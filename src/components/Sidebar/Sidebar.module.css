@@ -1,0 +1,59 @@
+#Sidebar {
+    /* padding: 23px 27px; */
+    background-color: #7152eb;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 96.5vh;
+    overflow: hidden;
+}
+
+#logo {
+    width: 56px;
+    height: 56px;
+    margin: 23px 27px;
+    margin-bottom: 0;
+}
+
+#Sidebar nav {
+    /* margin-top: 60px; */
+}
+
+.activeIcon {
+    position: absolute;
+    z-index: 0;
+    width: 113px !important;
+    height: 113px !important;
+    right: -20px;
+    top: -7px;
+    display: none;
+}
+
+.active .activeIcon {
+    display: block;
+}
+
+#Sidebar nav img {
+    width: 36px;
+    height: 36px;
+}
+
+#Sidebar nav ul li {
+    padding: 28px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.navIcon {
+    z-index: 1;
+}
+
+#logout {
+    width: 36px;
+    height: 36px;
+    margin: 0 auto;
+    margin-bottom: 34px;
+}
