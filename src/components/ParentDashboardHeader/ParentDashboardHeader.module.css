@@ -1,3 +1,7 @@
+#parentDashboardHeader {
+    padding: 70px 40px;
+}
+
 #explore {
     /* padding: 44px 24px; */
     background-image: linear-gradient(to right, #7306e0, #8d68f3);

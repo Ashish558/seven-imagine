@@ -6,16 +6,18 @@ import ParentDashboard from "./Pages/ParentDashboard/ParentDashboard";
 function App() {
     return (
         <div className="flex">
-            <Sidebar />
+            <div className="w-1/12">
+                <Sidebar />
+            </div>
 
-            <div className="w-10/12">
+            <>
                 <Routes>
                     <Route
                         path="/parent-dashboard"
                         element={<ParentDashboard />}
                     ></Route>
                 </Routes>
-            </div>
+            </>
         </div>
     );
 }

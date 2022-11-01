@@ -13,7 +13,7 @@ import logout from "./../../Assets/icons/navbar-icons/logout.png";
 
 const Sidebar = () => {
     return (
-        <div id={styles.Sidebar}>
+        <div className="w-28" id={styles.Sidebar}>
             <img id={styles.logo} src={logo} alt="" />
 
             <nav>

@@ -84,6 +84,8 @@
 body {
     background-color: #f3f5f7;
     padding: 15px 17px;
+    padding-right: 0;
+    padding-bottom: 0;
     font-family: "Inter", sans-serif;
 }
 

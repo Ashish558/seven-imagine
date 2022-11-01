@@ -9,7 +9,11 @@ import shivam from "./../../Assets/images/tutors/shivam-shrivastab.png";
 
 const ParentDashboardHeader = () => {
     return (
-        <div className="flex" style={{ gap: 86 }}>
+        <div
+            className="flex"
+            id={styles.parentDashboardHeader}
+            style={{ gap: 86 }}
+        >
             <div className="w-2/3">
                 <div className="flex" style={{ gap: 16 }}>
                     <div className="w-2/3" id={styles.explore}>
