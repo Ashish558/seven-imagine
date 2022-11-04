@@ -8,6 +8,7 @@ import Document from '../../assets/Navbar/document.svg'
 import Calendar from '../../assets/Navbar/calendar.svg'
 import People from '../../assets/Navbar/people.svg'
 import NavLink from './NavLink'
+import { useLocation } from 'react-router-dom'
 
 const navdata = [
    {
@@ -47,8 +48,11 @@ const navdata = [
 
 export default function Navbar() {
 
+   const location = useLocation()
+   console.log(location)
    return (
-      <div className='fixed top-0 left-0 h-screen z-50 overflow-auto p-4 flex overflow-auto'>
+      <div className={`fixed top-0 left-0 h-screen z-50 overflow-auto p-4 flex overflow-auto
+      ${location.pathname === '/login' ? 'hidden' : 'bg-lightWhite' }`}>
          <div className='min-h-full flex flex-col items-center bg-primary w-110 p-4 rounded-20 self-stretch overflow-auto pt-14'>
             {navdata.map((item, idx) => {
                return <NavLink key={idx} {...item} />

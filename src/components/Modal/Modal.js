@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './modal.module.css'
 import CancelIcon from '../../assets/Modal/cancel.svg'
+import SecondaryButton from '../Buttons/SecondaryButton'
 
 export default function Modal({ title, body, cancelBtn, primaryBtn, handleClose, classname }) {
 
@@ -17,9 +18,7 @@ export default function Modal({ title, body, cancelBtn, primaryBtn, handleClose,
                <div className='flex justify-center'>
                   {
                      cancelBtn &&
-                     <button className='bg-secondaryLight rounded-md text-textGray py-4 px-12' onClick={handleClose} >
-                        Cancel
-                     </button>
+                     <SecondaryButton onClick={handleClose} children='Cancel' />
                   }
                   {
                      primaryBtn &&
@@ -29,7 +28,7 @@ export default function Modal({ title, body, cancelBtn, primaryBtn, handleClose,
                   }
                </div>
                <button className={styles.cancelBtn} >
-                  <img  src={CancelIcon} onClick={handleClose} />
+                  <img src={CancelIcon} onClick={handleClose} />
                </button>
 
             </div>

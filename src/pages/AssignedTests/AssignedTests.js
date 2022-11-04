@@ -44,7 +44,7 @@ export default function AssignedTests() {
                </div>
 
                <div className='mt-6'>
-                  <Table dataFor='assignedTests' data={tableData} tableHeaders={tableHeaders} maxPageSize={5} />
+                  <Table dataFor='assignedTests' data={tableData} tableHeaders={tableHeaders} maxPageSize={10} />
                </div>
             </div>
          </div>
@@ -61,24 +61,28 @@ export default function AssignedTests() {
                   <div className='grid grid-cols-2 grid-rows-2 gap-x-2 md:gap-x-3 gap-y-2 gap-y-4 mb-5'>
                      <div>
                         <InputSelect label='Student Name'
+                           labelClassname='ml-2 mb-0.5'
                            optionData={optionData}
                            placeholder='Student Name'
                            parentClassName='w-full mr-4' type='select' />
                      </div>
                      <div>
                         <InputSelect label='Time Limit'
+                           labelClassname='ml-2 mb-0.5'
                            optionData={optionData}
                            placeholder='Select Time Limit'
                            parentClassName='w-full mr-4' type='select' />
                      </div>
                      <div>
                         <InputSelect label='Due Date'
+                           labelClassname='ml-2 mb-0.5'
                            optionData={optionData}
                            placeholder=''
                            parentClassName='w-full mr-4' type='select' />
                      </div>
                      <div>
                         <InputSelect optionData={optionData}
+                           labelClassname='ml-2 mb-0.5'
                            label='Test'
                            placeholder='Type Test Name'
                            parentClassName='w-full mr-4'

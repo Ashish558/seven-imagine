@@ -16,11 +16,12 @@ code {
     monospace;
 }
 
-.table-auto.table { 
-  border-collapse: separate; 
-  border-spacing: 1rem 1rem; 
-  /* margin-top: -10px; correct offset on first border spacing if desired */
+.table-auto { 
+  border-collapse: separate;
+  border-spacing: 0 4px; 
+  margin-top: 10px; 
 }
+
 .table-auto td {
   border-style: solid none;
   padding: 10px;
@@ -35,3 +36,20 @@ code {
   border-bottom-right-radius: 10px; 
   border-top-right-radius: 10px; 
 }
+
+/* 
+select option{
+  outline: none;
+}
+select {
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;       /* Remove default arrow 
+   /* background-image: url(...);   Add custom arrow 
+} */
+/* 
+select::-ms-expand {
+  display: none; /* Hide the default arrow in Internet Explorer 10 and Internet Explorer 11 
+  box-shadow: none;
+  border: none;
+} */

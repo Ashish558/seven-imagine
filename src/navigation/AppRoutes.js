@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import AssignedTests from "../pages/AssignedTests/AssignedTests";
 import Calendar from "../pages/Calendar/Calendar";
+import CompletedTest from "../pages/CompletedTest/CompletedTest";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Users from "../pages/Users/users";
@@ -23,6 +24,7 @@ const AppRoutes = () => {
                <Route path="/users" element={<Users />} />
                <Route path="/calendar" element={<Calendar />} />
                <Route path="/assigned-tests" element={<AssignedTests />} />
+               <Route path="/assigned-tests/student/:id" element={<CompletedTest />} />
 
                {/* <Route
                   path="/profile"
