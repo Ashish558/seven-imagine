@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./ConceptSection.module.css";
 import arrowDown from "./../../Assets/icons/arrow-down.png";
 import Chart from "./../Chart/Chart";
+import downloadImage from "./../../Assets/icons/download.png";
 
 // import faker from "faker";
 
@@ -10,8 +11,11 @@ const ConceptSection = () => {
     const [slot, setSlot] = useState("Jun 20, 2022 - Jul 30, 2022 ");
 
     return (
-        <div className="flex" id={styles.conceptSectionContainer}>
-            <div className="w-3/5" id={styles.conceptChart}>
+        <div
+            className="flex justify-between"
+            id={styles.conceptSectionContainer}
+        >
+            <div className="w-2/3" id={styles.conceptChart}>
                 <div className="flex items-center" style={{ gap: "20px" }}>
                     <h1>Concept Chart</h1>
 
@@ -109,6 +113,147 @@ const ConceptSection = () => {
                 <div id={styles.chartContainer}>
                     <div id={styles.chart}>
                         <Chart />
+                    </div>
+                </div>
+            </div>
+
+            <div className="w-1/3" id={styles.listedData}>
+                <div
+                    className="flex items-center justify-between"
+                    style={{ padding: "10px 0" }}
+                >
+                    <div className="w-1/2">
+                        <div className={styles.listedDataItem}>
+                            <h1>SAT B2</h1>
+                            <div className="flex" style={{ gap: "12px" }}>
+                                <h2>Due Date</h2>
+                                <h3>June 20, 2022</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="w-1/2">
+                        <div
+                            className="flex items-center justify-end"
+                            style={{ gap: "12px" }}
+                        >
+                            <img src={downloadImage} alt="" />
+                            <button className={styles.btnGreen}>Start</button>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    className="flex items-center justify-between"
+                    style={{ padding: "10px 0" }}
+                >
+                    <div className="w-1/2">
+                        <div className={styles.listedDataItem}>
+                            <h1>SAT B2</h1>
+                            <div className="flex" style={{ gap: "12px" }}>
+                                <h2>Due Date</h2>
+                                <h3>June 20, 2022</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="w-1/2">
+                        <div
+                            className="flex items-center justify-end"
+                            style={{ gap: "12px" }}
+                        >
+                            <img src={downloadImage} alt="" />
+                            <button className={styles.btnGreen}>Start</button>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    className="flex items-center justify-between"
+                    style={{ padding: "10px 0" }}
+                >
+                    <div className="w-1/2">
+                        <div className={styles.listedDataItem}>
+                            <h1>SAT B2</h1>
+                            <div className="flex" style={{ gap: "12px" }}>
+                                <h2>Due Date</h2>
+                                <h3>June 20, 2022</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="w-1/2">
+                        <div
+                            className="flex items-center justify-end"
+                            style={{ gap: "12px" }}
+                        >
+                            <img src={downloadImage} alt="" />
+                            <button className={styles.btnGreen}>Start</button>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    className="flex items-center justify-between"
+                    style={{ padding: "10px 0" }}
+                >
+                    <div className="w-1/2">
+                        <div className={styles.listedDataItem}>
+                            <h1>SAT B2</h1>
+                            <div className="flex" style={{ gap: "12px" }}>
+                                <h2>Due Date</h2>
+                                <h3>June 20, 2022</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="w-1/2">
+                        <div
+                            className="flex items-center justify-end"
+                            style={{ gap: "12px" }}
+                        >
+                            <img src={downloadImage} alt="" />
+                            <button className={styles.btnGreen}>Start</button>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    className="flex items-center justify-between"
+                    style={{ padding: "10px 0" }}
+                >
+                    <div className="w-1/2">
+                        <div className={styles.listedDataItem}>
+                            <h1>SAT B2</h1>
+                            <div className="flex" style={{ gap: "12px" }}>
+                                <h2>Due Date</h2>
+                                <h3>June 20, 2022</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="w-1/2">
+                        <div
+                            className="flex items-center justify-end"
+                            style={{ gap: "12px" }}
+                        >
+                            <img src={downloadImage} alt="" />
+                            <button className={styles.btnGreen}>Start</button>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    className="flex items-center justify-between"
+                    style={{ padding: "10px 0" }}
+                >
+                    <div className="w-1/2">
+                        <div className={styles.listedDataItem}>
+                            <h1>SAT B2</h1>
+                            <div className="flex" style={{ gap: "12px" }}>
+                                <h2>Due Date</h2>
+                                <h3>June 20, 2022</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="w-1/2">
+                        <div
+                            className="flex items-center justify-end"
+                            style={{ gap: "12px" }}
+                        >
+                            <img src={downloadImage} alt="" />
+                            <button className={styles.btnGreen}>Start</button>
+                        </div>
                     </div>
                 </div>
             </div>

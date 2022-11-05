@@ -38,10 +38,77 @@
 
 #chart {
     background-color: #fff;
-    width: 83%;
+    width: 100%;
     height: 100%;
     margin-top: 19px;
     border-radius: 20px;
     padding: 40px 20px;
     overflow-x: scroll;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+#chart::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+#chart::-webkit-scrollbar-track {
+    background: #6da8ff26;
+    margin-left: 16px;
+    margin-right: 40px;
+    border-radius: 20px;
+}
+
+/* Handle */
+#chart::-webkit-scrollbar-thumb {
+    background-color: rgba(109, 168, 255, 0.6);
+    border-radius: 20px;
+}
+
+/* Handle on hover */
+#chart::-webkit-scrollbar-thumb:hover {
+    background: rgba(40, 68, 109, 0.6);
+}
+
+#listedData {
+    background-color: #fff;
+    box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    padding: 38px 28px;
+    color: black;
+}
+
+#listedData h1 {
+    color: black;
+    font-size: 18px;
+    font-weight: 500;
+    display: block;
+    padding: 0;
+}
+#listedData h2 {
+    color: black;
+    font-size: 18px;
+    font-weight: 600;
+    display: block;
+    padding: 0;
+    margin-right: 12px;
+}
+#listedData h1 {
+    color: black;
+    font-size: 18px;
+    font-weight: 500;
+    display: block;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+#listedData img {
+    width: 33px;
+    height: 33px;
+}
+
+.btnGreen {
+    background-color: #4ef988;
+    padding: 10px 34px;
+    border-radius: 6px;
 }

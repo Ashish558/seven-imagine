@@ -24,9 +24,9 @@ const ParentDashboardHeader = () => {
                                     Experts.
                                 </h2>
 
-                                <a href="#" className={styles.knowMore}>
+                                <button className={styles.knowMore}>
                                     Know More {">"}
-                                </a>
+                                </button>
                             </div>
                             <div className="w-1/2" id={styles.exploreBg}>
                                 <img src={explore} alt="" />
@@ -41,9 +41,9 @@ const ParentDashboardHeader = () => {
                         </div>
 
                         <div id={styles.creditBalance}>- 200 USD</div>
-                        <a href="#" className={styles.btnRed}>
+                        <button className={styles.btnRed}>
                             Pay Now: $ 2600
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -60,9 +60,7 @@ const ParentDashboardHeader = () => {
                                 Lorem ipsum dolor sit amet, consectetur
                                 adipiscing elit.
                             </p>
-                            <a href="#" className="btn-gold">
-                                View Profile
-                            </a>
+                            <button className="btn-gold">View Profile</button>
                         </div>
                         <div className="w-1/2">
                             <img src={shivam} className="mx-auto" alt="" />
@@ -78,9 +76,7 @@ const ParentDashboardHeader = () => {
                                 Lorem ipsum dolor sit amet, consectetur
                                 adipiscing elit.
                             </p>
-                            <a href="#" className="btn-gold">
-                                View Profile
-                            </a>
+                            <button className="btn-gold">View Profile</button>
                         </div>
                         <div className="w-1/2">
                             <img src={shivam} className="mx-auto" alt="" />
@@ -96,9 +92,7 @@ const ParentDashboardHeader = () => {
                                 Lorem ipsum dolor sit amet, consectetur
                                 adipiscing elit.
                             </p>
-                            <a href="#" className="btn-gold">
-                                View Profile
-                            </a>
+                            <button className="btn-gold">View Profile</button>
                         </div>
                         <div className="w-1/2">
                             <img src={shivam} className="mx-auto" alt="" />
