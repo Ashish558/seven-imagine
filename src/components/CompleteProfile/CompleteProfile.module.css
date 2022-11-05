@@ -1,0 +1,89 @@
+#completeProfile {
+    margin-top: 64px;
+}
+
+#completeProfile h1 {
+    font-size: 21px;
+    font-weight: 600;
+    color: #4715d7;
+    margin: 0;
+    margin-left: 14px;
+}
+
+#arrowRight {
+    width: 15px;
+    height: 15px;
+    transform: rotate(270deg);
+}
+
+#completeProfileHeader {
+    gap: 133px;
+}
+
+#profileHeader {
+    display: flex;
+    margin-left: 14px;
+    margin-top: 12px;
+    /* justify-content: space-between; */
+    gap: 235px;
+}
+
+#profileHeader {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+#statusContainer {
+    width: 426px;
+    height: 9px;
+    background-color: #d9d9d9;
+    border-radius: 10px;
+}
+
+#statusBar {
+    border-radius: 10px;
+    height: 100%;
+    background: #62dd43;
+    margin-top: 10px;
+}
+
+#practiceTest {
+    margin-top: 33px;
+}
+
+#practiceTest h1 {
+    margin-bottom: 8px;
+    margin-left: 0;
+}
+
+#practiceTestContainer {
+    background-color: #fbfbfb;
+    border-radius: 20px;
+    padding-top: 34px;
+    padding-left: 28px;
+    width: 440px;
+    height: 236px;
+    overflow-y: scroll;
+}
+
+/* width */
+#practiceTestContainer::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+#practiceTestContainer::-webkit-scrollbar-track {
+    background: #6da8ff26;
+    border-radius: 20px;
+}
+
+/* Handle */
+#practiceTestContainer::-webkit-scrollbar-thumb {
+    background: #6da8ff99;
+    border-radius: 20px;
+}
+
+/* Handle on hover */
+#practiceTestContainer::-webkit-scrollbar-thumb:hover {
+    background: #5582c599;
+}

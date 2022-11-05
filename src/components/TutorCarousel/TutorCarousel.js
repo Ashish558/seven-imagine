@@ -1,7 +1,5 @@
 import React from "react";
 import styles from "./TutorCarousel.module.css";
-import explore from "./../../Assets/images/explore-bg.png";
-import i from "./../../Assets/icons/i.png";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";

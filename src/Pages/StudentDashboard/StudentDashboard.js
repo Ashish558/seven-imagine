@@ -4,6 +4,7 @@ import Chart from "./../../components/Chart/Chart";
 import arrowDown from "./../../Assets/icons/arrow-down.png";
 import StudentDashboardHeader from "../../components/StudentDashboardHeader/StudentDashboardHeader";
 import TutorCarousel from "../../components/TutorCarousel/TutorCarousel";
+import CompleteProfile from "../../components/CompleteProfile/CompleteProfile";
 
 const StudentDashboard = () => {
     const [subject, setSubject] = useState("Maths");
@@ -128,9 +129,10 @@ const StudentDashboard = () => {
                     <div id={styles.chartContainer}>
                         <Chart></Chart>
                     </div>
-                </div>{" "}
+                </div>
                 <div className="w-1/3" id={styles.studentDashboardRight}>
                     <TutorCarousel></TutorCarousel>
+                    <CompleteProfile />
                 </div>
             </div>
         </div>

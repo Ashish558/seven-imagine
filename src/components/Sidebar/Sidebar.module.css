@@ -8,6 +8,7 @@
     height: 96.5vh;
     overflow: hidden;
     box-shadow: 0 0 4px;
+    position: fixed;
 }
 
 #logo {
