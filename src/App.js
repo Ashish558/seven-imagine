@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Sidebar from "./components/Sidebar/Sidebar";
 import ParentDashboard from "./Pages/ParentDashboard/ParentDashboard";
+import StudentDashboard from "./Pages/StudentDashboard/StudentDashboard";
 
 function App() {
     return (
@@ -15,6 +16,10 @@ function App() {
                     <Route
                         path="/parent-dashboard"
                         element={<ParentDashboard />}
+                    ></Route>
+                    <Route
+                        path="/student-dashboard"
+                        element={<StudentDashboard />}
                     ></Route>
                 </Routes>
             </>

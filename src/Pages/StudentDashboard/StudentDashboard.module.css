@@ -1,0 +1,70 @@
+#studentDashboard {
+    padding-top: 32px;
+    padding-left: 62px;
+    padding-bottom: 0;
+    gap: 39px;
+}
+
+#chartContainer {
+    overflow-x: scroll;
+    background-color: #fff;
+    padding: 0 10px;
+    border-radius: 20px;
+    margin-top: 19px;
+}
+
+#chartContainer::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+#chartContainer::-webkit-scrollbar-track {
+    background: #6da8ff26;
+    margin-left: 16px;
+    margin-right: 40px;
+    border-radius: 20px;
+}
+
+/* Handle */
+#chartContainer::-webkit-scrollbar-thumb {
+    background-color: rgba(109, 168, 255, 0.6);
+    border-radius: 20px;
+}
+
+/* Handle on hover */
+#chartContainer::-webkit-scrollbar-thumb:hover {
+    background: rgba(40, 68, 109, 0.6);
+}
+
+#studentDashboard h1 {
+    font-size: 21px;
+    font-weight: 600;
+    color: #4715d7;
+    margin-left: 34px;
+    margin-right: 56px;
+}
+
+#studentDashboard label {
+    background-color: #d9d9d980;
+    padding: 10px 12px;
+    border-radius: 10px;
+}
+
+#dropdownHeading {
+    gap: 77px;
+}
+
+#studentDashboardRight {
+    background-color: #d9d9d9;
+    height: 100vh;
+    padding: 37px;
+    border-radius: 20px 0 0 0;
+}
+
+.arrowDown {
+    width: 16px;
+}
+
+#studentDashboardRight {
+    padding-right: 10px;
+}

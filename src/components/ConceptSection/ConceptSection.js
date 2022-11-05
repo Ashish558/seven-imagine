@@ -4,8 +4,6 @@ import arrowDown from "./../../Assets/icons/arrow-down.png";
 import Chart from "./../Chart/Chart";
 import downloadImage from "./../../Assets/icons/download.png";
 
-// import faker from "faker";
-
 const ConceptSection = () => {
     const [subject, setSubject] = useState("Maths");
     const [slot, setSlot] = useState("Jun 20, 2022 - Jul 30, 2022 ");
