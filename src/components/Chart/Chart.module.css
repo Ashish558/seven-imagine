@@ -86,3 +86,62 @@
     top: 30%;
     left: 65%;
 }
+
+#algebra2 {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    background-color: #4d33e999;
+    border-radius: 50%;
+    top: 36%;
+    left: 77%;
+}
+
+#advMath2 {
+    width: 54px;
+    height: 54px;
+    position: absolute;
+    background-color: #da33e999;
+    border-radius: 50%;
+    top: 60%;
+    left: 89.5%;
+}
+
+#geometry2 {
+    position: absolute;
+    width: 127px;
+    height: 127px;
+    background-color: #33e99299;
+    border-radius: 50%;
+    top: 22%;
+    left: 98.1%;
+}
+#trigonometry2 {
+    position: absolute;
+    width: 56px;
+    height: 56px;
+    background-color: #33bde999;
+    border-radius: 50%;
+    top: 24%;
+    left: 115%;
+}
+#stat2 {
+    position: absolute;
+    width: 82px;
+    height: 82px;
+    background-color: #f1848a;
+    opacity: 0.6;
+    border-radius: 50%;
+    top: 43%;
+    left: 127.6%;
+}
+#prob2 {
+    position: absolute;
+    width: 82px;
+    height: 82px;
+    background-color: #e9d73399;
+    opacity: 0.6;
+    border-radius: 50%;
+    top: 30%;
+    left: 141%;
+}

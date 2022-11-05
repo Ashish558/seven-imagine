@@ -11,6 +11,12 @@ const Chart = () => {
                 <div id={styles.trigonometry}></div>
                 <div id={styles.stat}></div>
                 <div id={styles.prob}></div>
+                <div id={styles.algebra2}></div>
+                <div id={styles.advMath2}></div>
+                <div id={styles.geometry2}></div>
+                <div id={styles.trigonometry2}></div>
+                <div id={styles.stat2}></div>
+                <div id={styles.prob2}></div>
 
                 <div className={styles.chartRow}>
                     <h4 className="w-5">100</h4>
@@ -33,7 +39,7 @@ const Chart = () => {
                     <div className={styles.hr}></div>
                 </div>
                 <div className={styles.chartRow}>
-                    <h4 className="w-5"></h4>
+                    <h4 className="w-5">0</h4>
                     <div className={styles.hr}></div>
                 </div>
             </div>

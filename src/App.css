@@ -95,3 +95,11 @@ nav .active {
     background-position-y: 50%;
     background-position-x: 50%;
 }
+
+.btn-gold {
+    display: inline-block;
+    background-color: #f6a429;
+    padding: 10px 7px;
+    border-radius: 6px;
+    margin-top: 10px;
+}

@@ -16,17 +16,13 @@
     margin-bottom: 0;
 }
 
-#Sidebar nav {
-    /* margin-top: 60px; */
-}
-
 .activeIcon {
     position: absolute;
     z-index: 0;
     width: 113px !important;
     height: 113px !important;
-    right: -20px;
-    top: -7px;
+    right: 0;
+    top: -9px;
     display: none;
 }
 
