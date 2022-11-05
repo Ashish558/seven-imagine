@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styles from "./CompleteProfile.module.css";
 import arrow from "./../../Assets/icons/arrow-down.png";
-import downloadImage from "./../../Assets/icons/download.png";
 import { ListData } from "../ListData/ListData";
 
 const CompleteProfile = () => {
     const [profileProgress, setProfileProgress] = useState("65%");
+
     return (
         <div id={styles.completeProfile}>
             <div

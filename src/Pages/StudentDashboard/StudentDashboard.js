@@ -5,6 +5,7 @@ import arrowDown from "./../../Assets/icons/arrow-down.png";
 import StudentDashboardHeader from "../../components/StudentDashboardHeader/StudentDashboardHeader";
 import TutorCarousel from "../../components/TutorCarousel/TutorCarousel";
 import CompleteProfile from "../../components/CompleteProfile/CompleteProfile";
+import SessionFeedback from "../../components/SessionFeedback/SessionFeedback";
 
 const StudentDashboard = () => {
     const [subject, setSubject] = useState("Maths");
@@ -133,6 +134,7 @@ const StudentDashboard = () => {
                 <div className="w-1/3" id={styles.studentDashboardRight}>
                     <TutorCarousel></TutorCarousel>
                     <CompleteProfile />
+                    <SessionFeedback />
                 </div>
             </div>
         </div>
