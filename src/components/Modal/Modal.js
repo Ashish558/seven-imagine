@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './modal.module.css'
 import CancelIcon from '../../assets/Modal/cancel.svg'
 import SecondaryButton from '../Buttons/SecondaryButton'
 
-export default function Modal({ title, body, cancelBtn, primaryBtn, handleClose, classname }) {
+export default function Modal({ title,titleClassName, body, cancelBtn, cancelBtnClassName, primaryBtn, handleClose, classname }) {
+
+
+   //disable body scroll if modal open
+   useEffect(() => {
+      document.body.style.overflow = 'hidden';
+      return () => {
+         document.body.style.overflow = 'unset';
+      }
+   }, [])
 
    return (
       <div className={styles.modalContainer}>
@@ -11,18 +20,24 @@ export default function Modal({ title, body, cancelBtn, primaryBtn, handleClose,
          <div className='w-full p-1'>
             <div
                className={`w-full bg-white p-3 py-5 md:py-9.5 md:px-9.5 rounded-20 relative ${classname ? classname : ''}`}>
-               <p className={`font-semibold text-xl text-center mb-4.5 text-textPrimaryDark`}>
+              
+               <p className={`font-semibold text-xl md:text-2xl text-center mb-4.5 text-textPrimaryDark 
+               ${titleClassName ? titleClassName : ''}`}>
                   {title}
                </p>
                {body}
+
+               {/* footer buttons */}
                <div className='flex justify-center'>
                   {
                      cancelBtn &&
-                     <SecondaryButton onClick={handleClose} children='Cancel' />
+                     <SecondaryButton onClick={handleClose} children='Cancel' className={cancelBtnClassName} />
                   }
                   {
                      primaryBtn &&
-                     <button className='bg-primary rounded-md text-white py-4 px-12 ml-12' >
+                     <button
+                        onClick={primaryBtn.onClick ? primaryBtn.onClick : null}
+                        className={`bg-primary rounded-md text-white py-4 px-12 ml-12 ${primaryBtn.className ? primaryBtn.className : ''}`} >
                         {primaryBtn.text}
                      </button>
                   }

@@ -3,7 +3,7 @@ import Pagination from './Pagination'
 import { TableHeader } from './TableHeader'
 import TableItem from './tableItem'
 
-export default function Table({dataFor, data, tableHeaders, maxPageSize }) {
+export default function Table({dataFor, data, tableHeaders, maxPageSize, openRemoveTestModal}) {
 
   const [tableData, setTableData] = useState(data)
   const [currentPage, setCurrentPage] = useState(1)
@@ -36,7 +36,7 @@ export default function Table({dataFor, data, tableHeaders, maxPageSize }) {
         <tbody>
           {
             tableData.map((item, idx) => {
-              return <TableItem dataFor={dataFor} item={item} key={idx} />
+              return <TableItem dataFor={dataFor} item={item} key={idx} openRemoveTestModal={openRemoveTestModal} />
             })
           }
         </tbody>

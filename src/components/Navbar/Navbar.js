@@ -21,7 +21,7 @@ const navdata = [
    },
    {
       icon: Document,
-      path: '/'
+      path: '/all-tests'
    },
    {
       icon: Bubble,
@@ -49,7 +49,7 @@ const navdata = [
 export default function Navbar() {
 
    const location = useLocation()
-   console.log(location)
+   // console.log(location)
    return (
       <div className={`fixed top-0 left-0 h-screen z-50 overflow-auto p-4 flex overflow-auto
       ${location.pathname === '/login' ? 'hidden' : 'bg-lightWhite' }`}>

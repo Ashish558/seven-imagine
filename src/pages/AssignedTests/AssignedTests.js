@@ -24,6 +24,7 @@ export default function AssignedTests() {
    const [assignTestModalActive, setAssignTestModalActive] = useState(false)
 
    const handleClose = () => setAssignTestModalActive(false)
+   
    return (
       <>
          <div className='ml-pageLeft bg-lightWhite min-h-screen'>
@@ -58,7 +59,7 @@ export default function AssignedTests() {
                }
                handleClose={handleClose}
                body={
-                  <div className='grid grid-cols-2 grid-rows-2 gap-x-2 md:gap-x-3 gap-y-2 gap-y-4 mb-5'>
+                  <div className='grid grid-cols-1 md:grid-cols-2 gap-x-2 md:gap-x-3 gap-y-2 gap-y-4 mb-5'>
                      <div>
                         <InputSelect label='Student Name'
                            labelClassname='ml-2 mb-0.5'

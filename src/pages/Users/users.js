@@ -61,7 +61,7 @@ export default function Users() {
                primaryBtn={{ text: "Assign" }}
                handleClose={handleClose}
                body={
-                  <div className='grid grid-cols-2 grid-rows-2 gap-x-2 md:gap-x-3 gap-y-2 gap-y-4 mb-5'>
+                  <div className='grid grid-cols-1 md:grid-cols-2  gap-x-2 md:gap-x-3 gap-y-2 gap-y-4 mb-5'>
                      <div>
                         <InputField label='Email Addresss'
                            labelClassname='ml-2 mb-0.5'
