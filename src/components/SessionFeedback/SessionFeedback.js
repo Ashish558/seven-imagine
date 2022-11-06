@@ -6,7 +6,7 @@ import starLight from "./../../Assets/icons/star-light.png";
 
 const SessionFeedback = () => {
     return (
-        <div id={styles.sessionFeedback}>
+        <div id={styles.sessionFeedback} className="w-10/12">
             <h1>Session Feedback</h1>
 
             <div id={styles.feedbacks}>

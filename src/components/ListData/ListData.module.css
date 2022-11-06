@@ -24,7 +24,7 @@
     font-weight: 600;
     display: block;
     padding: 0;
-    margin-right: 12px;
+    /* margin-right: 12px; */
 }
 #listedData h3 {
     color: rgba(0, 0, 0, 0.5);
@@ -32,7 +32,7 @@
     font-weight: 600;
     display: block;
     padding: 0;
-    margin-right: 12px;
+    /* margin-right: 12px; */
 }
 
 #listedData img {
