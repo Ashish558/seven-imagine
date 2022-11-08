@@ -5,7 +5,7 @@ export default function InputField({parentClassName, Icon, value, placeholder, l
 
    return (
       <div className={` ${parentClassName && parentClassName}`}>
-         <label className={`font-semibold ${labelClassname}`}>
+         <label className={`inline-block font-semibold ${labelClassname}`}>
             {label}
          </label>
          <div className='py-3 px-6 border flex items-center rounded-10'>
