@@ -22,6 +22,12 @@ export default function AllTests() {
 
    const [tableData, setTableData] = useState(data)
    const [modalActive, setModalActive] = useState(false)
+   const [testName, setTestName] = useState('')
+
+   const [question, setQuestion] = useState('')
+   const [answer, setAnswer] = useState('')
+   const [concept, setConcept] = useState('')
+   const [strategy, setStrategy] = useState('')
 
    const [removeQuestionModal, setRemoveQuestionModal] = useState(false)
 
@@ -37,7 +43,7 @@ export default function AllTests() {
    const openRemoveTestModal = item => {
       setRemoveQuestionModal(true)
    }
-   const removeTest = ()=>{
+   const removeTest = () => {
       setRemoveQuestionModal(false)
       console.log('removed')
    }
@@ -54,7 +60,12 @@ export default function AllTests() {
                </button>
             </div>
             <div className='flex align-center mt-8'>
-               <InputSelect optionData={optionData} placeholder='Test Name' parentClassName='w-290 mr-4' type='select' />
+               <InputSelect value={testName}
+                  onChange={(val) => setTestName(val)}
+                  optionData={optionData}
+                  placeholder='Test Name'
+                  parentClassName='w-290 mr-4'
+                  type='select' />
             </div>
 
             <div className='mt-6'>
@@ -67,12 +78,14 @@ export default function AllTests() {
             <Modal
                title='Assign New Test'
                cancelBtn={true}
-               primaryBtn={{ text: "Assign"}}
+               primaryBtn={{ text: "Assign" }}
                handleClose={handleClose}
                body={
                   <div className='grid grid-cols-1 md:grid-cols-2 gap-x-2 md:gap-x-3 gap-y-2 gap-y-4 mb-5'>
-                     <div>
+                     <div className=''>
                         <InputSelect label='Question Type'
+                           value={question}
+                           onChange={val => setQuestion(val)}
                            labelClassname='ml-2 mb-1.2'
                            optionData={optionData}
                            placeholder='Select Question Type'
@@ -85,17 +98,21 @@ export default function AllTests() {
                            placeholder='Type Correct Answer'
                            parentClassName='w-full mr-4' type='select' />
                      </div>
-                     <div>
-                        <InputSelect label='Concept'
+                     <div className=''>
+                        <InputSelect value={concept}
+                           onChange={val => setConcept(val)} 
+                           label='Concept'
                            labelClassname='ml-2 mb-1.2'
                            optionData={optionData}
-                           placeholder=''
+                           placeholder='Concept'
                            parentClassName='w-full mr-4' type='select' />
                      </div>
-                     <div>
-                        <InputSelect optionData={optionData}
-                           labelClassname='ml-2 mb-1.2'
+                     <div className=''>
+                        <InputSelect value={strategy}
+                           onChange={val => setStrategy(val)} 
+                           optionData={optionData}
                            label='Strategy'
+                           labelClassname='ml-2 mb-1.2'
                            placeholder='Strategy'
                            parentClassName='w-full mr-4'
                            type='select' />
@@ -109,17 +126,17 @@ export default function AllTests() {
             removeQuestionModal &&
             <Modal
                title={<>
-                Are you sure <br />
-               you want to remove the test ?
+                  Are you sure <br />
+                  you want to remove the test ?
                </>}
                titleClassName='leading-9'
                cancelBtn={true}
-               cancelBtnClassName = 'py-4'
-               primaryBtn={{ text: "Remove", className: 'bg-danger', onClick: removeTest}}
+               cancelBtnClassName='py-4'
+               primaryBtn={{ text: "Remove", className: 'bg-danger', onClick: removeTest }}
                handleClose={closeRemoveModal}
                body={
                   <div className='mb-10'>
-                     
+
                   </div>
                }
                classname={'max-w-567 mx-auto'}

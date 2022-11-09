@@ -26,6 +26,19 @@ export default function Users() {
    const [modalActive, setModalActive] = useState(false)
    const handleClose = () => setModalActive(false)
 
+   const [typeName, setTypeName] = useState('')
+   const [userType, setUserType] = useState('')
+   const [status, setStatus] = useState('')
+   const [services, setServices] = useState('')
+   const [tutor, setTutor] = useState('')
+
+   const [modalUserType, setModalUserType] = useState('')
+  const updateTypeName = val => setTypeName(val)
+  const updateUserType = val => setUserType(val)
+  const updateStatus = val => setStatus(val)
+  const updateServices = val => setServices(val)
+  const updateTutor = val => setTutor(val)
+   
    return (
       <div className='ml-pageLeft bg-lightWhite min-h-screen'>
          <div className='py-14 px-5'>
@@ -38,11 +51,11 @@ export default function Users() {
                </button>
             </div>
             <div className='flex align-center mt-8'>
-               <InputSelect optionData={optionData} placeholder='Type Name' parentClassName='w-full mr-4' type='select' />
-               <InputSelect optionData={optionData} placeholder='User Type' parentClassName='w-full mr-4' type='select' />
-               <InputSelect optionData={optionData} placeholder='Lead Status' parentClassName='w-full mr-4' type='select' />
-               <InputSelect optionData={optionData} placeholder='Services' parentClassName='w-full mr-4' type='select' />
-               <InputSelect optionData={optionData} placeholder='Tutor' parentClassName='w-full mr-4' type='select' />
+               <InputSelect optionData={optionData} placeholder='Type Name' parentClassName='w-full mr-4' type='select' value={typeName} onChange={updateTypeName} />
+               <InputSelect optionData={optionData} placeholder='User Type' parentClassName='w-full mr-4' type='select' value={userType} onChange={updateUserType} />
+               <InputSelect optionData={optionData} placeholder='Lead Status' parentClassName='w-full mr-4' type='select' value={status} onChange={updateStatus} />
+               <InputSelect optionData={optionData} placeholder='Services' parentClassName='w-full mr-4' type='select' value={services} onChange={updateServices} />
+               <InputSelect optionData={optionData} placeholder='Tutor' parentClassName='w-full mr-4' type='select' value={tutor} onChange={updateTutor} />
             </div>
             <div className='mt-4' >
                <FilterItems data={filterData} setData={filterData} />
@@ -76,7 +89,8 @@ export default function Users() {
                            parentClassName='w-full mr-4' type='select' />
                      </div>
                      <div>
-                        <InputSelect
+                        <InputSelect value={modalUserType}
+                        onChange={val => setModalUserType(val)}
                            type='select'
                            placeholder='User Type'
                            label='Select User Type'

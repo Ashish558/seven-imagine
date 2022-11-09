@@ -1,0 +1,19 @@
+.selectedIcon{
+   position: absolute;
+   right: -57px;
+   top: -35px;
+   z-index: -1;
+   min-width: 113.32px;
+}
+.selectedNavLink {
+ fill: black;
+}
+.selectedNavLink svg {
+   fill: black;
+   /* background-color: rgb(38, 43, 41); */
+   filter:  invert(0.55)
+   sepia(1)
+   hue-rotate(200deg)
+   saturate(5)
+   brightness(1);;
+}

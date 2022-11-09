@@ -60,6 +60,9 @@ module.exports = {
       maxWidth: {
         '840': '840px',
         '567': '567px'
+      },
+      zIndex: {
+        '5000': 5000
       }
     },
   },

@@ -24,7 +24,23 @@ export default function AssignedTests() {
    const [assignTestModalActive, setAssignTestModalActive] = useState(false)
 
    const handleClose = () => setAssignTestModalActive(false)
-   
+
+   const [studentName, setStudentName] = useState('')
+   const [testName, setTestName] = useState('')
+   const [tutor, setTutor] = useState('')
+   const [status, setStatus] = useState('')
+
+   const updateStudentName = val => setStudentName(val)
+   const updateTestName = val => setTestName(val)
+   const updateTutor = val => setTutor(val)
+   const updateStatus = val => setStatus(val)
+
+   const [modalData, setModalData] = useState({
+      name: '',
+      limit: '',
+      date: '',
+      test: ''
+   })
    return (
       <>
          <div className='ml-pageLeft bg-lightWhite min-h-screen'>
@@ -37,10 +53,31 @@ export default function AssignedTests() {
                   </button>
                </div>
                <div className='flex align-center mt-8'>
-                  <InputSelect className='' optionData={optionData} placeholder='Student Name' parentClassName='w-full mr-4' type='select' />
-                  <InputSelect optionData={optionData} placeholder='Test Name' parentClassName='w-full mr-4' type='select' />
-                  <InputSelect optionData={optionData} placeholder='Tutor Name' parentClassName='w-full mr-4' type='select' />
-                  <InputSelect optionData={optionData} placeholder='Completion Status' parentClassName='w-full mr-4' type='select' />
+                  <InputSelect value={studentName}
+                     onChange={updateStudentName}
+                     className=''
+                     optionData={optionData}
+                     placeholder='Student Name'
+                     parentClassName='w-full mr-4'
+                     type='select' />
+                  <InputSelect value={testName}
+                     onChange={updateTestName}
+                     optionData={optionData}
+                     placeholder='Test Name'
+                     parentClassName='w-full mr-4'
+                     type='select' />
+                  <InputSelect value={tutor}
+                     onChange={updateTutor}
+                     optionData={optionData}
+                     placeholder='Tutor Name'
+                     parentClassName='w-full mr-4'
+                     type='select' />
+                  <InputSelect value={status}
+                     onChange={updateStatus}
+                     optionData={optionData}
+                     placeholder='Completion Status'
+                     parentClassName='w-full mr-4'
+                     type='select' />
 
                </div>
 
@@ -62,6 +99,8 @@ export default function AssignedTests() {
                   <div className='grid grid-cols-1 md:grid-cols-2 gap-x-2 md:gap-x-3 gap-y-2 gap-y-4 mb-5'>
                      <div>
                         <InputSelect label='Student Name'
+                           value={modalData.name}
+                           onChange={val => setModalData({...modalData, name: val})}
                            labelClassname='ml-2 mb-0.5'
                            optionData={optionData}
                            placeholder='Student Name'
@@ -69,6 +108,8 @@ export default function AssignedTests() {
                      </div>
                      <div>
                         <InputSelect label='Time Limit'
+                           value={modalData.limit}
+                           onChange={val => setModalData({...modalData, limit: val})}
                            labelClassname='ml-2 mb-0.5'
                            optionData={optionData}
                            placeholder='Select Time Limit'
@@ -76,13 +117,17 @@ export default function AssignedTests() {
                      </div>
                      <div>
                         <InputSelect label='Due Date'
+                           value={modalData.date}
+                           onChange={val => setModalData({...modalData, date: val})}
                            labelClassname='ml-2 mb-0.5'
                            optionData={optionData}
-                           placeholder=''
+                           placeholder='Date'
                            parentClassName='w-full mr-4' type='select' />
                      </div>
                      <div>
                         <InputSelect optionData={optionData}
+                           value={modalData.test}
+                           onChange={val => setModalData({...modalData, test: val})}
                            labelClassname='ml-2 mb-0.5'
                            label='Test'
                            placeholder='Type Test Name'
