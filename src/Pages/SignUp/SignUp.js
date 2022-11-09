@@ -19,7 +19,7 @@ const SignUp = () => {
         <div id={styles.signUp} className="flex w-11/12">
             <div className="w-1/2" id={styles.signUpLeft}></div>
             <div className="w-1/2" id={styles.signUpRight}>
-                <h1>SignUp</h1>
+                <h1>Sign Up</h1>
                 <h5>Sign up with email address</h5>
 
                 <div className="flex" style={{ gap: "24px" }}>
