@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Sidebar from "./components/Sidebar/Sidebar";
 import ParentDashboard from "./Pages/ParentDashboard/ParentDashboard";
+import SignUp from "./Pages/SignUp/SignUp";
 import StudentDashboard from "./Pages/StudentDashboard/StudentDashboard";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
                         path="/student-dashboard"
                         element={<StudentDashboard />}
                     ></Route>
+                    <Route path="/sign-up" element={<SignUp />}></Route>
                 </Routes>
             </>
         </div>
