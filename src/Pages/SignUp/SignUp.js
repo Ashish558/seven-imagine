@@ -7,7 +7,6 @@ const SignUp = () => {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [confirmPass, setConfirmPass] = useState("");
-    const [submitText, setSubmitText] = useState("Verify Email");
     const [passwordVisisbility, setPasswordVisisbility] = useState("none");
 
     const verifyEmail = () => {
