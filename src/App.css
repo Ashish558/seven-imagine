@@ -124,3 +124,15 @@ nav .active {
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+.concept {
+    position: relative;
+}
+
+.concept .owl-nav {
+    margin-top: 0 !important;
+    position: absolute;
+    top: -29px;
+    visibility: hidden;
+    right: 0;
+}

@@ -20,7 +20,10 @@
 
         <script src="./jquery.js"></script>
         <script>
-            $(".owl-carousel").owlCarousel();
+            $(document).ready(() => {
+                $(".owl-carousel").owlCarousel();
+                // $(".owl-next")[0].removeChild();
+            });
         </script>
     </body>
 </html>

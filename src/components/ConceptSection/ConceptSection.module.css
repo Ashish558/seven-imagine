@@ -74,6 +74,8 @@
     background-color: #fff;
     box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.05);
     border-radius: 20px;
+    height: 360px;
+    overflow-y: scroll;
     padding: 38px 28px;
     color: black;
 }
@@ -111,4 +113,54 @@
     background-color: #4ef988;
     padding: 10px 34px;
     border-radius: 6px;
+}
+
+#practiceTestContainer {
+    margin-top: 36px;
+}
+
+#practiceTestHeader {
+    color: #4715d7;
+    font-family: "Inter", sans-serif;
+    font-size: 21px;
+    font-weight: 600;
+    margin-top: 36px;
+    margin-left: 20px;
+    line-height: 25px;
+}
+
+#yourStudent h2 {
+    color: #4715d7;
+    font-family: "Inter", sans-serif;
+    font-size: 21px;
+    font-weight: 600;
+    margin-left: 20px;
+    line-height: 25px;
+}
+
+.student {
+    background: linear-gradient(95.17deg, #a455f2 3.84%, #981dac 92.55%);
+    border-radius: 20px;
+    padding: 20px 37px;
+    color: #fff;
+}
+
+.student h2 {
+    font-family: "Inter", sans-serif;
+    color: white !important;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.student img {
+    width: 90px !important;
+    height: 90px;
+}
+
+#leftArrow img {
+    transform: rotate(90deg);
+}
+#rightArrow img {
+    transform: rotate(270deg);
 }
