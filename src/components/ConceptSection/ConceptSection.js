@@ -25,7 +25,7 @@ const ConceptSection = () => {
         document.getElementsByClassName("owl-next")[1].click();
     };
     const goPrev = () => {
-        document.getElementsByClassName("owl-pregitv")[1].click();
+        document.getElementsByClassName("owl-prev")[1].click();
     };
 
     return (
