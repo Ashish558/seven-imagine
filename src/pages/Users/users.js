@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import AddIcon from '../../assets/icons/add.svg'
-import In from '../../components/InputSelect/InputSelect'
+import SearchIcon from '../../assets/icons/search.svg'
 import InputSelect from '../../components/InputSelect/InputSelect'
 import FilterItems from '../../components/FilterItems/filterItems'
 import Table from '../../components/Table/Table'
@@ -22,46 +22,74 @@ const tableHeaders = [
 
 export default function Users() {
 
-   const [filterData, setFilterData] = useState(['Student', 'Parent', 'Active'])
+   const [filterItems, setFilterItems] = useState(['Student', 'Parent', 'Active'])
    const [modalActive, setModalActive] = useState(false)
    const handleClose = () => setModalActive(false)
 
-   const [typeName, setTypeName] = useState('')
-   const [userType, setUserType] = useState('')
-   const [status, setStatus] = useState('')
-   const [services, setServices] = useState('')
-   const [tutor, setTutor] = useState('')
+   const [filterData, setFilterData] = useState({
+      typeName: '',
+      userType: '',
+      status: '',
+      services: '',
+      tutor: ''
+   })
 
    const [modalUserType, setModalUserType] = useState('')
-  const updateTypeName = val => setTypeName(val)
-  const updateUserType = val => setUserType(val)
-  const updateStatus = val => setStatus(val)
-  const updateServices = val => setServices(val)
-  const updateTutor = val => setTutor(val)
-   
+
+
    return (
-      <div className='ml-pageLeft bg-lightWhite min-h-screen'>
+      <div className='lg:ml-pageLeft bg-lightWhite min-h-screen'>
          <div className='py-14 px-5'>
             <div className='flex justify-between'>
-               <p className='font-bold text-4xl'>All Users</p>
-               <button className='bg-primary py-4 px-6 flex items-center text-white font-semibold rounded-lg mr-55'
+               <p className='font-bold text-4xl text-primary-dark'>All Users</p>
+               <button className='bg-primary py-3.5 text-lg px-6 flex items-center text-white font-semibold rounded-lg mr-55'
                   onClick={() => setModalActive(true)}>
                   Add new User
                   <img src={AddIcon} className='ml-3' />
                </button>
             </div>
             <div className='flex align-center mt-8'>
-               <InputSelect optionData={optionData} placeholder='Type Name' parentClassName='w-full mr-4' type='select' value={typeName} onChange={updateTypeName} />
-               <InputSelect optionData={optionData} placeholder='User Type' parentClassName='w-full mr-4' type='select' value={userType} onChange={updateUserType} />
-               <InputSelect optionData={optionData} placeholder='Lead Status' parentClassName='w-full mr-4' type='select' value={status} onChange={updateStatus} />
-               <InputSelect optionData={optionData} placeholder='Services' parentClassName='w-full mr-4' type='select' value={services} onChange={updateServices} />
-               <InputSelect optionData={optionData} placeholder='Tutor' parentClassName='w-full mr-4' type='select' value={tutor} onChange={updateTutor} />
+               <InputField
+                  IconRight={SearchIcon}
+                  placeholder='Type Name'
+                  parentClassName='w-full mr-4'
+                  inputContainerClassName='bg-white'
+                  type='select'
+                  value={filterData.typeName}
+                  onChange={val => setFilterData({ ...filterData, typeName: val })} />
+               <InputSelect optionData={optionData}
+                  placeholder='User Type'
+                  parentClassName='w-full mr-4'
+                  type='select'
+                  value={filterData.userType}
+                  onChange={val => setFilterData({ ...filterData, userType: val })} />
+               <InputSelect optionData={optionData}
+                  placeholder='Lead Status'
+                  parentClassName='w-full mr-4'
+                  type='select'
+                  value={filterData.status}
+                  onChange={val => setFilterData({ ...filterData, status: val })} />
+               <InputSelect optionData={optionData}
+                  placeholder='Services'
+                  parentClassName='w-full mr-4'
+                  type='select'
+                  value={filterData.services}
+                  onChange={val => setFilterData({ ...filterData, services: val })} />
+               <InputSelect optionData={optionData}
+                  placeholder='Tutor'
+                  parentClassName='w-full mr-4'
+                  type='select'
+                  value={filterData.tutor}
+                  onChange={val => setFilterData({ ...filterData, tutor: val })} />
             </div>
             <div className='mt-4' >
-               <FilterItems data={filterData} setData={filterData} />
+               <FilterItems data={filterItems} setData={setFilterItems} />
             </div>
             <div className='mt-6'>
-               <Table dataFor='allUsers' data={tableData} tableHeaders={tableHeaders} maxPageSize={10} />
+               <Table dataFor='allUsers'
+                  data={tableData}
+                  tableHeaders={tableHeaders}
+                  maxPageSize={10} />
             </div>
          </div>
 
@@ -69,33 +97,39 @@ export default function Users() {
             modalActive &&
             <Modal
                classname={'max-w-840 mx-auto'}
-               title='Add a new user'
+               title='Add a New User'
                cancelBtn={true}
-               primaryBtn={{ text: "Assign" }}
+               cancelBtnClassName='w-140'
+               primaryBtn={{ text: "Add", className: 'w-140' }}
                handleClose={handleClose}
                body={
                   <div className='grid grid-cols-1 md:grid-cols-2  gap-x-2 md:gap-x-3 gap-y-2 gap-y-4 mb-5'>
                      <div>
                         <InputField label='Email Addresss'
-                           labelClassname='ml-2 mb-0.5'
+                           labelClassname='ml-4 mb-0.5'
                            placeholder='Email Addresss'
+                           inputContainerClassName='px-5 bg-primary-50'
+                           inputClassName='bg-transparent'
                            parentClassName='w-full mr-4' type='text' />
                      </div>
                      <div>
                         <InputField label='Password'
-                           labelClassname='ml-2 mb-0.5'
+                           labelClassname='ml-4 mb-0.5'
                            optionData={optionData}
                            placeholder='minimum 8 characters'
+                           inputContainerClassName='px-5 bg-primary-50'
+                           inputClassName='bg-transparent'
                            parentClassName='w-full mr-4' type='select' />
                      </div>
                      <div>
                         <InputSelect value={modalUserType}
-                        onChange={val => setModalUserType(val)}
+                           onChange={val => setModalUserType(val)}
                            type='select'
-                           placeholder='User Type'
-                           label='Select User Type'
-                           labelClassname='ml-2 mb-0.5'
+                           placeholder='Select User Type'
+                           label='User Type'
+                           labelClassname='ml-4 mb-0.5'
                            optionData={optionData}
+                           inputContainerClassName=' bg-primary-50 px-5'
                            parentClassName='w-full mr-4' />
                      </div>
                   </div>

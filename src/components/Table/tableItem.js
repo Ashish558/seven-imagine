@@ -6,16 +6,19 @@ import SuccessIcon from '../../assets/assignedTests/success.svg'
 import FailIcon from '../../assets/assignedTests/fail.svg'
 
 //can b made dynamic
-export default function TableItem({ item, dataFor, openRemoveTestModal }) {
+export default function TableItem({ item, dataFor, onClick }) {
 
   const navigate = useNavigate()
+  // console.log(onClick)
 
   return (
     <>
       {dataFor === 'allUsers' && (
         <tr className='odd:bg-white shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-8'>
-          <td className='font-semibold px-1  min-w-14 py-4 text-primaryBlue' >
-            {item.name}
+          <td className='font-semibold px-1  min-w-14 py-4 text-primaryBlue text-left' >
+            <span className='inline-block cursor-pointer pl-4' onClick={() => navigate(`/profile/213`)}>
+              {item.name}
+            </span>
           </td>
           <td className='font-medium px-1  min-w-14 py-4'>
             {item.userType}
@@ -109,13 +112,15 @@ export default function TableItem({ item, dataFor, openRemoveTestModal }) {
           <td className='font-medium px-1 py-4 w-auto text-right'>
             <div className='flex justify-center'>
               <button className='flex bg-primaryOrange items-center text-white py-[5px] px-5 rounded'
-              onClick={()=>navigate('/all-tests/456')}>
+                onClick={() => navigate('/all-tests/456')}>
                 View Test
               </button>
             </div>
           </td>
           <td className='font-medium px-1 text-right w-auto py-4'>
-            <div className='flex justify-center' onClick={() => openRemoveTestModal(item)} >
+            <div className='flex justify-center'
+              onClick={() => onClick.openRemoveTestModal(item)}
+            >
               <button className='flex bg-textGray-400 flex items-center items-center text-white py-[5px] px-5 rounded'>
                 Remove
               </button>

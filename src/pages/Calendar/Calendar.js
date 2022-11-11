@@ -105,7 +105,7 @@ export default function Calendar() {
       }])
    }
    return (
-      <div className='ml-pageLeft bg-lightWhite min-h-screen'>
+      <div className='lg:ml-pageLeft bg-lightWhite min-h-screen'>
          <div className='py-14 px-5 calendar flex'>
             <div className='p-2 pl-0'>
                <SimpleCalendar />

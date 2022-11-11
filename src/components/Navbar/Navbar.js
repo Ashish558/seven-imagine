@@ -10,6 +10,10 @@ import People from '../../assets/Navbar/people'
 import Selected from '../../assets/Navbar/selected.svg'
 import NavLink from './NavLink'
 import { useLocation } from 'react-router-dom'
+import styles from './navbar.module.css'
+import useWindowDimensions from '../../hooks/useWindowDimensions'
+import { desktop } from '../../constants/breakpoints'
+import Options from '../../assets/Navbar/options'
 
 const navdata = [
    {
@@ -50,14 +54,35 @@ const navdata = [
 export default function Navbar() {
 
    const location = useLocation()
-   // console.log(location)
+   const { width } = useWindowDimensions()
+
    return (
-      <div className={`fixed top-0 left-0 h-screen z-50 overflow-y-auto p-4 flex overflow-auto
-      ${location.pathname === '/login' ? 'hidden' : 'bg-lightWhite' }`}>
-         <div className='min-h-full flex flex-col items-center bg-primary w-110 p-4 rounded-20 self-stretch overflow-x-hidden  overflow-y-auto pt-14'>
+      <div
+         className={`
+         fixed bottom-0 lg:w-auto lg:top-0 lg:left-0 lg:h-screen z-50 w-full 
+         overflow-y-hidden lg:overflow-y-auto
+          lg:p-4 
+          flex overflow-auto
+      ${location.pathname === '/login' ? 'hidden' : 'bg-lightWhite'}`}
+      // className={styles.navContainer}
+      >
+         <div className='lg:min-h-full lg:w-110 w-full
+         h-75 lg:h-auto
+         flex lg:flex-col items-center 
+         bg-primary p-4 lg:rounded-20 rounded-30  self-stretch justify-around 
+         overflow-x-hidden overflow-y-hidden lg:overflow-y-auto lg:pt-14'>
             {navdata.map((item, idx) => {
-               return <NavLink key={idx} {...item} />
+               if (width < desktop) {
+                  return idx < 4 &&
+                     <>
+                        <NavLink width={width} key={idx} {...item} />
+                     </>
+               } else {
+                  return <NavLink width={width} key={idx} {...item} />
+               }
+
             })}
+            {width < desktop && <NavLink width={width} icon={Options} isOption={true} />}
          </div>
       </div>
    )

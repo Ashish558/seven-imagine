@@ -1,19 +1,60 @@
-.selectedIcon{
+.selectedIcon {
    position: absolute;
    right: -57px;
    top: -35px;
    z-index: -1;
    min-width: 113.32px;
 }
+
 .selectedNavLink {
- fill: black;
+   fill: black;
 }
+
 .selectedNavLink svg {
    fill: black;
    /* background-color: rgb(38, 43, 41); */
-   filter:  invert(0.55)
-   sepia(1)
-   hue-rotate(200deg)
-   saturate(5)
-   brightness(1);;
+   filter: invert(0.55) sepia(1) hue-rotate(200deg) saturate(5) brightness(1);
+   ;
 }
+.translateUp svg{
+   transform: translateY(-15px);
+}
+.navLink svg{
+   transition: 0.2s;
+}
+@media only screen and (max-width: 1024px) {
+
+   .navLink svg {
+      max-width: 24px;
+   }
+
+   .selectedIcon {
+      /* transform: rotate(-90deg); */
+      /* bottom: 80px; */
+      display: flex;
+      top: -48px;
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 100px;
+      height: 92px;
+      /* max-width: 66px; */
+   }
+}
+
+/* 
+.navContainer {
+   position: fixed;
+   bottom: 0;
+   left: 0;
+}
+
+@media only screen and (max-width: 600px) {
+   .navContainer {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      overflow-y: auto;
+   }
+ }
+  */

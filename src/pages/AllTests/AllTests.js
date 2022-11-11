@@ -42,14 +42,14 @@ export default function AllTests() {
 
    const openRemoveTestModal = item => {
       setRemoveQuestionModal(true)
+      // console.log(item)
    }
-   const removeTest = () => {
+   const removeTest = item => {
       setRemoveQuestionModal(false)
-      console.log('removed')
    }
 
    return (
-      <div className='ml-pageLeft bg-lightWhite min-h-screen'>
+      <div className='lg:ml-pageLeft bg-lightWhite min-h-screen'>
          <div className='py-14 px-5'>
             <div className='flex justify-between'>
                <p className='font-bold text-4xl'>All Tests</p>
@@ -69,7 +69,7 @@ export default function AllTests() {
             </div>
 
             <div className='mt-6'>
-               <Table dataFor='allTests' data={tableData} tableHeaders={tableHeaders} maxPageSize={10} openRemoveTestModal={openRemoveTestModal} />
+               <Table dataFor='allTests' data={tableData} tableHeaders={tableHeaders} maxPageSize={10} onClick={{ openRemoveTestModal }} />
             </div>
          </div>
 
@@ -100,7 +100,7 @@ export default function AllTests() {
                      </div>
                      <div className=''>
                         <InputSelect value={concept}
-                           onChange={val => setConcept(val)} 
+                           onChange={val => setConcept(val)}
                            label='Concept'
                            labelClassname='ml-2 mb-1.2'
                            optionData={optionData}
@@ -109,7 +109,7 @@ export default function AllTests() {
                      </div>
                      <div className=''>
                         <InputSelect value={strategy}
-                           onChange={val => setStrategy(val)} 
+                           onChange={val => setStrategy(val)}
                            optionData={optionData}
                            label='Strategy'
                            labelClassname='ml-2 mb-1.2'

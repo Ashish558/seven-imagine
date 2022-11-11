@@ -8,6 +8,7 @@ import Calendar from "../pages/Calendar/Calendar";
 import CompletedTest from "../pages/CompletedTest/CompletedTest";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
+import Profile from "../pages/Profile/Profile";
 import TestDetail from "../pages/TestDetail/TestDetail";
 import Users from "../pages/Users/users";
 
@@ -18,19 +19,20 @@ const AppRoutes = () => {
    const { isLoggedIn } = useSelector(state => state.user)
 
    return (
-         <BrowserRouter>
-               <Navbar />
-            <Routes>
-               <Route path="/" element={<Home />} />
-               <Route path="/login" element={<Login />} />
-               <Route path="/users" element={<Users />} />
-               <Route path="/calendar" element={<Calendar />} />
-               <Route path="/assigned-tests" element={<AssignedTests />} />
-               <Route path="/assigned-tests/student/:id" element={<CompletedTest />} />
-               <Route path="/all-tests" element={<AllTests />} />
-               <Route path="/all-tests/:id" element={<TestDetail />} />
+      <BrowserRouter>
+         <Navbar />
+         <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/calendar" element={<Calendar />} />
+            <Route path="/assigned-tests" element={<AssignedTests />} />
+            <Route path="/assigned-tests/student/:id" element={<CompletedTest />} />
+            <Route path="/all-tests" element={<AllTests />} />
+            <Route path="/all-tests/:id" element={<TestDetail />} />
+            <Route path="/profile/:id" element={<Profile />} />
 
-               {/* <Route
+            {/* <Route
                   path="/profile"
                   element={
                      <RequireAuth isLoggedIn={isLoggedIn}>
@@ -39,8 +41,8 @@ const AppRoutes = () => {
                   }
                /> */}
 
-            </Routes>
-         </BrowserRouter>
+         </Routes>
+      </BrowserRouter>
 
    );
 };

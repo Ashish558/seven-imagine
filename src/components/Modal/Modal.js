@@ -21,7 +21,7 @@ export default function Modal({ title,titleClassName, body, cancelBtn, cancelBtn
             <div
                className={`w-full bg-white p-3 py-5 md:py-9.5 md:px-9.5 rounded-20 relative ${classname ? classname : ''}`}>
               
-               <p className={`font-semibold text-xl md:text-2xl text-center mb-4.5 text-textPrimaryDark 
+               <p className={`font-semibold text-xl md:text-2xl text-center mb-4.5 text-primary-dark 
                ${titleClassName ? titleClassName : ''}`}>
                   {title}
                </p>
@@ -37,7 +37,7 @@ export default function Modal({ title,titleClassName, body, cancelBtn, cancelBtn
                      primaryBtn &&
                      <button
                         onClick={primaryBtn.onClick ? primaryBtn.onClick : null}
-                        className={`bg-primary rounded-md text-white py-4 px-12 ml-12 ${primaryBtn.className ? primaryBtn.className : ''}`} >
+                        className={`bg-primary rounded-md font-medium text-white py-4 px-12 ml-12 ${primaryBtn.className ? primaryBtn.className : ''}`} >
                         {primaryBtn.text}
                      </button>
                   }

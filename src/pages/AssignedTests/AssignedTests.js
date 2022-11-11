@@ -43,7 +43,7 @@ export default function AssignedTests() {
    })
    return (
       <>
-         <div className='ml-pageLeft bg-lightWhite min-h-screen'>
+         <div className='lg:ml-pageLeft bg-lightWhite min-h-screen'>
             <div className='py-14 px-5'>
                <div className='flex justify-between'>
                   <p className='font-bold text-4xl'>Assigned Tests</p>
