@@ -13,6 +13,7 @@ module.exports = {
         '4.5': '18px',
         '9.5': '38px',
         '29': '29px',
+        '49': '49px',
         '53': '53px',
         '55': '55px',
         '67': '67px',
@@ -52,7 +53,8 @@ module.exports = {
         darkWhite: '#EBE7FF',
         textGray: {
           DEFAULT: 'rgba(99, 99, 99, 1)',
-          '400': 'rgba(192, 184, 171, 1)'
+          '400': 'rgba(192, 184, 171, 1)',
+          '30': 'rgba(217, 217, 217, 0.3)'
         },
         textPrimaryDark: '#25335A',
         textBlue: '#0671E0',
@@ -74,13 +76,14 @@ module.exports = {
         '24': '24px',
         '567': '567px',
         '840': '840px',
-        
+
       },
       zIndex: {
         '5000': 5000
       },
       boxShadow: {
-        'white': '0px 8px 16px rgba(0, 0, 0, 0.05)'
+        'white': '0px 8px 16px rgba(0, 0, 0, 0.05)',
+        'light': '0px 6px 20px rgba(0, 10, 255, 0.14)'
       }
     },
   },
