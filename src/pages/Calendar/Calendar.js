@@ -11,9 +11,35 @@ import timeGridWeek from '@fullcalendar/timegrid'
 import LeftIcon from '../../assets/icons/left.svg'
 import nextIcon from '../../assets/icons/right.svg'
 import SimpleCalendar from '../../components/SimpleCalendar/SimpleCalendar';
+import InputField from '../../components/InputField/inputField';
+
+import SearchIcon from '../../assets/icons/search.svg'
+import { useParams } from 'react-router-dom';
 
 const days = [
    'S', 'M', 'T', 'W', 'T', 'F', 'S'
+]
+const students = [
+   {
+      name: 'Joseph Brown',
+      bg: '#51D294'
+   },
+   {
+      name: 'Joseph Brown',
+      bg: '#C56DEE'
+   },
+   {
+      name: 'Joseph Brown',
+      bg: '#6F7ADE'
+   },
+   {
+      name: 'Joseph Brown',
+      bg: '#7DE94A'
+   },
+   {
+      name: 'Joseph Brown',
+      bg: '#F6935A'
+   },
 ]
 
 export default function Calendar() {
@@ -21,8 +47,15 @@ export default function Calendar() {
    const calendarRef = useRef(null)
    // console.log(calendarRef.current)
    const [events, setEvents] = useState([])
+   const [persona, setPersona] = useState('')
+   const [eventModalActive, setEventModalActive] = useState(false)
+   const params = useParams()
+   //change btn 
+   useEffect(() => {
+      if (params.persona) return setPersona(params.persona)
+   }, [])
 
-   //change btn styles
+   console.log(persona)
    useEffect(() => {
       if (calendarRef.current) {
          const prevBtn = document.getElementsByClassName('calendar-prevButton-custom')[0].parentElement
@@ -84,6 +117,7 @@ export default function Calendar() {
          description: 'QWerfgfgsrt',
       }])
    }
+
    const handleDateSelect = arg => {
 
       const startDate = moment(arg.startStr);
@@ -96,19 +130,47 @@ export default function Calendar() {
       if (minutes === 0 && hours === 0) return
       if (minutes === 30 && hours === 0) return
 
-      setEvents([...events, {
-         id: 2,
-         start: arg.startStr,
-         end: arg.endStr,
-         title: 'QWerrt',
-         description: 'QWerfgfgsrt',
-      }])
+      // setEvents([...events, {
+      //    id: 2,
+      //    start: arg.startStr,
+      //    end: arg.endStr,
+      //    title: 'QWerrt',
+      //    description: 'QWerfgfgsrt',
+      // }])
+
    }
+
    return (
       <div className='lg:ml-pageLeft bg-lightWhite min-h-screen'>
          <div className='py-14 px-5 calendar flex'>
             <div className='p-2 pl-0'>
                <SimpleCalendar />
+               {persona === 'student' ?
+                  <div className='mt-10'>
+                     <p className='text-primaryDark text-21 font-semibold mb-8 ml-2'> Student Name </p>
+                     <div>
+                        {students.map(student => {
+                           return <div className='p-4 mb-4 rounded-10 flex justify-between items-center border bg-white'>
+                              <p className='font-medium'>
+                                 {student.name}
+                              </p>
+                              <div className='student-circle' style={{ backgroundColor: student.bg }}>
+                              </div>
+                           </div>
+                        })}
+                     </div>
+                  </div>
+                  :
+                  <div>
+                     <InputField
+                        IconRight={SearchIcon}
+                        placeholder='Type Name'
+                        parentClassName='w-full mr-4 mt-5'
+                        inputContainerClassName='bg-white shadow'
+                        type='select'
+                     />
+                  </div>
+               }
             </div>
             <div className='flex-1'>
                <FullCalendar

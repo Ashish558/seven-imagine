@@ -7,6 +7,7 @@ import EditIcon from '../../assets/icons/edit.svg'
 import MailIcon from '../../assets/icons/mail.svg'
 import WhatsappIcon from '../../assets/icons/whatsapp.svg'
 import EditableText from '../../components/EditableText/EditableText'
+import { useNavigate } from 'react-router-dom'
 
 const students = [
    {
@@ -20,11 +21,13 @@ const students = [
       image: '/images/student-2.png',
    },
 ]
+
 export default function Profile() {
 
+   const navigate = useNavigate()
 
    return (
-      <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pb-55'>
+      <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pb-51'>
          <div className='lg:px-5 lg:pt-10'>
 
             <div className={styles.profileCard}>
@@ -41,7 +44,7 @@ export default function Profile() {
                </div>
             </div>
 
-            <div className='lg:inline-grid grid-cols-3 grid-rws-3 lg:mt-10 gap-8 pl-3'>
+            <div className='lg:inline-grid grid-cols-3 grid-rws-3 lg:mt-10 gap-8 lg:pl-3'>
 
                <ProfileCard className='mt-53 lg:h-140 lg:order-3 lg:mt-0'
                   title={
@@ -129,13 +132,13 @@ export default function Profile() {
                                     <div className={styles.studentImageContainer}>
                                        <img src={student.image} />
                                     </div>
-                                    <div className='text-primary font-bold text-lg whitespace-nowrap mt-6 font-inter underline underline-offset-8'>
+                                    <div className='text-primary font-bold text-lg whitespace-nowrap mt-6 font-inter underline underline-offset-8'
+                                    onClick={()=>navigate('/profile/student/12')}>
                                        {student.name}
                                     </div>
                                  </div>
                               )
                            })}
-                        
                      </div>
                   }
                />

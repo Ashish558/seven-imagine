@@ -44,3 +44,9 @@
    border: 0 !important;
    box-shadow: none !important;
 }
+
+.student-circle{
+   width: 20px;
+   height: 20px;
+   border-radius: 50%;
+}

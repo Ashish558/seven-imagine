@@ -63,7 +63,7 @@ export default function Navbar() {
          overflow-y-hidden lg:overflow-y-auto
           lg:p-4 
           flex overflow-auto
-      ${location.pathname === '/login' ? 'hidden' : 'bg-lightWhite'}`}
+      ${location.pathname === '/login' || location.pathname === '/signup' ? 'hidden' : 'bg-lightWhite'}`}
       // className={styles.navContainer}
       >
          <div className='lg:min-h-full lg:w-110 w-full

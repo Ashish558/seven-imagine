@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-import AddIcon from '../../assets/icons/add.svg'
-import SearchIcon from '../../assets/icons/search.svg'
-import InputSelect from '../../components/InputSelect/InputSelect'
-import FilterItems from '../../components/FilterItems/filterItems'
+
 import Table from '../../components/Table/Table'
-import { tableData } from './tempData'
+import FilterItems from '../../components/FilterItems/filterItems'
 import Modal from '../../components/Modal/Modal'
 import InputField from '../../components/InputField/inputField'
+import InputSelect from '../../components/InputSelect/InputSelect'
+
+import AddIcon from '../../assets/icons/add.svg'
+import SearchIcon from '../../assets/icons/search.svg'
+import { tableData } from './tempData'
 
 const optionData = [
    'option 1',

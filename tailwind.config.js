@@ -18,6 +18,8 @@ module.exports = {
         '55': '55px',
         '67': '67px',
         '75': '75px',
+        '80': '80px',
+        '90': '90px',
         '110': '110px',
         '120': '100px',
         'pageLeft': '125px',
@@ -34,6 +36,7 @@ module.exports = {
           DEFAULT: '#7152EB',
           '300': 'rgba(113, 82, 235, 0.3)',
           dark: '#25335A',
+          light: 'rgba(151, 102, 255, 0.3)',
           '60': '#7C859C',
           '50': '#F4F5F7',
         },
@@ -61,8 +64,9 @@ module.exports = {
         gradient: 'linear-gradient(94.33deg, #7152EB 10.45%, rgba(247, 125, 86, 0.99) 84.22%)'
       },
       borderRadius: {
-        '10': '10px',
         '7': '7px',
+        '15': '15px',
+        '10': '10px',
         '20': '20px',
         '30': '30px',
         '40': '40px',
