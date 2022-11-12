@@ -56,7 +56,7 @@ export default function Users() {
                   placeholder='Type Name'
                   parentClassName='w-full mr-4'
                   inputContainerClassName='bg-white'
-                  type='select'
+                  type='text'
                   value={filterData.typeName}
                   onChange={val => setFilterData({ ...filterData, typeName: val })} />
                <InputSelect optionData={optionData}
@@ -121,7 +121,7 @@ export default function Users() {
                            placeholder='minimum 8 characters'
                            inputContainerClassName='px-5 bg-primary-50'
                            inputClassName='bg-transparent'
-                           parentClassName='w-full mr-4' type='select' />
+                           parentClassName='w-full mr-4' type='password' />
                      </div>
                      <div>
                         <InputSelect value={modalUserType}

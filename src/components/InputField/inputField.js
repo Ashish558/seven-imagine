@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function InputField({ parentClassName, inputContainerClassName, Icon, value, placeholder, label, labelClassname, IconRight, inputClassName, inputLeftField, onChange }) {
+export default function InputField({ parentClassName, inputContainerClassName, Icon, value, placeholder, label, labelClassname, IconRight, inputClassName, inputLeftField, onChange, type, right }) {
 
 
    return (
@@ -13,8 +13,11 @@ export default function InputField({ parentClassName, inputContainerClassName, I
             {inputLeftField && inputLeftField}
             <input className={`outline-0 w-full ${inputClassName ? inputClassName : ''}`}
                placeholder={placeholder}
-               onChange={e => onChange(e)} />
+               type={type ? type : 'text'}
+               onChange={e => onChange !== undefined ? onChange(e) : ''}
+            />
             {IconRight && <img src={IconRight} className='ml-4' />}
+            {right && right}
          </div>
       </div>
    )

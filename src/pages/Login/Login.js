@@ -43,6 +43,7 @@ export default function Login() {
                         <InputField Icon={Passwordicon}
                            parentClassName='mb-2.5'
                            placeholder='Password'
+                           type='password'
                            label='Password'
                            labelClassname='ml-2 mb-2' />
                         <p className='text-secondary text-sm font-semibold ml-2' onClick={() => setActiveFrame(setIsPasswordForgot)} >

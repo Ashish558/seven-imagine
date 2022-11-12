@@ -15,6 +15,8 @@ import InputField from '../../components/InputField/inputField';
 
 import SearchIcon from '../../assets/icons/search.svg'
 import { useParams } from 'react-router-dom';
+import Modal from '../../components/Modal/Modal';
+import EventModal from '../Frames/EventModal/EventModal';
 
 const days = [
    'S', 'M', 'T', 'W', 'T', 'F', 'S'
@@ -48,14 +50,13 @@ export default function Calendar() {
    // console.log(calendarRef.current)
    const [events, setEvents] = useState([])
    const [persona, setPersona] = useState('')
-   const [eventModalActive, setEventModalActive] = useState(false)
+   const [eventModalActive, setEventModalActive] = useState(true)
    const params = useParams()
    //change btn 
    useEffect(() => {
       if (params.persona) return setPersona(params.persona)
    }, [])
 
-   console.log(persona)
    useEffect(() => {
       if (calendarRef.current) {
          const prevBtn = document.getElementsByClassName('calendar-prevButton-custom')[0].parentElement
@@ -119,6 +120,7 @@ export default function Calendar() {
    }
 
    const handleDateSelect = arg => {
+      setEventModalActive(true)
 
       const startDate = moment(arg.startStr);
       const timeEnd = moment(arg.endStr);
@@ -129,7 +131,6 @@ export default function Calendar() {
 
       if (minutes === 0 && hours === 0) return
       if (minutes === 30 && hours === 0) return
-
       // setEvents([...events, {
       //    id: 2,
       //    start: arg.startStr,
@@ -141,88 +142,93 @@ export default function Calendar() {
    }
 
    return (
-      <div className='lg:ml-pageLeft bg-lightWhite min-h-screen'>
-         <div className='py-14 px-5 calendar flex'>
-            <div className='p-2 pl-0'>
-               <SimpleCalendar />
-               {persona === 'student' ?
-                  <div className='mt-10'>
-                     <p className='text-primaryDark text-21 font-semibold mb-8 ml-2'> Student Name </p>
-                     <div>
-                        {students.map(student => {
-                           return <div className='p-4 mb-4 rounded-10 flex justify-between items-center border bg-white'>
-                              <p className='font-medium'>
-                                 {student.name}
-                              </p>
-                              <div className='student-circle' style={{ backgroundColor: student.bg }}>
+      <>
+         <div className='lg:ml-pageLeft bg-lightWhite min-h-screen'>
+            <div className='py-14 px-5 calendar flex'>
+               <div className='p-2 pl-0'>
+                  <SimpleCalendar />
+                  {persona === 'student' ?
+                     <div className='mt-10'>
+                        <p className='text-primaryDark text-21 font-semibold mb-8 ml-2'> Student Name </p>
+                        <div>
+                           {students.map(student => {
+                              return <div className='p-4 mb-4 rounded-10 flex justify-between items-center border bg-white'>
+                                 <p className='font-medium'>
+                                    {student.name}
+                                 </p>
+                                 <div className='student-circle' style={{ backgroundColor: student.bg }}>
+                                 </div>
                               </div>
-                           </div>
-                        })}
+                           })}
+                        </div>
                      </div>
-                  </div>
-                  :
-                  <div>
-                     <InputField
-                        IconRight={SearchIcon}
-                        placeholder='Type Name'
-                        parentClassName='w-full mr-4 mt-5'
-                        inputContainerClassName='bg-white shadow'
-                        type='select'
-                     />
-                  </div>
-               }
-            </div>
-            <div className='flex-1'>
-               <FullCalendar
-                  events={events}
-                  ref={calendarRef}
-                  plugins={[timeGridPlugin, timeGridWeek, interactionPlugin]}
-                  customButtons={{
-                     prevButton: {
-                        text: <span className='calendar-prevButton-custom'>
-                           <img src={LeftIcon} />
-                        </span>,
-                        click: handlePrevClick
-                     },
-                     nextButton: {
-                        text: <span className='calendar-nextButton-custom'>
-                           <img src={nextIcon} />
-                        </span>,
-                        click: handleNextClick
-                     },
-                  }}
-                  eventContent={eventContent}
-                  initialView="timeGridWeek"
-                  allDaySlot={false}
-                  headerToolbar={{
-                     start: 'prevButton title nextButton',
-                     end: '',
-                  }}
-                  titleFormat={{
-                     month: 'long',
-                     year: 'numeric'
-                  }}
-                  expandRows={true}
-                  contentHeight={3250}
-                  dayHeaderFormat={{
-                     day: '2-digit',
-                     month: 'narrow'
-                  }}
-                  dayHeaderContent={getDayHeaders}
+                     :
+                     <div>
+                        <InputField
+                           IconRight={SearchIcon}
+                           placeholder='Type Name'
+                           parentClassName='w-full mr-4 mt-5'
+                           inputContainerClassName='bg-white shadow'
+                           type='select'
+                        />
+                     </div>
+                  }
+               </div>
+               <div className='flex-1'>
+                  <FullCalendar
+                     events={events}
+                     ref={calendarRef}
+                     plugins={[timeGridPlugin, timeGridWeek, interactionPlugin]}
+                     customButtons={{
+                        prevButton: {
+                           text: <span className='calendar-prevButton-custom'>
+                              <img src={LeftIcon} />
+                           </span>,
+                           click: handlePrevClick
+                        },
+                        nextButton: {
+                           text: <span className='calendar-nextButton-custom'>
+                              <img src={nextIcon} />
+                           </span>,
+                           click: handleNextClick
+                        },
+                     }}
+                     eventContent={eventContent}
+                     initialView="timeGridWeek"
+                     allDaySlot={false}
+                     headerToolbar={{
+                        start: 'prevButton title nextButton',
+                        end: '',
+                     }}
+                     titleFormat={{
+                        month: 'long',
+                        year: 'numeric'
+                     }}
+                     expandRows={true}
+                     contentHeight={3250}
+                     dayHeaderFormat={{
+                        day: '2-digit',
+                        month: 'narrow'
+                     }}
+                     dayHeaderContent={getDayHeaders}
 
-                  selectable={true}
-                  // select={handleDateClick}
-                  dateClick={handleDateClick}
-                  select={handleDateSelect}
-                  // titleFormat={{
-                  //    month: ''
-                  // }}
-                  selectOverlap={false}
-                  defaultTimedEventDuration='01:00'
-               />
-            </div>
+                     selectable={true}
+                     // select={handleDateClick}
+                     dateClick={handleDateClick}
+                     select={handleDateSelect}
+                     // titleFormat={{
+                     //    month: ''
+                     // }}
+                     selectOverlap={false}
+                     defaultTimedEventDuration='01:00'
+                  />
+               </div>
 
+            </div>
          </div>
-      </div>
+         {
+            eventModalActive && <EventModal setEventModalActive={setEventModalActive} />
+         }
+      </>
    )
 }
