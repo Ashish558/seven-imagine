@@ -7,23 +7,36 @@ import EmailIcon from '../../assets/form/email.svg'
 import Passwordicon from '../../assets/form/password.svg'
 import DownArrow from '../../assets/icons/down-chevron.svg'
 import styles from './signup.module.css'
-import SelectPersona from '../Frames/selectPersona'
-
+import SelectPersona from '../Frames/SelectPersona/selectPersona'
+import SelectServices from '../Frames/SelectServices/SelectServices'
+import UserDetails from '../Frames/UserDetails/userDetails'
+import Questions from '../Frames/Questions/Questions'
 export default function Signup() {
 
-   const [selectPersonaFrame, setSelectPersonaFrame] = useState(false)
-
+   
    const [values, setValues] = useState({
       firstName: '',
       lastName: '',
       email: '',
       phone: '',
+      questions: false
    })
-   const [signupActive, setSignupActive] = useState(true)
+
+   const [frames, setFrames] = useState({
+      signupActive: true,
+      selectPersona: false,
+      services: false,
+      userDetails: false
+   })
+console.log(frames)
+   // const [signupActive, setSignupActive] = useState(true)
+   // const [selectPersonaFrame, setSelectPersonaFrame] = useState(false)
+   // const [servicesFrameActive, setServicesFrameActive] = useState(false)
 
    const handleClick = () => {
-      setSignupActive(false)
-      setSelectPersonaFrame(true)
+      setFrames({
+         ...frames, signupActive: false, selectPersona: true
+      })
    }
 
    return (
@@ -38,7 +51,7 @@ export default function Signup() {
                   </p>
 
                   {
-                     signupActive ?
+                     frames.signupActive ?
                         <>
                            <p className='text-lg font-bold mb-12'>
                               Sign up with email address
@@ -81,12 +94,16 @@ export default function Signup() {
                               Submit
                            </button>
                         </>
-                        : selectPersonaFrame ?
+                        : frames.selectPersona ?
                            <SelectPersona
-                              setSelectPersonaFrame={setSelectPersonaFrame}
-
+                              setFrames={setFrames}
                            /> :
-                           ''}
+                           frames.services ? <SelectServices setFrames={setFrames} /> 
+                           : 
+                           frames.userDetails ? <UserDetails setFrames={setFrames} /> 
+                           : 
+                           frames.questions ? <Questions setFrames={setFrames} /> : ''
+                  }
                </div>
             </div>
          </div>

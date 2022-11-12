@@ -4,6 +4,7 @@ import styles from './style.module.css'
 import InputField from '../../../components/InputField/inputField'
 import Modal from '../../../components/Modal/Modal'
 import CalendarIcon from '../../../assets/form/calendar.svg'
+import StarIcon from '../../../assets/form/star.svg'
 import InputSelect from '../../../components/InputSelect/InputSelect'
 import Checkbox from '../../../components/Checkbox/Checkbox'
 import PrimaryButton from '../../../components/Buttons/PrimaryButton'
@@ -138,7 +139,7 @@ const tempProductive = [
    },
 ]
 
-export default function EventModal({ setEventModalActive }) {
+export default function EventModal({ setEventModalActive, persona }) {
 
    const [data, setData] = useState({
       timeZone: '',
@@ -280,113 +281,169 @@ export default function EventModal({ setEventModalActive }) {
                         inputClassName='bg-transparent'
                         type='text'
                      />
-                     <div className='w-full flex flex-col items-center'>
-                        <InputSelect value={data.sessionStatus}
-                           onChange={val => setData({ ...data, sessionStatus: val })}
-                           optionData={status}
-                           inputContainerClassName='bg-lightWhite border-0 font-medium pr-3'
-                           inputClassName='bg-transparent appearance-none font-medium'
-                           placeholder='Time Zone'
-                           parentClassName='w-full mr-4'
-                           type='select' />
-                        <div className='flex mb-3 mt-3'>
-                           <div className={`${styles.container} `}
-                              onClick={() => setData({ ...data, rescheduling: !data.rescheduling })} >
-                              <input checked={data.rescheduling} type='checkbox' name='recurring' />
-                              <span class={styles.checkmark}></span>
+                     {
+                        persona === 'student' ?
+                           <div className='w-full flex flex-col items-start'>
+                              <InputSelect value={data.sessionStatus}
+                                 onChange={val => setData({ ...data, sessionStatus: val })}
+                                 optionData={status}
+                                 label='Session Status'
+                                 labelClassname='ml-2'
+                                 inputContainerClassName='bg-lightWhite border-0 font-medium pr-3'
+                                 inputClassName='bg-transparent appearance-none font-medium'
+                                 placeholder='Session Status'
+                                 parentClassName='w-full mr-4'
+                                 type='select' />
+                              <div className='flex mb-3 mt-3 ml-3'>
+                                 <div className={`${styles.container} `}
+                                    onClick={() => setData({ ...data, rescheduling: !data.rescheduling })} >
+                                    <input checked={data.rescheduling} type='checkbox' name='recurring' />
+                                    <span class={styles.checkmark}></span>
+                                 </div>
+                                 <p className='font-medium text-primary-60 text-sm'>Rescheduling</p>
+                              </div>
                            </div>
-                           <p className='font-medium text-primary-60 text-sm'>Rescheduling</p>
-                        </div>
-
-                     </div>
+                           :
+                           <div className='w-full flex flex-col items-center'>
+                              <InputSelect value={data.sessionStatus}
+                                 onChange={val => setData({ ...data, sessionStatus: val })}
+                                 optionData={status}
+                                 inputContainerClassName='bg-lightWhite border-0 font-medium pr-3'
+                                 inputClassName='bg-transparent appearance-none font-medium'
+                                 placeholder='Time Zone'
+                                 parentClassName='w-full mr-4'
+                                 type='select' />
+                              <div className='flex mb-3 mt-3'>
+                                 <div className={`${styles.container} `}
+                                    onClick={() => setData({ ...data, rescheduling: !data.rescheduling })} >
+                                    <input checked={data.rescheduling} type='checkbox' name='recurring' />
+                                    <span class={styles.checkmark}></span>
+                                 </div>
+                                 <p className='font-medium text-primary-60 text-sm'>Rescheduling</p>
+                              </div>
+                           </div>
+                     }
 
                   </div>
 
-                  <div>
+                  <div className='flex'>
+
                      <InputSelect label='Services'
                         labelClassname='ml-3'
                         value={data.service}
                         onChange={val => setData({ ...data, service: val })}
                         optionData={services}
-                        inputContainerClassName='bg-lightWhite border-0 font-medium pr-3'
+                        inputContainerClassName={`bg-lightWhite border-0 font-medium pr-3
+                       `}
                         inputClassName='bg-transparent appearance-none font-medium'
                         placeholder='Service'
-                        parentClassName='w-full mr-4 max-w-373'
+                        parentClassName={`w-full mr-4 max-w-373 self-end 
+                        ${persona === 'student' ? 'mr-4' : ''}
+                        ${persona === 'parent' ? ' order-2' : ''}
+                        `}
                         type='select' />
-                  </div>
 
-                  <div className='mt-7 mb-5'>
-                     <p className='font-medium mb-2.5'>Topics Covered</p>
-                     <div className='flex'>
-                        {topics.map((topic, idx) => {
-                           return <div key={idx} className='flex mb-3 mr-3' onClick={() => handleCheckboxChange(topic.text, topics, setTopics)} >
-                              <div className={`${styles.container} `}>
-                                 <input checked={topic.checked} type='checkbox' name='recurring' />
-                                 <span class={styles.checkmark}></span>
-                              </div>
-                              <p className='font-medium text-primary-60 text-sm'>{topic.text}</p>
+                     {
+                        persona === 'student' &&
+                        <div className='ml-4 mt-5'>
+                           <p className='font-medium mb-4'>Session Feedback</p>
+                           <div className='flex'>
+                              {[...Array(5)].map((x, i) =>
+                                 <img src={StarIcon} className='mr-7' />
+                              )}
                            </div>
-                        })}
-                     </div>
-                  </div>
-
-                  <div className='mt-5 mb-5'>
-                     <p className='font-medium mb-2.5'>Student Mood</p>
-                     <div className='flex'>
-                        {studentMoods.map((item, idx) => {
-                           return <div key={idx} className='flex mb-3 mr-3' onClick={() => handleCheckboxChange(item.text, studentMoods, setStudentMoods)} >
-                              <div className={`${styles.container} `}>
-                                 <input checked={item.checked} type='checkbox' name='moods' value='' />
-                                 <span class={styles.checkmark}></span>
-                              </div>
-                              <p className='font-medium text-primary-60 text-sm'>{item.text}</p>
+                        </div>
+                     }
+                     {
+                        persona === 'parent' &&
+                        <div className='mr-4 mt-5 order-1 flex-1'>
+                           <p className='font-medium mb-1'>Session Feedback</p>
+                           <div className='flex py-3 px-4 bg-lightWhite rounded-10'>
+                              {[...Array(5)].map((x, i) =>
+                                 <img src={StarIcon} className='mr-7' />
+                              )}
                            </div>
-                        })}
-                     </div>
+                        </div>
+                     }
                   </div>
+                  {
+                     persona !== 'student' && persona !== 'parent' &&
+                     <>
 
-                  <div className='mt-5 mb-7'>
-                     <p className='font-medium  mb-2.5'>Homework Assigned</p>
-                     <div className='flex flex-wrap	'>
-                        {homeworks.map((item, idx) => {
-                           return <div key={idx} className='flex mb-3 mr-6' onClick={() => handleCheckboxChange(item.text, homeworks, setHomeworks)} >
-                              <div className={`${styles.container} `}>
-                                 <input checked={item.checked} type='checkbox' name='moods' value='' />
-                                 <span class={styles.checkmark}></span>
-                              </div>
-                              <p className='font-medium text-primary-60 text-sm'>{item.text}</p>
+                        <div className='mt-7 mb-5'>
+                           <p className='font-medium mb-2.5'>Topics Covered</p>
+                           <div className='flex'>
+                              {topics.map((topic, idx) => {
+                                 return <div key={idx} className='flex mb-3 mr-3' onClick={() => handleCheckboxChange(topic.text, topics, setTopics)} >
+                                    <div className={`${styles.container} `}>
+                                       <input checked={topic.checked} type='checkbox' name='recurring' />
+                                       <span class={styles.checkmark}></span>
+                                    </div>
+                                    <p className='font-medium text-primary-60 text-sm'>{topic.text}</p>
+                                 </div>
+                              })}
                            </div>
-                        })}
-                     </div>
-                  </div>
+                        </div>
 
-                  <div className='mt-5 mb-7'>
-                     <p className='font-medium mb-2.5'>Was the session Productive?</p>
-                     <div className='flex flex-wrap	'>
-                        {isProductive.map((item, idx) => {
-                           return <div key={idx} className='flex mb-3 mr-6' onClick={() => handleCheckboxChange(item.text, isProductive, setIsProductive, true)} >
-                              <div className={`${styles.container} `}>
-                                 <input checked={item.checked} type='checkbox' name='moods' value='' />
-                                 <span class={styles.checkmark}></span>
-                              </div>
-                              <p className='font-medium text-primary-60 text-sm'>{item.text}</p>
+                        <div className='mt-5 mb-5'>
+                           <p className='font-medium mb-2.5'>Student Mood</p>
+                           <div className='flex'>
+                              {studentMoods.map((item, idx) => {
+                                 return <div key={idx} className='flex mb-3 mr-3' onClick={() => handleCheckboxChange(item.text, studentMoods, setStudentMoods)} >
+                                    <div className={`${styles.container} `}>
+                                       <input checked={item.checked} type='checkbox' name='moods' value='' />
+                                       <span class={styles.checkmark}></span>
+                                    </div>
+                                    <p className='font-medium text-primary-60 text-sm'>{item.text}</p>
+                                 </div>
+                              })}
                            </div>
-                        })}
-                     </div>
-                  </div>
+                        </div>
 
-                  <div className='mb-12'>
-                     <p className='font-medium mb-2.5'>Session Notes</p>
-                     <textarea placeholder='Session Notes'
-                        rows={3}
-                        className='bg-lightWhite w-full outline-0 px-5 py-4 rounded'>
-                     </textarea>
-                     <p className='text-right text-xs text-primary-80'>0/200</p>
-                  </div>
+                        <div className='mt-5 mb-7'>
+                           <p className='font-medium  mb-2.5'>Homework Assigned</p>
+                           <div className='flex flex-wrap	'>
+                              {homeworks.map((item, idx) => {
+                                 return <div key={idx} className='flex mb-3 mr-6' onClick={() => handleCheckboxChange(item.text, homeworks, setHomeworks)} >
+                                    <div className={`${styles.container} `}>
+                                       <input checked={item.checked} type='checkbox' name='moods' value='' />
+                                       <span class={styles.checkmark}></span>
+                                    </div>
+                                    <p className='font-medium text-primary-60 text-sm'>{item.text}</p>
+                                 </div>
+                              })}
+                           </div>
+                        </div>
 
-                  <div className='flex justify-center'>
-                     <PrimaryButton children='Schedule' className='text-21 py-3 font-medium px-7' />
-                  </div>
+                        <div className='mt-5 mb-7'>
+                           <p className='font-medium mb-2.5'>Was the session Productive?</p>
+                           <div className='flex flex-wrap	'>
+                              {isProductive.map((item, idx) => {
+                                 return <div key={idx} className='flex mb-3 mr-6' onClick={() => handleCheckboxChange(item.text, isProductive, setIsProductive, true)} >
+                                    <div className={`${styles.container} `}>
+                                       <input checked={item.checked} type='checkbox' name='moods' value='' />
+                                       <span class={styles.checkmark}></span>
+                                    </div>
+                                    <p className='font-medium text-primary-60 text-sm'>{item.text}</p>
+                                 </div>
+                              })}
+                           </div>
+                        </div>
+
+                        <div className='mb-12'>
+                           <p className='font-medium mb-2.5'>Session Notes</p>
+                           <textarea placeholder='Session Notes'
+                              rows={3}
+                              className='bg-lightWhite w-full outline-0 px-5 py-4 rounded'>
+                           </textarea>
+                           <p className='text-right text-xs text-primary-80'>0/200</p>
+                        </div>
+
+                        <div className='flex justify-center'>
+                           <PrimaryButton children='Schedule' className='text-21 py-3 font-medium px-7' />
+                        </div>
+                     </>
+                  }
                </div>
             }
          />

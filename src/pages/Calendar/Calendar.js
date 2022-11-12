@@ -50,7 +50,7 @@ export default function Calendar() {
    // console.log(calendarRef.current)
    const [events, setEvents] = useState([])
    const [persona, setPersona] = useState('')
-   const [eventModalActive, setEventModalActive] = useState(true)
+   const [eventModalActive, setEventModalActive] = useState(false)
    const params = useParams()
    //change btn 
    useEffect(() => {
@@ -147,8 +147,8 @@ export default function Calendar() {
             <div className='py-14 px-5 calendar flex'>
                <div className='p-2 pl-0'>
                   <SimpleCalendar />
-                  {persona === 'student' ?
-                     <div className='mt-10'>
+                  {persona === 'student' || persona === 'parent' ?
+                     <div className='mt-10 pr-4'>
                         <p className='text-primaryDark text-21 font-semibold mb-8 ml-2'> Student Name </p>
                         <div>
                            {students.map(student => {
@@ -227,7 +227,7 @@ export default function Calendar() {
             </div>
          </div>
          {
-            eventModalActive && <EventModal setEventModalActive={setEventModalActive} />
+            eventModalActive && <EventModal setEventModalActive={setEventModalActive} persona={persona} />
          }
       </>
    )
