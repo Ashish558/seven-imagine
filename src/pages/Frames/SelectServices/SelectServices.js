@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PrimaryButton from '../../../components/Buttons/PrimaryButton'
 import SecondaryButton from '../../../components/Buttons/SecondaryButton'
 import InputField from '../../../components/InputField/inputField'
@@ -29,7 +29,7 @@ const tempData = [
 ]
 const grades = ['A', 'B', 'C']
 
-export default function SelectServices({setFrames}) {
+export default function SelectServices({ setFrames, persona, setcurrentStep }) {
    const [data, setData] = useState(tempData)
    const [grade, setGrade] = useState('')
 
@@ -41,9 +41,35 @@ export default function SelectServices({setFrames}) {
    }
 
    const handleSubmit = () => {
-      setFrames(prev =>{
-         return {...prev, services: false, userDetails: true}
-      })
+      if (persona === 'parent') {
+         setFrames(prev => {
+            return { ...prev, services: false, userDetails: true }
+         })
+      } else {
+         setFrames(prev => {
+            return { ...prev, services: false, questions: true }
+         })
+      }
+   }
+
+   useEffect(() => {
+      if (persona === 'parent') {
+         setcurrentStep(3)
+      } else {
+         setcurrentStep(4)
+      }
+   }, [])
+
+   const handleBack = () => {
+      if (persona === 'parent') {
+         setFrames(prev => {
+            return { ...prev, services: false, selectPersona: true }
+         })
+      } else {
+         setFrames(prev => {
+            return { ...prev, services: false, userDetails: true }
+         })
+      }
    }
 
    return (
@@ -83,10 +109,11 @@ export default function SelectServices({setFrames}) {
                parentClassName='w-full max-w-150'
                type='select' />
             <div className='flex items-center mt-12'>
-               <SecondaryButton children='Back' className='text-21 text-white mr-6 w-140' />
+               <SecondaryButton children='Back' className='text-21 text-white mr-6 w-140'
+                  onClick={handleBack} />
                <PrimaryButton children='Next' className='text-21 font-semibold text-white mr-6 w-140'
                   onClick={() => handleSubmit()} />
-            </div>   
+            </div>
          </div>
 
       </div>

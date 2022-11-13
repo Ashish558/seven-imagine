@@ -12,8 +12,9 @@ module.exports = {
         '2.5': '10px',
         '3.5': '14px',
         '4.5': '18px',
-        '9.5': '38px',
         '29': '29px',
+        '8.5': '34px',
+        '9.5': '38px',
         '49': '49px',
         '53': '53px',
         '55': '55px',
@@ -98,6 +99,9 @@ module.exports = {
       boxShadow: {
         'white': '0px 8px 16px rgba(0, 0, 0, 0.05)',
         'light': '0px 6px 20px rgba(0, 10, 255, 0.14)'
+      },
+      borderWidth:{
+        '3': '3px'
       }
     },
   },

@@ -11,27 +11,29 @@ import SelectPersona from '../Frames/SelectPersona/selectPersona'
 import SelectServices from '../Frames/SelectServices/SelectServices'
 import UserDetails from '../Frames/UserDetails/userDetails'
 import Questions from '../Frames/Questions/Questions'
+import SignupLast from '../Frames/SignupLast/SignupLast'
+import NumericSteppers from '../../components/NumericSteppers/NumericSteppers'
+
 export default function Signup() {
 
-   
    const [values, setValues] = useState({
       firstName: '',
       lastName: '',
       email: '',
       phone: '',
-      questions: false
    })
+
+   const [persona, setPersona] = useState('')
+   const [currentStep, setcurrentStep] = useState(1)
 
    const [frames, setFrames] = useState({
       signupActive: true,
       selectPersona: false,
       services: false,
-      userDetails: false
+      userDetails: false,
+      questions: false,
+      signupLast: false
    })
-console.log(frames)
-   // const [signupActive, setSignupActive] = useState(true)
-   // const [selectPersonaFrame, setSelectPersonaFrame] = useState(false)
-   // const [servicesFrameActive, setServicesFrameActive] = useState(false)
 
    const handleClick = () => {
       setFrames({
@@ -39,16 +41,23 @@ console.log(frames)
       })
    }
 
+   const props = { persona, setFrames, setcurrentStep }
+
    return (
       <div className='min-h-screen'>
          <div className='grid grid-cols-2 min-h-screen'>
             <div className='bg-primary'></div>
             <div className='flex items-center'>
 
-               <div className='w-full px-148'>
+               <div className='w-full px-148 py-8'>
                   <p className='font-bold text-5xl leading-snug mb-7'>
                      Signup
                   </p>
+
+                  {
+                     currentStep > 1 &&
+                     <NumericSteppers totalSteps={6} currentStep={currentStep} />
+                  }
 
                   {
                      frames.signupActive ?
@@ -94,15 +103,17 @@ console.log(frames)
                               Submit
                            </button>
                         </>
-                        : frames.selectPersona ?
-                           <SelectPersona
-                              setFrames={setFrames}
-                           /> :
-                           frames.services ? <SelectServices setFrames={setFrames} /> 
-                           : 
-                           frames.userDetails ? <UserDetails setFrames={setFrames} /> 
-                           : 
-                           frames.questions ? <Questions setFrames={setFrames} /> : ''
+                        :
+                        frames.selectPersona ? <SelectPersona {...props} setPersona={setPersona} />
+                           :
+                           frames.services ? <SelectServices {...props} />
+                              :
+                              frames.userDetails ? <UserDetails {...props} />
+                                 :
+                                 frames.questions ? <Questions {...props} />
+                                    :
+                                    frames.signupLast ? <SignupLast {...props} /> : ''
+
                   }
                </div>
             </div>
