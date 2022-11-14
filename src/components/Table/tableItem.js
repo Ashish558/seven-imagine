@@ -128,19 +128,19 @@ export default function TableItem({ item, dataFor, onClick }) {
               {item[key]}
             </td>
           ))}
-          <td className='font-medium px-1 py-4 w-auto text-right'>
-            <div className='flex justify-center'>
-              <button className='flex bg-primaryOrange items-center text-white py-[5px] px-5 rounded'
+          <td className='font-medium px-1 py-4 text-right w-240'>
+            <div className='flex justify-end'>
+              <button className='flex bg-primaryOrange items-center leading-none text-white py-1.8 px-5 rounded'
                 onClick={() => navigate('/all-tests/456')}>
-                View Test
+                View Test 
               </button>
             </div>
           </td>
-          <td className='font-medium px-1 text-right w-auto py-4'>
-            <div className='flex justify-center'
+          <td className='font-medium px-1 text-right w-240 py-4'>
+            <div className='flex'
               onClick={() => onClick.openRemoveTestModal(item)}
             >
-              <button className='flex bg-textGray-400 flex items-center items-center text-white py-[5px] px-5 rounded'>
+              <button className='flex ml-6 bg-textGray-400 flex items-center items-center leading-none text-white py-1.8 px-5 rounded'>
                 Remove
               </button>
             </div>

@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import AddIcon from '../../assets/icons/add.svg'
 import InputSelect from '../../components/InputSelect/InputSelect'
 import Table from '../../components/Table/Table'
 import Modal from '../../components/Modal/Modal'
 import InputField from '../../components/InputField/inputField'
+
+import AddIcon from '../../assets/icons/add.svg'
+import SearchIcon from '../../assets/icons/search.svg'
 
 import data from './tempData'
 
@@ -51,20 +53,22 @@ export default function AllTests() {
    return (
       <div className='lg:ml-pageLeft bg-lightWhite min-h-screen'>
          <div className='py-14 px-5'>
-            <div className='flex justify-between'>
+            <div className='flex justify-between items-center'>
                <p className='font-bold text-4xl'>All Tests</p>
-               <button className='bg-primaryOrange py-4 px-6 flex items-center text-white font-semibold rounded-lg mr-55'
+               <button className='bg-primaryOrange py-3.5 px-6 flex items-center text-white font-semibold rounded-lg mr-55'
                   onClick={() => setModalActive(true)}>
                   Add new Test
                   <img src={AddIcon} className='ml-3' />
                </button>
             </div>
             <div className='flex align-center mt-8'>
-               <InputSelect value={testName}
+               <InputField value={testName}
+                  IconRight={SearchIcon}
                   onChange={(val) => setTestName(val)}
                   optionData={optionData}
                   placeholder='Test Name'
                   parentClassName='w-290 mr-4'
+                  inputContainerClassName='bg-white'
                   type='select' />
             </div>
 

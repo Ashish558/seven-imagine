@@ -70,7 +70,7 @@ export default function Navbar() {
          h-75 lg:h-auto
          flex lg:flex-col items-center 
          bg-primary p-4 lg:rounded-20 rounded-30  self-stretch justify-around 
-         overflow-x-hidden overflow-y-hidden lg:overflow-y-auto lg:pt-14'>
+         overflow-x-hidden overflow-y-hidden lg:overflow-y-auto lg:pt-14 '>
             {navdata.map((item, idx) => {
                if (width < desktop) {
                   return idx < 4 &&
