@@ -4,12 +4,24 @@ import ResendConfirmation from '../../assets/assignedTests/resendConfirmation.sv
 import UploadIcon from '../../assets/assignedTests/upload.svg'
 import SuccessIcon from '../../assets/assignedTests/success.svg'
 import FailIcon from '../../assets/assignedTests/fail.svg'
+import YellowIcon from '../../assets/assignedTests/yellow.svg'
+import RedIcon from '../../assets/assignedTests/red.svg'
+import GreenIcon from '../../assets/assignedTests/green.svg'
+import GrayIcon from '../../assets/assignedTests/gray.svg'
 
 //can b made dynamic
 export default function TableItem({ item, dataFor, onClick }) {
 
   const navigate = useNavigate()
   // console.log(onClick)
+
+  const returnStatus = (status) => {
+    return status === 0 ?
+      <img className='first:mr-2' src={YellowIcon} /> :
+      status === 1 ? <img className='first:mr-2' src={RedIcon} /> :
+        status === 2 ? <img className='first:mr-2' src={GreenIcon} /> :
+          status === 3 ? <img className='first:mr-2' src={GrayIcon} /> : <></>
+  }
 
   return (
     <>
@@ -46,8 +58,10 @@ export default function TableItem({ item, dataFor, onClick }) {
 
       {dataFor === 'assignedTests' && (
         <tr className='odd:bg-white shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-8'>
-          <td className='font-medium px-1  min-w-14 py-4'>
-            {item.name}
+          <td className='font-semibold px-1  min-w-14 py-4 text-primaryBlue text-left' >
+            <span className='inline-block cursor-pointer pl-4'>
+              {item.name}
+            </span>
           </td>
           <td className='font-medium px-1  min-w-14 py-4'>
             {item.assigedOn}
@@ -59,19 +73,24 @@ export default function TableItem({ item, dataFor, onClick }) {
             {item.duration}
           </td>
           <td className='font-medium px-1  min-w-14 py-4'>
-            {item.status}
+            <div className='flex items-center no-wrap justify-center'>
+              {/* {item.status[0] && returnStatus(item.status[0])}
+            {item.status[1] && returnStatus(item.status[1])} */}
+              {returnStatus(item.status[0])}
+              {returnStatus(item.status[1])}
+            </div>
           </td>
           <td className='font-medium px-1  min-w-14 py-4'>
             {item.score}
           </td>
           <td className='font-medium px-1  min-w-14 py-4'>
-            <button className='p-2 py-2 rounded-md flex items-center leading-none bg-primary text-white'
+            <button className='px-2.5 py-1.8 rounded-md flex items-center leading-none bg-primary text-white'
               onClick={() => navigate('/assigned-tests/student/321')}>
               Test details
             </button>
           </td>
           <td className='font-medium px-1 min-w-14 py-4'>
-            <img src={ResendConfirmation} />
+            <img src={ResendConfirmation} className='cursor-pointer' onClick={() => onClick.handleResend(item)} />
           </td>
         </tr>
       )}

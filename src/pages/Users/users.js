@@ -42,7 +42,7 @@ export default function Users() {
    return (
       <div className='lg:ml-pageLeft bg-lightWhite min-h-screen'>
          <div className='py-14 px-5'>
-            <div className='flex justify-between'>
+            <div className='flex justify-between items-center'>
                <p className='font-bold text-4xl text-primary-dark'>All Users</p>
                <button className='bg-primary py-3.5 text-lg px-6 flex items-center text-white font-semibold rounded-lg mr-55'
                   onClick={() => setModalActive(true)}>

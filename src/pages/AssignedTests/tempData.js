@@ -1,11 +1,11 @@
 
-export const tableData=[
+export const tableData = [
    {
       name: 'Joseph Brown 1',
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: 'Pending',
+      status: [0, 1],
       score: 'V720 M650 | C1370',
    },
    {
@@ -13,7 +13,7 @@ export const tableData=[
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: 'Pending',
+      status: [2, 1],
       score: 'V720 M650 | C1370',
    },
    {
@@ -21,7 +21,7 @@ export const tableData=[
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: 'Pending',
+      status: [3, 1],
       score: 'V720 M650 | C1370',
    },
    {
@@ -29,7 +29,7 @@ export const tableData=[
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: 'Pending',
+      status: [3,2],
       score: 'V720 M650 | C1370',
    },
    {
@@ -37,7 +37,7 @@ export const tableData=[
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: 'Pending',
+      status: [0, 1],
       score: 'V720 M650 | C1370',
    },
    {
@@ -45,7 +45,7 @@ export const tableData=[
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: 'Pending',
+      status: [0, 3],
       score: 'V720 M650 | C1370',
    },
    {
@@ -53,7 +53,7 @@ export const tableData=[
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: 'Pending',
+      status: [3, 2],
       score: 'V720 M650 | C1370',
    },
    {
@@ -61,7 +61,7 @@ export const tableData=[
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: 'Pending',
+      status: [3, 1],
       score: 'V720 M650 | C1370',
    },
    {
@@ -69,7 +69,7 @@ export const tableData=[
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: 'Pending',
+      status: [1, 2],
       score: 'V720 M650 | C1370',
    },
    {
@@ -77,7 +77,7 @@ export const tableData=[
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: 'Pending',
+      status: [0, 1],
       score: 'V720 M650 | C1370',
    },
    {
@@ -85,7 +85,7 @@ export const tableData=[
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: 'Pending',
+      status: [0, 1],
       score: 'V720 M650 | C1370',
    },
    {
@@ -93,7 +93,7 @@ export const tableData=[
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: 'Pending',
+      status: [0, 1],
       score: 'V720 M650 | C1370',
    },
    {
@@ -101,7 +101,7 @@ export const tableData=[
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: 'Pending',
+      status: [0, 1],
       score: 'V720 M650 | C1370',
    },
    {
@@ -109,7 +109,7 @@ export const tableData=[
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: 'Pending',
+      status: [0, 1],
       score: 'V720 M650 | C1370',
    },
    {
@@ -117,7 +117,7 @@ export const tableData=[
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: 'Pending',
+      status: [0, 1],
       score: 'V720 M650 | C1370',
    },
 ]

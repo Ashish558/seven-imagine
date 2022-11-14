@@ -91,3 +91,24 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   border-radius: 20px;
   border: 3px solid rgba(109, 168, 255, 0.15);
 }
+
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  --webkit-appearance: none;
+  cursor: pointer;
+  width: 15px;
+  padding: 0px;
+  margin: 0px;
+  background-image: url(./assets/form/calendar.svg);
+}
+
+input[type=password]::-ms-reveal,
+input[type=password]::-ms-clear {
+  --webkit-appearance: none;
+  cursor: pointer;
+  width: 15px;
+  padding: 0px;
+  margin: 0px;
+  background-image: url(./assets/form/eye-open.svg);
+}
+
