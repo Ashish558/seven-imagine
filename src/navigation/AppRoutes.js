@@ -16,6 +16,7 @@ import Users from "../pages/Users/users";
 
 import { RequireAuth } from "./PrivateRoute";
 import ParentDashboard from "./../Pages/ParentDashboard/ParentDashboard";
+import StudentDashboard from "./../Pages/StudentDashboard/StudentDashboard";
 
 const AppRoutes = () => {
     const { isLoggedIn } = useSelector((state) => state.user);
@@ -43,6 +44,10 @@ const AppRoutes = () => {
                     element={<StudentProfile />}
                 />
                 <Route path="/parent-dashboard" element={<ParentDashboard />} />
+                <Route
+                    path="/student-dashboard"
+                    element={<StudentDashboard />}
+                />
 
                 {/* <Route
                   path="/profile"
