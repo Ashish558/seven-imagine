@@ -14,6 +14,7 @@ export default function InputField({
     onChange,
     type,
     right,
+    required
 }) {
     return (
         <div className={` ${parentClassName && parentClassName}`}>
@@ -21,18 +22,17 @@ export default function InputField({
                 className={`inline-block font-semibold ${labelClassname} w-2/3`}
             >
                 {label}
+                {required && <span className='text-primaryRed inline-block pl-1'>*</span>}
             </label>
             <div
-                className={`py-3 px-6 border flex items-center rounded-10 ${
-                    inputContainerClassName ? inputContainerClassName : ""
-                }`}
+                className={`py-3 px-6 border flex items-center rounded-10 ${inputContainerClassName ? inputContainerClassName : ""
+                    }`}
             >
                 {Icon && <img src={Icon} className="mr-6" />}
                 {inputLeftField && inputLeftField}
                 <input
-                    className={`outline-0 w-full ${
-                        inputClassName ? inputClassName : ""
-                    }`}
+                    className={`outline-0 w-full ${inputClassName ? inputClassName : ""
+                        }`}
                     placeholder={placeholder}
                     type={type ? type : "text"}
                     onChange={(e) =>

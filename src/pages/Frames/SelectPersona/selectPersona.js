@@ -89,12 +89,12 @@ export default function SelectPersona({
             <div className="flex items-center">
                 <SecondaryButton
                     children="Back"
-                    className="text-21 text-white mr-6 w-140"
+                    className="text-21 py-3.2 text-white mr-6 w-140"
                     onClick={handleBack}
                 />
                 <PrimaryButton
                     children="Next"
-                    className="text-21 font-semibold text-white mr-6 w-140 disabled:opacity-60"
+                    className="text-21 py-3.2  font-semibold text-white mr-6 w-140 disabled:opacity-60"
                     onClick={() => handleClick()}
                     disabled={nextDisabled}
                 />

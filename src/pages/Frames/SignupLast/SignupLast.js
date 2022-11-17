@@ -40,9 +40,9 @@ export default function SignupLast({ setFrames, setcurrentStep }) {
    }
 
    const handleSubmit = () => {
-      // setFrames(prev => {
-      //    return { ...prev, services: false, userDetails: true }
-      // })
+      setFrames(prev => {
+         return { ...prev, signupLast: false, signupSuccessful: true }
+      })
    }
    
    const handleBack = () => {
@@ -56,10 +56,10 @@ export default function SignupLast({ setFrames, setcurrentStep }) {
    }, [])
 
    return (
-      <div className='mt-5 mb-7'>
+      <div className='mb-7'>
 
 
-         <div className=''>
+         <div className='mb-120'>
             <p className='font-medium mb-6'>
                How did you hear about us?
             </p>
@@ -77,8 +77,7 @@ export default function SignupLast({ setFrames, setcurrentStep }) {
             </div>
          </div>
 
-         <div className=''>
-
+         {/* <div className=''>
             <InputField placeholder=''
                parentClassName='mb-2'
                label='Please enter the subscription code required to access Seven Square Learning and starting prep.'
@@ -93,13 +92,13 @@ export default function SignupLast({ setFrames, setcurrentStep }) {
                I don't have one.
                </p>
             </div>
-         </div>
+         </div> */}
 
 
          <div className='flex items-center mt-16'>
-            <SecondaryButton children='Back' className='text-21 text-white mr-6 w-140'
+            <SecondaryButton children='Back' className='text-21 py-3.2 text-white mr-6 w-140'
              onClick={handleBack} />
-            <PrimaryButton children='Next' className='text-21 font-semibold text-white mr-6 w-140'
+            <PrimaryButton children='Next' className='text-21 py-3.2 font-semibold text-white mr-6 w-140'
                onClick={() => handleSubmit()} />
          </div>
 

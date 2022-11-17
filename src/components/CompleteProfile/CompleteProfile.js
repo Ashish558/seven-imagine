@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./CompleteProfile.module.css";
-import arrow from "./../../Assets/icons/arrow-down.png";
+import arrow from "./../../assets/icons/arrow-down.png";
 import { ListData } from "../ListData/ListData";
 
 const CompleteProfile = () => {

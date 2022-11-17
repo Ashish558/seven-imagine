@@ -103,7 +103,7 @@ export default function Questions({ setFrames, persona, setcurrentStep }) {
                <p className='font-medium mb-1'>
                   Do you have any PSAT / P-ACT scores to share? How are your student's grades in school?
                </p>
-               <textarea rows={3} className='border w-full outline-0 px-5 py-4 rounded'>
+               <textarea rows={3} className='border bg-transparent w-full outline-0 px-5 py-4 rounded'>
                </textarea>
             </div>
 
@@ -112,7 +112,7 @@ export default function Questions({ setFrames, persona, setcurrentStep }) {
             </p>
             <div className='grid grid-cols-2 mb-10'>
                {data.map((item, idx) => {
-                  return <div key={idx} className='flex mb-6 mr-6'
+                  return <div key={idx} className='flex items-center mb-6 mr-6'
                      onClick={() => handleCheckboxChange(item.text, data, setData)} >
                      <div className={`${styles.container} `}>
                         <input checked={item.checked} type='checkbox' name='tests' value='' />
@@ -143,9 +143,9 @@ export default function Questions({ setFrames, persona, setcurrentStep }) {
             </div>
 
             <div className='flex items-center mt-12'>
-               <SecondaryButton children='Back' className='text-21 text-white mr-6 w-140'
+               <SecondaryButton children='Back' className='text-21 py-3.2 text-white mr-6 w-140'
                   onClick={handleBack} />
-               <PrimaryButton children='Next' className='text-21 font-semibold text-white mr-6 w-140'
+               <PrimaryButton children='Next' className='text-21 py-3.2 font-semibold text-white mr-6 w-140'
                   onClick={() => handleSubmit()} />
             </div>
          </div>

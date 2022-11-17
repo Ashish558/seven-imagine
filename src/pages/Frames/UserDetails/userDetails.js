@@ -47,6 +47,7 @@ export default function UserDetails({ setFrames, persona, setcurrentStep }) {
       }
    }
 
+   let personaText = persona === 'parent' ? 'Parent' : 'Student' 
 
    return (
       <div className='w-full'>
@@ -54,22 +55,25 @@ export default function UserDetails({ setFrames, persona, setcurrentStep }) {
          <div className='flex'>
             <InputField placeholder='First Name'
                parentClassName='mb-6 mr-5'
-               label='Student First Name'
+               required={persona === 'parent' ? true : false}
+               label={`${personaText} First Name`}
                labelClassname='ml-2 mb-2' />
             <InputField placeholder='Last Name '
                parentClassName='mb-6'
-               label='Student Last Name'
+               label={`${personaText} Last Name`}
+               required={persona === 'parent' ? true : false}
                labelClassname='ml-2 mb-2' />
          </div>
 
          <InputField placeholder='Email address'
             parentClassName='mb-6'
-            label='Student Email Address'
+            label={`${personaText} Email Address`}
+           required={persona === 'parent' ? true : false}
             onChange={e => setValues({ ...values, email: e.target.value })}
             labelClassname='ml-2 mb-2' />
          <InputField placeholder='Phone Number'
             parentClassName='mb-6'
-            label='Student Phone Number (For tutor correspondence)'
+            label={`${personaText} Phone Number ${persona !== 'parent' ? '(For tutor correspondence)' : ''} `}
             labelClassname='ml-2 mb-2'
             inputContainerClassName='relative'
             inputClassName='ml-80'
@@ -84,8 +88,8 @@ export default function UserDetails({ setFrames, persona, setcurrentStep }) {
          />
 
          <div className='flex items-center mt-120'>
-            <SecondaryButton children='Back' className='text-21 text-white mr-6 w-140'  onClick={handleBack} />
-            <PrimaryButton children='Next' className='text-21 font-semibold text-white mr-6 w-140'
+            <SecondaryButton children='Back' className='text-21 py-3.2 text-white mr-6 w-140'  onClick={handleBack} />
+            <PrimaryButton children='Next' className='text-21 py-3.2 font-semibold text-white mr-6 w-140'
                onClick={() => handleClick()} />
          </div>
       </div>

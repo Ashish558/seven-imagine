@@ -76,8 +76,11 @@ export default function SelectServices({ setFrames, persona, setcurrentStep }) {
       <div className='mt-5 mb-7'>
 
          <div className=''>
-            <p className='font-medium mb-7'>What service are you seeking?</p>
-            <div className='grid grid-cols-2 mb-10'>
+            <p className='font-medium mb-7'>What service are you seeking?
+               <span className='text-primaryRed inline-block pl-1'>*</span>
+            </p>
+
+            <div className='inline-grid grid-cols-2 mb-10'>
                {data.map((item, idx) => {
                   return <div key={idx} className='flex mb-6 mr-6'
                      onClick={() => handleCheckboxChange(item.text, data, setData)} >
@@ -85,29 +88,36 @@ export default function SelectServices({ setFrames, persona, setcurrentStep }) {
                         <input checked={item.checked} type='checkbox' name='moods' value='' />
                         <span class={styles.checkmark}></span>
                      </div>
-                     <p className='font-medium text-primary-60 text-sm whitespace-nowrap'>{item.text}</p>
+                     <p className='font-medium opacity-90 text-sm whitespace-nowrap'>{item.text}</p>
                   </div>
                })}
+               <div className='row-span-2'>
+                  <InputField labelClassname='hidden'
+                  placeholder='Tell us more (char limit)'
+                  inputContainerClassName='pt-1.8 pb-1.8 px-2.5' />
+               </div>
             </div>
             <InputField
                label='School Name'
                labelClassname='ml-3'
-               placeholder='School Name'
+               placeholder=''
                parentClassName='w-full mr-4 mb-5'
                inputContainerClassName=''
                inputClassName='bg-transparent'
                type='text'
             />
+
             <InputSelect value={grade}
                label='Grade'
                labelClassname='ml-3'
                onChange={val => setGrade(val)}
                optionData={grades}
-               inputContainerClassName='font-medium pr-3'
+               inputContainerClassName='font-medium pr-3 bg-transparent'
                inputClassName='appearance-none font-medium'
-               placeholder='Time Zone'
+               placeholder='Select'
                parentClassName='w-full max-w-150'
                type='select' />
+
             <div className='flex items-center mt-12'>
                <SecondaryButton children='Back' className='text-21 text-white mr-6 w-140'
                   onClick={handleBack} />
