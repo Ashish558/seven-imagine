@@ -8,37 +8,52 @@ import StarIcon from '../../../assets/form/star.svg'
 import InputSelect from '../../../components/InputSelect/InputSelect'
 import Checkbox from '../../../components/Checkbox/Checkbox'
 import PrimaryButton from '../../../components/Buttons/PrimaryButton'
+import { tConvert } from '../../../utils/utils'
 
 const timeZones = [
    "IST",
 ]
 const tempDays = [
    {
+      id: 1,
       text: 'M',
+      full: 'Mon',
       checked: false
    },
    {
+      id: 2,
       text: 'T',
+      full: 'Tue',
       checked: false
    },
    {
+      id: 3,
       text: 'W',
+      full: 'Wed',
       checked: true
    },
    {
+      id: 4,
       text: 'T',
+      full: 'Thu',
       checked: false
    },
    {
+      id: 5,
       text: 'F',
+      full: 'Fri',
       checked: false
    },
    {
+      id: 6,
       text: 'S',
+      full: 'Sat',
       checked: false
    },
    {
+      id: 7,
       text: 'S',
+      full: 'Sun',
       checked: false
    },
 ]
@@ -142,21 +157,49 @@ const tempProductive = [
 export default function EventModal({ setEventModalActive, persona }) {
 
    const [data, setData] = useState({
+      studentName: '',
+      tutorName: '',
+      date: '',
+      time: {
+         start: {
+            time: '',
+            timeType: ''
+         },
+         end: {
+            time: '',
+            timeType: ''
+         },
+      },
       timeZone: '',
+      recurring: false,
+      day: [],
+      endDate: '',
+
+      session: '',
       sessionStatus: '',
+      service: '',
+      topicsCovered: '',
       rescheduling: false,
-      service: ''
+      studentMood: '',
+      homeworkAssigned: '',
+      sessionProductive: 'Yes',
+      sessionNotes: ''
    })
+   console.log(data)
    const [days, setDays] = useState(tempDays)
    const [topics, setTopics] = useState(tempTopics)
    const [studentMoods, setStudentMoods] = useState(tempStudentMood)
    const [homeworks, setHomeworks] = useState(tempHomeworks)
    const [isProductive, setIsProductive] = useState(tempProductive)
 
-   const [recurring, setRecurring] = useState(false)
+   // const [recurring, setRecurring] = useState(false)
 
-   const handleDayChange = () => {
-
+   const handleDayChange = id => {
+      console.log(id)
+      let tempdays = days.map(day => {
+         return day.id === id ? { ...day, checked: !day.checked } : { ...day }
+      })
+      setDays(tempdays)
    }
    const handleCheckboxChange = (text, arr, setValue, isSingle) => {
       if (isSingle) {
@@ -171,6 +214,8 @@ export default function EventModal({ setEventModalActive, persona }) {
          setValue(temp)
       }
    }
+   // console.log(topics)
+
    return (
       <>
          <Modal
@@ -208,6 +253,7 @@ export default function EventModal({ setEventModalActive, persona }) {
                         inputContainerClassName='bg-lightWhite border-0'
                         inputClassName='bg-transparent appearance-none'
                         type='date'
+                        onChange={e => setData({ ...data, date: e.target.value })}
                      />
 
                      <InputField
@@ -217,6 +263,10 @@ export default function EventModal({ setEventModalActive, persona }) {
                         type='time'
                         inputContainerClassName='bg-lightWhite border-0 font-medium pr-3'
                         inputClassName='bg-transparent appearance-none font-medium'
+                        onChange={e => setData({
+                           ...data,
+                           time: { ...data.time, start: tConvert(e.target.value) }
+                        })}
                      />
                      <span className='self-end mb-4 mx-4 font-medium'>
                         -
@@ -226,6 +276,10 @@ export default function EventModal({ setEventModalActive, persona }) {
                         type='time'
                         inputContainerClassName='bg-lightWhite border-0 font-medium pr-3'
                         inputClassName='bg-transparent appearance-none font-medium'
+                        onChange={e => setData({
+                           ...data,
+                           time: { ...data.time, end: tConvert(e.target.value) }
+                        })}
                      />
                      <InputSelect value={data.timeZone}
                         onChange={val => setData({ ...data, timeZone: val })}
@@ -238,8 +292,9 @@ export default function EventModal({ setEventModalActive, persona }) {
                   </div>
 
                   <div className='flex mb-3'>
-                     <div className={`${styles.container} `} onClick={() => setRecurring(!recurring)} >
-                        <input checked={recurring} type='checkbox' name='recurring' />
+                     <div className={`${styles.container} `}
+                        onClick={() => setData({ ...data, recurring: !data.recurring })} >
+                        <input checked={data.recurring} type='checkbox' name='recurring' />
                         <span class={styles.checkmark}></span>
                      </div>
                      <p className='font-medium text-primary-60 text-sm'>Recurring</p>
@@ -252,6 +307,7 @@ export default function EventModal({ setEventModalActive, persona }) {
                            {days.map((day, idx) => {
                               return <Checkbox
                                  key={idx}
+                                 id={day.id}
                                  body={day.text}
                                  bodyClassName='font-medium flex bg-lightWhite mr-1.4 justify-center items-center text-lg w-56 h-56 rounded-10'
                                  checked={day.checked}
@@ -267,9 +323,11 @@ export default function EventModal({ setEventModalActive, persona }) {
                         type='date'
                         inputContainerClassName='bg-lightWhite border-0 font-medium pr-3'
                         inputClassName='bg-transparent appearance-none font-medium'
+                        onChange={e => setData({ ...data, endDate: e.target.value })}
                      />
                   </div>
 
+                  {/* SESSIONS */}
 
                   <div className='flex'>
                      <InputField
@@ -280,6 +338,7 @@ export default function EventModal({ setEventModalActive, persona }) {
                         inputContainerClassName='bg-lightWhite border-0'
                         inputClassName='bg-transparent'
                         type='text'
+                        onChange={e => setData({ ...data, session: e.target.value })}
                      />
                      {
                         persona === 'student' ?
