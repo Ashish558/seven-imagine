@@ -50,9 +50,7 @@ export default function Signup() {
                 <div className="bg-primary"></div>
                 <div className="flex items-center">
                     <div className="w-full px-148 py-8">
-                        <p className="font-bold text-5xl leading-snug mb-7">
-                            Signup
-                        </p>
+                        <h1>Signup</h1>
 
                         {currentStep > 1 && (
                             <NumericSteppers
@@ -63,9 +61,7 @@ export default function Signup() {
 
                         {frames.signupActive ? (
                             <>
-                                <p className="text-lg font-bold mb-12">
-                                    Sign up with email address
-                                </p>
+                                <h6>Sign up with email address</h6>
                                 <div className="flex">
                                     <InputField
                                         placeholder="First Name"
@@ -82,7 +78,7 @@ export default function Signup() {
                                 </div>
 
                                 <InputField
-                                    placeholder="Email address"
+                                    placeholder="email@example.com"
                                     parentClassName="mb-6"
                                     label="Email Address"
                                     onChange={(e) =>
@@ -114,6 +110,22 @@ export default function Signup() {
                                         </div>
                                     }
                                 />
+
+                                <InputField
+                                    placeholder=""
+                                    parentClassName="mb-6"
+                                    label="Please enter the subscription code required to access Seven Square Learning and starting prep."
+                                    onChange={(e) =>
+                                        setValues({
+                                            ...values,
+                                            email: e.target.value,
+                                        })
+                                    }
+                                    labelClassname="ml-2 mb-2"
+                                />
+
+                                <input id="check" type="checkbox" />
+                                <label htmlFor="check">I don't have one.</label>
 
                                 <button
                                     disabled={
