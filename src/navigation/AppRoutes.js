@@ -15,29 +15,36 @@ import TestDetail from "../pages/TestDetail/TestDetail";
 import Users from "../pages/Users/users";
 
 import { RequireAuth } from "./PrivateRoute";
+import ParentDashboard from "./../Pages/ParentDashboard/ParentDashboard";
 
 const AppRoutes = () => {
+    const { isLoggedIn } = useSelector((state) => state.user);
 
-   const { isLoggedIn } = useSelector(state => state.user)
+    return (
+        <BrowserRouter>
+            <Navbar />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/users" element={<Users />} />
+                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/calendar/:persona" element={<Calendar />} />
+                <Route path="/assigned-tests" element={<AssignedTests />} />
+                <Route
+                    path="/assigned-tests/student/:id"
+                    element={<CompletedTest />}
+                />
+                <Route path="/all-tests" element={<AllTests />} />
+                <Route path="/all-tests/:id" element={<TestDetail />} />
+                <Route path="/profile/:id" element={<Profile />} />
+                <Route
+                    path="/profile/student/:id"
+                    element={<StudentProfile />}
+                />
+                <Route path="/parent-dashboard" element={<ParentDashboard />} />
 
-   return (
-      <BrowserRouter>
-         <Navbar />
-         <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/calendar" element={<Calendar />} />
-            <Route path="/calendar/:persona" element={<Calendar />} />
-            <Route path="/assigned-tests" element={<AssignedTests />} />
-            <Route path="/assigned-tests/student/:id" element={<CompletedTest />} />
-            <Route path="/all-tests" element={<AllTests />} />
-            <Route path="/all-tests/:id" element={<TestDetail />} />
-            <Route path="/profile/:id" element={<Profile />} />
-            <Route path="/profile/student/:id" element={<StudentProfile />} />
-
-            {/* <Route
+                {/* <Route
                   path="/profile"
                   element={
                      <RequireAuth isLoggedIn={isLoggedIn}>
@@ -45,11 +52,9 @@ const AppRoutes = () => {
                      </RequireAuth>
                   }
                /> */}
-
-         </Routes>
-      </BrowserRouter>
-
-   );
+            </Routes>
+        </BrowserRouter>
+    );
 };
 
 export default AppRoutes;

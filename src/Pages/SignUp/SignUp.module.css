@@ -1,0 +1,75 @@
+#signUp {
+    height: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+#signUpLeft {
+    background-color: #7152eb;
+}
+
+#signUpRight {
+    background-color: #f3f5f7;
+    padding: 157px 147px;
+}
+
+#signUpRight h1 {
+    font-family: "Inter", sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+}
+
+#signUpRight h5 {
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 43px;
+    margin-bottom: 26px;
+}
+
+#signUpRight input {
+    margin-top: 8px;
+    padding: 18px 24px;
+    border: 2px solid #0000001a;
+    border-radius: 10px;
+    width: 100%;
+    background-color: transparent;
+}
+
+#signUpRight label {
+    margin-left: 10px;
+}
+
+#signUpRight input:focus {
+    outline: 0;
+}
+
+#mail {
+    margin-top: 24px;
+    width: 100%;
+}
+
+#mail input {
+    width: 100%;
+}
+
+#signUpRight button {
+    background-color: #4715d7;
+    width: 100%;
+    padding: 16px;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 21px;
+    border-radius: 10px;
+    margin-top: 24px;
+    color: white;
+}
+
+#signUpRight button:disabled {
+    background-color: #bf8dff;
+}
+
+#password,
+#confirm {
+    margin-top: 24px;
+}

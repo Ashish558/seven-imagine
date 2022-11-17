@@ -1,0 +1,41 @@
+#tutorCarousel {
+    padding: 19px 5px;
+    padding-top: 5px;
+    background-color: #7152eb;
+    color: white;
+    border-radius: 20px;
+    margin-right: 60px;
+    height: 226px;
+}
+
+#tutorCarousel h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+#tutorCarousel h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+#tutorCarousel h5 {
+    font-size: 10px;
+    margin-top: 10px;
+}
+#tutorCarousel p {
+    font-size: 12px;
+    /* margin-top: 10px; */
+    font-weight: 400;
+    font-stretch: italic;
+}
+
+#tutorCarousel button {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#tutorial h3 {
+    font-size: 18px;
+    font-weight: 700;
+}
