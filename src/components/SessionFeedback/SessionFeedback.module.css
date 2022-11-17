@@ -1,0 +1,78 @@
+#sessionFeedback {
+    margin-top: 27px;
+}
+
+#sessionFeedback h1 {
+    font-size: 21px;
+    font-weight: 600;
+    color: #4715d7;
+    margin-left: 21px;
+    margin-bottom: 6px;
+}
+
+#feedbacks {
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 0 28px;
+    /* width: 426px; */
+    height: 218px;
+    overflow: auto;
+}
+
+.feedback {
+    margin-top: 26px;
+}
+
+.feedback h1 {
+    color: black !important;
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.feedback h3 {
+    color: rgba(0, 0, 0, 50%);
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    margin: 0 !important;
+}
+
+.stars {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.stars img {
+    width: 32px;
+    height: 32px;
+}
+
+.details button {
+    background-color: #f6a429cc;
+    padding: 10px 27px;
+    border-radius: 6px;
+}
+
+/* width */
+#feedbacks::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+#feedbacks::-webkit-scrollbar-track {
+    background: #6da8ff26;
+    border-radius: 20px;
+}
+
+/* Handle */
+#feedbacks::-webkit-scrollbar-thumb {
+    background: #6da8ff99;
+    border-radius: 20px;
+}
+
+/* Handle on hover */
+#feedbacks::-webkit-scrollbar-thumb:hover {
+    background: #5582c599;
+}

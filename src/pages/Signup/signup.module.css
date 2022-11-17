@@ -1,0 +1,50 @@
+.phoneNumberField {
+    position: absolute;
+    left: 0;
+    width: 87px;
+    top: 0;
+    height: 100%;
+    background: rgba(113, 82, 235, 0.27);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: stretch;
+}
+
+.phoneNumberShort {
+    position: absolute;
+    left: 0;
+    width: 69px;
+    top: 0;
+    height: 100%;
+    background: rgba(113, 82, 235, 0.27);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: stretch;
+}
+
+#signUp input {
+    background-color: transparent;
+}
+
+#signUp h1 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 43px;
+}
+
+#signUp h6 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 26px;
+}
+
+#signUp label {
+    margin-left: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.9);
+}
