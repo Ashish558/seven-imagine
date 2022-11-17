@@ -50,7 +50,9 @@ export default function Signup() {
                 <div className="bg-primary"></div>
                 <div className="flex items-center">
                     <div className="w-full px-148 py-8">
-                        <h1>Signup</h1>
+                        <h1>
+                            {frames.signupActive ? "Signup" : "Profile Details"}
+                        </h1>
 
                         {currentStep > 1 && (
                             <NumericSteppers
