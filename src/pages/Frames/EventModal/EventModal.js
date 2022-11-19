@@ -62,10 +62,10 @@ const tempDays = [
 const status = [
    'Scheduled', 'Option 2'
 ]
-const services = [
-   'ACT/SAT',
-   'Option 2'
-]
+// const services = [
+//    'ACT/SAT',
+//    'Option 2'
+// ]
 const tempTopics = [
    {
       text: 'Math',
@@ -206,6 +206,7 @@ export default function EventModal({ setEventModalActive, persona }) {
    const [student, setStudent] = useState('')
 
    const [fetchSettings, settingsResponse] = useLazyGetSettingsQuery()
+   const [services, setServices] = useState([])
 
    useEffect(() => {
       if (tutor.length > 2) {
@@ -243,14 +244,13 @@ export default function EventModal({ setEventModalActive, persona }) {
       fetchSettings()
          .then(res => {
             let sessionTags = res.data.data.setting.sessionTags
-            console.log(sessionTags)
+            // console.log(sessionTags)
             let homeworks = sessionTags.homeworkAssigned.map(item => {
                return {
                   text: item, checked: false
                }
             })
             setHomeworks(homeworks)
-
             let topics = sessionTags.topicsCovered.map(item => {
                return {
                   text: item, checked: false
@@ -271,6 +271,8 @@ export default function EventModal({ setEventModalActive, persona }) {
                }
             })
             setIsProductive(productive)
+            // console.log(res.data.data.setting)
+            setServices(res.data.data.setting.serviceSpecialisation)
 
          })
    }, [])
@@ -320,17 +322,17 @@ export default function EventModal({ setEventModalActive, persona }) {
       })
       reqBody.day = day
       reqBody.topicsCovered = getCheckedString(topics)
-      reqBody.homeworkAssigned  = getCheckedString(homeworks)
-      reqBody.studentMood  = getCheckedString(studentMoods)
+      reqBody.homeworkAssigned = getCheckedString(homeworks)
+      reqBody.studentMood = getCheckedString(studentMoods)
       console.log(reqBody)
       submitSession(reqBody)
-      .then(res => {
-         console.log(res)
-         setEventModalActive(false)
-      })
+         .then(res => {
+            console.log(res)
+            setEventModalActive(false)
+         })
    }
    // console.log(topics)
-   
+
    return (
       <>
          <Modal
