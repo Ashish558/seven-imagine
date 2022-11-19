@@ -31,10 +31,6 @@
    align-items: center !important;
 }
 
-/* .fc-theme-standard .fc-timeGridWeek-view  .fc-col-header-cell{
-   border: 0;
-} */
-
 /* Event */
 .fc-direction-ltr .fc-timegrid-col-events{
    margin: 0 !important;

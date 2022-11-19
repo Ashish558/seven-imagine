@@ -37,57 +37,33 @@ code {
     border-top-right-radius: 10px;
 }
 
-/* 
-select option{
-  outline: none;
-}
-select {
-   -webkit-appearance: none;
-   -moz-appearance: none;
-   appearance: none;       /* Remove default arrow 
-   /* background-image: url(...);   Add custom arrow 
-} */
-/* 
-select::-ms-expand {
-  display: none; /* Hide the default arrow in Internet Explorer 10 and Internet Explorer 11 
-  box-shadow: none;
-  border: none;
-} */
 
-/* SCROLLBARS */
 * {
     scrollbar-width: none;
     scrollbar-color: #546ea0 #856f6f;
 }
 
-/* Chrome, Edge, and Safari */
 .scrollbar-content::-webkit-scrollbar {
-    /* width: 10px; */
+   
     height: 10px;
     border-radius: 20px;
 }
 
 .scrollbar-content::-webkit-scrollbar-track {
-    /* background: #a9c7f5; */
     background: rgba(109, 168, 255, 0.15);
     border-radius: 20px;
 }
 
 .scrollbar-content::-webkit-scrollbar-thumb {
-    /* background-color: #7152eb; */
-    /* border: 3px solid #a9c7f5; */
-
     background: rgba(109, 168, 255, 0.6);
     border-radius: 20px;
     border: 3px solid rgba(109, 168, 255, 0.15);
 }
 
-/* scrollbar vertical */
 
 .scrollbar-vertical.scrollbar-content::-webkit-scrollbar {
     width: 10px;
 }
-/* INPUTS */
 
 input[type="time"]::-webkit-calendar-picker-indicator {
     background: none;
