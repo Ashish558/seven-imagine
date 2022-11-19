@@ -18,7 +18,6 @@ import { RequireAuth } from "./PrivateRoute";
 import ParentDashboard from "./../pages/ParentDashboard/ParentDashboard";
 
 const AppRoutes = () => {
-    const { isLoggedIn } = useSelector((state) => state.user);
 
     return (
         <BrowserRouter>

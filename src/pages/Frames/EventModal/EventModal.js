@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './style.module.css'
 
 import InputField from '../../../components/InputField/inputField'
@@ -9,6 +9,8 @@ import InputSelect from '../../../components/InputSelect/InputSelect'
 import Checkbox from '../../../components/Checkbox/Checkbox'
 import PrimaryButton from '../../../components/Buttons/PrimaryButton'
 import { tConvert } from '../../../utils/utils'
+import InputSearch from '../../../components/InputSearch/InputSearch'
+import { useLazyGetSettingsQuery, useLazyGetStudentsByNameQuery, useLazyGetTutorsByNameQuery, useSubmitSessionMutation } from '../../../app/services/session'
 
 const timeZones = [
    "IST",
@@ -159,6 +161,8 @@ export default function EventModal({ setEventModalActive, persona }) {
    const [data, setData] = useState({
       studentName: '',
       tutorName: '',
+      studentId: '',
+      tutorId: '',
       date: '',
       time: {
          start: {
@@ -185,14 +189,97 @@ export default function EventModal({ setEventModalActive, persona }) {
       sessionProductive: 'Yes',
       sessionNotes: ''
    })
-   console.log(data)
+
    const [days, setDays] = useState(tempDays)
-   const [topics, setTopics] = useState(tempTopics)
-   const [studentMoods, setStudentMoods] = useState(tempStudentMood)
-   const [homeworks, setHomeworks] = useState(tempHomeworks)
-   const [isProductive, setIsProductive] = useState(tempProductive)
+   const [topics, setTopics] = useState([])
+   const [studentMoods, setStudentMoods] = useState([])
+   const [homeworks, setHomeworks] = useState([])
+   const [isProductive, setIsProductive] = useState([])
+
+   const [fetchTutors, tutorResponse] = useLazyGetTutorsByNameQuery()
+   const [tutors, setTutors] = useState([])
+   const [tutor, setTutor] = useState('')
+
+   const [submitSession, sessionResponse] = useSubmitSessionMutation()
+   const [fetchStudents, studentResponse] = useLazyGetStudentsByNameQuery()
+   const [students, setStudents] = useState([])
+   const [student, setStudent] = useState('')
+
+   const [fetchSettings, settingsResponse] = useLazyGetSettingsQuery()
+
+   useEffect(() => {
+      if (tutor.length > 2) {
+         fetchTutors(tutor)
+            .then(res => {
+               // console.log(res.data.data.tutor)
+               let tempData = res.data.data.tutor.map(tutor => {
+                  return {
+                     _id: tutor._id,
+                     value: `${tutor.firstName} ${tutor.lastName}`
+                  }
+               })
+               setTutors(tempData)
+            })
+      }
+   }, [tutor])
+
+   useEffect(() => {
+      if (student.length > 2) {
+         fetchStudents(student)
+            .then(res => {
+               // console.log(res.data.data)
+               let tempData = res.data.data.tutor.map(tutor => {
+                  return {
+                     _id: tutor._id,
+                     value: `${tutor.firstName} ${tutor.lastName}`
+                  }
+               })
+               setStudents(tempData)
+            })
+      }
+   }, [student])
+
+   useEffect(() => {
+      fetchSettings()
+         .then(res => {
+            let sessionTags = res.data.data.setting.sessionTags
+            console.log(sessionTags)
+            let homeworks = sessionTags.homeworkAssigned.map(item => {
+               return {
+                  text: item, checked: false
+               }
+            })
+            setHomeworks(homeworks)
+
+            let topics = sessionTags.topicsCovered.map(item => {
+               return {
+                  text: item, checked: false
+               }
+            })
+            setTopics(topics)
+
+            let moods = sessionTags.studentMode.map(item => {
+               return {
+                  text: item, checked: false
+               }
+            })
+            setStudentMoods(moods)
+
+            let productive = sessionTags.wasProductive.map(item => {
+               return {
+                  text: item, checked: false
+               }
+            })
+            setIsProductive(productive)
+
+         })
+   }, [])
 
    // const [recurring, setRecurring] = useState(false)
+   // console.log(tutors)
+   // console.log(tutor)
+   // console.log(homeworks)
+   // console.log(data)
 
    const handleDayChange = id => {
       console.log(id)
@@ -214,8 +301,36 @@ export default function EventModal({ setEventModalActive, persona }) {
          setValue(temp)
       }
    }
-   // console.log(topics)
 
+   const getCheckedString = (arr) => {
+      let strArr = []
+      arr.map(item => {
+         if (item.checked) strArr.push(item.text)
+      })
+      return strArr
+   }
+
+   const handleSubmit = () => {
+      let reqBody = { ...data }
+      reqBody.studentName = student
+      reqBody.tutorName = tutor
+      let day = []
+      days.map(d => {
+         if (d.checked) day.push(d.full)
+      })
+      reqBody.day = day
+      reqBody.topicsCovered = getCheckedString(topics)
+      reqBody.homeworkAssigned  = getCheckedString(homeworks)
+      reqBody.studentMood  = getCheckedString(studentMoods)
+      console.log(reqBody)
+      submitSession(reqBody)
+      .then(res => {
+         console.log(res)
+         setEventModalActive(false)
+      })
+   }
+   // console.log(topics)
+   
    return (
       <>
          <Modal
@@ -225,7 +340,7 @@ export default function EventModal({ setEventModalActive, persona }) {
             body={
                <div>
                   <div className='flex mb-4'>
-                     <InputField
+                     <InputSearch
                         label='Student Name'
                         labelClassname='ml-3'
                         placeholder='Student Name'
@@ -233,8 +348,12 @@ export default function EventModal({ setEventModalActive, persona }) {
                         inputContainerClassName='bg-lightWhite border-0'
                         inputClassName='bg-transparent'
                         type='text'
+                        value={student}
+                        onChange={e => setStudent(e.target.value)}
+                        optionData={students}
+                        onOptionClick={item => { setStudent(item.value); setData({ ...data, studentId: item._id }) }}
                      />
-                     <InputField
+                     <InputSearch
                         label='Tutor Name'
                         labelClassname='ml-3'
                         placeholder='Tutor Name'
@@ -242,6 +361,10 @@ export default function EventModal({ setEventModalActive, persona }) {
                         inputContainerClassName='bg-lightWhite border-0'
                         inputClassName='bg-transparent'
                         type='text'
+                        value={tutor}
+                        onChange={e => setTutor(e.target.value)}
+                        optionData={tutors}
+                        onOptionClick={item => { setTutor(item.value); setData({ ...data, tutorId: item._id }) }}
                      />
                   </div>
 
@@ -432,7 +555,7 @@ export default function EventModal({ setEventModalActive, persona }) {
                         <div className='mt-7 mb-5'>
                            <p className='font-medium mb-2.5'>Topics Covered</p>
                            <div className='flex'>
-                              {topics.map((topic, idx) => {
+                              {topics.length > 0 && topics.map((topic, idx) => {
                                  return <div key={idx} className='flex mb-3 mr-3' onClick={() => handleCheckboxChange(topic.text, topics, setTopics)} >
                                     <div className={`${styles.container} `}>
                                        <input checked={topic.checked} type='checkbox' name='recurring' />
@@ -447,7 +570,7 @@ export default function EventModal({ setEventModalActive, persona }) {
                         <div className='mt-5 mb-5'>
                            <p className='font-medium mb-2.5'>Student Mood</p>
                            <div className='flex'>
-                              {studentMoods.map((item, idx) => {
+                              {studentMoods.length > 0 && studentMoods.map((item, idx) => {
                                  return <div key={idx} className='flex mb-3 mr-3' onClick={() => handleCheckboxChange(item.text, studentMoods, setStudentMoods)} >
                                     <div className={`${styles.container} `}>
                                        <input checked={item.checked} type='checkbox' name='moods' value='' />
@@ -462,7 +585,7 @@ export default function EventModal({ setEventModalActive, persona }) {
                         <div className='mt-5 mb-7'>
                            <p className='font-medium  mb-2.5'>Homework Assigned</p>
                            <div className='flex flex-wrap	'>
-                              {homeworks.map((item, idx) => {
+                              {homeworks.length > 0 && homeworks.map((item, idx) => {
                                  return <div key={idx} className='flex mb-3 mr-6' onClick={() => handleCheckboxChange(item.text, homeworks, setHomeworks)} >
                                     <div className={`${styles.container} `}>
                                        <input checked={item.checked} type='checkbox' name='moods' value='' />
@@ -492,6 +615,8 @@ export default function EventModal({ setEventModalActive, persona }) {
                         <div className='mb-12'>
                            <p className='font-medium mb-2.5'>Session Notes</p>
                            <textarea placeholder='Session Notes'
+                              value={data.sessionNotes}
+                              onChange={e => setData({ ...data, sessionNotes: e.target.value })}
                               rows={3}
                               className='bg-lightWhite w-full outline-0 px-5 py-4 rounded'>
                            </textarea>
@@ -499,7 +624,8 @@ export default function EventModal({ setEventModalActive, persona }) {
                         </div>
 
                         <div className='flex justify-center'>
-                           <PrimaryButton children='Schedule' className='text-21 py-3 font-medium px-7' />
+                           <PrimaryButton children='Schedule' className='text-21 py-3 font-medium px-7'
+                              onClick={handleSubmit} />
                         </div>
                      </>
                   }
