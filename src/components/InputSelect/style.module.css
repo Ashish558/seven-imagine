@@ -17,4 +17,7 @@
    max-height: 165px;
    overflow-y: auto;
    z-index: 100000;
+
+   border-top-left-radius: 0;
+   border-top-right-radius: 0;
 }

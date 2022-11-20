@@ -331,7 +331,7 @@ export default function EventModal({ setEventModalActive, persona }) {
             setEventModalActive(false)
          })
    }
-   // console.log(topics)
+   // console.log( )
 
    return (
       <>

@@ -17,6 +17,9 @@ import SearchIcon from '../../assets/icons/search.svg'
 import { useParams } from 'react-router-dom';
 import Modal from '../../components/Modal/Modal';
 import EventModal from '../Frames/EventModal/EventModal';
+import InputSearch from '../../components/InputSearch/InputSearch';
+import { useLazyGetSessionsQuery, useLazyGetUsersByNameQuery } from '../../app/services/session';
+import { convertTime12to24 } from '../../utils/utils';
 
 const days = [
    'S', 'M', 'T', 'W', 'T', 'F', 'S'
@@ -52,11 +55,71 @@ export default function Calendar() {
    const [persona, setPersona] = useState('')
    const [eventModalActive, setEventModalActive] = useState(false)
    const params = useParams()
+
+   const [fetchNames, namesResponse] = useLazyGetUsersByNameQuery()
+   const [fetchUserSessions, fetchUserSessionsResponse] = useLazyGetSessionsQuery()
+
+   const [userSessions, setUserSessions] = useState([])
+   const [names, setNames] = useState([])
+   const [name, setName] = useState('')
+   const [searchedUserId, setSearchedUserId] = useState('')
+   const [eventDetails, setEventDetails] = useState([])
    //change btn 
    useEffect(() => {
       if (params.persona) return setPersona(params.persona)
    }, [])
 
+   const fetchSessions = (id, role) => {
+      // console.log(id)
+      const url = `/api/session/${role}/${id}`
+      // console.log(url)
+      fetchUserSessions(url)
+         .then(res => {
+            setEventDetails(res.data.data.session)
+            let tempSession = res.data.data.session.map(session => {
+               const time = session.time
+               const strtTime12HFormat = `${time.start.time} ${time.start.timeType}`
+               const startTime = convertTime12to24(`${time.start.time} ${time.start.timeType}`)
+               const endTime = `${time.end.time} ${time.end.timeType}`
+
+               // console.log(session)
+               // console.log(`${time.start.time} ${time.start.timeType}`)
+               // console.log(`${time.end.time} ${time.end.timeType}`)
+
+               // console.log(startTime.split(':'))
+               const startHours = parseInt(startTime.split(":")[0])
+               const startMinutes = parseInt(startTime.split(":")[1])
+
+               // const endHours = parseInt(endTime.split(":")[0])
+               // const endMinutes = parseInt(endTime.split(":")[1])
+
+
+               // console.log(startHours)
+               // console.log(startMinutes)
+               let startDate = new Date(session.date)
+               startHours !== NaN && startDate.setHours(startHours)
+               startMinutes !== NaN && startDate.setMinutes(startMinutes)
+
+               let eventObj = {
+                  id: session._id,
+                  start: startDate,
+                  title: session.tutorName,
+                  description: `${strtTime12HFormat} - ${endTime}`,
+               }
+               return eventObj
+            })
+            setEvents(tempSession)
+            // setEvents([...events, {
+            //    id: session._id,
+            //    start: startDate,
+            //    title: 'tutorName',
+            //    description: `${strtTime12HFormat} - ${endTime}`,
+            // }])
+
+         })
+
+   }
+   console.log(events)
    useEffect(() => {
       if (calendarRef.current) {
          const prevBtn = document.getElementsByClassName('calendar-prevButton-custom')[0].parentElement
@@ -97,12 +160,13 @@ export default function Calendar() {
 
    const eventContent = arg => {
       // console.log(arg)
-      // const description = arg.event._def.extendedProps.description
+      const description = arg.event._def.extendedProps.description
       return (
          <div className='p-0.5 h-full'>
             <div className='bg-darkWhite h-full p-2 rounded-lg'>
                <p className='text-primary font-semibold text-sm'> {arg.event._def.title} </p>
-               <p className='text-black opacity-60 text-xs'> {arg.timeText} </p>
+               {/* <p className='text-black opacity-60 text-xs'> {arg.timeText} </p> */}
+               <p className='text-black opacity-60 text-xs'> {description} </p>
             </div>
          </div>
       )
@@ -110,27 +174,28 @@ export default function Calendar() {
    }
 
    const handleDateClick = arg => {
+      setEventModalActive(true)
       // console.log(arg)
-      setEvents([...events, {
-         id: 2,
-         start: arg.dateStr,
-         title: 'QWerrt',
-         description: 'QWerfgfgsrt',
-      }])
+      // setEvents([...events, {
+      //    id: 2,
+      //    start: arg.dateStr,
+      //    title: 'QWerrt',
+      //    description: 'QWerfgfgsrt',
+      // }])
    }
 
    const handleDateSelect = arg => {
-      setEventModalActive(true)
+      // setEventModalActive(true)
 
-      const startDate = moment(arg.startStr);
-      const timeEnd = moment(arg.endStr);
-      const diff = timeEnd.diff(startDate);
-      const diffDuration = moment.duration(diff);
-      const minutes = diffDuration.minutes()
-      const hours = diffDuration.hours()
+      // const startDate = moment(arg.startStr);
+      // const timeEnd = moment(arg.endStr);
+      // const diff = timeEnd.diff(startDate);
+      // const diffDuration = moment.duration(diff);
+      // const minutes = diffDuration.minutes()
+      // const hours = diffDuration.hours()
 
-      if (minutes === 0 && hours === 0) return
-      if (minutes === 30 && hours === 0) return
+      // if (minutes === 0 && hours === 0) return
+      // if (minutes === 30 && hours === 0) return
       // setEvents([...events, {
       //    id: 2,
       //    start: arg.startStr,
@@ -138,9 +203,26 @@ export default function Calendar() {
       //    title: 'QWerrt',
       //    description: 'QWerfgfgsrt',
       // }])
-
    }
 
+   useEffect(() => {
+      if (name.length > 2) {
+         fetchNames(name)
+            .then(res => {
+               // console.log(res.data.data.user)
+               let tempData = res.data.data.user.map(user => {
+                  return {
+                     _id: user._id,
+                     value: `${user.firstName} ${user.lastName}`,
+                     role: user.role,
+                     ...user
+                  }
+               })
+               setNames(tempData)
+            })
+      }
+   }, [name])
+   // console.log(names)
    return (
       <>
          <div className='lg:ml-pageLeft bg-lightWhite min-h-screen'>
@@ -164,12 +246,19 @@ export default function Calendar() {
                      </div>
                      :
                      <div>
-                        <InputField
-                           IconRight={SearchIcon}
+                        <InputSearch
+                           // IconRight={SearchIcon}
                            placeholder='Type Name'
                            parentClassName='w-full mr-4 mt-5'
                            inputContainerClassName='bg-white shadow'
                            type='select'
+                           value={name}
+                           onChange={e => setName(e.target.value)}
+                           optionData={names}
+                           onOptionClick={item => {
+                              setName(item.value);
+                              fetchSessions(item._id, item.role)
+                           }}
                         />
                      </div>
                   }
