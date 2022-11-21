@@ -72,6 +72,12 @@ export const sessionServicesApi = createApi({
 
          })
       }),
+      getTutorStudents: builder.query({
+         query: (id) => ({
+            url: `/api/session/tutor/${id}`,
+            method: "GET",
+         }),
+      }),
 
    }),
 });
@@ -83,5 +89,6 @@ export const {
    useSubmitSessionMutation,
    useLazyGetUsersByNameQuery,
    useLazyGetSessionsQuery,
-   useUpdateSessionMutation
+   useUpdateSessionMutation,
+   useLazyGetTutorStudentsQuery
 } = sessionServicesApi;

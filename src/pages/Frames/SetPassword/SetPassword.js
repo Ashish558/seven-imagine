@@ -5,7 +5,7 @@ import styles from '../../Signup/signup.module.css'
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useSetPasswordMutation } from '../../../app/services/auth';
 
-export default function SetPassword({ signup }) {
+export default function SetPassword({ signup, setLoginFormActive }) {
 
    const [searchParams, setSearchParams] = useSearchParams();
    const userId = searchParams.get("userid")
@@ -26,7 +26,8 @@ export default function SetPassword({ signup }) {
       setUserPassword({ userId, body: reqBody })
          .then(res => {
             console.log(res)
-            navigate('/login')
+            setLoginFormActive(true)
+            navigate('/')
          })
    }
 

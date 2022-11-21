@@ -18,8 +18,9 @@ import { useParams } from 'react-router-dom';
 import Modal from '../../components/Modal/Modal';
 import EventModal from '../Frames/EventModal/EventModal';
 import InputSearch from '../../components/InputSearch/InputSearch';
-import { useLazyGetSessionsQuery, useLazyGetUsersByNameQuery } from '../../app/services/session';
+import { useLazyGetSessionsQuery, useLazyGetTutorStudentsQuery, useLazyGetUsersByNameQuery } from '../../app/services/session';
 import { convertTime12to24 } from '../../utils/utils';
+import { useSelector } from 'react-redux';
 
 const days = [
    'S', 'M', 'T', 'W', 'T', 'F', 'S'
@@ -59,7 +60,8 @@ export default function Calendar() {
 
    const [fetchNames, namesResponse] = useLazyGetUsersByNameQuery()
    const [fetchUserSessions, fetchUserSessionsResponse] = useLazyGetSessionsQuery()
-   
+   const [fetchStudents, fetchStudentsResp] = useLazyGetTutorStudentsQuery()
+
    const [userSessions, setUserSessions] = useState([])
    const [names, setNames] = useState([])
    const [name, setName] = useState('')
@@ -67,11 +69,16 @@ export default function Calendar() {
    const [eventDetails, setEventDetails] = useState([])
 
    const [sessionToUpdate, setSessionToUpdate] = useState({})
+   // const params = useParams()
 
-   const params = useParams()
+   const { isLoggedIn } = useSelector(state => state.user)
+   // console.log(isLoggedIn)
+
    //change btn 
    useEffect(() => {
-      if (params.persona) return setPersona(params.persona)
+      if (sessionStorage.getItem('role')) {
+         setPersona(sessionStorage.getItem('role'))
+      }
    }, [])
 
    const fetchSessions = (id, role) => {
@@ -87,20 +94,9 @@ export default function Calendar() {
                const startTime = convertTime12to24(`${time.start.time} ${time.start.timeType}`)
                const endTime = `${time.end.time} ${time.end.timeType}`
 
-               // console.log(session)
-               // console.log(`${time.start.time} ${time.start.timeType}`)
-               // console.log(`${time.end.time} ${time.end.timeType}`)
-
-               // console.log(startTime.split(':'))
                const startHours = parseInt(startTime.split(":")[0])
                const startMinutes = parseInt(startTime.split(":")[1])
 
-               // const endHours = parseInt(endTime.split(":")[0])
-               // const endMinutes = parseInt(endTime.split(":")[1])
-
-
-               // console.log(startHours)
-               // console.log(startMinutes)
                let startDate = new Date(session.date)
                startHours !== NaN && startDate.setHours(startHours)
                startMinutes !== NaN && startDate.setMinutes(startMinutes)
@@ -122,9 +118,17 @@ export default function Calendar() {
             // }])
 
          })
-
    }
-   // console.log(events)
+
+   useEffect(() => {
+      if (persona == 'student') {
+         const userId = sessionStorage.getItem('userId')
+         const role = sessionStorage.getItem('role')
+         if (!userId) return
+         fetchSessions(userId, role)
+      }
+   }, [persona])
+
    useEffect(() => {
       if (calendarRef.current) {
          const prevBtn = document.getElementsByClassName('calendar-prevButton-custom')[0].parentElement
@@ -180,7 +184,9 @@ export default function Calendar() {
 
 
    const handleDateClick = arg => {
-      setEventModalActive(true)
+      if (persona === 'admin' || persona === 'tutor') {
+         setEventModalActive(true)
+      }
       // console.log(arg)
       // setEvents([...events, {
       //    id: 2,
@@ -229,19 +235,54 @@ export default function Calendar() {
       }
    }, [name])
 
+   useEffect(() => {
+      const userId = sessionStorage.getItem('userId')
+      if (persona === 'tutor') {
+         fetchStudents(userId)
+            .then(res => {
+               // console.log(res)
+               setEventDetails(res.data.data.session)
+               let tempSession = res.data.data.session.map(session => {
+                  const time = session.time
+                  const strtTime12HFormat = `${time.start.time} ${time.start.timeType}`
+                  const startTime = convertTime12to24(`${time.start.time} ${time.start.timeType}`)
+                  const endTime = `${time.end.time} ${time.end.timeType}`
+
+                  const startHours = parseInt(startTime.split(":")[0])
+                  const startMinutes = parseInt(startTime.split(":")[1])
+
+                  let startDate = new Date(session.date)
+                  startHours !== NaN && startDate.setHours(startHours)
+                  startMinutes !== NaN && startDate.setMinutes(startMinutes)
+
+                  let eventObj = {
+                     id: session._id,
+                     start: startDate,
+                     title: session.studentName,
+                     description: `${strtTime12HFormat} - ${endTime}`,
+                  }
+                  return eventObj
+               })
+               setEvents(tempSession)
+            })
+      }
+   }, [persona])
+
    const handleEventClick = info => {
       const session = eventDetails.find(e => e._id === info.event._def.publicId)
-      console.log(session)
-      setUpdateEventModalActive(true)
-      setSessionToUpdate(session)
+      if (persona === 'admin' || persona === 'tutor') {
+         setUpdateEventModalActive(true)
+         setSessionToUpdate(session)
+      }
    }
+
    return (
       <>
          <div className='lg:ml-pageLeft bg-lightWhite min-h-screen'>
             <div className='py-14 px-5 calendar flex'>
                <div className='p-2 pl-0'>
                   <SimpleCalendar />
-                  {persona === 'student' || persona === 'parent' ?
+                  {persona === 'parent' || persona === 'tutor' ?
                      <div className='mt-10 pr-4'>
                         <p className='text-primaryDark text-21 font-semibold mb-8 ml-2'> Student Name </p>
                         <div>
@@ -256,23 +297,24 @@ export default function Calendar() {
                            })}
                         </div>
                      </div>
-                     :
-                     <div>
-                        <InputSearch
-                           // IconRight={SearchIcon}
-                           placeholder='Type Name'
-                           parentClassName='w-full mr-4 mt-5'
-                           inputContainerClassName='bg-white shadow'
-                           type='select'
-                           value={name}
-                           onChange={e => setName(e.target.value)}
-                           optionData={names}
-                           onOptionClick={item => {
-                              setName(item.value);
-                              fetchSessions(item._id, item.role)
-                           }}
-                        />
-                     </div>
+                     : persona === 'student' ? <></> :
+                        <div>
+                           <InputSearch
+                              // IconRight={SearchIcon}
+                              placeholder='Type Name'
+                              parentClassName='w-full mr-4 mt-5'
+                              inputContainerClassName='bg-white shadow'
+                              type='select'
+                              value={name}
+                              onChange={e => setName(e.target.value)}
+                              optionData={names}
+                              onOptionClick={item => {
+                                 setName(item.value);
+                                 fetchSessions(item._id, item.role)
+                              }}
+                           />
+                        </div>
+
                   }
                </div>
                <div className='flex-1'>
@@ -333,9 +375,9 @@ export default function Calendar() {
          }
          {
             updateEventModalActive && <EventModal setEventModalActive={setUpdateEventModalActive}
-             persona={persona}
-             isUpdating={true}
-             sessionToUpdate={sessionToUpdate} />
+               persona={persona}
+               isUpdating={true}
+               sessionToUpdate={sessionToUpdate} />
          }
       </>
    )

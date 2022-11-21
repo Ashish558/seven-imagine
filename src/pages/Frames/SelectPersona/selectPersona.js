@@ -52,6 +52,7 @@ export default function SelectPersona({
             <p className="text-lg font-bold mb-6">Sign up as</p>
 
             <div className="flex mb-120 justify-center text-center">
+                
                 <div className="w-1/2" id={styles.student}>
                     <img
                         src={StudentImg}
@@ -63,11 +64,12 @@ export default function SelectPersona({
                                 parent: false,
                                 student: !selectedImg.student,
                             });
-                            setPersona("parent");
+                            setPersona("student");
                         }}
                     />
                     student
                 </div>
+
                 <div className="w-1/2" id={styles.parent}>
                     <img
                         src={ParentImg}
@@ -79,7 +81,7 @@ export default function SelectPersona({
                                 student: false,
                                 parent: !selectedImg.parent,
                             });
-                            setPersona("student");
+                            setPersona("parent");
                         }}
                     />
                     parent

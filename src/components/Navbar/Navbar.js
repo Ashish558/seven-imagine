@@ -14,6 +14,7 @@ import styles from './navbar.module.css'
 import useWindowDimensions from '../../hooks/useWindowDimensions'
 import { desktop } from '../../constants/breakpoints'
 import Options from '../../assets/Navbar/options'
+import { useSelector } from 'react-redux'
 
 const navdata = [
    {
@@ -55,6 +56,7 @@ export default function Navbar() {
 
    const location = useLocation()
    const { width } = useWindowDimensions()
+   const { isLoggedIn } = useSelector(state => state.user)
 
    return (
       <div
@@ -64,7 +66,7 @@ export default function Navbar() {
           lg:p-4 
           flex overflow-auto
       ${location.pathname === '/login' || location.pathname === '/signup' ||
-               location.pathname === '/set-password' ? 'hidden' : 'bg-lightWhite'}`}
+               location.pathname === '/set-password' || !isLoggedIn ? 'hidden' : 'bg-lightWhite'}`}
       // className={styles.navContainer}
       >
          <div className='lg:min-h-full lg:w-110 w-full

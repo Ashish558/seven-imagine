@@ -5,8 +5,10 @@ import Passwordicon from '../../assets/form/password.svg'
 import ForgotPassword from '../Frames/ForgotPassword'
 import ResetPassword from '../Frames/ResetPassword'
 import { useLoginUserMutation } from '../../app/services/auth'
+import { useDispatch } from 'react-redux'
+import { updateIsLoggedIn } from '../../app/slices/user'
 
-export default function Login() {
+export default function Login({ setLoginFormActive }) {
 
    const [isPasswordForgot, setIsPasswordForgot] = useState(false)
    const [resetPasswordActive, setResetPasswordActive] = useState(false)
@@ -16,7 +18,7 @@ export default function Login() {
    const [password, setPassword] = useState('')
 
    const [loginUser, loginUserResp] = useLoginUserMutation()
-
+   const dispatch = useDispatch()
    const setActiveFrame = (func) => {
       setIsPasswordForgot(false)
       setResetPasswordActive(false)
@@ -28,7 +30,10 @@ export default function Login() {
       loginUser({ email, password })
          .then(res => {
             console.log(res)
-            // console.log(res.data.data.token)
+            sessionStorage.setItem('token', res.data.data.token)
+            sessionStorage.setItem('role', res.data.data.role)
+            sessionStorage.setItem('userId', res.data.data.userId)
+             dispatch(updateIsLoggedIn(true))
          })
    }
 
@@ -76,6 +81,11 @@ export default function Login() {
                            className='w-full bg-primaryDark disabled:bg-pink  py-4 mt-12 rounded-10 text-white text-21' onClick={handleSubmit}>
                            Login
                         </button>
+                        <p className='text-secondary text-sm font-semibold ml-2 mt-2 cursor-pointer inline-block'
+                        onClick={() => setLoginFormActive(false)}
+                        >
+                           Sign-up Instead?
+                        </p>
 
                      </div>
                      : isPasswordForgot ?
