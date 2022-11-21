@@ -5,65 +5,19 @@ import InputField from '../../../components/InputField/inputField'
 import InputSelect from '../../../components/InputSelect/InputSelect'
 import styles from '../EventModal/style.module.css'
 
-const tempData = [
-   {
-      text: 'AP Calc AB / BC',
-      checked: false
-   },
-   {
-      text: 'AP Physics',
-      checked: false
-   },
-   {
-      text: 'AP Biology',
-      checked: false
-   },
-   {
-      text: 'AP Chemistry',
-      checked: false
-   },
-   {
-      text: 'AP History',
-      checked: false
-   },
-   {
-      text: 'AP Economics',
-      checked: false
-   },
-   {
-      text: 'AP Statistics',
-      checked: false
-   },
-   {
-      text: 'AP World Language',
-      checked: false
-   },
-]
-
-const tempQuestions = [
-   {
-      text: 'I am only looking to improve scores, nothing else.',
-      checked: false
-   },
-   {
-      text: 'I am concerned about my motivation to learn.',
-      checked: false
-   },
-   {
-      text: 'I have learning accommodations.',
-      checked: false
-   },
-   {
-      text: 'I want a mentor that can guide me through the learning process.',
-      checked: false
-   }
-]
 
 const grades = ['A', 'B', 'C']
-
-export default function Questions({ setFrames, persona, setcurrentStep }) {
-   const [data, setData] = useState(tempData)
-   const [questions, setQuestions] = useState(tempQuestions)
+export default function Questions({
+   setFrames,
+   persona,
+   setcurrentStep,
+   otherDetails,
+   setOtherDetails,
+   apCourses,
+   setApCourses,
+   motive,
+   setMotive
+}) {
 
    const handleCheckboxChange = (text, arr, setValue) => {
       const temp = arr.map(topic => {
@@ -103,7 +57,11 @@ export default function Questions({ setFrames, persona, setcurrentStep }) {
                <p className='font-medium mb-1'>
                   Do you have any PSAT / P-ACT scores to share? How are your student's grades in school?
                </p>
-               <textarea rows={3} className='border bg-transparent w-full outline-0 px-5 py-4 rounded'>
+               <textarea rows={3}
+                  className='border bg-transparent w-full outline-0 px-5 py-4 rounded'
+                  value={otherDetails.aboutScore}
+                  onChange={e => setOtherDetails({ ...otherDetails, aboutScore: e.target.value })}
+               >
                </textarea>
             </div>
 
@@ -111,9 +69,9 @@ export default function Questions({ setFrames, persona, setcurrentStep }) {
                Are you / your child taking any AP courses in school? Please select all that apply.
             </p>
             <div className='grid grid-cols-2 mb-10'>
-               {data.map((item, idx) => {
+               {apCourses.map((item, idx) => {
                   return <div key={idx} className='flex items-center mb-6 mr-6'
-                     onClick={() => handleCheckboxChange(item.text, data, setData)} >
+                     onClick={() => handleCheckboxChange(item.text, apCourses, setApCourses)} >
                      <div className={`${styles.container} `}>
                         <input checked={item.checked} type='checkbox' name='tests' value='' />
                         <span class={styles.checkmark}></span>
@@ -128,9 +86,9 @@ export default function Questions({ setFrames, persona, setcurrentStep }) {
                   Select if any of these apply to you
                </p>
                <div className='grid grid-cols-1 mb-6'>
-                  {questions.map((item, idx) => {
+                  {motive.map((item, idx) => {
                      return <div key={idx} className='flex items-center mb-7 mr-6'
-                        onClick={() => handleCheckboxChange(item.text, questions, setQuestions)} >
+                        onClick={() => handleCheckboxChange(item.text, motive, setMotive)} >
                         <div className={`${styles.container} `}>
                            <input checked={item.checked} type='checkbox' name='questions' value='' />
                            <span class={styles.checkmark}></span>

@@ -53,17 +53,22 @@ export default function Calendar() {
    // console.log(calendarRef.current)
    const [events, setEvents] = useState([])
    const [persona, setPersona] = useState('')
+
    const [eventModalActive, setEventModalActive] = useState(false)
-   const params = useParams()
+   const [updateEventModalActive, setUpdateEventModalActive] = useState(false)
 
    const [fetchNames, namesResponse] = useLazyGetUsersByNameQuery()
    const [fetchUserSessions, fetchUserSessionsResponse] = useLazyGetSessionsQuery()
-
+   
    const [userSessions, setUserSessions] = useState([])
    const [names, setNames] = useState([])
    const [name, setName] = useState('')
    const [searchedUserId, setSearchedUserId] = useState('')
    const [eventDetails, setEventDetails] = useState([])
+
+   const [sessionToUpdate, setSessionToUpdate] = useState({})
+
+   const params = useParams()
    //change btn 
    useEffect(() => {
       if (params.persona) return setPersona(params.persona)
@@ -119,7 +124,7 @@ export default function Calendar() {
          })
 
    }
-   console.log(events)
+   // console.log(events)
    useEffect(() => {
       if (calendarRef.current) {
          const prevBtn = document.getElementsByClassName('calendar-prevButton-custom')[0].parentElement
@@ -173,6 +178,7 @@ export default function Calendar() {
 
    }
 
+
    const handleDateClick = arg => {
       setEventModalActive(true)
       // console.log(arg)
@@ -222,7 +228,13 @@ export default function Calendar() {
             })
       }
    }, [name])
-   // console.log(names)
+
+   const handleEventClick = info => {
+      const session = eventDetails.find(e => e._id === info.event._def.publicId)
+      console.log(session)
+      setUpdateEventModalActive(true)
+      setSessionToUpdate(session)
+   }
    return (
       <>
          <div className='lg:ml-pageLeft bg-lightWhite min-h-screen'>
@@ -266,6 +278,7 @@ export default function Calendar() {
                <div className='flex-1'>
                   <FullCalendar
                      events={events}
+                     eventClick={info => handleEventClick(info)}
                      ref={calendarRef}
                      plugins={[timeGridPlugin, timeGridWeek, interactionPlugin]}
                      customButtons={{
@@ -317,6 +330,12 @@ export default function Calendar() {
          </div>
          {
             eventModalActive && <EventModal setEventModalActive={setEventModalActive} persona={persona} />
+         }
+         {
+            updateEventModalActive && <EventModal setEventModalActive={setUpdateEventModalActive}
+             persona={persona}
+             isUpdating={true}
+             sessionToUpdate={sessionToUpdate} />
          }
       </>
    )

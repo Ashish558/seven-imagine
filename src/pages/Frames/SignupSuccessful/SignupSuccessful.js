@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import PrimaryButton from '../../../components/Buttons/PrimaryButton'
 import SecondaryButton from '../../../components/Buttons/SecondaryButton'
-import InputField from '../../../components/InputField/inputField'
-import styles from '../EventModal/style.module.css'
 
-export default function SignupSuccessful({ setFrames, setcurrentStep }) {
+export default function SignupSuccessful({ setFrames, setcurrentStep, addDetails }) {
    
 
    const handleClick = () => {
-      setFrames(prev => {
-         return { ...prev, signupSuccessful: false, signupActive: true }
-      })
-      setcurrentStep(1)
+      addDetails()
+      // setFrames(prev => {
+      //    return { ...prev, signupSuccessful: false, signupActive: true }
+      // })
+      // setcurrentStep(1)
    }
 
    useEffect(() => {

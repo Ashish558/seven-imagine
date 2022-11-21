@@ -8,9 +8,10 @@ import StarIcon from '../../../assets/form/star.svg'
 import InputSelect from '../../../components/InputSelect/InputSelect'
 import Checkbox from '../../../components/Checkbox/Checkbox'
 import PrimaryButton from '../../../components/Buttons/PrimaryButton'
-import { tConvert } from '../../../utils/utils'
+import { convertTime12to24, getFormattedDate, tConvert } from '../../../utils/utils'
 import InputSearch from '../../../components/InputSearch/InputSearch'
-import { useLazyGetSettingsQuery, useLazyGetStudentsByNameQuery, useLazyGetTutorsByNameQuery, useSubmitSessionMutation } from '../../../app/services/session'
+import { useLazyGetSettingsQuery, useLazyGetStudentsByNameQuery, useLazyGetTutorsByNameQuery, useSubmitSessionMutation, useUpdateSessionMutation } from '../../../app/services/session'
+import { array } from 'yup'
 
 const timeZones = [
    "IST",
@@ -156,7 +157,7 @@ const tempProductive = [
    },
 ]
 
-export default function EventModal({ setEventModalActive, persona }) {
+export default function EventModal({ setEventModalActive, persona, isUpdating, sessionToUpdate }) {
 
    const [data, setData] = useState({
       studentName: '',
@@ -178,7 +179,6 @@ export default function EventModal({ setEventModalActive, persona }) {
       recurring: false,
       day: [],
       endDate: '',
-
       session: '',
       sessionStatus: '',
       service: '',
@@ -201,12 +201,26 @@ export default function EventModal({ setEventModalActive, persona }) {
    const [tutor, setTutor] = useState('')
 
    const [submitSession, sessionResponse] = useSubmitSessionMutation()
+   const [updateUserSession, updateUserSessionResp] = useUpdateSessionMutation()
+
    const [fetchStudents, studentResponse] = useLazyGetStudentsByNameQuery()
    const [students, setStudents] = useState([])
    const [student, setStudent] = useState('')
 
    const [fetchSettings, settingsResponse] = useLazyGetSettingsQuery()
    const [services, setServices] = useState([])
+
+   const [isSettingsLoaded, setIsSettingsLoaded] = useState(false)
+
+   const getCheckedItems = (strArr, array) => {
+      let checkedItems = array.map(item => {
+         return strArr.includes(item.text) ?
+            {
+               ...item, checked: true
+            } : { ...item }
+      })
+      return checkedItems
+   }
 
    useEffect(() => {
       if (tutor.length > 2) {
@@ -273,14 +287,66 @@ export default function EventModal({ setEventModalActive, persona }) {
             setIsProductive(productive)
             // console.log(res.data.data.setting)
             setServices(res.data.data.setting.serviceSpecialisation)
-
+            setIsSettingsLoaded(true)
          })
    }, [])
 
-   // const [recurring, setRecurring] = useState(false)
-   // console.log(tutors)
-   // console.log(tutor)
-   // console.log(homeworks)
+   useEffect(() => {
+      if (isUpdating) {
+         let startTime = convertTime12to24(`${sessionToUpdate.time.start.time} ${sessionToUpdate.time.start.timeType}`)
+         // console.log(startTime)
+         setData({
+            ...data,
+            studentName: sessionToUpdate.studentName,
+            studentId: sessionToUpdate.studentId,
+            tutorId: sessionToUpdate.tutorId,
+            date: getFormattedDate(sessionToUpdate.date),
+            time: sessionToUpdate.time,
+            timeZone: sessionToUpdate.timeZone,
+            recurring: sessionToUpdate.recurring,
+
+            endDate: getFormattedDate(sessionToUpdate.endDate),
+            session: sessionToUpdate.session,
+            sessionStatus: sessionToUpdate.sessionStatus,
+            rescheduling: sessionToUpdate.resheduling,
+            service: sessionToUpdate.service,
+            sessionNotes: sessionToUpdate.sessionNotes,
+         })
+
+         let checkedDays = days.map(day => {
+            return sessionToUpdate.day.includes(day.full) ?
+               {
+                  ...day, checked: true
+               } : { ...day }
+         })
+         setDays(checkedDays)
+
+         // console.log(sessionToUpdate.sessionProductive)
+         setStudent(sessionToUpdate.studentName)
+         setTutor(sessionToUpdate.tutorName)
+
+         // console.log(sessionToUpdate)
+      }
+   }, [sessionToUpdate])
+
+   useEffect(() => {
+      if (isSettingsLoaded && isUpdating) {
+         setIsProductive(getCheckedItems([sessionToUpdate.sessionProductive], isProductive))
+         setTopics(updateCheckedArr(sessionToUpdate.topicsCovered, topics))
+         setHomeworks(updateCheckedArr(sessionToUpdate.homeworkAssigned, homeworks))
+         setStudentMoods(updateCheckedArr(sessionToUpdate.studentMood, studentMoods))
+      }
+   }, [sessionToUpdate, isSettingsLoaded])
+
+   const updateCheckedArr = (strArr, arr, setArr) => {
+      return arr.map(item => {
+         if (strArr.includes(item.text)) {
+            return { ...item, checked: true }
+         }
+         return { ...item }
+      })
+   }
+   // console.log(sessionToUpdate)
    // console.log(data)
 
    const handleDayChange = id => {
@@ -312,6 +378,15 @@ export default function EventModal({ setEventModalActive, persona }) {
       return strArr
    }
 
+   const updateSession = reqBody => {
+      // console.log(sessionToUpdate)
+      console.log(reqBody)
+      updateUserSession({id: sessionToUpdate._id, body: reqBody})
+      .then(res=> {
+         console.log(res)
+         setEventModalActive(false)
+      })
+   }
    const handleSubmit = () => {
       let reqBody = { ...data }
       reqBody.studentName = student
@@ -324,14 +399,19 @@ export default function EventModal({ setEventModalActive, persona }) {
       reqBody.topicsCovered = getCheckedString(topics)
       reqBody.homeworkAssigned = getCheckedString(homeworks)
       reqBody.studentMood = getCheckedString(studentMoods)
-      console.log(reqBody)
+     
+      if(isUpdating) return updateSession(reqBody)
+
       submitSession(reqBody)
          .then(res => {
             console.log(res)
             setEventModalActive(false)
          })
    }
-   // console.log( )
+   // console.log(convertTime12to24(`${data.time.end.time} ${data.time.end.timeType}`))
+   // console.log(convertTime12to24('1:00 AM'))
+   // console.log(data)
+   // console.log(sessionToUpdate)
 
    return (
       <>
@@ -377,6 +457,7 @@ export default function EventModal({ setEventModalActive, persona }) {
                         labelClassname='ml-3'
                         inputContainerClassName='bg-lightWhite border-0'
                         inputClassName='bg-transparent appearance-none'
+                        value={data.date}
                         type='date'
                         onChange={e => setData({ ...data, date: e.target.value })}
                      />
@@ -388,6 +469,7 @@ export default function EventModal({ setEventModalActive, persona }) {
                         type='time'
                         inputContainerClassName='bg-lightWhite border-0 font-medium pr-3'
                         inputClassName='bg-transparent appearance-none font-medium'
+                        value={convertTime12to24(`${data.time.start.time} ${data.time.start.timeType}`)}
                         onChange={e => setData({
                            ...data,
                            time: { ...data.time, start: tConvert(e.target.value) }
@@ -401,10 +483,14 @@ export default function EventModal({ setEventModalActive, persona }) {
                         type='time'
                         inputContainerClassName='bg-lightWhite border-0 font-medium pr-3'
                         inputClassName='bg-transparent appearance-none font-medium'
-                        onChange={e => setData({
-                           ...data,
-                           time: { ...data.time, end: tConvert(e.target.value) }
-                        })}
+                        value={convertTime12to24(`${data.time.end.time} ${data.time.end.timeType}`)}
+                        onChange={e => {
+                           setData({
+                              ...data,
+                              time: { ...data.time, end: tConvert(e.target.value) }
+                           });
+                        }
+                        }
                      />
                      <InputSelect value={data.timeZone}
                         onChange={val => setData({ ...data, timeZone: val })}
@@ -448,6 +534,7 @@ export default function EventModal({ setEventModalActive, persona }) {
                         type='date'
                         inputContainerClassName='bg-lightWhite border-0 font-medium pr-3'
                         inputClassName='bg-transparent appearance-none font-medium'
+                        value={data.endDate}
                         onChange={e => setData({ ...data, endDate: e.target.value })}
                      />
                   </div>
@@ -463,6 +550,7 @@ export default function EventModal({ setEventModalActive, persona }) {
                         inputContainerClassName='bg-lightWhite border-0'
                         inputClassName='bg-transparent'
                         type='text'
+                        value={data.session}
                         onChange={e => setData({ ...data, session: e.target.value })}
                      />
                      {
@@ -494,7 +582,7 @@ export default function EventModal({ setEventModalActive, persona }) {
                                  optionData={status}
                                  inputContainerClassName='bg-lightWhite border-0 font-medium pr-3'
                                  inputClassName='bg-transparent appearance-none font-medium'
-                                 placeholder='Time Zone'
+                                 placeholder='Session Status'
                                  parentClassName='w-full mr-4'
                                  type='select' />
                               <div className='flex mb-3 mt-3'>

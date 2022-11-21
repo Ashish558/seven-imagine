@@ -16,6 +16,7 @@ import Users from "../pages/Users/users";
 
 import { RequireAuth } from "./PrivateRoute";
 import ParentDashboard from "./../pages/ParentDashboard/ParentDashboard";
+import SetPassword from "../pages/Frames/SetPassword/SetPassword";
 
 const AppRoutes = () => {
 
@@ -30,6 +31,7 @@ const AppRoutes = () => {
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/calendar/:persona" element={<Calendar />} />
                 <Route path="/assigned-tests" element={<AssignedTests />} />
+                <Route path="/set-password" element={<SetPassword />} />
                 <Route
                     path="/assigned-tests/student/:id"
                     element={<CompletedTest />}

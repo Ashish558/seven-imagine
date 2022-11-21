@@ -20,7 +20,8 @@ export default function ForgotPassword({ setActiveFrame, setResetPasswordActive 
          <InputField Icon={EmailIcon} placeholder='Email address'
             parentClassName='mb-6'
             label='Email Address'
-            labelClassname='ml-2 mb-2' />
+            labelClassname='ml-2 mb-2'
+            inputClassName='bg-transparent' />
 
          <button disabled={false}
             className='w-full bg-primaryDark disabled:bg-pink  py-4 rounded-10 text-white text-21'

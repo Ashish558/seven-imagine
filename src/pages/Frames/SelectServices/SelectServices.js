@@ -5,33 +5,17 @@ import InputField from '../../../components/InputField/inputField'
 import InputSelect from '../../../components/InputSelect/InputSelect'
 import styles from '../EventModal/style.module.css'
 
-const tempData = [
-   {
-      text: 'SAT / ACT Prep',
-      checked: false
-   },
-   {
-      text: 'Subject Tutoring',
-      checked: false
-   },
-   {
-      text: 'AP Tutoring',
-      checked: false
-   },
-   {
-      text: 'Career and College Advice',
-      checked: false
-   },
-   {
-      text: 'Others',
-      checked: false
-   }
-]
 const grades = ['A', 'B', 'C']
 
-export default function SelectServices({ setFrames, persona, setcurrentStep }) {
-   const [data, setData] = useState(tempData)
-   const [grade, setGrade] = useState('')
+export default function SelectServices({
+   setFrames,
+   persona,
+   setcurrentStep,
+   services,
+   setServices,
+   setOtherDetails,
+   otherDetails
+}) {
 
    const handleCheckboxChange = (text, arr, setValue) => {
       const temp = arr.map(topic => {
@@ -81,9 +65,9 @@ export default function SelectServices({ setFrames, persona, setcurrentStep }) {
             </p>
 
             <div className='inline-grid grid-cols-2 mb-10'>
-               {data.map((item, idx) => {
+               {services.map((item, idx) => {
                   return <div key={idx} className='flex mb-6 mr-6'
-                     onClick={() => handleCheckboxChange(item.text, data, setData)} >
+                     onClick={() => handleCheckboxChange(item.text, services, setServices)} >
                      <div className={`${styles.container} `}>
                         <input checked={item.checked} type='checkbox' name='moods' value='' />
                         <span class={styles.checkmark}></span>
@@ -93,8 +77,8 @@ export default function SelectServices({ setFrames, persona, setcurrentStep }) {
                })}
                <div className='row-span-2'>
                   <InputField labelClassname='hidden'
-                  placeholder='Tell us more (char limit)'
-                  inputContainerClassName='pt-1.8 pb-1.8 px-2.5' />
+                     placeholder='Tell us more (char limit)'
+                     inputContainerClassName='pt-1.8 pb-1.8 px-2.5' />
                </div>
             </div>
             <InputField
@@ -105,12 +89,14 @@ export default function SelectServices({ setFrames, persona, setcurrentStep }) {
                inputContainerClassName=''
                inputClassName='bg-transparent'
                type='text'
+               value={otherDetails.schoolName}
+               onChange={e => setOtherDetails({ ...otherDetails, schoolName: e.target.value })}
             />
 
-            <InputSelect value={grade}
+            <InputSelect value={otherDetails.grade}
                label='Grade'
                labelClassname='ml-3'
-               onChange={val => setGrade(val)}
+               onChange={val => setOtherDetails({...otherDetails, grade: val})}
                optionData={grades}
                inputContainerClassName='font-medium pr-3 bg-transparent'
                inputClassName='appearance-none font-medium'

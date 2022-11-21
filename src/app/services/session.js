@@ -55,6 +55,16 @@ export const sessionServicesApi = createApi({
             },
          })
       }),
+      updateSession: builder.mutation({
+         query: (payload) => ({
+            url: `/api/session/${payload.id}`,
+            method: "PATCH",
+            body: payload.body,
+            headers: {
+               "Content-type": "application/json; charset=UTF-8",
+            },
+         })
+      }),
       getSessions: builder.query({
          query: (url) => ({
             url: url,
@@ -72,5 +82,6 @@ export const {
    useLazyGetSettingsQuery,
    useSubmitSessionMutation,
    useLazyGetUsersByNameQuery,
-   useLazyGetSessionsQuery
+   useLazyGetSessionsQuery,
+   useUpdateSessionMutation
 } = sessionServicesApi;

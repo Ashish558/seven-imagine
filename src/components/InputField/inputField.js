@@ -38,6 +38,7 @@ export default function InputField({
                     onChange={(e) =>
                         onChange !== undefined ? onChange(e) : ""
                     }
+                    value={value}
                 />
                 {IconRight && <img src={IconRight} className="ml-4" />}
                 {right && right}
