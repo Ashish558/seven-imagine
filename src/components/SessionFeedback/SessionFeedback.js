@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./SessionFeedback.module.css";
-import starGold from "./../../Assets/icons/star-gold.png";
-import starDark from "./../../Assets/icons/star-dark.png";
-import starLight from "./../../Assets/icons/star-light.png";
+import starGold from "./../../assets/icons/star-gold.png";
+import starDark from "./../../assets/icons/star-dark.png";
+import starLight from "./../../assets/icons/star-light.png";
 
 const SessionFeedback = () => {
     return (

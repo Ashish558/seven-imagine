@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 // import Chart from "../Chart/Chart";
-import explore from "./../../Assets/images/explore-bg.png";
+import explore from "./../../assets/images/explore-bg.png";
 import styles from "./StudentDashboardHeader.module.css";
-import arrow from "./../../Assets/icons/arrow-down.png";
+import arrow from "./../../assets/icons/arrow-down.png";
 
 const StudentDashboardHeader = () => {
     return (

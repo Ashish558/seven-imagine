@@ -15,8 +15,8 @@ import TestDetail from "../pages/TestDetail/TestDetail";
 import Users from "../pages/Users/users";
 
 import { RequireAuth } from "./PrivateRoute";
-import ParentDashboard from "./../Pages/ParentDashboard/ParentDashboard";
-import StudentDashboard from "./../Pages/StudentDashboard/StudentDashboard";
+import ParentDashboard from "./../pages/ParentDashboard/ParentDashboard";
+import StudentDashboard from "./../pages/StudentDashboard/StudentDashboard";
 
 const AppRoutes = () => {
     const { isLoggedIn } = useSelector((state) => state.user);

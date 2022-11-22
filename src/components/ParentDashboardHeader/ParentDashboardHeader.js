@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "./ParentDashboardHeader.module.css";
-import explore from "./../../Assets/images/explore-bg.png";
-import i from "./../../Assets/icons/i.png";
+import explore from "./../../assets/images/explore-bg.png";
+import i from "./../../assets/icons/i.png";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import shivam from "./../../Assets/images/tutors/shivam-shrivastab.png";
+import shivam from "./../../assets/images/tutors/shivam-shrivastab.png";
 
 const ParentDashboardHeader = () => {
     return (

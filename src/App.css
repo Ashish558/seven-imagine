@@ -1,85 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("http://fonts.cdnfonts.com/css/gilroy-bold?styles=20876,20877,20878,20879,20880");
+@import url("http://fonts.cdnfonts.com/css/gilroy");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
-@font-face {
-    font-family: GilroyBlack;
-    src: url(./Assets//fonts/Gilroy-Black.ttf);
-}
-@font-face {
-    font-family: GilroyBlackItalic;
-    src: url(./Assets//fonts/Gilroy-BlackItalic.ttf);
-}
-@font-face {
-    font-family: GilroyBold;
-    src: url(./Assets//fonts/Gilroy-Bold.ttf);
-}
-@font-face {
-    font-family: GilroyBolditalic;
-    src: url(./Assets//fonts/Gilroy-BoldItalic.ttf);
-}
-@font-face {
-    font-family: GilroyExtraBold;
-    src: url(./Assets//fonts/Gilroy-ExtraBold.ttf);
-}
-@font-face {
-    font-family: GilroyExtraBolditalic;
-    src: url(./Assets//fonts/Gilroy-Black.ttf);
-}
-@font-face {
-    font-family: GilroyHeavy;
-    src: url(./Assets//fonts/Gilroy-Heavy.ttf);
-}
-@font-face {
-    font-family: GilroyHeavyItalic;
-    src: url(./Assets//fonts/Gilroy-HeavyItalic.ttf);
-}
-@font-face {
-    font-family: GilroyLight;
-    src: url(./Assets//fonts/Gilroy-Light.ttf);
-}
-@font-face {
-    font-family: GilroyLightItalic;
-    src: url(./Assets//fonts/Gilroy-LightItalic.ttf);
-}
-@font-face {
-    font-family: GilroyMedium;
-    src: url(./Assets//fonts/Gilroy-Medium.ttf);
-}
-@font-face {
-    font-family: GilroyMediumItalic;
-    src: url(./Assets//fonts/Gilroy-MediumItalic.ttf);
-}
-@font-face {
-    font-family: GilroyRegular;
-    src: url(./Assets//fonts/Gilroy-Regular.ttf);
-}
-@font-face {
-    font-family: GilroySemiBold;
-    src: url(./Assets//fonts/Gilroy-SemiBold.ttf);
-}
-@font-face {
-    font-family: GilroySemiBoldItalic;
-    src: url(./Assets//fonts/Gilroy-SemiBoldItalic.ttf);
-}
-@font-face {
-    font-family: GilroyThin;
-    src: url(./Assets//fonts/Gilroy-Thin.ttf);
-}
-@font-face {
-    font-family: GilroyThinItalic;
-    src: url(./Assets//fonts/Gilroy-ThinItalic.ttf);
-}
-@font-face {
-    font-family: GilroyUltralight;
-    src: url(./Assets//fonts/Gilroy-UltraLight.ttf);
-}
-@font-face {
-    font-family: GilroyUltralightItalic;
-    src: url(./Assets//fonts/Gilroy-UltraLightItalic.ttf);
-}
 
 body {
     background-color: #f3f5f7;
@@ -92,7 +15,7 @@ body {
 }
 
 nav .active {
-    background-image: url("./Assets/icons/navbar-active-icon.png");
+    background-image: url("./assets/icons/navbar-active-icon.png");
     background-size: 100%;
     background-position-y: 50%;
     background-position-x: 50%;

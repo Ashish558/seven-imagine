@@ -1,15 +1,15 @@
 import React from "react";
 import styles from "./Sidebar.module.css";
-import logo from "./../../Assets/icons/logo.png";
-import bubbleGraph from "./../../Assets/icons/navbar-icons/bubble-graph.png";
-import dashboard from "./../../Assets/icons/navbar-icons/dashboard.png";
-import docs from "./../../Assets/icons/navbar-icons/docs.png";
-import onlineClass from "./../../Assets/icons/navbar-icons/online-class.png";
-import profile from "./../../Assets/icons/navbar-icons/profile.png";
-import settings from "./../../Assets/icons/navbar-icons/settings.png";
-import video from "./../../Assets/icons/navbar-icons/video.png";
-import navbarActiveIcons from "./../../Assets/icons/navbar-active-icon.png";
-import logout from "./../../Assets/icons/navbar-icons/logout.png";
+import logo from "./../../assets/icons/logo.png";
+import bubbleGraph from "./../../assets/icons/navbar-icons/bubble-graph.png";
+import dashboard from "./../../assets/icons/navbar-icons/dashboard.png";
+import docs from "./../../assets/icons/navbar-icons/docs.png";
+import onlineClass from "./../../assets/icons/navbar-icons/online-class.png";
+import profile from "./../../assets/icons/navbar-icons/profile.png";
+import settings from "./../../assets/icons/navbar-icons/settings.png";
+import video from "./../../assets/icons/navbar-icons/video.png";
+import navbarActiveIcons from "./../../assets/icons/navbar-active-icon.png";
+import logout from "./../../assets/icons/navbar-icons/logout.png";
 
 const Sidebar = () => {
     return (

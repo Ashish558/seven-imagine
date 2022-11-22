@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ConceptSection.module.css";
-import arrowDown from "./../../Assets/icons/arrow-down.png";
+import arrowDown from "./../../assets/icons/arrow-down.png";
 import Chart from "./../Chart/Chart";
-import downloadImage from "./../../Assets/icons/download.png";
+import downloadImage from "./../../assets/icons/download.png";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import josephBrown from "./../../Assets/images/joseph-brown.png";
-import rightArrow from "./../../Assets/icons/arrow-down.png";
+import josephBrown from "./../../assets/images/joseph-brown.png";
+import rightArrow from "./../../assets/icons/arrow-down.png";
 
 const ConceptSection = () => {
     const [subject, setSubject] = useState("Maths");

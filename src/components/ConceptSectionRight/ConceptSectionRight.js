@@ -1,5 +1,5 @@
 import React from "react";
-import downloadImage from "./../../Assets/icons/download.png";
+import downloadImage from "./../../assets/icons/download.png";
 import styles from "./ConceptSectionRight.module.css";
 
 const ConceptSectionRight = () => {
