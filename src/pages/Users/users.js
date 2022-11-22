@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Table from '../../components/Table/Table'
 import FilterItems from '../../components/FilterItems/filterItems'
@@ -8,7 +8,8 @@ import InputSelect from '../../components/InputSelect/InputSelect'
 
 import AddIcon from '../../assets/icons/add.svg'
 import SearchIcon from '../../assets/icons/search.svg'
-import { tableData } from './tempData'
+import { tableData, userTypesList } from './tempData'
+import { useLazyGetAllUsersQuery } from '../../app/services/users'
 
 const optionData = [
    'option 1',
@@ -26,7 +27,8 @@ export default function Users() {
 
    const [filterItems, setFilterItems] = useState(['Student', 'Parent', 'Active'])
    const [modalActive, setModalActive] = useState(false)
-   const handleClose = () => setModalActive(false)
+   const [usersData, setUsersData] = useState([])
+   const [fetchUsers, fetchUsersResp] = useLazyGetAllUsersQuery()
 
    const [filterData, setFilterData] = useState({
       typeName: '',
@@ -36,8 +38,33 @@ export default function Users() {
       tutor: ''
    })
 
-   const [modalUserType, setModalUserType] = useState('')
+   useEffect(() => {
+      fetchUsers()
+         .then(res => {
+            let data = res.data.data.user.map(user => {
+               return {
+                  _id: user._id,
+                  name: `${user.firstName} ${user.lastName}`,
+                  email: user.email ? user.email : '-',
+                  userType: user.role ? user.role : '-',
+                  phone: user.phone ? user.phone : '-',
+                  assignedTutor: '-',
+                  leadStatus: '-',
+                  tutorStatus: '-',
+                  services: '-',
+               }
+            })
+            setUsersData(data)
+         })
+   }, [])
+   // console.log(filterData)
 
+   useEffect(() => {
+
+   }, [filterData.userType])
+
+   const [modalUserType, setModalUserType] = useState('')
+   const handleClose = () => setModalActive(false)
 
    return (
       <div className='lg:ml-pageLeft bg-lightWhite min-h-screen'>
@@ -58,8 +85,8 @@ export default function Users() {
                   inputContainerClassName='bg-white'
                   type='text'
                   value={filterData.typeName}
-                  onChange={val => setFilterData({ ...filterData, typeName: val })} />
-               <InputSelect optionData={optionData}
+                  onChange={e => setFilterData({ ...filterData, typeName: e.target.value })} />
+               <InputSelect optionData={userTypesList}
                   placeholder='User Type'
                   parentClassName='w-full mr-4'
                   type='select'
@@ -89,7 +116,7 @@ export default function Users() {
             </div>
             <div className='mt-6'>
                <Table dataFor='allUsers'
-                  data={tableData}
+                  data={usersData}
                   tableHeaders={tableHeaders}
                   maxPageSize={10} />
             </div>

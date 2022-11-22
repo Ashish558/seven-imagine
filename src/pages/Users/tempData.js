@@ -165,3 +165,10 @@ export const tableData=[
       email: 'dsds'
    }
 ]
+
+export const userTypesList = [
+   'admin',
+   'parent',
+   'student',
+   'tutor',
+]

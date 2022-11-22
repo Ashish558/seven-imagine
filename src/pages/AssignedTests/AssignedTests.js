@@ -36,9 +36,9 @@ export default function AssignedTests() {
    const [tutor, setTutor] = useState('')
    const [status, setStatus] = useState('')
 
-   const updateStudentName = val => setStudentName(val)
-   const updateTestName = val => setTestName(val)
-   const updateTutor = val => setTutor(val)
+   const updateStudentName = e => setStudentName(e.target.value)
+   const updateTestName = e => setTestName(e.target.value)
+   const updateTutor = e => setTutor(e.target.value)
    const updateStatus = val => setStatus(val)
 
    const [modalData, setModalData] = useState({

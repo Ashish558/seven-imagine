@@ -13,7 +13,8 @@ import GrayIcon from '../../assets/assignedTests/gray.svg'
 export default function TableItem({ item, dataFor, onClick }) {
 
   const navigate = useNavigate()
-  // console.log(onClick)
+  // console.log(item)
+  // console.log(dataFor)
 
   const returnStatus = (status) => {
     return status === 0 ?

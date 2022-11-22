@@ -14,11 +14,15 @@ export default function Table({ dataFor, data, tableHeaders, maxPageSize, onClic
     setCurrentPage(1)
   }, [])
 
+  // useEffect(() => {
+  //   setTableData(data)
+  // }, [])
+
   //change tabledata if current page changes
   useEffect(() => {
     const temp = data.slice((currentPage - 1) * maxPageSize, (currentPage - 1) * maxPageSize + maxPageSize)
     setTableData(temp)
-  }, [currentPage])
+  }, [currentPage, data])
 
   return (
 
