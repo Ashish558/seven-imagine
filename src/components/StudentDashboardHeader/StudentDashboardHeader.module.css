@@ -86,20 +86,3 @@
     font-size: 21px;
     font-weight: 600;
 }
-
-#admissionExpert button {
-    background-color: #f3f5f7;
-    border-radius: 5px;
-    color: #7b25e6;
-    padding: 6px 13px;
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    margin-left: 34px;
-    margin-top: 15px;
-}
-
-#admissionExpert button img {
-    position: relative;
-    transform: rotate(-90deg);
-}

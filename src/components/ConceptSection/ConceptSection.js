@@ -1,21 +1,32 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ConceptSection.module.css";
-import arrowDown from "./../../assets/icons/arrow-down.png";
-import Chart from "./../Chart/Chart";
-import downloadImage from "./../../assets/icons/download.png";
+import arrowDown from "../../assets/icons/arrow-down.png";
+import Chart from "../Chart/Chart";
+import downloadImage from "../../assets/icons/download.png";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import josephBrown from "./../../assets/images/joseph-brown.png";
-import rightArrow from "./../../assets/icons/arrow-down.png";
+import josephBrown from "../../assets/images/joseph-brown.png";
+import rightArrow from "../../assets/icons/arrow-down.png";
 
 const ConceptSection = () => {
     const [subject, setSubject] = useState("Maths");
     const [slot, setSlot] = useState("Jun 20, 2022 - Jul 30, 2022 ");
+
     const [leftOpacity, setLeftOpacityy] = useState(1);
     const [rightOpacity, setRightOpacity] = useState(1);
-    const [showSub, setShowSub] = useState(false);
-    const [showSlot, setShowSlot] = useState(false);
+    const [subVisisbility, setSubVisisbility] = useState("hidden");
+    const [dateVisibility, setDateVisibility] = useState("hidden");
+
+    // const rightOpacity = document
+    //     .getElementsByClassName("owl-next")[1]
+    //     ?.classList.contains("disabled")
+    //     ? 0.5
+    //     : 1;
+
+    // useEffect(() => {
+    //     console.log(dateVisibility);
+    // }, [dateVisibility]);
 
     const goNext = () => {
         document.getElementsByClassName("owl-next")[1].click();
@@ -35,30 +46,46 @@ const ConceptSection = () => {
 
                     <div className="dropdown" id={styles.subject}>
                         <label
-                            htmlFor="subCheck"
                             className="flex items-center"
                             id={styles.dropdownHeading}
                             tabIndex={0}
+                            htmlFor="subVisisbility"
                         >
-                            <input
-                                onChange={(e) => setShowSub(e.target.checked)}
-                                type="checkbox"
-                                id="subCheck"
-                                className="hidden"
-                            />
                             {subject}
-                            <img id={styles.arrowDown} src={arrowDown} alt="" />
+                            <img
+                                id={styles.arrowDown}
+                                src={arrowDown}
+                                style={
+                                    subVisisbility === "visible"
+                                        ? { transform: "rotate(180deg)" }
+                                        : { transform: "rotate(0)" }
+                                }
+                                alt=""
+                            />
                         </label>
+                        <input
+                            type="checkbox"
+                            className="hidden"
+                            id="subVisisbility"
+                            onChange={(e) =>
+                                setSubVisisbility(
+                                    e.target.checked === true
+                                        ? "visible"
+                                        : "hidden"
+                                )
+                            }
+                        />
                         <ul
                             tabIndex={0}
-                            className={`dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 ${
-                                showSub ? "visible" : "invisible"
-                            }`}
+                            className={`dropdown-content menu p-2 shadow bg-base-100 rounded-box absolute bg-white z-10 w-52 ${subVisisbility}`}
                         >
                             <li
                                 onClick={(e) => {
                                     setSubject(e.target.innerText);
-                                    setShowSub(false);
+                                    setSubVisisbility("hidden");
+                                    document
+                                        .getElementById("subVisisbility")
+                                        .click();
                                 }}
                                 className="py-2 cursor-pointer"
                             >
@@ -68,7 +95,10 @@ const ConceptSection = () => {
                             <li
                                 onClick={(e) => {
                                     setSubject(e.target.innerText);
-                                    setShowSub(false);
+                                    setSubVisisbility("hidden");
+                                    document
+                                        .getElementById("subVisisbility")
+                                        .click();
                                 }}
                                 className="py-2 cursor-pointer"
                             >
@@ -77,7 +107,10 @@ const ConceptSection = () => {
                             <li
                                 onClick={(e) => {
                                     setSubject(e.target.innerText);
-                                    setShowSub(false);
+                                    setSubVisisbility("hidden");
+                                    document
+                                        .getElementById("subVisisbility")
+                                        .click();
                                 }}
                                 className="py-2 cursor-pointer"
                             >
@@ -86,7 +119,10 @@ const ConceptSection = () => {
                             <li
                                 onClick={(e) => {
                                     setSubject(e.target.innerText);
-                                    setShowSub(false);
+                                    setSubVisisbility("hidden");
+                                    document
+                                        .getElementById("subVisisbility")
+                                        .click();
                                 }}
                                 className="py-2 cursor-pointer"
                             >
@@ -100,27 +136,43 @@ const ConceptSection = () => {
                             className="flex items-center"
                             id={styles.dropdownHeading}
                             tabIndex={0}
-                            htmlFor="slotcheck"
+                            htmlFor="dateVisisbility"
                         >
                             {slot}
-                            <input
-                                type="checkbox"
-                                className="hidden"
-                                onChange={(e) => setShowSlot(e.target.checked)}
-                                id="slotcheck"
+                            <img
+                                id={styles.arrowDown}
+                                src={arrowDown}
+                                style={
+                                    dateVisibility === "visible"
+                                        ? { transform: "rotate(180deg)" }
+                                        : { transform: "rotate(0)" }
+                                }
+                                alt=""
                             />
-                            <img id={styles.arrowDown} src={arrowDown} alt="" />
                         </label>
+                        <input
+                            type="checkbox"
+                            className="hidden"
+                            id="dateVisisbility"
+                            onChange={(e) =>
+                                setDateVisibility(
+                                    e.target.checked === true
+                                        ? "visible"
+                                        : "hidden"
+                                )
+                            }
+                        />
                         <ul
                             tabIndex={0}
-                            className={`dropdown-content menu p-2 shadow bg-base-100 rounded-box ${
-                                showSlot ? "visible" : "invisible"
-                            }`}
+                            className={`dropdown-content menu p-2 shadow bg-base-100 rounded-box absolute bg-white w-60 z-10 ${dateVisibility}`}
                         >
                             <li
                                 onClick={(e) => {
                                     setSlot(e.target.innerText);
-                                    setShowSlot(false);
+                                    setDateVisibility("hidden");
+                                    document
+                                        .getElementById("dateVisisbility")
+                                        .click();
                                 }}
                                 className="py-2 cursor-pointer"
                             >
@@ -130,7 +182,10 @@ const ConceptSection = () => {
                             <li
                                 onClick={(e) => {
                                     setSlot(e.target.innerText);
-                                    setShowSlot(false);
+                                    setDateVisibility("hidden");
+                                    document
+                                        .getElementById("dateVisisbility")
+                                        .click();
                                 }}
                                 className="py-2 cursor-pointer"
                             >
@@ -139,7 +194,10 @@ const ConceptSection = () => {
                             <li
                                 onClick={(e) => {
                                     setSlot(e.target.innerText);
-                                    setShowSlot(false);
+                                    setDateVisibility("hidden");
+                                    document
+                                        .getElementById("dateVisisbility")
+                                        .click();
                                 }}
                                 className="py-2 cursor-pointer"
                             >
@@ -148,7 +206,10 @@ const ConceptSection = () => {
                             <li
                                 onClick={(e) => {
                                     setSlot(e.target.innerText);
-                                    setShowSlot(false);
+                                    setDateVisibility("hidden");
+                                    document
+                                        .getElementById("dateVisisbility")
+                                        .click();
                                 }}
                                 className="py-2 cursor-pointer"
                             >

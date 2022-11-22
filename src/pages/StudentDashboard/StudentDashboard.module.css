@@ -1,5 +1,6 @@
 #studentDashboard {
     padding-top: 32px;
+    padding-left: 62px;
     padding-bottom: 0;
     gap: 39px;
 }
@@ -16,7 +17,6 @@
     width: 10px;
 }
 
-/* Track */
 #chartContainer::-webkit-scrollbar-track {
     background: #6da8ff26;
     margin-left: 16px;
@@ -24,13 +24,11 @@
     border-radius: 20px;
 }
 
-/* Handle */
 #chartContainer::-webkit-scrollbar-thumb {
     background-color: rgba(109, 168, 255, 0.6);
     border-radius: 20px;
 }
 
-/* Handle on hover */
 #chartContainer::-webkit-scrollbar-thumb:hover {
     background: rgba(40, 68, 109, 0.6);
 }

@@ -6,14 +6,13 @@ import SecondaryButton from "../../../components/Buttons/SecondaryButton";
 import InputField from "../../../components/InputField/inputField";
 import styles from "../../Signup/signup.module.css";
 
-export default function UserDetails({ setFrames, persona, setcurrentStep }) {
-    const [values, setValues] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-    });
-
+export default function UserDetails({
+    setFrames,
+    persona,
+    setcurrentStep,
+    otherDetails,
+    setOtherDetails,
+}) {
     const handleClick = () => {
         if (persona === "parent") {
             setFrames((prev) => {
@@ -46,36 +45,58 @@ export default function UserDetails({ setFrames, persona, setcurrentStep }) {
         }
     };
 
+    let personaText = persona === "parent" ? "Student" : "Parent";
+
     return (
         <div className="w-full">
             <div className="flex">
                 <InputField
                     placeholder="First Name"
                     parentClassName="mb-6 mr-5"
-                    label="Student First Name"
+                    required={persona === "parent" ? true : false}
+                    label={`${personaText} First Name`}
                     labelClassname="ml-2 mb-2"
+                    value={otherDetails.FirstName}
+                    onChange={(e) =>
+                        setOtherDetails({
+                            ...otherDetails,
+                            FirstName: e.target.value,
+                        })
+                    }
                 />
                 <InputField
                     placeholder="Last Name "
                     parentClassName="mb-6"
-                    label="Student Last Name"
+                    label={`${personaText} Last Name`}
+                    required={persona === "parent" ? true : false}
                     labelClassname="ml-2 mb-2"
+                    value={otherDetails.LastName}
+                    onChange={(e) =>
+                        setOtherDetails({
+                            ...otherDetails,
+                            LastName: e.target.value,
+                        })
+                    }
                 />
             </div>
 
             <InputField
                 placeholder="Email address"
                 parentClassName="mb-6"
-                label="Student Email Address"
-                onChange={(e) =>
-                    setValues({ ...values, email: e.target.value })
-                }
+                label={`${personaText} Email Address`}
+                required={persona === "parent" ? true : false}
                 labelClassname="ml-2 mb-2"
+                value={otherDetails.Email}
+                onChange={(e) =>
+                    setOtherDetails({ ...otherDetails, Email: e.target.value })
+                }
             />
             <InputField
                 placeholder="Phone Number"
                 parentClassName="mb-6"
-                label="Student Phone Number (For tutor correspondence)"
+                label={`${personaText} Phone Number ${
+                    persona !== "parent" ? "(For tutor correspondence)" : ""
+                } `}
                 labelClassname="ml-2 mb-2"
                 inputContainerClassName="relative"
                 inputClassName="ml-80"
@@ -87,17 +108,21 @@ export default function UserDetails({ setFrames, persona, setcurrentStep }) {
                         </div>
                     </div>
                 }
+                value={otherDetails.Phone}
+                onChange={(e) =>
+                    setOtherDetails({ ...otherDetails, Phone: e.target.value })
+                }
             />
 
             <div className="flex items-center mt-120">
                 <SecondaryButton
                     children="Back"
-                    className="text-21 text-white mr-6 w-140"
+                    className="text-21 py-3.2 text-white mr-6 w-140"
                     onClick={handleBack}
                 />
                 <PrimaryButton
                     children="Next"
-                    className="text-21 font-semibold text-white mr-6 w-140"
+                    className="text-21 py-3.2 font-semibold text-white mr-6 w-140"
                     onClick={() => handleClick()}
                 />
             </div>

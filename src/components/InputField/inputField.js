@@ -14,6 +14,7 @@ export default function InputField({
     onChange,
     type,
     right,
+    required,
 }) {
     return (
         <div className={` ${parentClassName && parentClassName}`}>
@@ -21,6 +22,9 @@ export default function InputField({
                 className={`inline-block font-semibold ${labelClassname} w-2/3`}
             >
                 {label}
+                {required && (
+                    <span className="text-primaryRed inline-block pl-1">*</span>
+                )}
             </label>
             <div
                 className={`py-3 px-6 border flex items-center rounded-10 ${
@@ -38,6 +42,7 @@ export default function InputField({
                     onChange={(e) =>
                         onChange !== undefined ? onChange(e) : ""
                     }
+                    value={value}
                 />
                 {IconRight && <img src={IconRight} className="ml-4" />}
                 {right && right}

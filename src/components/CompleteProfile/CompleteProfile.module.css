@@ -17,7 +17,6 @@
 }
 
 #completeProfileHeader {
-    /* gap: 133px; */
     justify-content: space-between;
 }
 
@@ -26,7 +25,6 @@
     margin-left: 14px;
     margin-top: 12px;
     justify-content: space-between;
-    /* gap: 235px; */
 }
 
 #profileHeader {
@@ -35,7 +33,6 @@
 }
 
 #statusContainer {
-    /* width: 426px; */
     height: 9px;
     background-color: #d9d9d9;
     border-radius: 10px;
@@ -62,29 +59,24 @@
     border-radius: 20px;
     padding-top: 34px;
     padding-left: 28px;
-    /* width: 440px; */
     height: 236px;
     overflow-y: scroll;
 }
 
-/* width */
 #practiceTestContainer::-webkit-scrollbar {
     width: 10px;
 }
 
-/* Track */
 #practiceTestContainer::-webkit-scrollbar-track {
     background: #6da8ff26;
     border-radius: 20px;
 }
 
-/* Handle */
 #practiceTestContainer::-webkit-scrollbar-thumb {
     background: #6da8ff99;
     border-radius: 20px;
 }
 
-/* Handle on hover */
 #practiceTestContainer::-webkit-scrollbar-thumb:hover {
     background: #5582c599;
 }

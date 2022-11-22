@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 // import Chart from "../Chart/Chart";
-import explore from "./../../assets/images/explore-bg.png";
+import explore from "./../../Assets/images/explore-bg.png";
 import styles from "./StudentDashboardHeader.module.css";
-import arrow from "./../../assets/icons/arrow-down.png";
 
 const StudentDashboardHeader = () => {
+    const [subject, setSubject] = useState("Maths");
+    const [slot, setSlot] = useState("Jun 20, 2022 - Jul 30, 2022 ");
+
     return (
         <div className="flex" id={styles.StudentDashboardHeader}>
             <div id={styles.admissionExpert} className="w-3/5">
                 <div className="flex">
                     <div className="w-2/4">
                         <h1>This fall get help from our Admission Experts.</h1>
-                        <button className="relative">
-                            Know More{" "}
-                            <img src={arrow} width="10px" height="8px" alt="" />
-                        </button>
                     </div>
 
                     <div className="w-2/4">

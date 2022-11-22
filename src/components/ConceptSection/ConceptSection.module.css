@@ -17,10 +17,11 @@
 #arrowDown {
     width: 12px;
     height: 12px;
+    transition: all 0.3s;
 }
 
 #dropdownHeading {
-    gap: 77px;
+    gap: 60px;
     background-color: rgba(217, 217, 217, 0.5);
     padding: 10px 12px;
     border-radius: 10px;
@@ -34,7 +35,6 @@
 #conceptChart {
     padding: 0 38px;
     padding-left: 0;
-    padding-right: 86px;
 }
 
 #chart {
@@ -52,7 +52,6 @@
     width: 10px;
 }
 
-/* Track */
 #chart::-webkit-scrollbar-track {
     background: #6da8ff26;
     margin-left: 16px;
@@ -60,13 +59,11 @@
     border-radius: 20px;
 }
 
-/* Handle */
 #chart::-webkit-scrollbar-thumb {
     background-color: rgba(109, 168, 255, 0.6);
     border-radius: 20px;
 }
 
-/* Handle on hover */
 #chart::-webkit-scrollbar-thumb:hover {
     background: rgba(40, 68, 109, 0.6);
 }
@@ -127,12 +124,7 @@
     font-weight: 600;
     margin-top: 36px;
     margin-left: 20px;
-    margin-bottom: 10px;
     line-height: 25px;
-}
-
-#yourStudent {
-    margin-bottom: 26px;
 }
 
 #yourStudent h2 {
@@ -169,12 +161,4 @@
 }
 #rightArrow img {
     transform: rotate(270deg);
-}
-
-#subject ul,
-#data ul {
-    position: absolute;
-    background-color: #fff;
-    display: inline-block;
-    z-index: 100;
 }

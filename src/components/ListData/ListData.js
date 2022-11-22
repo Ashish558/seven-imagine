@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./ListData.module.css";
-import downloadImage from "./../../assets/icons/download.png";
+import downloadImage from "./../../Assets/icons/download.png";
 
 export const ListData = () => {
     return (

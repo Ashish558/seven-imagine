@@ -14,7 +14,6 @@
     background-color: #fff;
     border-radius: 20px;
     padding: 0 28px;
-    /* width: 426px; */
     height: 218px;
     overflow: auto;
 }
@@ -55,24 +54,20 @@
     border-radius: 6px;
 }
 
-/* width */
 #feedbacks::-webkit-scrollbar {
     width: 10px;
 }
 
-/* Track */
 #feedbacks::-webkit-scrollbar-track {
     background: #6da8ff26;
     border-radius: 20px;
 }
 
-/* Handle */
 #feedbacks::-webkit-scrollbar-thumb {
     background: #6da8ff99;
     border-radius: 20px;
 }
 
-/* Handle on hover */
 #feedbacks::-webkit-scrollbar-thumb:hover {
     background: #5582c599;
 }

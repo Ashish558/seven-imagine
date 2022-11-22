@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./StudentDashboard.module.css";
 import Chart from "./../../components/Chart/Chart";
-import arrowDown from "./../../assets/icons/arrow-down.png";
+import arrowDown from "./../../Assets/icons/arrow-down.png";
 import StudentDashboardHeader from "../../components/StudentDashboardHeader/StudentDashboardHeader";
 import TutorCarousel from "../../components/TutorCarousel/TutorCarousel";
 import CompleteProfile from "../../components/CompleteProfile/CompleteProfile";

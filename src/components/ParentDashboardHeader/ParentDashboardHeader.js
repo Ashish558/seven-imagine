@@ -12,7 +12,7 @@ const ParentDashboardHeader = () => {
         <div
             className="flex"
             id={styles.parentDashboardHeader}
-            style={{ gap: 86 }}
+            style={{ gap: 38 }}
         >
             <div className="w-2/3">
                 <div className="flex" style={{ gap: 16 }}>
