@@ -1,0 +1,164 @@
+#conceptSectionContainer {
+    background-color: rgba(217, 217, 217, 0.2);
+    padding: 42px 30px;
+    margin-top: 46px;
+    border-radius: 20px 0 0 20px;
+    font-family: "Inter";
+}
+
+#conceptSectionContainer h1 {
+    color: #4715d7;
+    padding-left: 34px;
+    padding-right: 56px;
+    font-size: 21px;
+    font-weight: 600;
+}
+
+#arrowDown {
+    width: 12px;
+    height: 12px;
+    transition: all 0.3s;
+}
+
+#dropdownHeading {
+    gap: 60px;
+    background-color: rgba(217, 217, 217, 0.5);
+    padding: 10px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#subject {
+    margin-right: 21px;
+}
+
+#conceptChart {
+    padding: 0 38px;
+    padding-left: 0;
+}
+
+#chart {
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    margin-top: 19px;
+    border-radius: 20px;
+    padding: 40px 20px;
+    overflow-x: scroll;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+#chart::-webkit-scrollbar {
+    width: 10px;
+}
+
+#chart::-webkit-scrollbar-track {
+    background: #6da8ff26;
+    margin-left: 16px;
+    margin-right: 40px;
+    border-radius: 20px;
+}
+
+#chart::-webkit-scrollbar-thumb {
+    background-color: rgba(109, 168, 255, 0.6);
+    border-radius: 20px;
+}
+
+#chart::-webkit-scrollbar-thumb:hover {
+    background: rgba(40, 68, 109, 0.6);
+}
+
+#listedData {
+    background-color: #fff;
+    box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    height: 360px;
+    overflow-y: scroll;
+    padding: 38px 28px;
+    color: black;
+}
+
+#listedData h1 {
+    color: black;
+    font-size: 18px;
+    font-weight: 500;
+    display: block;
+    padding: 0;
+}
+#listedData h2 {
+    color: black;
+    font-size: 18px;
+    font-weight: 600;
+    display: block;
+    padding: 0;
+    margin-right: 12px;
+}
+#listedData h1 {
+    color: black;
+    font-size: 18px;
+    font-weight: 500;
+    display: block;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+#listedData img {
+    width: 33px;
+    height: 33px;
+}
+
+.btnGreen {
+    background-color: #4ef988;
+    padding: 10px 34px;
+    border-radius: 6px;
+}
+
+#practiceTestContainer {
+    margin-top: 36px;
+}
+
+#practiceTestHeader {
+    color: #4715d7;
+    font-family: "Inter", sans-serif;
+    font-size: 21px;
+    font-weight: 600;
+    margin-top: 36px;
+    margin-left: 20px;
+    line-height: 25px;
+}
+
+#yourStudent h2 {
+    color: #4715d7;
+    font-family: "Inter", sans-serif;
+    font-size: 21px;
+    font-weight: 600;
+    margin-left: 20px;
+    line-height: 25px;
+}
+
+.student {
+    background: linear-gradient(95.17deg, #a455f2 3.84%, #981dac 92.55%);
+    border-radius: 20px;
+    padding: 20px 37px;
+    color: #fff;
+}
+
+.student h2 {
+    font-family: "Inter", sans-serif;
+    color: white !important;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.student img {
+    width: 90px !important;
+    height: 90px;
+}
+
+#leftArrow img {
+    transform: rotate(90deg);
+}
+#rightArrow img {
+    transform: rotate(270deg);
+}

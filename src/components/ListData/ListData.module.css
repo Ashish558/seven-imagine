@@ -1,0 +1,57 @@
+
+
+#listedData {
+    padding-right: 34px;
+}
+
+#listedData h1 {
+    color: black;
+    margin-left: 0;
+    font-size: 18px;
+    font-weight: 500;
+    display: block;
+    padding: 0;
+}
+#listedData h2 {
+    color: rgba(0, 0, 0, 50%);
+    font-size: 12px;
+    font-weight: 600;
+    display: block;
+    padding: 0;
+}
+#listedData h3 {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 12px;
+    font-weight: 600;
+    display: block;
+    padding: 0;
+}
+
+#listedData img {
+    width: 33px;
+    height: 33px;
+}
+
+.btnGold {
+    background-color: #f6a429cc;
+    border-radius: 6px;
+    padding: 10px 19px;
+    font-size: 18px;
+}
+.btnGreen {
+    background-color: #4ef988;
+    border-radius: 6px;
+    padding: 10px 19px;
+    font-size: 18px;
+}
+
+.btnBlue {
+    background-color: #7152ebb2;
+    border-radius: 6px;
+    padding: 10px 19px;
+    font-size: 18px;
+}
+
+.listedDataItem h1 {
+    margin-bottom: 0 !important;
+}

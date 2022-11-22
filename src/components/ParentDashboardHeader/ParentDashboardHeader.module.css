@@ -1,0 +1,115 @@
+#parentDashboardHeader {
+    padding: 70px 40px;
+}
+
+#explore {
+    background-image: linear-gradient(to right, #7306e0, #8d68f3);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+#exploreBg img {
+    width: 46%;
+    position: absolute;
+    bottom: 0;
+}
+
+#explore h2 {
+    font-weight: 700;
+    font-size: 26px;
+    color: #f3f5f7;
+    margin: 24px 44px;
+    margin-right: 0;
+    font-family: "GilroySemiBold", sans-serif;
+}
+
+#availableCredit {
+    background-color: #f36262;
+    padding: 23px;
+    border-radius: 16.4662px;
+    box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.05);
+}
+
+#availableCredit img {
+    width: 21px;
+    height: 21px;
+}
+
+#availableCredit h3 {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 19.76px;
+    color: white;
+}
+
+#creditBalance {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 28px 17px;
+    font-size: 36.23px;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    border-radius: 12.35px;
+    margin: 18px 0;
+}
+
+.btnRed {
+    display: inline-block;
+    background-color: #bb2f2f;
+    width: 100%;
+    padding: 8px 0;
+    text-align: center;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    color: white;
+    border-radius: 4.94px;
+}
+
+.knowMore {
+    margin-left: 46px;
+    background-color: #f3f5f7;
+    border-radius: 5px;
+    padding: 8px 15px;
+}
+
+#tutor {
+    background-color: #7152eb;
+    padding: 19px 23px;
+    border-radius: 20px;
+    color: white;
+}
+
+#tutor h2 {
+    font-family: "Inter", sans-serif;
+    font-size: 21px;
+    font-weight: 600;
+}
+
+#tutor img {
+    width: 165px;
+    height: 165px;
+    margin: 0 auto;
+}
+
+.tag {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    margin-top: 10px;
+    margin-bottom: 19px;
+}
+
+#tutor h3 {
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+#tutor p {
+    font-family: "Inter", sans-serif;
+    font-style: italic;
+    font-size: 12px;
+    font-weight: 400;
+}
