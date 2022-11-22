@@ -27,7 +27,10 @@ export default function Users() {
 
    const [filterItems, setFilterItems] = useState(['Student', 'Parent', 'Active'])
    const [modalActive, setModalActive] = useState(false)
+
    const [usersData, setUsersData] = useState([])
+   const [filteredUsersData, setFilteredUsersData] = useState([])
+
    const [fetchUsers, fetchUsersResp] = useLazyGetAllUsersQuery()
 
    const [filterData, setFilterData] = useState({
@@ -55,13 +58,14 @@ export default function Users() {
                }
             })
             setUsersData(data)
+            setFilteredUsersData(data)
          })
    }, [])
-   // console.log(filterData)
 
-   useEffect(() => {
-
-   }, [filterData.userType])
+   // useEffect(() => {
+   //    let tempdata = usersData.filter(user => user.userType === filterData.userType)
+   //    setFilteredUsersData(tempdata)
+   // }, [filterData.userType])
 
    const [modalUserType, setModalUserType] = useState('')
    const handleClose = () => setModalActive(false)
@@ -116,7 +120,7 @@ export default function Users() {
             </div>
             <div className='mt-6'>
                <Table dataFor='allUsers'
-                  data={usersData}
+                  data={filteredUsersData}
                   tableHeaders={tableHeaders}
                   maxPageSize={10} />
             </div>
