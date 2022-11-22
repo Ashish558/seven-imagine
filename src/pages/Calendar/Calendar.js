@@ -264,18 +264,15 @@ export default function Calendar() {
                   return eventObj
                })
                setEvents(tempSession)
-               let tempstudents = []
-               res.data.data.session.map(session => {
-                  if (students.length === 0) {
-                     tempstudents.push({ studentId: session.studentId, studentName: session.studentName })
+               
+               const arrayUniqueByKey = [...new Map(res.data.data.session.map(item =>
+                  [item['studentId'], item])).values()];
+              
+                  let tempstudents = arrayUniqueByKey.map(item => {
+                  return {
+                     studentId: item.studentId, studentName: item.studentName
                   }
-                  tempstudents.map(item => {
-                     if (item.id === !session.studentId) {
-                        tempstudents.push({ studentId: session.studentId, studentName: session.studentName })
-                     }
-                  })
                })
-               // console.log('students', tempstudents)
                setStudents(tempstudents)
             })
       }
@@ -289,7 +286,7 @@ export default function Calendar() {
       }
    }
 
-   console.log(events)
+   // console.log(students)
    return (
       <>
          <div className='lg:ml-pageLeft bg-lightWhite min-h-screen'>
@@ -301,7 +298,7 @@ export default function Calendar() {
                         <p className='text-primaryDark text-21 font-semibold mb-8 ml-2'> Student Name </p>
                         <div>
                            {students.map(student => {
-                              return <div className='p-4 mb-4 rounded-10 flex justify-between items-center border bg-white'>
+                              return <div key={student.studentId} className='p-4 mb-4 rounded-10 flex justify-between items-center border bg-white'>
                                  <p className='font-medium'>
                                     {student.studentName}
                                  </p>
