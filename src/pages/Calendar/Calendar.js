@@ -68,6 +68,7 @@ export default function Calendar() {
    const [searchedUserId, setSearchedUserId] = useState('')
    const [eventDetails, setEventDetails] = useState([])
 
+   const [students, setStudents] = useState([])
    const [sessionToUpdate, setSessionToUpdate] = useState({})
    // const params = useParams()
 
@@ -240,7 +241,6 @@ export default function Calendar() {
       if (persona === 'tutor') {
          fetchStudents(userId)
             .then(res => {
-               // console.log(res)
                setEventDetails(res.data.data.session)
                let tempSession = res.data.data.session.map(session => {
                   const time = session.time
@@ -264,6 +264,19 @@ export default function Calendar() {
                   return eventObj
                })
                setEvents(tempSession)
+               let tempstudents = []
+               res.data.data.session.map(session => {
+                  if (students.length === 0) {
+                     tempstudents.push({ studentId: session.studentId, studentName: session.studentName })
+                  }
+                  tempstudents.map(item => {
+                     if (item.id === !session.studentId) {
+                        tempstudents.push({ studentId: session.studentId, studentName: session.studentName })
+                     }
+                  })
+               })
+               // console.log('students', tempstudents)
+               setStudents(tempstudents)
             })
       }
    }, [persona])
@@ -276,6 +289,7 @@ export default function Calendar() {
       }
    }
 
+   console.log(events)
    return (
       <>
          <div className='lg:ml-pageLeft bg-lightWhite min-h-screen'>
@@ -289,7 +303,7 @@ export default function Calendar() {
                            {students.map(student => {
                               return <div className='p-4 mb-4 rounded-10 flex justify-between items-center border bg-white'>
                                  <p className='font-medium'>
-                                    {student.name}
+                                    {student.studentName}
                                  </p>
                                  <div className='student-circle' style={{ backgroundColor: student.bg }}>
                                  </div>

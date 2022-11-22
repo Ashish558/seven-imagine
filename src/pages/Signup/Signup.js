@@ -104,8 +104,6 @@ export default function Signup() {
          window.open(redirectLink)
       })
    }
-
-
    const props = { persona, setFrames, setcurrentStep };
    const valueProps = { values, setValues }
    const otherDetailsProps = { otherDetails, setOtherDetails }

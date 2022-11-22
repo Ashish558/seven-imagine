@@ -46,7 +46,7 @@ export default function UserDetails({
       }
    }
 
-   let personaText = persona === 'parent' ? 'Parent' : 'Student'
+   let personaText = persona === 'parent' ? 'Student' : 'Parent'
 
    return (
       <div className='w-full'>

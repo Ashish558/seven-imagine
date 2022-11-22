@@ -49,12 +49,12 @@ export const getFormattedDate = argDate => {
    let dateNum = date.getDate()
 
    if (month < 10) {
-      month = `0${month + 1}`
+      month = `0${month}`
    }
    if (dateNum < 10) {
       dateNum = `0${dateNum}`
    }
-   let dateFormatted = `${year}-${month}-${dateNum}`
+   let dateFormatted = `${year}-${month+1}-${dateNum}`
    return dateFormatted
 }
 

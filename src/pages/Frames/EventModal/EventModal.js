@@ -387,6 +387,7 @@ export default function EventModal({ setEventModalActive, persona, isUpdating, s
          setEventModalActive(false)
       })
    }
+   
    const handleSubmit = () => {
       let reqBody = { ...data }
       reqBody.studentName = student
