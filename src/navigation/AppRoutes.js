@@ -17,6 +17,7 @@ import Users from "../pages/Users/users";
 import { RequireAuth } from "./PrivateRoute";
 import ParentDashboard from "./../pages/ParentDashboard/ParentDashboard";
 import SetPassword from "../pages/Frames/SetPassword/SetPassword";
+import StudentDashboard from "../pages/StudentDashboard/StudentDashboard";
 
 const PrivateRoutes = [
     {
@@ -106,6 +107,10 @@ const AppRoutes = () => {
                     element={<StudentProfile />}
                 />
                 <Route path="/parent-dashboard" element={<ParentDashboard />} />
+                <Route
+                    path="/student-dashboard"
+                    element={<StudentDashboard />}
+                />
 
                 {/* <Route
                   path="/profile"
