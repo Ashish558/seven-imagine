@@ -14,10 +14,7 @@ const StudentDashboard = () => {
     const [showSlot, setShowSlot] = useState(false);
 
     return (
-        <div
-            className={`w-11/12 ml-auto ${styles.studentDashboardContainer}`}
-            id="container"
-        >
+        <div className={`${styles.studentDashboardContainer}`} id="container">
             <div className="flex" id={styles.studentDashboard}>
                 <div className="w-2/3">
                     <StudentDashboardHeader></StudentDashboardHeader>
