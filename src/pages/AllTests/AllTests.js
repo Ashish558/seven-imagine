@@ -10,11 +10,12 @@ import styles from "./style.module.css";
 
 import data from "./tempData";
 import upload from "./../../assets/icons/upload.png";
+import axios from "axios";
 const optionData = ["option 1", "option 2", "option 3", "option 4", "option 5"];
 const tableHeaders = ["Test Name", "Date Modified", "Test Type", "", ""];
 
 export default function AllTests() {
-    const [tableData, setTableData] = useState(data);
+    const [tableData, setTableData] = useState([]);
     const [modalActive, setModalActive] = useState(false);
     const [testName, setTestName] = useState("");
     const [concept, setConcept] = useState("");
@@ -24,10 +25,6 @@ export default function AllTests() {
     const [csvFile, setCSVFile] = useState({});
     const [csvError, setCSVError] = useState("");
     const [PDFError, setPDFError] = useState("");
-
-    useEffect(() => {
-        console.log(pdfFile.name);
-    }, [pdfFile]);
 
     const [removeQuestionModal, setRemoveQuestionModal] = useState(false);
 
@@ -66,6 +63,12 @@ export default function AllTests() {
             setCSVError("Not a CSV File");
         }
     };
+
+    useEffect(() => {
+        axios
+            .get("https://sevenimagine.herokuapp.com/api/test")
+            .then((res) => setTableData(res.data.data.test));
+    }, []);
 
     return (
         <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">
