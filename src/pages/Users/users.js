@@ -9,7 +9,7 @@ import InputSelect from '../../components/InputSelect/InputSelect'
 import AddIcon from '../../assets/icons/add.svg'
 import SearchIcon from '../../assets/icons/search.svg'
 import { tableData, userTypesList } from './tempData'
-import { useLazyGetAllUsersQuery } from '../../app/services/users'
+import { useAddUserMutation, useLazyGetAllUsersQuery } from '../../app/services/users'
 import { retry } from '@reduxjs/toolkit/dist/query'
 
 const optionData = [
@@ -19,16 +19,28 @@ const optionData = [
    'option 4',
    'option 5',
 ]
+
 const tableHeaders = [
    'Full Name', 'User Type', "Email", 'Phone', 'Assigned Tutor', 'Lead Status', 'Tutor Status',
    'Services'
 ]
 
+const userTypeOptions = ['tutor']
+
+const initialState = {
+   email: '',
+   firstName: '',
+   lastName: '',
+   phone: '',
+   userType: 'tutor',
+}
 export default function Users() {
 
    // const [filterItems, setFilterItems] = useState(['Student', 'Parent', 'Active'])
    const [modalActive, setModalActive] = useState(false)
-   const [modalUserType, setModalUserType] = useState('')
+   // const [modalUserType, setModalUserType] = useState('')
+
+   const [modalData, setModalData] = useState(initialState)
 
    const [usersData, setUsersData] = useState([])
    const [filteredUsersData, setFilteredUsersData] = useState([])
@@ -36,6 +48,7 @@ export default function Users() {
    const [filterItems, setFilterItems] = useState([])
 
    const [fetchUsers, fetchUsersResp] = useLazyGetAllUsersQuery()
+   const [addUser, addUserResp] = useAddUserMutation()
 
    const [filterData, setFilterData] = useState({
       typeName: '',
@@ -74,10 +87,10 @@ export default function Users() {
       } else {
          tempdata = tempdata.filter(user => user.userType !== '')
       }
-      if(filterData.typeName !== ''){
+      if (filterData.typeName !== '') {
          const regex2 = new RegExp(`${filterData.typeName.toLowerCase()}`, 'i')
          tempdata = tempdata.filter(user => user.name.match(regex2))
-      }else{
+      } else {
          tempdata = tempdata.filter(user => user.name !== '')
       }
       setFilteredUsersData(tempdata)
@@ -105,8 +118,26 @@ export default function Users() {
       setFilterItems(arr)
    }, [filterData])
 
-   const onRemoveFilter = (item) => {
-      item.removeFilter(item.type)
+
+   const onRemoveFilter = (item) => item.removeFilter(item.type)
+
+   const handleSubmit = e => {
+      e.preventDefault()
+      console.log(modalData)
+      const body = {
+         firstName: modalData.firstName,
+         lastName: modalData.lastName,
+         email: modalData.email,
+      }
+      addUser(body)
+         .then(res => {
+            console.log(res)
+            if (res.error) {
+              return alert(res.error.data.message)
+            }
+            setModalData(initialState)
+            handleClose()
+         })
    }
 
    const handleClose = () => setModalActive(false)
@@ -174,39 +205,76 @@ export default function Users() {
                title='Add a New User'
                cancelBtn={true}
                cancelBtnClassName='w-140'
-               primaryBtn={{ text: "Add", className: 'w-140' }}
+               primaryBtn={{
+                  text: "Add",
+                  className: 'w-140',
+                  form: 'add-user-form',
+                  onClick: handleSubmit,
+                  type: 'submit',
+               }}
                handleClose={handleClose}
                body={
-                  <div className='grid grid-cols-1 md:grid-cols-2  gap-x-2 md:gap-x-3 gap-y-2 gap-y-4 mb-5'>
-                     <div>
-                        <InputField label='Email Addresss'
-                           labelClassname='ml-4 mb-0.5'
-                           placeholder='Email Addresss'
-                           inputContainerClassName='px-5 bg-primary-50'
-                           inputClassName='bg-transparent'
-                           parentClassName='w-full mr-4' type='text' />
+                  <form id='add-user-form' onSubmit={handleSubmit}>
+                     <div className='grid grid-cols-1 md:grid-cols-2  gap-x-2 md:gap-x-3 gap-y-2 gap-y-4 mb-5'>
+                        <div>
+                           <InputField label='First Name'
+                              labelClassname='ml-4 mb-0.5'
+                              placeholder='First Name'
+                              inputContainerClassName='px-5 bg-primary-50 border-0'
+                              inputClassName='bg-transparent'
+                              parentClassName='w-full mr-4' type='text'
+                              value={modalData.firstName}
+                              isRequired={true}
+                              onChange={e => setModalData({ ...modalData, firstName: e.target.value })} />
+                        </div>
+                        <div>
+                           <InputField label='Last Name'
+                              labelClassname='ml-4 mb-0.5'
+                              isRequired={true}
+                              placeholder='Last Name'
+                              inputContainerClassName='px-5 bg-primary-50 border-0'
+                              inputClassName='bg-transparent'
+                              parentClassName='w-full mr-4' type='text'
+                              value={modalData.lastName}
+                              onChange={e => setModalData({ ...modalData, lastName: e.target.value })} />
+                        </div>
+                        <div>
+                           <InputField label='Email Addresss'
+                              labelClassname='ml-4 mb-0.5'
+                              isRequired={true}
+                              placeholder='Email Addresss'
+                              inputContainerClassName='px-5 bg-primary-50 border-0'
+                              inputClassName='bg-transparent'
+                              parentClassName='w-full mr-4' type='text'
+                              value={modalData.email}
+                              onChange={e => setModalData({ ...modalData, email: e.target.value })} />
+                        </div>
+                        <div>
+                           <InputField label='Password'
+                              labelClassname='ml-4 mb-0.5'
+                              isRequired={true}
+                              optionData={optionData}
+                              placeholder='minimum 8 characters'
+                              inputContainerClassName='px-5 bg-primary-50 border-0'
+                              inputClassName='bg-transparent'
+                              parentClassName='w-full mr-4' type='password'
+                              value={modalData.password}
+                              onChange={e => setModalData({ ...modalData, password: e.target.value })} />
+                        </div>
+                        <div>
+                           <InputSelect value={modalData.userType}
+                              onChange={val => setModalData({ ...modalData, userType: val })}
+                              isRequired={true}
+                              type='select'
+                              placeholder='Select User Type'
+                              label='User Type'
+                              labelClassname='ml-4 mb-0.5'
+                              optionData={userTypeOptions}
+                              inputContainerClassName=' bg-primary-50 px-5 border-0'
+                              parentClassName='w-full mr-4' />
+                        </div>
                      </div>
-                     <div>
-                        <InputField label='Password'
-                           labelClassname='ml-4 mb-0.5'
-                           optionData={optionData}
-                           placeholder='minimum 8 characters'
-                           inputContainerClassName='px-5 bg-primary-50'
-                           inputClassName='bg-transparent'
-                           parentClassName='w-full mr-4' type='password' />
-                     </div>
-                     <div>
-                        <InputSelect value={modalUserType}
-                           onChange={val => setModalUserType(val)}
-                           type='select'
-                           placeholder='Select User Type'
-                           label='User Type'
-                           labelClassname='ml-4 mb-0.5'
-                           optionData={optionData}
-                           inputContainerClassName=' bg-primary-50 px-5'
-                           parentClassName='w-full mr-4' />
-                     </div>
-                  </div>
+                  </form>
                }
             />
          }

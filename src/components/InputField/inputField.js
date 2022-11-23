@@ -15,6 +15,7 @@ export default function InputField({
     type,
     right,
     required,
+    isRequired
 }) {
     return (
         <div className={` ${parentClassName && parentClassName}`}>
@@ -43,6 +44,7 @@ export default function InputField({
                         onChange !== undefined ? onChange(e) : ""
                     }
                     value={value}
+                    required={isRequired ? true : false}
                 />
                 {IconRight && <img src={IconRight} className="ml-4" />}
                 {right && right}
