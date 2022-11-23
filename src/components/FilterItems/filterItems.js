@@ -2,18 +2,18 @@ import React from 'react'
 import CrossIcon from '../../assets/icons/cross.svg'
 import styles from './style.module.css'
 
-export default function FilterItems({ data, setData }) {
+export default function FilterItems({ items, setData, onRemoveFilter }) {
 
 
    return (
       <div className='flex items-center'>
-         {data.map((data, idx) => {
+         {items.map((item, idx) => {
             return (
-               <div key={idx} className={`mr-3 bg-primaryLight py-1.5 px-3 rounded-10 group ${styles.filterItem}`}>
+               <div key={item.text} className={`mr-3 bg-primaryLight py-1.5 px-3 rounded-10 group ${styles.filterItem}`}>
                   <p className='text-lightGray'>
-                     {data}
+                     {item.text}
                   </p>
-                  <img className={styles.icon} src={CrossIcon} />
+                  <img className={styles.icon} src={CrossIcon} onClick={()=> onRemoveFilter(item)} />
                </div>
             )
          })}

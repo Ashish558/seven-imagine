@@ -10,6 +10,7 @@ import AddIcon from '../../assets/icons/add.svg'
 import SearchIcon from '../../assets/icons/search.svg'
 import { tableData, userTypesList } from './tempData'
 import { useLazyGetAllUsersQuery } from '../../app/services/users'
+import { retry } from '@reduxjs/toolkit/dist/query'
 
 const optionData = [
    'option 1',
@@ -25,11 +26,14 @@ const tableHeaders = [
 
 export default function Users() {
 
-   const [filterItems, setFilterItems] = useState(['Student', 'Parent', 'Active'])
+   // const [filterItems, setFilterItems] = useState(['Student', 'Parent', 'Active'])
    const [modalActive, setModalActive] = useState(false)
+   const [modalUserType, setModalUserType] = useState('')
 
    const [usersData, setUsersData] = useState([])
    const [filteredUsersData, setFilteredUsersData] = useState([])
+
+   const [filterItems, setFilterItems] = useState([])
 
    const [fetchUsers, fetchUsersResp] = useLazyGetAllUsersQuery()
 
@@ -62,12 +66,49 @@ export default function Users() {
          })
    }, [])
 
-   // useEffect(() => {
-   //    let tempdata = usersData.filter(user => user.userType === filterData.userType)
-   //    setFilteredUsersData(tempdata)
-   // }, [filterData.userType])
+   useEffect(() => {
+      let tempdata = [...usersData]
+      // console.log(usersData)
+      if (filterData.userType !== '') {
+         tempdata = tempdata.filter(user => user.userType === filterData.userType)
+      } else {
+         tempdata = tempdata.filter(user => user.userType !== '')
+      }
+      if(filterData.typeName !== ''){
+         const regex2 = new RegExp(`${filterData.typeName.toLowerCase()}`, 'i')
+         tempdata = tempdata.filter(user => user.name.match(regex2))
+      }else{
+         tempdata = tempdata.filter(user => user.name !== '')
+      }
+      setFilteredUsersData(tempdata)
+   }, [filterData])
 
-   const [modalUserType, setModalUserType] = useState('')
+   const removeFilter = key => {
+      let tempFilterData = { ...filterData }
+      tempFilterData[key] = ''
+      // console.log(key)
+      // console.log(tempFilterData)
+      setFilterData(tempFilterData)
+   }
+
+   useEffect(() => {
+      let arr = Object.keys(filterData).map(key => {
+         if (filterData[key] !== '') {
+            return {
+               text: filterData[key],
+               type: key,
+               removeFilter: (key) => removeFilter(key)
+            }
+         }
+      }).filter(item => item !== undefined)
+      // console.log(arr)
+      setFilterItems(arr)
+   }, [filterData])
+
+   const onRemoveFilter = (item) => {
+      item.removeFilter(item.type)
+   }
+
    const handleClose = () => setModalActive(false)
 
    return (
@@ -116,7 +157,7 @@ export default function Users() {
                   onChange={val => setFilterData({ ...filterData, tutor: val })} />
             </div>
             <div className='mt-4' >
-               <FilterItems data={filterItems} setData={setFilterItems} />
+               <FilterItems items={filterItems} setData={setFilterItems} onRemoveFilter={onRemoveFilter} />
             </div>
             <div className='mt-6'>
                <Table dataFor='allUsers'
