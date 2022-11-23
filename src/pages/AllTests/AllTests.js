@@ -10,6 +10,7 @@ import styles from "./style.module.css";
 
 import data from "./tempData";
 import upload from "./../../assets/icons/upload.png";
+import Papa from "papaparse";
 import axios from "axios";
 const optionData = ["option 1", "option 2", "option 3", "option 4", "option 5"];
 const tableHeaders = ["Test Name", "Date Modified", "Test Type", "", ""];
@@ -19,12 +20,13 @@ export default function AllTests() {
     const [modalActive, setModalActive] = useState(false);
     const [testName, setTestName] = useState("");
     const [concept, setConcept] = useState("");
-    const [strategy, setStrategy] = useState("");
+    const [type, setType] = useState("");
     const [name, setName] = useState("");
     const [pdfFile, setPDFFile] = useState({});
     const [csvFile, setCSVFile] = useState({});
     const [csvError, setCSVError] = useState("");
     const [PDFError, setPDFError] = useState("");
+    const [testForDelete, setTestForDelete] = useState("");
 
     const [removeQuestionModal, setRemoveQuestionModal] = useState(false);
 
@@ -39,10 +41,16 @@ export default function AllTests() {
 
     const openRemoveTestModal = (item) => {
         setRemoveQuestionModal(true);
-        // console.log(item)
+        setTestForDelete(item);
     };
     const removeTest = (item) => {
         setRemoveQuestionModal(false);
+        console.log(testForDelete._id);
+        axios
+            .delete(
+                `https://sevenimagine.herokuapp.com/api/test/${testForDelete._id}`
+            )
+            .then((res) => console.log(res));
     };
 
     const handlePDFFile = (file) => {
@@ -123,8 +131,8 @@ export default function AllTests() {
                                 />
 
                                 <InputSelect
-                                    value={strategy}
-                                    onChange={(val) => setStrategy(val)}
+                                    value={type}
+                                    onChange={(val) => setType(val)}
                                     optionData={optionData}
                                     label="Test Type"
                                     labelClassname="ml-3 mb-0"
@@ -192,11 +200,25 @@ export default function AllTests() {
                                             <input
                                                 id="csv"
                                                 type="file"
-                                                onChange={(e) =>
+                                                onChange={(e) => {
                                                     handleCSVFile(
                                                         e.target.files[0]
-                                                    )
-                                                }
+                                                    );
+
+                                                    Papa.parse(
+                                                        e.target.files[0],
+                                                        {
+                                                            complete: function (
+                                                                results
+                                                            ) {
+                                                                console.log(
+                                                                    "Finished:",
+                                                                    results.data
+                                                                );
+                                                            },
+                                                        }
+                                                    );
+                                                }}
                                             />
                                         </div>
                                     </div>

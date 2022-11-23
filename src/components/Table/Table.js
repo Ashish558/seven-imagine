@@ -28,7 +28,7 @@ export default function Table({
         setTableData(temp);
     }, [currentPage, data, maxPageSize]);
 
-    console.log(tableData);
+    // console.log(tableData);
 
     return (
         <div>
