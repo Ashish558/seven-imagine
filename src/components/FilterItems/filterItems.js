@@ -9,7 +9,7 @@ export default function FilterItems({ items, setData, onRemoveFilter }) {
       <div className='flex items-center'>
          {items.map((item, idx) => {
             return (
-               <div key={item.text} className={`mr-3 bg-primaryLight py-1.5 px-3 rounded-10 group ${styles.filterItem}`}>
+               <div key={item.idx} className={`mr-3 bg-primaryLight py-1.5 px-3 rounded-10 group ${styles.filterItem}`}>
                   <p className='text-lightGray'>
                      {item.text}
                   </p>
