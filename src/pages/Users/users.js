@@ -133,7 +133,8 @@ export default function Users() {
          .then(res => {
             console.log(res)
             if (res.error) {
-              return alert(res.error.data.message)
+               alert(res.error.data.message)
+               return
             }
             setModalData(initialState)
             handleClose()
