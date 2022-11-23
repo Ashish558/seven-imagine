@@ -268,7 +268,7 @@ export default function Users() {
                               value={modalData.email}
                               onChange={e => setModalData({ ...modalData, email: e.target.value })} />
                         </div>
-                        <div>
+                        {/* <div>
                            <InputField label='Password'
                               labelClassname='ml-4 mb-0.5'
                               isRequired={true}
@@ -279,7 +279,7 @@ export default function Users() {
                               parentClassName='w-full mr-4' type='password'
                               value={modalData.password}
                               onChange={e => setModalData({ ...modalData, password: e.target.value })} />
-                        </div>
+                        </div> */}
                         <div>
                            <InputSelect value={modalData.userType}
                               onChange={val => setModalData({ ...modalData, userType: val })}
