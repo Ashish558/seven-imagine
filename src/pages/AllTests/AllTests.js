@@ -27,6 +27,8 @@ export default function AllTests() {
     const [csvError, setCSVError] = useState("");
     const [PDFError, setPDFError] = useState("");
     const [testForDelete, setTestForDelete] = useState("");
+    const [question, setQuestion] = useState("");
+    const [strategy, setStrategy] = useState("");
 
     const [removeQuestionModal, setRemoveQuestionModal] = useState(false);
 
@@ -57,6 +59,21 @@ export default function AllTests() {
         if (file.type.includes("pdf")) {
             setPDFError("");
             setPDFFile(file);
+            console.log(file);
+            const formData = new FormData();
+            formData.append("pdf", file);
+
+            axios
+                .post(
+                    `https://sevenimagine.herokuapp.com/api/test/addPdf/${testForDelete._id}`,
+                    {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        },
+                    },
+                    formData
+                )
+                .then((res) => console.log(res));
         } else {
             setPDFFile({});
             setPDFError("Not a PDF File");
@@ -126,17 +143,20 @@ export default function AllTests() {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-2 md:gap-x-3 gap-y-2 gap-y-4">
                                 <InputField
                                     label="Test Name"
-                                    placeholder="Test Name"
-                                    onChange={(e) => setName(e.target.value)}
+                                    labelClassname="ml-2 mb-1.2"
+                                    optionData={optionData}
+                                    placeholder="Type Test Name"
+                                    parentClassName="w-full mr-4"
+                                    type="select"
                                 />
 
                                 <InputSelect
-                                    value={type}
-                                    onChange={(val) => setType(val)}
-                                    optionData={optionData}
                                     label="Test Type"
-                                    labelClassname="ml-3 mb-0"
-                                    placeholder="Test Type"
+                                    value={question}
+                                    onChange={(val) => setQuestion(val)}
+                                    labelClassname="ml-2 mb-1.2"
+                                    optionData={optionData}
+                                    placeholder="Select Test Type"
                                     parentClassName="w-full mr-4"
                                     type="select"
                                 />
@@ -212,7 +232,6 @@ export default function AllTests() {
                                                                 results
                                                             ) {
                                                                 console.log(
-                                                                    "Finished:",
                                                                     results.data
                                                                 );
                                                             },
