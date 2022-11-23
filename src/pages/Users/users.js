@@ -10,7 +10,7 @@ import AddIcon from '../../assets/icons/add.svg'
 import SearchIcon from '../../assets/icons/search.svg'
 import { tableData, userTypesList } from './tempData'
 import { useAddUserMutation, useLazyGetAllUsersQuery } from '../../app/services/users'
-import { retry } from '@reduxjs/toolkit/dist/query'
+import { useSignupUserMutation } from '../../app/services/auth'
 
 const optionData = [
    'option 1',
@@ -25,7 +25,7 @@ const tableHeaders = [
    'Services'
 ]
 
-const userTypeOptions = ['tutor']
+const userTypeOptions = ['tutor', 'parent', 'student']
 
 const initialState = {
    email: '',
@@ -49,6 +49,7 @@ export default function Users() {
 
    const [fetchUsers, fetchUsersResp] = useLazyGetAllUsersQuery()
    const [addUser, addUserResp] = useAddUserMutation()
+   const [signupUser, signupUserResp] = useSignupUserMutation()
 
    const [filterData, setFilterData] = useState({
       typeName: '',
@@ -123,22 +124,39 @@ export default function Users() {
 
    const handleSubmit = e => {
       e.preventDefault()
-      console.log(modalData)
-      const body = {
+      if (modalData.userType === '') return alert('Fill all the fields')
+      let body = {
          firstName: modalData.firstName,
          lastName: modalData.lastName,
          email: modalData.email,
       }
-      addUser(body)
-         .then(res => {
-            console.log(res)
-            if (res.error) {
-               alert(res.error.data.message)
-               return
-            }
-            setModalData(initialState)
-            handleClose()
-         })
+      if (modalData.userType === 'tutor') {
+         console.log(body)
+         addUser(body)
+            .then(res => {
+               console.log(res)
+               if (res.error) {
+                  alert(res.error.data.message)
+                  return
+               }
+               setModalData(initialState)
+               handleClose()
+            })
+         return
+      } else {
+         body.role = modalData.userType
+         console.log(body)
+         signupUser(body)
+            .then(res => {
+               console.log(res)
+               if (res.error) {
+                  alert(res.error.data.message)
+                  return
+               }
+               setModalData(initialState)
+               handleClose()
+            })
+      }
    }
 
    const handleClose = () => setModalActive(false)

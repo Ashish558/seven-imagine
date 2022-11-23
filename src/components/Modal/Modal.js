@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react'
-import styles from './modal.module.css'
-import CancelIcon from '../../assets/Modal/cancel.svg'
-import SecondaryButton from '../Buttons/SecondaryButton'
+import React, { useEffect } from "react";
+import styles from "./modal.module.css";
+import CancelIcon from "../../assets/Modal/cancel.svg";
+import SecondaryButton from "../Buttons/SecondaryButton";
 
 export default function Modal({ title, titleClassName, body, cancelBtn, cancelBtnClassName, primaryBtn, handleClose, classname }) {
-
 
    //disable body scroll if modal open
    useEffect(() => {
@@ -49,9 +48,9 @@ export default function Modal({ title, titleClassName, body, cancelBtn, cancelBt
                </button>
 
             </div>
-         </div>
 
-         <div className={styles.modalOverlay}></div>
+            <div className={styles.modalOverlay}></div>
+         </div>
       </div>
-   )
+   );
 }

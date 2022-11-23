@@ -64,3 +64,19 @@
 #studentDashboardRight {
     padding-right: 10px;
 }
+
+#subjectList {
+    position: absolute;
+    z-index: 999;
+    background-color: #fff;
+    /* display: inline-block; */
+}
+
+#subjectCheck {
+    /* display: none; */
+}
+
+#subjectCheck:checked #subjectList {
+    /* display: block; */
+    background-color: #f00 !important;
+}

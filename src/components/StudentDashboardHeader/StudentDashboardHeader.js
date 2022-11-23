@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import Chart from "../Chart/Chart";
-import explore from "./../../Assets/images/explore-bg.png";
+import explore from "./../../assets/images/explore-bg.png";
 import styles from "./StudentDashboardHeader.module.css";
 
 const StudentDashboardHeader = () => {

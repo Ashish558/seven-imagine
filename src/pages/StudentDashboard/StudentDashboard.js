@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./StudentDashboard.module.css";
 import Chart from "./../../components/Chart/Chart";
-import arrowDown from "./../../Assets/icons/arrow-down.png";
+import arrowDown from "./../../assets/icons/arrow-down.png";
 import StudentDashboardHeader from "../../components/StudentDashboardHeader/StudentDashboardHeader";
 import TutorCarousel from "../../components/TutorCarousel/TutorCarousel";
 import CompleteProfile from "../../components/CompleteProfile/CompleteProfile";
@@ -10,11 +10,11 @@ import SessionFeedback from "../../components/SessionFeedback/SessionFeedback";
 const StudentDashboard = () => {
     const [subject, setSubject] = useState("Maths");
     const [slot, setSlot] = useState("Jun 20, 2022 - Jul 30, 2022 ");
+    const [showSub, setShowSub] = useState(false);
+    const [showSlot, setShowSlot] = useState(false);
+
     return (
-        <div
-            className={`w-11/12 ${styles.studentDashboardContainer}`}
-            id="container"
-        >
+        <div className={`${styles.studentDashboardContainer}`} id="container">
             <div className="flex" id={styles.studentDashboard}>
                 <div className="w-2/3">
                     <StudentDashboardHeader></StudentDashboardHeader>
@@ -26,6 +26,7 @@ const StudentDashboard = () => {
                                 className="flex items-center"
                                 id={styles.dropdownHeading}
                                 tabIndex={0}
+                                htmlFor={styles.subjectCheck}
                             >
                                 {subject}
                                 <img
@@ -34,39 +35,52 @@ const StudentDashboard = () => {
                                     alt=""
                                 />
                             </label>
+                            <input
+                                type="checkbox"
+                                className="hidden"
+                                onChange={(e) => setShowSub(e.target.checked)}
+                                id={styles.subjectCheck}
+                            />
                             <ul
                                 tabIndex={0}
-                                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+                                className={`menu p-2 shadow bg-base-100 rounded-box w-52 ${
+                                    showSub ? "visible" : "hidden"
+                                }`}
+                                id={styles.subjectList}
                             >
                                 <li
-                                    onClick={(e) =>
-                                        setSubject(e.target.innerText)
-                                    }
+                                    onClick={(e) => {
+                                        setSubject(e.target.innerText);
+                                        setShowSub(false);
+                                    }}
                                     className="py-2 cursor-pointer"
                                 >
                                     Math
                                 </li>
 
                                 <li
-                                    onClick={(e) =>
-                                        setSubject(e.target.innerText)
-                                    }
+                                    onClick={(e) => {
+                                        setSubject(e.target.innerText);
+                                        setShowSub(false);
+                                    }}
                                     className="py-2 cursor-pointer"
                                 >
                                     Physic
                                 </li>
                                 <li
-                                    onClick={(e) =>
-                                        setSubject(e.target.innerText)
-                                    }
+                                    onClick={(e) => {
+                                        setSubject(e.target.innerText);
+                                        setShowSub(false);
+                                    }}
                                     className="py-2 cursor-pointer"
                                 >
                                     Biology
                                 </li>
                                 <li
-                                    onClick={(e) =>
-                                        setSubject(e.target.innerText)
-                                    }
+                                    onClick={(e) => {
+                                        setSubject(e.target.innerText);
+                                        setShowSub(false);
+                                    }}
                                     className="py-2 cursor-pointer"
                                 >
                                     Chemistry
@@ -79,6 +93,7 @@ const StudentDashboard = () => {
                                 className="flex items-center"
                                 id={styles.dropdownHeading}
                                 tabIndex={0}
+                                htmlFor="slot"
                             >
                                 {slot}
                                 <img
@@ -87,13 +102,22 @@ const StudentDashboard = () => {
                                     alt=""
                                 />
                             </label>
+                            <input
+                                type="checkbox"
+                                className="hidden"
+                                id="slot"
+                                onChange={(e) => setShowSlot(e.target.checked)}
+                            />
                             <ul
                                 tabIndex={0}
-                                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-full"
+                                className={`dropdown-content menu p-2 shadow bg-base-100 rounded-box absolute bg-white z-50 ${
+                                    showSlot ? "visible" : "hidden"
+                                }`}
                             >
                                 <li
                                     onClick={(e) => {
                                         setSlot(e.target.innerText);
+                                        setShowSlot(false);
                                     }}
                                     className="py-2 cursor-pointer"
                                 >
@@ -103,6 +127,7 @@ const StudentDashboard = () => {
                                 <li
                                     onClick={(e) => {
                                         setSlot(e.target.innerText);
+                                        setShowSlot(false);
                                     }}
                                     className="py-2 cursor-pointer"
                                 >
@@ -111,6 +136,7 @@ const StudentDashboard = () => {
                                 <li
                                     onClick={(e) => {
                                         setSlot(e.target.innerText);
+                                        setShowSlot(false);
                                     }}
                                     className="py-2 cursor-pointer"
                                 >
@@ -119,6 +145,7 @@ const StudentDashboard = () => {
                                 <li
                                     onClick={(e) => {
                                         setSlot(e.target.innerText);
+                                        setShowSlot(false);
                                     }}
                                     className="py-2 cursor-pointer"
                                 >

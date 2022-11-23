@@ -3,7 +3,7 @@ import styles from "./TutorCarousel.module.css";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import shivam from "./../../Assets/images/tutors/shivam-shrivastab.png";
+import shivam from "./../../assets/images/tutors/shivam-shrivastab.png";
 
 const TutorCarousel = () => {
     return (
