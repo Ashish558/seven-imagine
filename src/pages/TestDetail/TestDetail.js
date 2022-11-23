@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SecondaryButton from "../../components/Buttons/SecondaryButton";
 import BackIcon from "../../assets/assignedTests/back.svg";
 import PrimaryButton from "../../components/Buttons/PrimaryButton";
@@ -27,10 +27,10 @@ const tableHeaders = [
 ];
 
 export default function TestDetail() {
-    // const [testData, setTestData] = useState(tableData)
+    const [testData, setTestData] = useState([]);
     const navigate = useNavigate();
 
-    console.log(window.location.pathname.split("/")[2]);
+    // console.log(window.location.pathname.split("/")[2]);
 
     axios
         .get(
@@ -38,7 +38,11 @@ export default function TestDetail() {
                 window.location.pathname.split("/")[2]
             }`
         )
-        .then((res) => console.log(res.data.data.test));
+        .then((res) => {
+            setTestData(res.data.data.test);
+        });
+
+    // console.log(testData);
 
     return (
         <div className="ml-pageLeft bg-lightWhite min-h-screen">
@@ -56,7 +60,7 @@ export default function TestDetail() {
                             }
                         />
                         <p className="mt-6 text-textPrimaryDark text-4xl font-bold">
-                            ACT O
+                            {testData.testName}
                         </p>
 
                         <div className="grid max-w-840 gap-y-2 mt-2">
@@ -67,8 +71,7 @@ export default function TestDetail() {
                                 </p>
                                 <span className="inline-block mr-4">:</span>
                                 <p className="inline-block w-138 font-semibold ml-7">
-                                    {" "}
-                                    20/06/22
+                                    {testData.createdAt?.split("T")[0]}
                                 </p>
                             </div>
                             <div>
@@ -79,7 +82,7 @@ export default function TestDetail() {
                                 <span className="inline-block mr-4">:</span>
                                 <p className="inline-block w-138 font-semibold ml-7">
                                     {" "}
-                                    20/06/22
+                                    {testData.updatedAt?.split("T")[0]}
                                 </p>
                             </div>
                             <div>
@@ -90,7 +93,7 @@ export default function TestDetail() {
                                 <span className="inline-block mr-4">:</span>
                                 <p className="inline-block w-138 font-semibold ml-7">
                                     {" "}
-                                    ACT 0{" "}
+                                    {testData.testName}
                                 </p>
                             </div>
                             <div>
@@ -101,7 +104,7 @@ export default function TestDetail() {
                                 <span className="inline-block mr-4">:</span>
                                 <p className="inline-block w-138 font-semibold ml-7">
                                     {" "}
-                                    ACT
+                                    {testData.testType}
                                 </p>
                             </div>
                         </div>
@@ -124,58 +127,21 @@ export default function TestDetail() {
                                         Total Questions
                                     </p>
                                 </div>
-                                <div>
-                                    <p className="inline-block w-138 font-semibold">
-                                        {" "}
-                                        English
-                                    </p>
-                                    <div className="inline-block w-120 font-semibold">
-                                        45 mins
+                                {testData.sections?.map((section) => (
+                                    <div>
+                                        <p className="inline-block w-138 font-semibold">
+                                            {" "}
+                                            {section.name}
+                                        </p>
+                                        <div className="inline-block w-120 font-semibold">
+                                            {section.time} mins
+                                        </div>
+                                        <p className="inline-block w-138 font-semibold text-center">
+                                            {" "}
+                                            {section.totalQuestions}
+                                        </p>
                                     </div>
-                                    <p className="inline-block w-138 font-semibold text-center">
-                                        {" "}
-                                        75
-                                    </p>
-                                </div>
-                                <div>
-                                    <p className="inline-block w-138 font-semibold">
-                                        {" "}
-                                        Mathematics{" "}
-                                    </p>
-                                    <div className="inline-block w-120 font-semibold">
-                                        45 mins
-                                    </div>
-                                    <p className="inline-block w-138 font-semibold text-center">
-                                        {" "}
-                                        75
-                                    </p>
-                                </div>
-                                <div>
-                                    <p className="inline-block w-138 font-semibold">
-                                        {" "}
-                                        Reading{" "}
-                                    </p>
-                                    <div className="inline-block w-120 font-semibold">
-                                        45 mins
-                                    </div>
-                                    <p className="inline-block w-138 font-semibold text-center ">
-                                        {" "}
-                                        40{" "}
-                                    </p>
-                                </div>
-                                <div>
-                                    <p className="inline-block w-138 font-semibold">
-                                        {" "}
-                                        Science{" "}
-                                    </p>
-                                    <div className="inline-block w-120 font-semibold">
-                                        45 mins
-                                    </div>
-                                    <p className="inline-block w-138 font-semibold text-center">
-                                        {" "}
-                                        4
-                                    </p>
-                                </div>
+                                ))}
                             </div>
                         </div>
                     </div>
