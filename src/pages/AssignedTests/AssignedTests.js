@@ -103,7 +103,8 @@ export default function AssignedTests() {
                      dataFor='assignedTests'
                      data={tableData}
                      tableHeaders={tableHeaders}
-                     maxPageSize={10} />
+                     maxPageSize={10}
+                     hidePagination={true} />
                </div>
             </div>
          </div>
