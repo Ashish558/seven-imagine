@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SecondaryButton from '../../components/Buttons/SecondaryButton'
 import BackIcon from '../../assets/assignedTests/back.svg'
 import PrimaryButton from '../../components/Buttons/PrimaryButton'
@@ -7,7 +7,7 @@ import { tableData } from './tempData'
 import Table from '../../components/Table/Table'
 import { useNavigate } from 'react-router-dom'
 
-const subjects = [
+const tempsubjects = [
    { text: 'Trigonometry', selected: true },
    { text: 'Mathematics', selected: false },
    { text: 'Reading', selected: false },
@@ -22,7 +22,34 @@ export default function CompletedTest() {
 
    const [testData, setTestData] = useState(tableData)
    const navigate = useNavigate()
+   const [subjects, setSubjects] = useState(tempsubjects)
 
+   const getSelectedString = (arr) => {
+      let strArr = []
+      arr.map(item => {
+         if (item.selected) strArr.push(item.text)
+      })
+      return strArr
+   }
+
+   const handleChange = (item) => {
+      let tempdata = subjects.map(sub => {
+         if (sub.text === item.text) {
+            return { ...sub, selected: !item.selected }
+         } else {
+            return { ...sub }
+         }
+      })
+      setSubjects(tempdata)
+   }
+
+   useEffect(() => {
+      let strArr = getSelectedString(subjects)
+      let tempData = tableData.filter(item => strArr.includes(item.concept))
+      setTestData(tempData)
+   }, [subjects])
+   
+   // console.log(testData)
    return (
       <div className='ml-pageLeft bg-lightWhite min-h-screen'>
          <div className='py-14 px-5'>
@@ -75,6 +102,7 @@ export default function CompletedTest() {
                      {subjects.map((item, idx) => {
                         return <PrimaryButton
                            children={item.text}
+                           onClick={() => handleChange(item)}
                            className={`py-2 px-0 mr-7 font-semibold w-160 ${item.selected ? '' : 'bg-secondaryLight text-textGray'}`} />
                      })}
                   </div>
@@ -109,7 +137,8 @@ export default function CompletedTest() {
                </div>
 
                <div className='mt-4'>
-                  <Table dataFor='tests' hidePagination={true} data={testData} tableHeaders={tableHeaders} maxPageSize={10} />
+                  <Table dataFor='tests' hidePagination={true} data={testData}
+                   tableHeaders={tableHeaders} maxPageSize={10} />
                </div>
             </div>
          </div>

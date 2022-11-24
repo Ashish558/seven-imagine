@@ -13,7 +13,7 @@ export const tableData= [
       correctAnswer: 'A',
       studentResponse: 'B',
       Accuracy: 100,
-      concept: 'Trigonometry',
+      concept: 'Mathematics',
       strategy: 'Backsolving',
       time: '21 sec'
    },
@@ -22,7 +22,7 @@ export const tableData= [
       correctAnswer: 'A',
       studentResponse: 'B',
       Accuracy: 50,
-      concept: 'Trigonometry',
+      concept: 'Reading',
       strategy: 'Backsolving',
       time: '21 sec'
    },
@@ -31,7 +31,7 @@ export const tableData= [
       correctAnswer: 'A',
       studentResponse: 'B',
       Accuracy: 40,
-      concept: 'Trigonometry',
+      concept: 'Science',
       strategy: 'Backsolving',
       time: '21 sec'
    },

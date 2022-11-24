@@ -22,7 +22,7 @@ export default function Table({
          setTableData(temp);
          setCurrentPage(1);
       }
-   }, []);
+   }, [data]);
 
 
    //change tabledata if current page changes
