@@ -12,14 +12,13 @@ import data from "./tempData";
 import upload from "./../../assets/icons/upload.png";
 import Papa from "papaparse";
 import axios from "axios";
-const optionData = ["option 1", "option 2", "option 3", "option 4", "option 5"];
+const optionData = ["SAT", "ACT"];
 const tableHeaders = ["Test Name", "Date Modified", "Test Type", "", ""];
 
 export default function AllTests() {
     const [tableData, setTableData] = useState([]);
     const [modalActive, setModalActive] = useState(false);
     const [testName, setTestName] = useState("");
-    const [concept, setConcept] = useState("");
     const [type, setType] = useState("");
     const [name, setName] = useState("");
     const [pdfFile, setPDFFile] = useState({});
@@ -28,7 +27,6 @@ export default function AllTests() {
     const [PDFError, setPDFError] = useState("");
     const [testForDelete, setTestForDelete] = useState("");
     const [question, setQuestion] = useState("");
-    const [strategy, setStrategy] = useState("");
 
     const [removeQuestionModal, setRemoveQuestionModal] = useState(false);
 
@@ -93,7 +91,21 @@ export default function AllTests() {
         axios
             .get("https://sevenimagine.herokuapp.com/api/test")
             .then((res) => setTableData(res.data.data.test));
-    }, []);
+    }, [tableData]);
+
+    const assignTest = () => {
+        const assignedTest = new FormData();
+        console.log(name, type);
+        assignedTest.append("testName", name);
+        assignedTest.append("testType", type);
+        const url = "https://sevenimagine.herokuapp.com/api/test";
+        axios
+            .post(url, {
+                testName: name,
+                testType: type,
+            })
+            .then((res) => console.log(res));
+    };
 
     return (
         <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">
@@ -136,7 +148,10 @@ export default function AllTests() {
                 <Modal
                     title="Create a New Test"
                     cancelBtn={true}
-                    primaryBtn={{ text: "Assign" }}
+                    primaryBtn={{
+                        text: "Assign",
+                        onClick: assignTest,
+                    }}
                     handleClose={handleClose}
                     body={
                         <>
@@ -148,12 +163,13 @@ export default function AllTests() {
                                     placeholder="Type Test Name"
                                     parentClassName="w-full mr-4"
                                     type="select"
+                                    onChange={(e) => setName(e.target.value)}
                                 />
 
                                 <InputSelect
                                     label="Test Type"
                                     value={question}
-                                    onChange={(val) => setQuestion(val)}
+                                    onChange={(val) => setType(val)}
                                     labelClassname="ml-2 mb-1.2"
                                     optionData={optionData}
                                     placeholder="Select Test Type"
