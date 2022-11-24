@@ -41,6 +41,8 @@ export default function AssignedTests() {
    const updateTutor = e => setTutor(e.target.value)
    const updateStatus = val => setStatus(val)
 
+   const persona = sessionStorage.getItem('role')
+
    const [modalData, setModalData] = useState({
       name: '',
       limit: '',
@@ -59,10 +61,19 @@ export default function AssignedTests() {
             <div className='py-14 px-5'>
                <div className='flex justify-between items-center'>
                   <p className='font-bold text-4xl text-primary-dark'>Assigned Tests</p>
-                  <button className='bg-primaryOrange py-3.5 px-6 flex items-center text-white font-semibold rounded-lg mr-55' onClick={() => setAssignTestModalActive(true)} >
-                     Assign new test
-                     <img src={AddIcon} className='ml-3' />
-                  </button>
+
+                  {
+                     persona === 'student' ?
+                        <button className='bg-primaryOrange py-3.5 px-6 flex items-center text-white font-semibold rounded-lg mr-55' onClick={() => setAssignTestModalActive(true)} >
+                           Assign new test
+                           <img src={AddIcon} className='ml-3' />
+                        </button> :
+                        <button className='bg-primaryOrange py-3.5 px-6 flex items-center text-white font-semibold rounded-lg mr-55' onClick={() => setAssignTestModalActive(true)} >
+                           Assign new test
+                           <img src={AddIcon} className='ml-3' />
+                        </button>
+                  }
+
                </div>
                <div className='flex align-center mt-8'>
                   <InputField value={studentName}
@@ -104,7 +115,7 @@ export default function AssignedTests() {
                      data={tableData}
                      tableHeaders={tableHeaders}
                      maxPageSize={10}
-                     hidePagination={true} />
+                     />
                </div>
             </div>
          </div>

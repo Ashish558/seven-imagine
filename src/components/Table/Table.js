@@ -13,7 +13,7 @@ export default function Table({
 }) {
    const [tableData, setTableData] = useState(data);
    const [currentPage, setCurrentPage] = useState(1);
-
+   
    useEffect(() => {
       if (hidePagination === true) {
          setTableData(data)

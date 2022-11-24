@@ -8,7 +8,7 @@ import Table from '../../components/Table/Table'
 import { useNavigate } from 'react-router-dom'
 
 const subjects = [
-   { text: 'English', selected: true },
+   { text: 'Trigonometry', selected: true },
    { text: 'Mathematics', selected: false },
    { text: 'Reading', selected: false },
    { text: 'Science', selected: false },
@@ -29,7 +29,7 @@ export default function CompletedTest() {
             <div className='px-0'>
                <SecondaryButton
                   className='flex items-center pl-2 pr-5 py-2.5'
-                  onClick={()=> navigate('/assigned-tests')}
+                  onClick={() => navigate('/assigned-tests')}
                   children={
                      <>
                         <img src={BackIcon} className='mr-2' />
@@ -109,7 +109,7 @@ export default function CompletedTest() {
                </div>
 
                <div className='mt-4'>
-                  <Table dataFor='tests' data={testData} tableHeaders={tableHeaders} maxPageSize={10} />
+                  <Table dataFor='tests' hidePagination={true} data={testData} tableHeaders={tableHeaders} maxPageSize={10} />
                </div>
             </div>
          </div>
