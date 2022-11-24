@@ -12,32 +12,33 @@ import data from "./tempData";
 import upload from "./../../assets/icons/upload.png";
 import Papa from "papaparse";
 import axios from "axios";
+import { useAddPdfMutation, useAddTestMutation } from "../../app/services/test";
 
 const optionData = ["option 1", "option 2", "option 3", "option 4", "option 5"];
+const testTypeOptions = ['SAT'];
 const tableHeaders = ["Test Name", "Date Modified", "Test Type", "", ""];
+
+const initialState = {
+   testName: "",
+   dateModified: "",
+   testType: "",
+}
 
 export default function AllTests() {
    const [tableData, setTableData] = useState([]);
    const [modalActive, setModalActive] = useState(false);
    const [testName, setTestName] = useState("");
-   const [concept, setConcept] = useState("");
-   const [type, setType] = useState("");
-   const [name, setName] = useState("");
    const [pdfFile, setPDFFile] = useState({});
    const [csvFile, setCSVFile] = useState({});
    const [csvError, setCSVError] = useState("");
    const [PDFError, setPDFError] = useState("");
    const [testForDelete, setTestForDelete] = useState("");
-   const [question, setQuestion] = useState("");
-   const [strategy, setStrategy] = useState("");
 
    const [removeQuestionModal, setRemoveQuestionModal] = useState(false);
+   const [submitTest, submitTestResp] = useAddTestMutation()
+   const [submitPdf, submitPdfResp] = useAddPdfMutation()
 
-   const [modalData, setModalData] = useState({
-      testName: "",
-      dateModified: "",
-      testType: "",
-   });
+   const [modalData, setModalData] = useState(initialState);
 
    const handleClose = () => setModalActive(false);
    const closeRemoveModal = () => setRemoveQuestionModal(false);
@@ -54,33 +55,46 @@ export default function AllTests() {
          .delete(
             `https://sevenimagine.herokuapp.com/api/test/${testForDelete._id}`
          )
-         .then((res) => console.log(res));
+         .then((res) => {
+            console.log(res)
+            fetchTests()
+         });
    };
 
    const handlePDFFile = (file) => {
-      if (file.type.includes("pdf")) {
-         setPDFError("");
-         setPDFFile(file);
-         console.log(file);
-         const formData = new FormData();
-         formData.append("pdf", file);
+      console.log(file);
+      // if (file.type.includes("pdf")) {
+      setPDFError("");
+      setPDFFile(file);
 
-         axios
-            .post(
-               `https://sevenimagine.herokuapp.com/api/test/addPdf/${testForDelete._id}`,
-               {
-                  headers: {
-                     "Content-Type": "multipart/form-data",
-                  },
-               },
-               formData
-            )
-            .then((res) => console.log(res));
-      } else {
-         setPDFFile({});
-         setPDFError("Not a PDF File");
-      }
+      // var reader = new FileReader();
+      // reader.onload = function (event) {
+      //    setPDFFile(event.target.result);
+      //    // console.log(event.target.result)
+      // };
+
+      // reader.readAsText(file);
+
+      // const formData = new FormData();
+      // formData.append("pdf", file);
+      // axios
+      //    .post(
+      //       `https://sevenimagine.herokuapp.com/api/test/addPdf/${testForDelete._id}`,
+      //       {
+      //          headers: {
+      //             "Content-Type": "multipart/form-data",
+      //          },
+      //       },
+      //       formData
+      //    )
+      //    .then((res) => console.log(res));
+      // } 
+      // else {
+      //    setPDFFile({});
+      //    setPDFError("Not a PDF File");
+      // }
    };
+
    const handleCSVFile = (file) => {
       if (file.type.includes("csv")) {
          setCSVError("");
@@ -91,11 +105,54 @@ export default function AllTests() {
       }
    };
 
-   useEffect(() => {
+   const handleSubmit = (e) => {
+      e.preventDefault()
+      // console.log(modalData)
+      let body = { testName: modalData.testName, testType: modalData.testType }
+      submitTest(body)
+         .then(res => {
+            console.log(res)
+            if(res.error){
+               alert(res.error.data.message)
+               return
+            }
+            let testId = res.data.data.test._id
+            const formData = new FormData();
+            formData.append("pdf", pdfFile);
+            axios
+               .post(
+                  `https://sevenimagine.herokuapp.com/api/test/addpdf/${testId}`,
+                  formData
+               )
+               .then((res) => {
+                  console.log(res)
+                  setModalData(initialState)
+                  setModalActive(false)
+                  setPDFFile({})
+                  // fetchTests()
+               });
+            // submitPdf({ id: testId, formData })
+            //    .then(res => {
+            //       console.log(res)
+            //       if (res.error) {
+            //          alert(res.error.data.message)
+            //       }
+            //    })
+         })
+   }
+
+   const fetchTests = () => {
       axios
          .get("https://sevenimagine.herokuapp.com/api/test")
          .then((res) => setTableData(res.data.data.test));
+   }
+
+   useEffect(() => {
+      fetchTests()
    }, []);
+
+   // console.log(pdfFile)
+   // console.log(csvFile)
 
    return (
       <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">
@@ -114,7 +171,7 @@ export default function AllTests() {
                <InputField
                   value={testName}
                   IconRight={SearchIcon}
-                  onChange={(val) => setTestName(val)}
+                  onChange={e => setTestName(e.target.value)}
                   optionData={optionData}
                   placeholder="Test Name"
                   parentClassName="w-290 mr-4"
@@ -138,10 +195,15 @@ export default function AllTests() {
             <Modal
                title="Create a New Test"
                cancelBtn={true}
-               primaryBtn={{ text: "Assign" }}
+               primaryBtn={{
+                  text: "Assign",
+                  form: 'add-test-form',
+                  onClick: handleSubmit,
+                  type: 'submit'
+               }}
                handleClose={handleClose}
                body={
-                  <>
+                  <form onSubmit={handleSubmit} id='add-test-form'>
                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-2 md:gap-x-3 gap-y-2 gap-y-4">
                         <InputField
                            label="Test Name"
@@ -150,17 +212,21 @@ export default function AllTests() {
                            placeholder="Type Test Name"
                            parentClassName="w-full mr-4"
                            type="select"
+                           isRequired={true}
+                           value={modalData.testName}
+                           onChange={e => setModalData({ ...modalData, testName: e.target.value })}
                         />
 
                         <InputSelect
                            label="Test Type"
-                           value={question}
-                           onChange={(val) => setQuestion(val)}
                            labelClassname="ml-2 mb-1.2"
-                           optionData={optionData}
+                           optionData={testTypeOptions}
                            placeholder="Select Test Type"
                            parentClassName="w-full mr-4"
+                           isRequired={true}
                            type="select"
+                           value={modalData.testType}
+                           onChange={val => setModalData({ ...modalData, testType: val })}
                         />
                      </div>
 
@@ -174,59 +240,35 @@ export default function AllTests() {
                               <div id={styles.pdfUpload}>
                                  <label
                                     htmlFor="pdf"
-                                    className={
-                                       pdfFile.name &&
-                                       styles.fileUploaded
-                                    }
+                                    className={pdfFile.name && styles.fileUploaded}
                                  >
                                     Upload PDF
-                                    <img
-                                       src={upload}
-                                       alt="Upload"
-                                    />
+                                    <img src={upload} alt="Upload" />
                                  </label>
-
                                  <div className={styles.error}>
                                     {PDFError}
                                  </div>
 
-                                 <input
-                                    id="pdf"
-                                    type="file"
-                                    onChange={(e) =>
-                                       handlePDFFile(
-                                          e.target.files[0]
-                                       )
-                                    }
+                                 <input id="pdf"
+                                    type="file" accept="application/pdf"
+                                    onChange={(e) => handlePDFFile(e.target.files[0])}
                                  />
                               </div>
                               <div id={styles.csvUpload}>
                                  <label
                                     htmlFor="csv"
-                                    className={
-                                       csvFile.name &&
-                                       styles.fileUploaded
-                                    }
-                                 >
+                                    className={csvFile.name && styles.fileUploaded} >
                                     Upload CSV
-                                    <img
-                                       src={upload}
-                                       alt="Upload"
-                                    />
+                                    <img src={upload} alt="Upload" />
                                  </label>
-
                                  <div className={styles.error}>
                                     {csvError}
                                  </div>
-
                                  <input
                                     id="csv"
                                     type="file"
                                     onChange={(e) => {
-                                       handleCSVFile(
-                                          e.target.files[0]
-                                       );
-
+                                       handleCSVFile(e.target.files[0]);
                                        Papa.parse(
                                           e.target.files[0],
                                           {
@@ -249,7 +291,7 @@ export default function AllTests() {
                            </div>
                         </div>
                      </div>
-                  </>
+                  </form>
                }
                classname={"max-w-840 mx-auto"}
             />

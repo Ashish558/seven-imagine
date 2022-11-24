@@ -228,7 +228,7 @@ export default function Users() {
                   text: "Add",
                   className: 'w-140',
                   form: 'add-user-form',
-                  onClick: handleSubmit,
+                  // onClick: handleSubmit,
                   type: 'submit',
                }}
                handleClose={handleClose}
