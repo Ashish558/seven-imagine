@@ -16,7 +16,7 @@ export default function TableItem({ item, dataFor, onClick }) {
     const navigate = useNavigate()
     // console.log(item)
     // console.log(dataFor)
-    
+
     const returnStatus = (status) => {
         return status === 0 ? (
             <img className="first:mr-2" src={YellowIcon} />
@@ -142,6 +142,28 @@ export default function TableItem({ item, dataFor, onClick }) {
                                 Upload Answer
                             </span>
                             <img src={UploadIcon} />
+                        </button>
+                    </td>
+                </tr>
+            )}
+            {dataFor === "assignedTestsStudents" && (
+                <tr className="odd:bg-white shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
+                    {Object.keys(item).map((key, i) =>
+                    (
+                        <td className="font-medium px-1  min-w-14 py-4">
+                            {key === 'status' ?
+                            <img className="first:mr-2 mx-auto inline-block" src={GreenIcon} />
+                             :
+                                item[key]
+                            }
+                        </td>
+                    )
+                    )}
+                    <td className="font-medium px-1  min-w-14 py-4">
+                        <button
+                            className="px-2.5 py-1.8 rounded-md flex items-center leading-none bg-primary text-white"
+                        >
+                            Test details
                         </button>
                     </td>
                 </tr>

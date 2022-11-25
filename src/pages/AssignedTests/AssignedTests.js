@@ -6,7 +6,7 @@ import InputSelect from "../../components/InputSelect/InputSelect";
 import AddIcon from "../../assets/icons/add.svg";
 import SearchIcon from "../../assets/icons/search.svg";
 
-import { tableData } from "./tempData";
+import { tableData, studentsDataTable } from "./tempData";
 import InputField from "../../components/InputField/inputField";
 import axios from "axios";
 
@@ -24,13 +24,23 @@ const tableHeaders = [
    "",
 ];
 
+const studentTableHeaders = [
+   "Test Name",
+   "Assigned on",
+   "Due Date",
+   "Duration",
+   "Status",
+   "Scores",
+   "",
+];
+
 export default function AssignedTests() {
    const [filterData, setFilterData] = useState([
       "Student",
       "Parent",
       "Active",
    ]);
-
+   const [studentsData, setStudentsData] = useState(studentsDataTable)
    const [assignTestModalActive, setAssignTestModalActive] = useState(false);
    const [resendModalActive, setResendModalActive] = useState(false);
    const persona = sessionStorage.getItem('role')
@@ -80,17 +90,13 @@ export default function AssignedTests() {
             <div className="py-14 px-5">
                <div className="flex justify-between items-center">
                   <p className="font-bold text-4xl text-primary-dark">
-                     Assigned Tests
+
+                     {persona === 'student' ? 'Tests' : 'Assigned Tests'}
                   </p>
                   {
                      persona === 'student' ?
-                        <button
-                           className="bg-primaryOrange py-3.5 px-6 flex items-center text-white font-semibold rounded-lg mr-55"
-                           // onClick={() => setAssignTestModalActive(true)}
-                        >
-                           Start Test
-                           <img src={AddIcon} className="ml-3" />
-                        </button> :
+                        <>
+                        </> :
                         <button
                            className="bg-primaryOrange py-3.5 px-6 flex items-center text-white font-semibold rounded-lg mr-55"
                            onClick={() => setAssignTestModalActive(true)}
@@ -100,56 +106,72 @@ export default function AssignedTests() {
                         </button>
                   }
                </div>
-               <div className="flex align-center mt-8">
-                  <InputField
-                     value={studentName}
-                     IconRight={SearchIcon}
-                     onChange={updateStudentName}
-                     optionData={optionData}
-                     placeholder="Student Name"
-                     inputContainerClassName="bg-white"
-                     parentClassName="w-full mr-4"
-                     type="text"
-                  />
-                  <InputField
-                     value={testName}
-                     IconRight={SearchIcon}
-                     onChange={updateTestName}
-                     optionData={optionData}
-                     placeholder="Test Name"
-                     inputContainerClassName="bg-white"
-                     parentClassName="w-full mr-4"
-                     type="text"
-                  />
-                  <InputField
-                     value={tutor}
-                     onChange={updateTutor}
-                     IconRight={SearchIcon}
-                     parentClassName="w-full mr-4"
-                     inputContainerClassName="bg-white"
-                     optionData={optionData}
-                     placeholder="Tutor Name"
-                     type="text"
-                  />
-                  <InputSelect
-                     value={status}
-                     onChange={updateStatus}
-                     optionData={optionData}
-                     placeholder="Completion Status"
-                     parentClassName="w-full mr-4"
-                     type="select"
-                  />
-               </div>
-
-               <div className="mt-6">
-                  <Table
-                     onClick={{ handleResend }}
-                     dataFor="assignedTests"
-                     data={tableData}
-                     tableHeaders={tableHeaders}
-                     maxPageSize={10}
-                  />
-               </div>
+               {
+                  persona === 'student' ? <></> :
+                     <div className="flex align-center mt-8">
+                        <InputField
+                           value={studentName}
+                           IconRight={SearchIcon}
+                           onChange={updateStudentName}
+                           optionData={optionData}
+                           placeholder="Student Name"
+                           inputContainerClassName="bg-white"
+                           parentClassName="w-full mr-4"
+                           type="text"
+                        />
+                        <InputField
+                           value={testName}
+                           IconRight={SearchIcon}
+                           onChange={updateTestName}
+                           optionData={optionData}
+                           placeholder="Test Name"
+                           inputContainerClassName="bg-white"
+                           parentClassName="w-full mr-4"
+                           type="text"
+                        />
+                        <InputField
+                           value={tutor}
+                           onChange={updateTutor}
+                           IconRight={SearchIcon}
+                           parentClassName="w-full mr-4"
+                           inputContainerClassName="bg-white"
+                           optionData={optionData}
+                           placeholder="Tutor Name"
+                           type="text"
+                        />
+                        <InputSelect
+                           value={status}
+                           onChange={updateStatus}
+                           optionData={optionData}
+                           placeholder="Completion Status"
+                           parentClassName="w-full mr-4"
+                           type="select"
+                        />
+                     </div>
+               }
+               {
+                  persona === 'student' ?
+                     <div className="mt-12">
+                        <Table
+                           // onClick={{ handleResend }}
+                           dataFor="assignedTestsStudents"
+                           data={studentsData}
+                           hidePagination={true}
+                           tableHeaders={studentTableHeaders}
+                           maxPageSize={10}
+                        />
+                     </div>
+                     :
+                     <div className="mt-6">
+                        <Table
+                           onClick={{ handleResend }}
+                           dataFor="assignedTests"
+                           data={tableData}
+                           tableHeaders={tableHeaders}
+                           maxPageSize={10}
+                        />
+                     </div>
+               }
             </div>
          </div>
          {assignTestModalActive && (

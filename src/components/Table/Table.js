@@ -38,7 +38,7 @@ export default function Table({
             <thead className="pb-2">
                <tr>
                   {tableHeaders.map((item, idx) => {
-                     return <TableHeader key={idx} header={item} />;
+                     return <TableHeader key={idx} header={item} dataFor={dataFor} />;
                   })}
                </tr>
             </thead>
