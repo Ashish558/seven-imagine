@@ -12,15 +12,17 @@ export default function NavLink({ width, icon: Icon, path, parentClassName }) {
     console.log(path);
     return (
         <button
-            className={`${path !== "/exit" && "lg:mb-14"} z-20 relative ${
-                styles.navLink
-            } ${parentClassName ? parentClassName : ""} 
+            className={`${
+                path !== "/exit" ? "lg:mb-14" : "lg:mt-32"
+            } z-20 relative ${styles.navLink} ${
+                parentClassName ? parentClassName : ""
+            } 
       ${location.pathname === path ? styles.selectedNavLink : ""}
       ${
           location.pathname === path && width < desktop
               ? styles.translateUp
               : ""
-      } ${path === "/exit" && "mt-32"} `}
+      }  `}
             onClick={handleNavigate}
         >
             {/* <img src={icon} className={Selected ? styles.selectedNavLink : ''} /> */}

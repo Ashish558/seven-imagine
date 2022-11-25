@@ -74,13 +74,7 @@ export default function Navbar() {
       }`}
             // className={styles.navContainer}
         >
-            <div
-                className="lg:min-h-full lg:w-110 w-full
-         h-75 lg:h-auto
-         
-         bg-primary p-4 lg:rounded-20 rounded-30   
-         overflow-x-hidden overflow-y-hidden lg:overflow-y-auto lg:pt-14"
-            >
+            <div className="lg:min-h-full lg:w-110 w-full h-75 lg:h-auto bg-primary p-4 lg:rounded-20 rounded-30 overflow-x-hidden overflow-y-hidden lg:overflow-y-auto lg:pt-14">
                 <div className=" flex lg:flex-col items-center self-stretch justify-around ">
                     {navdata.map((item, idx) => {
                         if (width < desktop) {
