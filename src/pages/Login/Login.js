@@ -41,10 +41,6 @@ export default function Login({ setLoginFormActive }) {
 
     const [isChecked, setIsChecked] = useState(true);
 
-    useEffect(() => {
-        console.log(isChecked);
-    }, [isChecked]);
-
     return (
         <div className="min-h-screen">
             <div className="grid grid-cols-2 min-h-screen">

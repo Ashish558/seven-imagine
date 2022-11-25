@@ -7,6 +7,8 @@ export default function ForgotPassword({
     setActiveFrame,
     setResetPasswordActive,
 }) {
+    const emailValidate = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+    const [email, setEmail] = useState("");
     return (
         <div className="w-full px-148">
             <p className="font-bold text-5xl leading-snug mb-7">
@@ -25,14 +27,15 @@ export default function ForgotPassword({
                 label="Email Address"
                 labelClassname="ml-2 mb-2"
                 inputClassName="bg-transparent"
+                onChange={(e) => setEmail(e.target.value)}
             />
 
             <button
-                disabled={false}
-                className="w-full bg-primaryDark disabled:bg-pink  py-4 rounded-10 text-white text-21"
+                disabled={!emailValidate.test(email)}
+                className="w-full bg-primaryDark disabled:bg-pink py-5 rounded-10 text-white text-21"
                 onClick={() => setActiveFrame(setResetPasswordActive)}
             >
-                Submit
+                Send Link
             </button>
         </div>
     );
