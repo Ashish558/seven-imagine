@@ -64,6 +64,11 @@ export default function Modal({
                                         ? primaryBtn.className
                                         : ""
                                 }`}
+                                style={{
+                                    fontSize: "21px",
+                                    paddingLeft: "35px",
+                                    paddingRight: "35px",
+                                }}
                             >
                                 {primaryBtn.text}
                             </button>

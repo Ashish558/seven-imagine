@@ -60,7 +60,7 @@ export default function AssignedTests() {
     };
 
     const assignTest = () => {
-        console.log(sessionStorage.getItem("userId"));
+        // console.log("userId");
         const newTest = new FormData();
         newTest.append("studentId", localStorage.getItem("userId"));
         newTest.append("testId", modalData.test);
@@ -164,7 +164,7 @@ export default function AssignedTests() {
                     primaryBtn={{
                         text: "Assign",
                         className: "max-w-140",
-                        onClick: assignTest,
+                        onClick: () => setResendModalActive(true),
                     }}
                     handleClose={handleClose}
                     body={
@@ -261,7 +261,11 @@ export default function AssignedTests() {
                     titleClassName="mb-12 leading-10"
                     cancelBtn={true}
                     cancelBtnClassName="max-w-140"
-                    primaryBtn={{ text: "Assign", className: "max-w-140" }}
+                    primaryBtn={{
+                        text: "Assign",
+                        className: "max-w-140",
+                        onclick: assignTest,
+                    }}
                     handleClose={() => setResendModalActive(false)}
                     classname={"max-w-567 mx-auto"}
                 />
