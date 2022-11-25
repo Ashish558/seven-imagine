@@ -64,14 +64,15 @@ export default function Navbar() {
          overflow-y-hidden lg:overflow-y-auto
           lg:p-4 
           flex overflow-auto
-      ${location.pathname === "/login" ||
-                    location.pathname === "/signup" ||
-                    location.pathname === "/set-password" ||
-                    !isLoggedIn
-                    ? "hidden"
-                    : "bg-lightWhite"
-                }`}
-        // className={styles.navContainer}
+      ${
+          location.pathname === "/login" ||
+          location.pathname === "/signup" ||
+          location.pathname === "/set-password" ||
+          !isLoggedIn
+              ? "hidden"
+              : "bg-lightWhite"
+      }`}
+            // className={styles.navContainer}
         >
             <div
                 className="lg:min-h-full lg:w-110 w-full
@@ -95,7 +96,9 @@ export default function Navbar() {
                                 )
                             );
                         } else {
-                            return <NavLink width={width} key={idx} {...item} />;
+                            return (
+                                <NavLink width={width} key={idx} {...item} />
+                            );
                         }
                     })}
                     {width < desktop && (
