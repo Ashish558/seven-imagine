@@ -79,7 +79,7 @@ export default function Navbar() {
          h-75 lg:h-auto
          
          bg-primary p-4 lg:rounded-20 rounded-30   
-         overflow-x-hidden overflow-y-hidden lg:overflow-y-auto lg:pt-14 "
+         overflow-x-hidden overflow-y-hidden lg:overflow-y-auto lg:pt-14"
             >
                 <div className=" flex lg:flex-col items-center self-stretch justify-around ">
                     {navdata.map((item, idx) => {

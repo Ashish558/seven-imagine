@@ -483,14 +483,14 @@ export default function EventModal({
                                 />
                                 <span class={styles.checkmark}></span>
                             </div>
-                            <p className="font-medium text-primary-60 text-sm">
+                            <p className="font-medium text-black text-sm">
                                 Recurring
                             </p>
                         </div>
 
                         <div className="flex mb-14">
                             <div className="mr-8">
-                                <p className="font-medium text-primary-60 mb-1">
+                                <p className="font-medium text-primary-60 mb-1 ml-4">
                                     Repeat every week on
                                 </p>
                                 <div className="flex">
@@ -511,6 +511,7 @@ export default function EventModal({
                             </div>
                             <InputField
                                 label="End Date"
+                                style={{ color: "#000000E5", opacity: "40%" }}
                                 labelClassname="ml-3"
                                 parentClassName="w-full self-end"
                                 type="date"
@@ -528,110 +529,115 @@ export default function EventModal({
 
                         {/* SESSIONS */}
 
-                        <div className="flex">
-                            <InputField
-                                label="Session"
-                                labelClassname="ml-3"
-                                placeholder="Session"
-                                parentClassName="w-full mr-8"
-                                inputContainerClassName="bg-lightWhite border-0"
-                                inputClassName="bg-transparent"
-                                type="text"
-                                value={data.session}
-                                onChange={(e) =>
-                                    setData({
-                                        ...data,
-                                        session: e.target.value,
-                                    })
-                                }
-                            />
-                            {persona === "student" ? (
-                                <div className="w-full flex flex-col items-start">
-                                    <InputSelect
-                                        value={data.sessionStatus}
-                                        onChange={(val) =>
-                                            setData({
-                                                ...data,
-                                                sessionStatus: val,
-                                            })
-                                        }
-                                        optionData={status}
-                                        label="Session Status"
-                                        labelClassname="ml-2"
-                                        inputContainerClassName="bg-lightWhite border-0 font-medium pr-3"
-                                        inputClassName="bg-transparent appearance-none font-medium"
-                                        placeholder="Session Status"
-                                        parentClassName="w-full mr-4"
-                                        type="select"
-                                    />
-                                    <div className="flex mb-3 mt-3 ml-3">
-                                        <div
-                                            className={`${styles.container} `}
-                                            onClick={() =>
+                        <div className="flex gap-7">
+                            <div className="w-4/5">
+                                <InputField
+                                    label="Session Link"
+                                    labelClassname="ml-3"
+                                    placeholder="Add Link Here"
+                                    parentClassName="w-full mr-8"
+                                    inputContainerClassName="bg-lightWhite border-0"
+                                    inputClassName="bg-transparent"
+                                    type="text"
+                                    value={data.session}
+                                    onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            session: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+                            <div className="w-1/5">
+                                {persona === "student" ? (
+                                    <div className="w-full flex flex-col items-start">
+                                        <InputSelect
+                                            label="Session Status"
+                                            value={data.sessionStatus}
+                                            onChange={(val) =>
                                                 setData({
                                                     ...data,
-                                                    rescheduling:
-                                                        !data.rescheduling,
+                                                    sessionStatus: val,
                                                 })
                                             }
-                                        >
-                                            <input
-                                                checked={data.rescheduling}
-                                                type="checkbox"
-                                                name="recurring"
-                                            />
-                                            <span
-                                                class={styles.checkmark}
-                                            ></span>
+                                            optionData={status}
+                                            labelClassname="ml-2"
+                                            inputContainerClassName="bg-lightWhite border-0 font-medium pr-3"
+                                            inputClassName="bg-transparent appearance-none font-medium"
+                                            placeholder="Session Status"
+                                            parentClassName="w-full mr-4"
+                                            type="select"
+                                        />
+                                        <div className="flex mb-3 mt-3 ml-3">
+                                            <div
+                                                className={`${styles.container} `}
+                                                onClick={() =>
+                                                    setData({
+                                                        ...data,
+                                                        rescheduling:
+                                                            !data.rescheduling,
+                                                    })
+                                                }
+                                            >
+                                                <input
+                                                    checked={data.rescheduling}
+                                                    type="checkbox"
+                                                    name="recurring"
+                                                />
+                                                <span
+                                                    class={styles.checkmark}
+                                                ></span>
+                                            </div>
+                                            <p className="font-medium text-primary-60 text-sm">
+                                                Rescheduling
+                                            </p>
                                         </div>
-                                        <p className="font-medium text-primary-60 text-sm">
-                                            Rescheduling
-                                        </p>
                                     </div>
-                                </div>
-                            ) : (
-                                <div className="w-full flex flex-col items-center">
-                                    <InputSelect
-                                        value={data.sessionStatus}
-                                        onChange={(val) =>
-                                            setData({
-                                                ...data,
-                                                sessionStatus: val,
-                                            })
-                                        }
-                                        optionData={status}
-                                        inputContainerClassName="bg-lightWhite border-0 font-medium pr-3"
-                                        inputClassName="bg-transparent appearance-none font-medium"
-                                        placeholder="Session Status"
-                                        parentClassName="w-full mr-4"
-                                        type="select"
-                                    />
-                                    <div className="flex mb-3 mt-3">
-                                        <div
-                                            className={`${styles.container} `}
-                                            onClick={() =>
+                                ) : (
+                                    <div className="w-full flex flex-col items-center">
+                                        <InputSelect
+                                            label="Session Status"
+                                            value={data.sessionStatus}
+                                            onChange={(val) =>
                                                 setData({
                                                     ...data,
-                                                    rescheduling:
-                                                        !data.rescheduling,
+                                                    sessionStatus: val,
                                                 })
                                             }
-                                        >
-                                            <input
-                                                checked={data.rescheduling}
-                                                type="checkbox"
-                                                name="recurring"
-                                            />
-                                            <span
-                                                class={styles.checkmark}
-                                            ></span>
+                                            optionData={status}
+                                            inputContainerClassName="bg-lightWhite border-0 font-medium pr-3"
+                                            inputClassName="bg-transparent appearance-none font-medium"
+                                            placeholder="Session Status"
+                                            parentClassName="w-full mr-4"
+                                            type="select"
+                                        />
+                                        <div className="flex mb-3 mt-3">
+                                            <div
+                                                className={`${styles.container} `}
+                                                onClick={() =>
+                                                    setData({
+                                                        ...data,
+                                                        rescheduling:
+                                                            !data.rescheduling,
+                                                    })
+                                                }
+                                            >
+                                                <input
+                                                    checked={data.rescheduling}
+                                                    type="checkbox"
+                                                    name="recurring"
+                                                />
+                                                <span
+                                                    class={styles.checkmark}
+                                                ></span>
+                                            </div>
+                                            <p className="font-medium text-primary-60 text-sm">
+                                                Rescheduling
+                                            </p>
                                         </div>
-                                        <p className="font-medium text-primary-60 text-sm">
-                                            Rescheduling
-                                        </p>
                                     </div>
-                                </div>
-                            )}
+                                )}
+                            </div>
                         </div>
 
                         <div className="flex">
@@ -732,7 +738,10 @@ export default function EventModal({
                                 </div>
 
                                 <div className="mt-5 mb-5">
-                                    <p className="font-medium mb-2.5">
+                                    <p
+                                        className="font-medium mb-2.5"
+                                        style={{ fontSize: "16px" }}
+                                    >
                                         Student Mood
                                     </p>
                                     <div className="flex">
@@ -882,7 +891,10 @@ export default function EventModal({
                                         rows={3}
                                         className="bg-lightWhite w-full outline-0 px-5 py-4 rounded"
                                     ></textarea>
-                                    <p className="text-right text-xs text-primary-80">
+                                    <p
+                                        className="text-right text-xs text-primary-80"
+                                        style={{ fontWeight: 400 }}
+                                    >
                                         0/200
                                     </p>
                                 </div>

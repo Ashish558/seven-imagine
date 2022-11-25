@@ -19,11 +19,13 @@ export default function InputField({
     icon,
     iconClass,
     setIsChecked,
+    style,
 }) {
     return (
         <div className={` ${parentClassName && parentClassName}`}>
             <label
                 className={`inline-block font-semibold ${labelClassname} w-2/3 ml-3`}
+                style={style}
             >
                 {label}
                 {required && (
