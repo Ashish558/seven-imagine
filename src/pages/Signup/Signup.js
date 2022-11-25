@@ -115,7 +115,7 @@ export default function Signup() {
                     <div className="w-full px-148 py-8">
                         <h1>
                             {frames.signupActive
-                                ? "Signup"
+                                ? "Sign Up"
                                 : frames.setPassword
                                 ? ""
                                 : "Profile Details"}
