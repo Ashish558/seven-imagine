@@ -20,7 +20,7 @@ export default function NavLink({ width, icon: Icon, path, parentClassName }) {
           location.pathname === path && width < desktop
               ? styles.translateUp
               : ""
-      } ${path === "/exit" && "mt-24"} `}
+      } ${path === "/exit" && "mt-32"} `}
             onClick={handleNavigate}
         >
             {/* <img src={icon} className={Selected ? styles.selectedNavLink : ''} /> */}

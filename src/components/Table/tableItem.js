@@ -13,10 +13,10 @@ import GrayIcon from "../../assets/assignedTests/gray.svg";
 export default function TableItem({ item, dataFor, onClick }) {
     // console.log(onClick)
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     // console.log(item)
     // console.log(dataFor)
-    
+
     const returnStatus = (status) => {
         return status === 0 ? (
             <img className="first:mr-2" src={YellowIcon} />
@@ -69,7 +69,7 @@ export default function TableItem({ item, dataFor, onClick }) {
 
             {dataFor === "assignedTests" && (
                 <tr className="odd:bg-white shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-8">
-                    <td className="font-semibold px-1  min-w-14 py-4 text-primaryBlue text-left">
+                    <td className="px-1  min-w-14 py-4 text-left">
                         <span className="inline-block cursor-pointer pl-4">
                             {item.name}
                         </span>
@@ -91,7 +91,10 @@ export default function TableItem({ item, dataFor, onClick }) {
                             {returnStatus(item.status[1])}
                         </div>
                     </td>
-                    <td className="font-medium px-1  min-w-14 py-4">
+                    <td
+                        className="font-medium pl-7 text-left min-w-14 py-4"
+                        style={{ padding: 0, paddingLeft: "27px" }}
+                    >
                         {item.score}
                     </td>
                     <td className="font-medium px-1  min-w-14 py-4">
