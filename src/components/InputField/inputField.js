@@ -15,7 +15,10 @@ export default function InputField({
     type,
     right,
     required,
-    isRequired
+    isRequired,
+    icon,
+    iconClass,
+    setIsChecked,
 }) {
     return (
         <div className={` ${parentClassName && parentClassName}`}>
@@ -49,6 +52,25 @@ export default function InputField({
                 {IconRight && <img src={IconRight} className="ml-4" />}
                 {right && right}
             </div>
+            {label === "Password" && (
+                <>
+                    <label htmlFor="eye">
+                        <img
+                            src={icon}
+                            className={iconClass}
+                            alt=""
+                            width="26px"
+                            height="26px"
+                        />
+                    </label>
+                    <input
+                        type="checkbox"
+                        className="hidden"
+                        id="eye"
+                        onChange={(e) => setIsChecked(e.target.checked)}
+                    />
+                </>
+            )}
         </div>
     );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputField from "../../components/InputField/inputField";
 import EmailIcon from "../../assets/form/email.svg";
 import Passwordicon from "../../assets/form/password.svg";
@@ -7,6 +7,8 @@ import ResetPassword from "../Frames/ResetPassword";
 import { useLoginUserMutation } from "../../app/services/auth";
 import { useDispatch } from "react-redux";
 import { updateIsLoggedIn } from "../../app/slices/user";
+import eye from "./../../assets/icons/eye.png";
+import styles from "./Login.module.css";
 
 export default function Login({ setLoginFormActive }) {
     const [isPasswordForgot, setIsPasswordForgot] = useState(false);
@@ -36,6 +38,13 @@ export default function Login({ setLoginFormActive }) {
     };
 
     const props = { setActiveFrame, setResetPasswordActive };
+
+    const [isChecked, setIsChecked] = useState(true);
+
+    useEffect(() => {
+        console.log(isChecked);
+    }, [isChecked]);
+
     return (
         <div className="min-h-screen">
             <div className="grid grid-cols-2 min-h-screen">
@@ -64,14 +73,17 @@ export default function Login({ setLoginFormActive }) {
 
                             <InputField
                                 Icon={Passwordicon}
-                                parentClassName="mb-2.5"
+                                parentClassName="mb-2.5 relative"
                                 placeholder="Password"
-                                type="password"
+                                type={isChecked ? "password" : "true"}
                                 label="Password"
                                 labelClassname="ml-2 mb-2"
                                 inputClassName="bg-transparent"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
+                                icon={eye}
+                                iconClass={styles.eye}
+                                setIsChecked={setIsChecked}
                             />
                             <p
                                 className="text-secondary text-sm font-semibold ml-2"
