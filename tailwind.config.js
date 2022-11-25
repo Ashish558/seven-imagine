@@ -61,6 +61,7 @@ module.exports = {
                 primaryWhite: {
                     300: "#F5F7F9",
                     60: "rgba(244, 245, 247, 0.6)",
+                    400: '#EBEBEB'
                 },
                 darkWhite: "#EBE7FF",
                 textGray: {

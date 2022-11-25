@@ -5,6 +5,7 @@ import { sessionServicesApi } from "./services/session";
 import { authServicesApi } from "./services/auth";
 import { userServicesApi } from "./services/users";
 import { testServicesApi } from "./services/test";
+import { dashboardServicesApi } from "./services/dashboard";
 
 import userReducer from './slices/user'
 
@@ -15,6 +16,7 @@ export const store = configureStore({
     [authServicesApi.reducerPath]: authServicesApi.reducer,
     [userServicesApi.reducerPath]: userServicesApi.reducer,
     [testServicesApi.reducerPath]: testServicesApi.reducer,
+    [dashboardServicesApi.reducerPath]: dashboardServicesApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -22,6 +24,7 @@ export const store = configureStore({
       authServicesApi.middleware,
       userServicesApi.middleware,
       testServicesApi.middleware,
+      dashboardServicesApi.middleware,
     ),
 });
 
