@@ -43,8 +43,14 @@ const ParentDashboardHeader = () => {
                      <img src={i} alt="" />
                   </div>
 
-                  <div id={styles.creditBalance}>- 200 USD</div>
-                  <button className={styles.btnRed} onClick={() => navigate('/ledger')} >
+                  <div id={styles.creditBalance}>
+                     - 200 USD
+                     <p className="text-[13.17px] font-bold cursor-pointer"
+                        onClick={() => navigate('/ledger')}>
+                        View details
+                     </p>
+                  </div>
+                  <button className={styles.btnRed}>
                      Pay Now: $ 2600
                   </button>
                </div>
