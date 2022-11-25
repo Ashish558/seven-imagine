@@ -12,12 +12,14 @@ export default function ForgotPassword({
     return (
         <div className="w-full px-148">
             <p className="font-bold text-5xl leading-snug mb-7">
-                Password Reset
+                Forget Password
             </p>
 
-            <p className="text-normal font-normal mb-90">
-                Enter the email that you used when registered. You will receive
-                a password reset link.
+            <p
+                className="text-normal font-bold mb-90"
+                style={{ fontSize: "18px" }}
+            >
+                Enter your email address linked to this account
             </p>
 
             <InputField
@@ -35,7 +37,7 @@ export default function ForgotPassword({
                 className="w-full bg-primaryDark disabled:bg-pink py-5 rounded-10 text-white text-21"
                 onClick={() => setActiveFrame(setResetPasswordActive)}
             >
-                Send Link
+                Submit
             </button>
         </div>
     );
