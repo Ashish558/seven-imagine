@@ -33,7 +33,7 @@ export default function InputSelect({
             </label>
 
             <div
-                className={`bg-white py-3 px-6 border flex items-center rounded-10 relative cursor-pointer z-50 ${
+                className={`bg-white py-[16px] px-[21px] border flex items-center rounded-10 relative cursor-pointer z-50 ${
                     inputContainerClassName ? inputContainerClassName : ""
                 }`}
             >

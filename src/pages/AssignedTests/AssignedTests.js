@@ -40,10 +40,10 @@ export default function AssignedTests() {
       "Parent",
       "Active",
    ]);
-   const [studentsData, setStudentsData] = useState(studentsDataTable)
+   const [studentsData, setStudentsData] = useState(studentsDataTable);
    const [assignTestModalActive, setAssignTestModalActive] = useState(false);
    const [resendModalActive, setResendModalActive] = useState(false);
-   const persona = sessionStorage.getItem('role')
+   const persona = sessionStorage.getItem("role");
    const handleClose = () => setAssignTestModalActive(false);
 
    const [studentName, setStudentName] = useState("");
@@ -98,7 +98,7 @@ export default function AssignedTests() {
                   {persona === "student" ? (
                      <button
                         className="bg-primaryOrange py-3.5 px-6 flex items-center text-white font-semibold rounded-lg mr-55"
-                     // onClick={() => setAssignTestModalActive(true)}
+                        // onClick={() => setAssignTestModalActive(true)}
                      >
                         Start Test
                         <img src={AddIcon} className="ml-3" />
@@ -107,7 +107,7 @@ export default function AssignedTests() {
                      <button
                         className="bg-primaryOrange flex items-center text-white font-semibold rounded-lg mr-55"
                         onClick={() => setAssignTestModalActive(true)}
-                        style={{ padding: "17px 24px" }}
+                        style={{ padding: "17px 24px", fontSize: "18px" }}
                      >
                         Assign new test
                         <img src={AddIcon} className="ml-3" />
