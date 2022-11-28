@@ -51,8 +51,8 @@ export default function SelectPersona({
         <div className="w-full">
             <p className="text-lg font-bold mb-6">Sign up as</p>
 
-            <div className="flex mb-120 justify-center text-center">
-                <div className="w-1/2" id={styles.student}>
+            <div className="flex mb-120 justify-center text-center gap-[15px]">
+                <div id={styles.student}>
                     <img
                         src={StudentImg}
                         className={`mx-auto ${
@@ -66,10 +66,10 @@ export default function SelectPersona({
                             setPersona("student");
                         }}
                     />
-                    student
+                    <div className={`mt-[19px] ${!selectedImg.student? "text-[#575656]":"text-[#7152EB]"}`} style={{fontWeight: 700}}>Student</div>
                 </div>
 
-                <div className="w-1/2" id={styles.parent}>
+                <div id={styles.parent}>
                     <img
                         src={ParentImg}
                         className={`mx-auto ${
@@ -83,7 +83,7 @@ export default function SelectPersona({
                             setPersona("parent");
                         }}
                     />
-                    parent
+                    <div className={`mt-[19px] ${!selectedImg.parent? "text-[#575656]":"text-[#7152EB]"}`} style={{fontWeight: 700}}>Parent / Guardian</div>
                 </div>
             </div>
 
