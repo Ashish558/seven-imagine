@@ -1,5 +1,6 @@
 import React from 'react'
 import ParentDashboard from '../ParentDashboard/ParentDashboard'
+import StudentDashboard from '../StudentDashboard/StudentDashboard'
 
 export default function Home() {
 
@@ -8,6 +9,9 @@ export default function Home() {
    return (
       persona === 'parent' ?
          <ParentDashboard />
+         :
+         persona === 'student' ?
+         <StudentDashboard /> 
          :
          <div className='ml-pageLeft bg-lightWhite min-h-screen'>
 

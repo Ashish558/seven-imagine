@@ -7,6 +7,7 @@ import PrimaryButton from "../../components/Buttons/PrimaryButton";
 import Table from "../../components/Table/Table";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BASE_URL } from "../../app/constants/constants";
 
 const subjects = [
    { text: "English", selected: true },
@@ -34,7 +35,7 @@ export default function TestDetail() {
 
    axios
       .get(
-         `https://sevenimagine.herokuapp.com/api/test/${window.location.pathname.split("/")[2]
+         `${BASE_URL}api/test/${window.location.pathname.split("/")[2]
          }`
       )
       .then((res) => {

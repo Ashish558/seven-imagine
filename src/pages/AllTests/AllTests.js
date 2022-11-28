@@ -13,6 +13,7 @@ import upload from "./../../assets/icons/upload.png";
 import Papa from "papaparse";
 import axios from "axios";
 import { useAddPdfMutation, useAddTestMutation } from "../../app/services/test";
+import { BASE_URL } from "../../app/constants/constants";
 
 const optionData = ["option 1", "option 2", "option 3", "option 4", "option 5"];
 const testTypeOptions = ["SAT"];
@@ -53,7 +54,7 @@ export default function AllTests() {
         console.log(testForDelete._id);
         axios
             .delete(
-                `https://sevenimagine.herokuapp.com/api/test/${testForDelete._id}`
+                `${BASE_URL}api/test/${testForDelete._id}`
             )
             .then((res) => {
                 console.log(res);
@@ -123,7 +124,7 @@ export default function AllTests() {
             formData.append("pdf", pdfFile);
             axios
                 .post(
-                    `https://sevenimagine.herokuapp.com/api/test/addpdf/${testId}`,
+                    `${BASE_URL}api/test/addpdf/${testId}`,
                     formData
                 )
                 .then((res) => {
@@ -145,7 +146,7 @@ export default function AllTests() {
 
     const fetchTests = () => {
         axios
-            .get("https://sevenimagine.herokuapp.com/api/test")
+            .get(`${BASE_URL}api/test`)
             .then((res) => setTableData(res.data.data.test));
     };
 

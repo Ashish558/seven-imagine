@@ -17,19 +17,33 @@
     color: #4715d7;
 }
 
-.react-calendar
-    .react-calendar__navigation__arrow.react-calendar__navigation__prev2-button,
-.react-calendar
-    .react-calendar__navigation__arrow.react-calendar__navigation__next2-button {
+.react-calendar__navigation{
+ width: 100%;
+}
+
+/* month year label */
+.react-calendar__navigation__label{
+    pointer-events: none;
+}
+
+/* navigation in header */
+.react-calendar .react-calendar__navigation__arrow.react-calendar__navigation__prev2-button,
+.react-calendar .react-calendar__navigation__arrow.react-calendar__navigation__next2-button {
     display: none !important;
 }
-.react-calendar
-    .react-calendar__navigation__arrow.react-calendar__navigation__prev-button {
+.react-calendar .react-calendar__navigation__arrow.react-calendar__navigation__prev-button {
     order: 3;
+    border-radius: 50%;
 }
 .react-calendar
-    .react-calendar__navigation__arrow.react-calendar__navigation__next-button {
+.react-calendar__navigation__arrow.react-calendar__navigation__next-button {
+        border-radius: 50%;
     order: 4;
+}
+
+/* weekday headers */
+.react-calendar__month-view__weekdays{
+    margin-bottom: 10px;
 }
 
 .react-calendar button abbr {
@@ -62,3 +76,13 @@
 .react-calendar__tile--active {
     border-radius: 50%;
 }
+
+
+.react-calendar__month-view__weekdays__weekday abbr{
+    text-decoration: none;
+    color: #25335A;
+    font-size: 14px;
+    font-family: Inter;
+    font-weight: 600;
+}
+

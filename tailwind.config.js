@@ -59,9 +59,11 @@ module.exports = {
                 primaryOrange: "#F6A429",
                 lightWhite: "#F3F5F7",
                 primaryWhite: {
+                    100: '#BEC2CE',
                     300: "#F5F7F9",
                     60: "rgba(244, 245, 247, 0.6)",
-                    400: '#EBEBEB'
+                    400: '#EBEBEB',
+                    900: '#F4F5F7'
                 },
                 darkWhite: "#EBE7FF",
                 textGray: {

@@ -75,7 +75,7 @@ export default function Login({ setLoginFormActive }) {
 
                      <InputField
                         Icon={Passwordicon}
-                        parentClassName="mb-2.5 relative"
+                        parentClassName="mb-1 relative"
                         placeholder="Password"
                         label="Password"
                         type='password'
@@ -85,7 +85,7 @@ export default function Login({ setLoginFormActive }) {
                         onChange={(e) => setPassword(e.target.value)}
                      />
                      <p
-                        className="text-secondary text-sm font-semibold ml-2"
+                        className="text-secondary text-xs inline-block cursor-pointer font-semibold ml-2"
                         onClick={() =>
                            setActiveFrame(setIsPasswordForgot)
                         }
@@ -101,7 +101,7 @@ export default function Login({ setLoginFormActive }) {
                         Login
                      </button>
                      <p
-                        className="text-secondary text-sm font-semibold ml-2 mt-2 cursor-pointer inline-block"
+                        className="text-secondary text-xs font-semibold ml-2 mt-2 cursor-pointer inline-block"
                         onClick={() => setLoginFormActive(false)}
                      >
                         Sign-up Instead?

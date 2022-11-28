@@ -9,6 +9,7 @@ import SearchIcon from "../../assets/icons/search.svg";
 import { tableData, studentsDataTable } from "./tempData";
 import InputField from "../../components/InputField/inputField";
 import axios from "axios";
+import { BASE_URL } from "../../app/constants/constants";
 
 const optionData = ["1", "2", "3", "4", "5"];
 const testData = ["SAT", "ACT"];
@@ -80,7 +81,7 @@ export default function AssignedTests() {
       console.log(modalData.name);
 
       axios
-         .get(`https://sevenimagine.herokuapp.com/api/test?search=tes`)
+         .get(`${BASE_URL}api/test?search=tes`)
          .then((res) => console.log(res.data));
    };
 

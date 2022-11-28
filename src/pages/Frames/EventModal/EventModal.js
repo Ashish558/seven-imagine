@@ -22,6 +22,10 @@ import {
    useUpdateSessionMutation,
 } from "../../../app/services/session";
 import { array } from "yup";
+import SearchNames from "./Sections/searchNames";
+import DateAndTimeInput from "./Sections/dateAndTimeInput";
+import CCheckbox from "../../../components/CCheckbox/CCheckbox";
+import DaysEndDate from "./Sections/daysEndDate";
 
 const timeZones = ["IST"];
 const tempDays = [
@@ -113,16 +117,12 @@ export default function EventModal({
    const [homeworks, setHomeworks] = useState([]);
    const [isProductive, setIsProductive] = useState([]);
 
-   const [fetchTutors, tutorResponse] = useLazyGetTutorsByNameQuery();
-   const [tutors, setTutors] = useState([]);
    const [tutor, setTutor] = useState("");
 
    const [submitSession, sessionResponse] = useSubmitSessionMutation();
    const [updateUserSession, updateUserSessionResp] =
       useUpdateSessionMutation();
 
-   const [fetchStudents, studentResponse] = useLazyGetStudentsByNameQuery();
-   const [students, setStudents] = useState([]);
    const [student, setStudent] = useState("");
 
    const [fetchSettings, settingsResponse] = useLazyGetSettingsQuery();
@@ -141,36 +141,6 @@ export default function EventModal({
       });
       return checkedItems;
    };
-
-   useEffect(() => {
-      if (tutor.length > 2) {
-         fetchTutors(tutor).then((res) => {
-            // console.log(res.data.data.tutor)
-            let tempData = res.data.data.tutor.map((tutor) => {
-               return {
-                  _id: tutor._id,
-                  value: `${tutor.firstName} ${tutor.lastName}`,
-               };
-            });
-            setTutors(tempData);
-         });
-      }
-   }, [tutor]);
-
-   useEffect(() => {
-      if (student.length > 2) {
-         fetchStudents(student).then((res) => {
-            // console.log(res.data.data)
-            let tempData = res.data.data.student.map((tutor) => {
-               return {
-                  _id: tutor._id,
-                  value: `${tutor.firstName} ${tutor.lastName}`,
-               };
-            });
-            setStudents(tempData);
-         });
-      }
-   }, [student]);
 
    useEffect(() => {
       fetchSettings().then((res) => {
@@ -280,18 +250,8 @@ export default function EventModal({
          return { ...item };
       });
    };
-   // console.log(sessionToUpdate)
-   // console.log(data)
 
-   const handleDayChange = (id) => {
-      console.log(id);
-      let tempdays = days.map((day) => {
-         return day.id === id
-            ? { ...day, checked: !day.checked }
-            : { ...day };
-      });
-      setDays(tempdays);
-   };
+  
    const handleCheckboxChange = (text, arr, setValue, isSingle) => {
       if (isSingle) {
          const temp = arr.map((topic) => {
@@ -353,7 +313,7 @@ export default function EventModal({
    // console.log(convertTime12to24('1:00 AM'))
    // console.log(data)
    // console.log(sessionToUpdate)
-
+   const dataProps = { data, setData }
    return (
       <>
          <Modal
@@ -362,133 +322,24 @@ export default function EventModal({
             title={isUpdating ? "Update Session" : "Create a New Session"}
             body={
                <div>
-                  <div className="flex mb-4">
-                     <InputSearch
-                        label="Student Name"
-                        labelClassname="ml-3"
-                        placeholder="Student Name"
-                        parentClassName="w-full mr-4"
-                        inputContainerClassName="bg-lightWhite border-0"
-                        inputClassName="bg-transparent"
-                        type="text"
-                        value={student}
-                        onChange={(e) => setStudent(e.target.value)}
-                        optionData={students}
-                        onOptionClick={(item) => {
-                           setStudent(item.value);
-                           setData({ ...data, studentId: item._id });
-                        }}
-                     />
-                     <InputSearch
-                        label="Tutor Name"
-                        labelClassname="ml-3"
-                        placeholder="Tutor Name"
-                        parentClassName="w-full"
-                        inputContainerClassName="bg-lightWhite border-0"
-                        inputClassName="bg-transparent"
-                        type="text"
-                        value={tutor}
-                        onChange={(e) => setTutor(e.target.value)}
-                        optionData={tutors}
-                        onOptionClick={(item) => {
-                           setTutor(item.value);
-                           setData({ ...data, tutorId: item._id });
-                        }}
-                     />
-                  </div>
+                  <SearchNames setStudent={setStudent}
+                     setData={setData} student={student} tutor={tutor} data={data}
+                     setTutor={setTutor} />
 
-                  <div className="flex mb-6">
-                     <InputField
-                        parentClassName="w-full mr-6"
-                        label="Date"
-                        labelClassname="ml-3"
-                        inputContainerClassName="bg-lightWhite border-0"
-                        inputClassName="bg-transparent appearance-none"
-                        value={data.date}
-                        type="date"
-                        onChange={(e) =>
-                           setData({ ...data, date: e.target.value })
-                        }
-                     />
-
-                     <InputField
-                        label="Time"
-                        labelClassname="ml-3"
-                        parentClassName="w-full max-w-120"
-                        type="time"
-                        inputContainerClassName="bg-lightWhite border-0 font-medium pr-3"
-                        inputClassName="bg-transparent appearance-none font-medium"
-                        value={convertTime12to24(
-                           `${data.time.start.time} ${data.time.start.timeType}`
-                        )}
-                        onChange={(e) =>
-                           setData({
-                              ...data,
-                              time: {
-                                 ...data.time,
-                                 start: tConvert(e.target.value),
-                              },
-                           })
-                        }
-                     />
-                     <span className="self-end mb-4 mx-4 font-medium">
-                        -
-                     </span>
-                     <InputField
-                        parentClassName="w-full max-w-120"
-                        type="time"
-                        inputContainerClassName="bg-lightWhite border-0 font-medium pr-3"
-                        inputClassName="bg-transparent appearance-none font-medium"
-                        value={convertTime12to24(
-                           `${data.time.end.time} ${data.time.end.timeType}`
-                        )}
-                        onChange={(e) => {
-                           setData({
-                              ...data,
-                              time: {
-                                 ...data.time,
-                                 end: tConvert(e.target.value),
-                              },
-                           });
-                        }}
-                     />
-                     <InputSelect
-                        value={data.timeZone}
-                        onChange={(val) =>
-                           setData({ ...data, timeZone: val })
-                        }
-                        optionData={timeZones}
-                        inputContainerClassName="bg-lightWhite border-0 font-medium pr-3"
-                        inputClassName="bg-transparent appearance-none font-medium"
-                        placeholder="Time Zone"
-                        parentClassName="w-full mr-4 ml-8"
-                        type="select"
-                     />
-                  </div>
+                  <DateAndTimeInput {...dataProps} />
 
                   <div className="flex mb-3">
-                     <div
-                        className={`${styles.container} `}
-                        onClick={() =>
-                           setData({
-                              ...data,
-                              recurring: !data.recurring,
-                           })
-                        }
-                     >
-                        <input
-                           checked={data.recurring}
-                           type="checkbox"
-                           name="recurring"
-                        />
-                        <span class={styles.checkmark}></span>
-                     </div>
+                     <CCheckbox checked={data.recurring} name='recurring' onChange={() =>
+                        setData({
+                           ...data,
+                           recurring: !data.recurring,
+                        })} />
                      <p className="font-medium text-primary-60 text-sm">
                         Recurring
                      </p>
                   </div>
-
-                  <div className="flex mb-14">
+                  <DaysEndDate days={days} setDays={setDays} {...dataProps} />
+                  {/* <div className="flex mb-14">
                      <div className="mr-8">
                         <p className="font-medium text-primary-60 mb-1">
                            Repeat every week on
@@ -524,7 +375,7 @@ export default function EventModal({
                            })
                         }
                      />
-                  </div>
+                  </div> */}
 
                   {/* SESSIONS */}
 
