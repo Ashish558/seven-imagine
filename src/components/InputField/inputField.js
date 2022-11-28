@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import EyeIcon from '../../assets/form/eye-open.svg'
 
 export default function InputField({
     parentClassName,
@@ -17,6 +18,10 @@ export default function InputField({
     required,
     isRequired
 }) {
+
+    const [inputType, setInputType] = useState(type)
+    // console.log(inputType, value)
+
     return (
         <div className={` ${parentClassName && parentClassName}`}>
             <label
@@ -39,13 +44,16 @@ export default function InputField({
                         inputClassName ? inputClassName : ""
                     }`}
                     placeholder={placeholder}
-                    type={type ? type : "text"}
+                    type={inputType ? inputType : "text"}
                     onChange={(e) =>
                         onChange !== undefined ? onChange(e) : ""
                     }
                     value={value}
                     required={isRequired ? true : false}
                 />
+                {type === 'password' && <img src={EyeIcon} className="ml-4"
+                 onClick={()=> inputType === 'password' ? setInputType('text') : setInputType('password')} 
+                 />  }
                 {IconRight && <img src={IconRight} className="ml-4" />}
                 {right && right}
             </div>

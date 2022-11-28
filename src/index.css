@@ -79,9 +79,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear {
     --webkit-appearance: none;
+    display: none;
     cursor: pointer;
-    width: 15px;
+    /* width: 15px;
     padding: 0px;
     margin: 0px;
-    background-image: url(./assets/form/eye-open.svg);
+    background-image: url(./assets/form/eye-open.svg); */
 }
