@@ -86,3 +86,7 @@ input[type="password"]::-ms-clear {
     margin: 0px;
     background-image: url(./assets/form/eye-open.svg); */
 }
+
+.react-calendar {
+    width: 100% !important;
+}

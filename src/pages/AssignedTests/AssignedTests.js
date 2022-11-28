@@ -70,7 +70,7 @@ export default function AssignedTests() {
    };
 
    const assignTest = () => {
-      console.log(sessionStorage.getItem("userId"));
+      // console.log("userId");
       const newTest = new FormData();
       newTest.append("studentId", localStorage.getItem("userId"));
       newTest.append("testId", modalData.test);
@@ -89,89 +89,81 @@ export default function AssignedTests() {
          <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">
             <div className="py-14 px-5">
                <div className="flex justify-between items-center">
-                  <p className="font-bold text-4xl text-primary-dark">
-
-                     {persona === 'student' ? 'Tests' : 'Assigned Tests'}
+                  <p
+                     className="font-bold text-4xl"
+                     style={{ color: "#25335A" }}
+                  >
+                     Assigned Tests
                   </p>
-                  {
-                     persona === 'student' ?
-                        <>
-                        </> :
-                        <button
-                           className="bg-primaryOrange py-3.5 px-6 flex items-center text-white font-semibold rounded-lg mr-55"
-                           onClick={() => setAssignTestModalActive(true)}
-                        >
-                           Assign new test
-                           <img src={AddIcon} className="ml-3" />
-                        </button>
-                  }
+                  {persona === "student" ? (
+                     <button
+                        className="bg-primaryOrange py-3.5 px-6 flex items-center text-white font-semibold rounded-lg mr-55"
+                     // onClick={() => setAssignTestModalActive(true)}
+                     >
+                        Start Test
+                        <img src={AddIcon} className="ml-3" />
+                     </button>
+                  ) : (
+                     <button
+                        className="bg-primaryOrange flex items-center text-white font-semibold rounded-lg mr-55"
+                        onClick={() => setAssignTestModalActive(true)}
+                        style={{ padding: "17px 24px" }}
+                     >
+                        Assign new test
+                        <img src={AddIcon} className="ml-3" />
+                     </button>
+                  )}
                </div>
-               {
-                  persona === 'student' ? <></> :
-                     <div className="flex align-center mt-8">
-                        <InputField
-                           value={studentName}
-                           IconRight={SearchIcon}
-                           onChange={updateStudentName}
-                           optionData={optionData}
-                           placeholder="Student Name"
-                           inputContainerClassName="bg-white"
-                           parentClassName="w-full mr-4"
-                           type="text"
-                        />
-                        <InputField
-                           value={testName}
-                           IconRight={SearchIcon}
-                           onChange={updateTestName}
-                           optionData={optionData}
-                           placeholder="Test Name"
-                           inputContainerClassName="bg-white"
-                           parentClassName="w-full mr-4"
-                           type="text"
-                        />
-                        <InputField
-                           value={tutor}
-                           onChange={updateTutor}
-                           IconRight={SearchIcon}
-                           parentClassName="w-full mr-4"
-                           inputContainerClassName="bg-white"
-                           optionData={optionData}
-                           placeholder="Tutor Name"
-                           type="text"
-                        />
-                        <InputSelect
-                           value={status}
-                           onChange={updateStatus}
-                           optionData={optionData}
-                           placeholder="Completion Status"
-                           parentClassName="w-full mr-4"
-                           type="select"
-                        />
-                     </div>
-               }
-               {
-                  persona === 'student' ?
-                     <div className="mt-12">
-                        <Table
-                           // onClick={{ handleResend }}
-                           dataFor="assignedTestsStudents"
-                           data={studentsData}
-                           hidePagination={true}
-                           tableHeaders={studentTableHeaders}
-                           maxPageSize={10}
-                        />
-                     </div>
-                     :
-                     <div className="mt-6">
-                        <Table
-                           onClick={{ handleResend }}
-                           dataFor="assignedTests"
-                           data={tableData}
-                           tableHeaders={tableHeaders}
-                           maxPageSize={10}
-                        />
-                     </div>
-               }
+               <div className="flex align-center mt-8">
+                  <InputField
+                     value={studentName}
+                     IconRight={SearchIcon}
+                     onChange={updateStudentName}
+                     optionData={optionData}
+                     placeholder="Student Name"
+                     inputContainerClassName="bg-white"
+                     parentClassName="w-full mr-4"
+                     type="text"
+                  />
+                  <InputField
+                     value={testName}
+                     IconRight={SearchIcon}
+                     onChange={updateTestName}
+                     optionData={optionData}
+                     placeholder="Test Name"
+                     inputContainerClassName="bg-white"
+                     parentClassName="w-full mr-4"
+                     type="text"
+                  />
+                  <InputField
+                     value={tutor}
+                     onChange={updateTutor}
+                     IconRight={SearchIcon}
+                     parentClassName="w-full mr-4"
+                     inputContainerClassName="bg-white"
+                     optionData={optionData}
+                     placeholder="Tutor Name"
+                     type="text"
+                  />
+                  <InputSelect
+                     value={status}
+                     onChange={updateStatus}
+                     optionData={optionData}
+                     placeholder="Completion Status"
+                     parentClassName="w-full mr-4"
+                     type="select"
+                  />
+               </div>
+
+               <div className="mt-6">
+                  <Table
+                     onClick={{ handleResend }}
+                     dataFor="assignedTests"
+                     data={tableData}
+                     tableHeaders={tableHeaders}
+                     maxPageSize={10}
+                  />
+               </div>
             </div>
          </div>
          {assignTestModalActive && (
@@ -182,7 +174,7 @@ export default function AssignedTests() {
                primaryBtn={{
                   text: "Assign",
                   className: "max-w-140",
-                  onClick: assignTest,
+                  onClick: () => setResendModalActive(true),
                }}
                handleClose={handleClose}
                body={
@@ -279,7 +271,11 @@ export default function AssignedTests() {
                titleClassName="mb-12 leading-10"
                cancelBtn={true}
                cancelBtnClassName="max-w-140"
-               primaryBtn={{ text: "Assign", className: "max-w-140" }}
+               primaryBtn={{
+                  text: "Assign",
+                  className: "max-w-140",
+                  onclick: assignTest,
+               }}
                handleClose={() => setResendModalActive(false)}
                classname={"max-w-567 mx-auto"}
             />

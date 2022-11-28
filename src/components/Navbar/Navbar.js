@@ -64,22 +64,17 @@ export default function Navbar() {
          overflow-y-hidden lg:overflow-y-auto
           lg:p-4 
           flex overflow-auto
-      ${location.pathname === "/login" ||
-                    location.pathname === "/signup" ||
-                    location.pathname === "/set-password" ||
-                    !isLoggedIn
-                    ? "hidden"
-                    : "bg-lightWhite"
-                }`}
-        // className={styles.navContainer}
+      ${
+          location.pathname === "/login" ||
+          location.pathname === "/signup" ||
+          location.pathname === "/set-password" ||
+          !isLoggedIn
+              ? "hidden"
+              : "bg-lightWhite"
+      }`}
+            // className={styles.navContainer}
         >
-            <div
-                className="lg:min-h-full lg:w-110 w-full
-         h-75 lg:h-auto
-         
-         bg-primary p-4 lg:rounded-20 rounded-30   
-         overflow-x-hidden overflow-y-hidden lg:overflow-y-auto lg:pt-14 "
-            >
+            <div className="lg:min-h-full lg:w-110 w-full h-75 lg:h-auto bg-primary p-4 lg:rounded-20 rounded-30 overflow-x-hidden overflow-y-hidden lg:overflow-y-auto lg:pt-14">
                 <div className=" flex lg:flex-col items-center self-stretch justify-around ">
                     {navdata.map((item, idx) => {
                         if (width < desktop) {
@@ -95,7 +90,9 @@ export default function Navbar() {
                                 )
                             );
                         } else {
-                            return <NavLink width={width} key={idx} {...item} />;
+                            return (
+                                <NavLink width={width} key={idx} {...item} />
+                            );
                         }
                     })}
                     {width < desktop && (

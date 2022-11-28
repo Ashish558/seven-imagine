@@ -80,14 +80,7 @@ const AppRoutes = () => {
                   </RequireAuth>
                }
             />
-            {/* <Route
-          path="/calendar/:persona"
-          element={
-            <RequireAuth isLoggedIn={isLoggedIn}>
-              <Calendar />
-            </RequireAuth>
-          }
-        />  */}
+
             {/* <Route path="/calendar" element={<Calendar />} /> */}
             {/* <Route path="/calendar/:persona" element={<Calendar />} /> */}
             <Route path="/assigned-tests" element={<AssignedTests />} />

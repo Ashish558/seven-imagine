@@ -699,9 +699,7 @@ export default function EventModal({
                                           key={idx}
                                           className="flex mb-3 mr-3"
                                           onClick={() =>
-                                             handleCheckboxChange(
-                                                topic.text,
-                                                topics,
+                                             handleCheckboxChange(topic.text, topics,
                                                 setTopics
                                              )
                                           }
@@ -742,13 +740,7 @@ export default function EventModal({
                                        <div
                                           key={idx}
                                           className="flex mb-3 mr-3"
-                                          onClick={() =>
-                                             handleCheckboxChange(
-                                                item.text,
-                                                studentMoods,
-                                                setStudentMoods
-                                             )
-                                          }
+                                          onClick={() => handleCheckboxChange(item.text, studentMoods, setStudentMoods)}
                                        >
                                           <div
                                              className={`${styles.container} `}
@@ -799,18 +791,12 @@ export default function EventModal({
                                              className={`${styles.container} `}
                                           >
                                              <input
-                                                checked={
-                                                   item.checked
-                                                }
+                                                checked={item.checked}
                                                 type="checkbox"
                                                 name="moods"
                                                 value=""
                                              />
-                                             <span
-                                                class={
-                                                   styles.checkmark
-                                                }
-                                             ></span>
+                                             <span class={styles.checkmark}></span>
                                           </div>
                                           <p className="font-medium text-primary-60 text-sm">
                                              {item.text}
@@ -832,13 +818,7 @@ export default function EventModal({
                                        key={idx}
                                        className="flex mb-3 mr-6"
                                        onClick={() =>
-                                          handleCheckboxChange(
-                                             item.text,
-                                             isProductive,
-                                             setIsProductive,
-                                             true
-                                          )
-                                       }
+                                          handleCheckboxChange(item.text, isProductive, setIsProductive, true)}
                                     >
                                        <div
                                           className={`${styles.container} `}

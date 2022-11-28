@@ -24,6 +24,7 @@ import {
     useLazyGetUsersByNameQuery,
 } from "../../app/services/session";
 import { convertTime12to24 } from "../../utils/utils";
+// import styles from "./calendar.css";
 import { useSelector } from "react-redux";
 
 const days = ["S", "M", "T", "W", "T", "F", "S"];
@@ -319,8 +320,8 @@ export default function Calendar() {
     return (
         <>
             <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">
-                <div className="py-14 px-5 calendar flex">
-                    <div className="p-2 pl-0">
+                <div className="py-14 pl-5 calendar flex">
+                    <div className="p-10 pl-0 pr-3 w-1/5">
                         <SimpleCalendar />
                         {persona === "parent" || persona === "tutor" ? (
                             <div className="mt-10 pr-4">
@@ -371,7 +372,7 @@ export default function Calendar() {
                             </div>
                         )}
                     </div>
-                    <div className="flex-1">
+                    <div className="flex-1 w-4/5" id="calendarContainer">
                         <FullCalendar
                             events={events}
                             eventClick={(info) => handleEventClick(info)}
