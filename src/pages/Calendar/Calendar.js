@@ -71,9 +71,8 @@ export default function Calendar() {
    const [students, setStudents] = useState([]);
    const [sessionToUpdate, setSessionToUpdate] = useState({});
    // const params = useParams()
-
+   const [currentDate, setCurrentDate] = useState(new Date)
    const { isLoggedIn } = useSelector((state) => state.user);
-   // console.log(isLoggedIn)
 
    //change btn
    useEffect(() => {
@@ -160,7 +159,7 @@ export default function Calendar() {
             <p
                className={`${arg.isToday ? "text-primaryWhite-900" : ""
                   } text-2xl font-bold font-inter
-                   ${arg.isPast ? "text-primaryWhite-100" :  arg.isFuture ? 'text-primary-dark' : ''
+                   ${arg.isPast ? "text-primaryWhite-100" : arg.isFuture ? 'text-primary-dark' : ''
                   }`}
             >
                {text[1]}
@@ -310,14 +309,19 @@ export default function Calendar() {
       }
    };
 
-   // console.log(students)
+   useEffect(() => {
+      // console.log(calendarRef.current.getApi())
+      calendarRef.current.getApi().gotoDate(currentDate)
+      // calendarRef.current.gotoDate(currentDate)
+   }, [currentDate])
+   
    return (
       <>
          <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">
             <div className="py-14 pl-5 calendar flex">
                <div className="p-10 pl-0 pr-3 w-1/5 w-[320px]">
                   <div className="w-[290px]" >
-                     <SimpleCalendar />
+                     <SimpleCalendar currentDate={currentDate} setCurrentDate={setCurrentDate} />
                   </div>
                   {persona === "parent" || persona === "tutor" ? (
                      <div className="mt-10 pr-4">
@@ -396,6 +400,7 @@ export default function Calendar() {
                            click: handleNextClick,
                         },
                      }}
+                     
                      eventContent={eventContent}
                      initialView="timeGridWeek"
                      allDaySlot={false}
