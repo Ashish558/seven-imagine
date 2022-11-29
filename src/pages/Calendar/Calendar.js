@@ -62,10 +62,8 @@ export default function Calendar() {
       useLazyGetSessionsQuery();
    const [fetchStudents, fetchStudentsResp] = useLazyGetTutorStudentsQuery();
 
-   const [userSessions, setUserSessions] = useState([]);
    const [names, setNames] = useState([]);
    const [name, setName] = useState("");
-   const [searchedUserId, setSearchedUserId] = useState("");
    const [eventDetails, setEventDetails] = useState([]);
 
    const [students, setStudents] = useState([]);
@@ -74,6 +72,14 @@ export default function Calendar() {
    const [currentDate, setCurrentDate] = useState(new Date)
    const { isLoggedIn } = useSelector((state) => state.user);
 
+   const [searchedUser, setSearchedUser] = useState({
+      id: '',
+      role: ''
+   })
+
+   const refetchSessions = () => {
+      fetchSessions(searchedUser.id, searchedUser.role)
+   }
    //change btn
    useEffect(() => {
       if (sessionStorage.getItem("role")) {
@@ -83,6 +89,7 @@ export default function Calendar() {
 
    const fetchSessions = (id, role) => {
       // console.log(id)
+      setSearchedUser({id, role})
       const url = `/api/session/${role}/${id}`;
       // console.log(url)
       fetchUserSessions(url).then((res) => {
@@ -169,7 +176,6 @@ export default function Calendar() {
    };
 
    const handlePrevClick = (arg) => {
-      // console.log(arg)
       const calendarAPI = calendarRef?.current?.getApi();
       calendarAPI?.prev();
    };
@@ -314,7 +320,7 @@ export default function Calendar() {
       calendarRef.current.getApi().gotoDate(currentDate)
       // calendarRef.current.gotoDate(currentDate)
    }, [currentDate])
-   
+
    return (
       <>
          <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">
@@ -400,7 +406,7 @@ export default function Calendar() {
                            click: handleNextClick,
                         },
                      }}
-                     
+
                      eventContent={eventContent}
                      initialView="timeGridWeek"
                      allDaySlot={false}
@@ -436,6 +442,7 @@ export default function Calendar() {
             <EventModal
                setEventModalActive={setEventModalActive}
                persona={persona}
+               refetchSessions={refetchSessions}
             />
          )}
          {updateEventModalActive && (
@@ -444,6 +451,7 @@ export default function Calendar() {
                persona={persona}
                isUpdating={true}
                sessionToUpdate={sessionToUpdate}
+               refetchSessions={refetchSessions}
             />
          )}
       </>

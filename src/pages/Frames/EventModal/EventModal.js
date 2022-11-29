@@ -7,6 +7,7 @@ import StarIcon from "../../../assets/form/star.svg";
 import InputSelect from "../../../components/InputSelect/InputSelect";
 import PrimaryButton from "../../../components/Buttons/PrimaryButton";
 import {
+   capitalize,
    convertTime12to24,
    getFormattedDate,
    tConvert,
@@ -76,6 +77,7 @@ export default function EventModal({
    persona,
    isUpdating,
    sessionToUpdate,
+   refetchSessions
 }) {
    const [data, setData] = useState({
       studentName: "",
@@ -104,7 +106,6 @@ export default function EventModal({
       rescheduling: false,
       studentMood: "",
       homeworkAssigned: "",
-      sessionProductive: "Yes",
       sessionNotes: "",
    });
 
@@ -126,7 +127,6 @@ export default function EventModal({
    const [services, setServices] = useState([]);
 
    const [isSettingsLoaded, setIsSettingsLoaded] = useState(false);
-
    const getCheckedItems = (strArr, array) => {
       let checkedItems = array.map((item) => {
          return strArr.includes(item.text)
@@ -281,6 +281,7 @@ export default function EventModal({
       updateUserSession({ id: sessionToUpdate._id, body: reqBody }).then(
          (res) => {
             console.log(res);
+            refetchSessions()
             setEventModalActive(false);
          }
       );
@@ -293,29 +294,30 @@ export default function EventModal({
       // }).catch(err => {
       //    console.log(err)
       // })
-      let reqBody = { ...data };
-      reqBody.studentName = student;
-      reqBody.tutorName = tutor;
-      let day = [];
+      let reqBody = { ...data }
+      reqBody.studentName = student
+      reqBody.tutorName = tutor
+      let day = []
       days.map((d) => {
          if (d.checked) day.push(d.full);
       });
       reqBody.day = day;
-      reqBody.topicsCovered = getCheckedString(topics);
-      reqBody.homeworkAssigned = getCheckedString(homeworks);
-      reqBody.studentMood = getCheckedString(studentMoods);
+      reqBody.topicsCovered = getCheckedString(topics)
+      reqBody.homeworkAssigned = getCheckedString(homeworks)
+      reqBody.studentMood = getCheckedString(studentMoods)
+      reqBody.sessionProductive = getCheckedString(isProductive)[0]
 
       if (isUpdating) return updateSession(reqBody);
 
       submitSession(reqBody).then((res) => {
-         console.log(res);
-         setEventModalActive(false);
-      });
-   };
+         console.log(res)
+         setEventModalActive(false)
+         refetchSessions()
+      })
+   }
+
    // console.log(convertTime12to24(`${data.time.end.time} ${data.time.end.timeType}`))
    // console.log(convertTime12to24('1:00 AM'))
-   // console.log(topics)
-   // console.log(sessionToUpdate)
    const dataProps = { data, setData }
    return (
       <>
