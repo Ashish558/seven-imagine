@@ -27,9 +27,8 @@ export default function DaysEndDate({ days, setDays, data, setData }) {
                         key={idx}
                         id={day.id}
                         body={day.text}
-                        bodyClassName="font-medium flex bg-lightWhite mr-1.4 justify-center items-center text-lg w-56 h-56 rounded-10"
+                        bodyClassName={`font-medium flex ${day.checked ? ' bg-primary text-white' : 'bg-lightWhite'} mr-1.4 justify-center items-center text-lg w-56 h-56 rounded-10`}
                         checked={day.checked}
-                        checkedClassName="bg-dark text-white"
                         onChange={handleDayChange}
                      />
                   );
@@ -41,7 +40,7 @@ export default function DaysEndDate({ days, setDays, data, setData }) {
             labelClassname="ml-3"
             parentClassName="w-full self-end"
             type="date"
-            inputContainerClassName="bg-lightWhite border-0 font-medium pr-3"
+            inputContainerClassName="bg-lightWhite border-0 font-medium pr-3 pt-4 pb-4"
             inputClassName="bg-transparent appearance-none font-medium"
             value={data.endDate}
             onChange={(e) =>

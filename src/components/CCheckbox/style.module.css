@@ -45,10 +45,10 @@
  }
  
  .container .checkmark:after {
-   left: 8px;
-   top: 4px;
-   width: 4px;
-   height: 10px;
+   left: 7px;
+   top: 2.2px;
+   width: 6.2px;
+   height: 13px;
    border: solid white;
    border-width: 0 3px 3px 0;
    -webkit-transform: rotate(45deg);

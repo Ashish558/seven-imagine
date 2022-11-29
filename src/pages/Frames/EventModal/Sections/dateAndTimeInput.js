@@ -15,7 +15,7 @@ export default function DateAndTimeInput({ data, setData }) {
             parentClassName="w-full mr-6"
             label="Date"
             labelClassname="ml-3"
-            inputContainerClassName="bg-lightWhite border-0"
+            inputContainerClassName="bg-lightWhite border-0  pt-4 pb-4"
             inputClassName="bg-transparent appearance-none"
             value={data.date}
             type="date"
@@ -29,7 +29,7 @@ export default function DateAndTimeInput({ data, setData }) {
             labelClassname="ml-3"
             parentClassName="w-full max-w-120"
             type="time"
-            inputContainerClassName="bg-lightWhite border-0 font-medium pr-3"
+            inputContainerClassName="bg-lightWhite border-0 font-medium pr-3 pt-4 pb-4"
             inputClassName="bg-transparent appearance-none font-medium"
             value={convertTime12to24(
                `${data.time.start.time} ${data.time.start.timeType}`
@@ -47,7 +47,7 @@ export default function DateAndTimeInput({ data, setData }) {
          <InputField
             parentClassName="w-full max-w-120"
             type="time"
-            inputContainerClassName="bg-lightWhite border-0 font-medium pr-3"
+            inputContainerClassName="bg-lightWhite border-0 font-medium pr-3 pt-4 pb-4"
             inputClassName="bg-transparent appearance-none font-medium"
             value={convertTime12to24(
                `${data.time.end.time} ${data.time.end.timeType}`
@@ -64,10 +64,10 @@ export default function DateAndTimeInput({ data, setData }) {
                setData({ ...data, timeZone: val })
             }
             optionData={timeZones}
-            inputContainerClassName="bg-lightWhite border-0 font-medium pr-3"
+            inputContainerClassName="bg-lightWhite border-0 font-medium pl-4 pr-3 pt-4 pb-4"
             inputClassName="bg-transparent appearance-none font-medium"
             placeholder="Time Zone"
-            parentClassName="w-full mr-4 ml-8"
+            parentClassName="w-full mr-4 ml-8  max-w-[140px]"
             type="select"
          />
       </div>

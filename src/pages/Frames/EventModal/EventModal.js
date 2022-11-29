@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "./style.module.css";
-
 import InputField from "../../../components/InputField/inputField";
 import Modal from "../../../components/Modal/Modal";
 import CalendarIcon from "../../../assets/form/calendar.svg";
 import StarIcon from "../../../assets/form/star.svg";
 import InputSelect from "../../../components/InputSelect/InputSelect";
-import Checkbox from "../../../components/Checkbox/Checkbox";
 import PrimaryButton from "../../../components/Buttons/PrimaryButton";
 import {
    convertTime12to24,
@@ -16,16 +14,15 @@ import {
 import InputSearch from "../../../components/InputSearch/InputSearch";
 import {
    useLazyGetSettingsQuery,
-   useLazyGetStudentsByNameQuery,
-   useLazyGetTutorsByNameQuery,
    useSubmitSessionMutation,
    useUpdateSessionMutation,
 } from "../../../app/services/session";
-import { array } from "yup";
 import SearchNames from "./Sections/searchNames";
 import DateAndTimeInput from "./Sections/dateAndTimeInput";
 import CCheckbox from "../../../components/CCheckbox/CCheckbox";
 import DaysEndDate from "./Sections/daysEndDate";
+import SessionInputs from "./Sections/sessionInputs";
+import { sessionSchema } from "./schema/schema";
 
 const timeZones = ["IST"];
 const tempDays = [
@@ -251,7 +248,7 @@ export default function EventModal({
       });
    };
 
-  
+
    const handleCheckboxChange = (text, arr, setValue, isSingle) => {
       if (isSingle) {
          const temp = arr.map((topic) => {
@@ -290,6 +287,12 @@ export default function EventModal({
    };
 
    const handleSubmit = () => {
+      //  sessionSchema.validate(data)
+      // .then(valid => {
+      //    console.log(valid)
+      // }).catch(err => {
+      //    console.log(err)
+      // })
       let reqBody = { ...data };
       reqBody.studentName = student;
       reqBody.tutorName = tutor;
@@ -338,153 +341,11 @@ export default function EventModal({
                         Recurring
                      </p>
                   </div>
+
                   <DaysEndDate days={days} setDays={setDays} {...dataProps} />
-                  {/* <div className="flex mb-14">
-                     <div className="mr-8">
-                        <p className="font-medium text-primary-60 mb-1">
-                           Repeat every week on
-                        </p>
-                        <div className="flex">
-                           {days.map((day, idx) => {
-                              return (
-                                 <Checkbox
-                                    key={idx}
-                                    id={day.id}
-                                    body={day.text}
-                                    bodyClassName="font-medium flex bg-lightWhite mr-1.4 justify-center items-center text-lg w-56 h-56 rounded-10"
-                                    checked={day.checked}
-                                    checkedClassName="bg-dark text-white"
-                                    onChange={handleDayChange}
-                                 />
-                              );
-                           })}
-                        </div>
-                     </div>
-                     <InputField
-                        label="End Date"
-                        labelClassname="ml-3"
-                        parentClassName="w-full self-end"
-                        type="date"
-                        inputContainerClassName="bg-lightWhite border-0 font-medium pr-3"
-                        inputClassName="bg-transparent appearance-none font-medium"
-                        value={data.endDate}
-                        onChange={(e) =>
-                           setData({
-                              ...data,
-                              endDate: e.target.value,
-                           })
-                        }
-                     />
-                  </div> */}
 
                   {/* SESSIONS */}
-
-                  <div className="flex">
-                     <InputField
-                        label="Session"
-                        labelClassname="ml-3"
-                        placeholder="Session"
-                        parentClassName="w-full mr-8"
-                        inputContainerClassName="bg-lightWhite border-0"
-                        inputClassName="bg-transparent"
-                        type="text"
-                        value={data.session}
-                        onChange={(e) =>
-                           setData({
-                              ...data,
-                              session: e.target.value,
-                           })
-                        }
-                     />
-                     {persona === "student" ? (
-                        <div className="w-full flex flex-col items-start">
-                           <InputSelect
-                              value={data.sessionStatus}
-                              onChange={(val) =>
-                                 setData({
-                                    ...data,
-                                    sessionStatus: val,
-                                 })
-                              }
-                              optionData={status}
-                              label="Session Status"
-                              labelClassname="ml-2"
-                              inputContainerClassName="bg-lightWhite border-0 font-medium pr-3"
-                              inputClassName="bg-transparent appearance-none font-medium"
-                              placeholder="Session Status"
-                              parentClassName="w-full mr-4"
-                              type="select"
-                           />
-                           <div className="flex mb-3 mt-3 ml-3">
-                              <div
-                                 className={`${styles.container} `}
-                                 onClick={() =>
-                                    setData({
-                                       ...data,
-                                       rescheduling:
-                                          !data.rescheduling,
-                                    })
-                                 }
-                              >
-                                 <input
-                                    checked={data.rescheduling}
-                                    type="checkbox"
-                                    name="recurring"
-                                 />
-                                 <span
-                                    class={styles.checkmark}
-                                 ></span>
-                              </div>
-                              <p className="font-medium text-primary-60 text-sm">
-                                 Rescheduling
-                              </p>
-                           </div>
-                        </div>
-                     ) : (
-                        <div className="w-full flex flex-col items-center">
-                           <InputSelect
-                              value={data.sessionStatus}
-                              onChange={(val) =>
-                                 setData({
-                                    ...data,
-                                    sessionStatus: val,
-                                 })
-                              }
-                              optionData={status}
-                              inputContainerClassName="bg-lightWhite border-0 font-medium pr-3"
-                              inputClassName="bg-transparent appearance-none font-medium"
-                              placeholder="Session Status"
-                              parentClassName="w-full mr-4"
-                              type="select"
-                           />
-                           <div className="flex mb-3 mt-3">
-                              <div
-                                 className={`${styles.container} `}
-                                 onClick={() =>
-                                    setData({
-                                       ...data,
-                                       rescheduling:
-                                          !data.rescheduling,
-                                    })
-                                 }
-                              >
-                                 <input
-                                    checked={data.rescheduling}
-                                    type="checkbox"
-                                    name="recurring"
-                                 />
-                                 <span
-                                    class={styles.checkmark}
-                                 ></span>
-                              </div>
-                              <p className="font-medium text-primary-60 text-sm">
-                                 Rescheduling
-                              </p>
-                           </div>
-                        </div>
-                     )}
-                  </div>
-
+                  <SessionInputs {...dataProps} status={status} />
                   <div className="flex">
                      <InputSelect
                         label="Services"
@@ -496,11 +357,10 @@ export default function EventModal({
                         optionData={services}
                         inputContainerClassName={`bg-lightWhite border-0 font-medium pr-3
                        `}
-                        inputClassName="bg-transparent appearance-none font-medium"
+                        inputClassName="bg-transparent appearance-none font-medium pt-4 pb-4"
                         placeholder="Service"
                         parentClassName={`w-full mr-4 max-w-373 self-end 
-                        ${persona === "student" ? "mr-4" : ""}
-                        ${persona === "parent" ? " order-2" : ""}
+                        ${persona === "student" ? "mr-4" : ""} ${persona === "parent" ? " order-2" : ""}
                         `}
                         type="select"
                      />
@@ -721,7 +581,7 @@ export default function EventModal({
                         <div className="flex justify-center">
                            <PrimaryButton
                               children="Schedule"
-                              className="text-21 py-3 font-medium px-7"
+                              className="text-21 py-3 pl-2 pr-2 font-medium px-7 h-[57px] w-[140px]"
                               onClick={handleSubmit}
                            />
                         </div>

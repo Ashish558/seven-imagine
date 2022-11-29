@@ -15,8 +15,7 @@ export default function Checkbox({
          onClick={() => onChange(id)}
       >
          <div
-            className={`${bodyClassName ? bodyClassName : ""} ${checked ? checkedClassName : ""
-               }`}
+            className={`${checked ? checkedClassName : ""} ${bodyClassName ? bodyClassName : ""}`}
          >
             {body}
          </div>
