@@ -28,8 +28,8 @@ import { getCheckedString } from "../../utils/utils";
 
 export default function Signup() {
     const [frames, setFrames] = useState({
-        signupActive: true,
-        selectPersona: false,
+        signupActive: false,
+        selectPersona: true,
         services: false,
         userDetails: false,
         questions: false,
@@ -213,7 +213,7 @@ export default function Signup() {
                                             subscriptionCode: e.target.value,
                                         })
                                     }
-                                    labelClassname="ml-2 mb-2"
+                                    labelClassname="ml-2 mb-[11px]"
                                 />
 
                                 <div className="flex items-center">
