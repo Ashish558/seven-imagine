@@ -314,7 +314,7 @@ export default function EventModal({
    };
    // console.log(convertTime12to24(`${data.time.end.time} ${data.time.end.timeType}`))
    // console.log(convertTime12to24('1:00 AM'))
-   // console.log(data)
+   // console.log(topics)
    // console.log(sessionToUpdate)
    const dataProps = { data, setData }
    return (
@@ -415,22 +415,9 @@ export default function EventModal({
                                              )
                                           }
                                        >
-                                          <div
-                                             className={`${styles.container} `}
-                                          >
-                                             <input
-                                                checked={
-                                                   topic.checked
-                                                }
-                                                type="checkbox"
-                                                name="recurring"
-                                             />
-                                             <span
-                                                class={
-                                                   styles.checkmark
-                                                }
-                                             ></span>
-                                          </div>
+                                          <CCheckbox checked={topic.checked}
+                                             name='topic'
+                                          />
                                           <p className="font-medium text-primary-60 text-sm">
                                              {topic.text}
                                           </p>
@@ -453,23 +440,9 @@ export default function EventModal({
                                           className="flex mb-3 mr-3"
                                           onClick={() => handleCheckboxChange(item.text, studentMoods, setStudentMoods)}
                                        >
-                                          <div
-                                             className={`${styles.container} `}
-                                          >
-                                             <input
-                                                checked={
-                                                   item.checked
-                                                }
-                                                type="checkbox"
-                                                name="moods"
-                                                value=""
-                                             />
-                                             <span
-                                                class={
-                                                   styles.checkmark
-                                                }
-                                             ></span>
-                                          </div>
+                                          <CCheckbox checked={item.checked}
+                                             name='moods'
+                                          />
                                           <p className="font-medium text-primary-60 text-sm">
                                              {item.text}
                                           </p>
@@ -498,17 +471,9 @@ export default function EventModal({
                                              )
                                           }
                                        >
-                                          <div
-                                             className={`${styles.container} `}
-                                          >
-                                             <input
-                                                checked={item.checked}
-                                                type="checkbox"
-                                                name="moods"
-                                                value=""
-                                             />
-                                             <span class={styles.checkmark}></span>
-                                          </div>
+                                          <CCheckbox checked={item.checked}
+                                             name='homeworks'
+                                          />
                                           <p className="font-medium text-primary-60 text-sm">
                                              {item.text}
                                           </p>
@@ -531,23 +496,9 @@ export default function EventModal({
                                        onClick={() =>
                                           handleCheckboxChange(item.text, isProductive, setIsProductive, true)}
                                     >
-                                       <div
-                                          className={`${styles.container} `}
-                                       >
-                                          <input
-                                             checked={
-                                                item.checked
-                                             }
-                                             type="checkbox"
-                                             name="moods"
-                                             value=""
-                                          />
-                                          <span
-                                             class={
-                                                styles.checkmark
-                                             }
-                                          ></span>
-                                       </div>
+                                       <CCheckbox checked={item.checked}
+                                          name='productive'
+                                       />
                                        <p className="font-medium text-primary-60 text-sm">
                                           {item.text}
                                        </p>
