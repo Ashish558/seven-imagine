@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import InputField from "../../components/InputField/inputField";
 import styles from "./signup.module.css";
 
-import ForgotPassword from "../Frames/ForgotPassword";
-import ResetPassword from "../Frames/ResetPassword";
 import SelectPersona from "../Frames/SelectPersona/selectPersona";
 import SelectServices from "../Frames/SelectServices/SelectServices";
 import UserDetails from "../Frames/UserDetails/userDetails";
@@ -26,10 +24,10 @@ import { getCheckedString } from "../../utils/utils";
 
 export default function Signup() {
    const [frames, setFrames] = useState({
-      signupActive: false,
+      signupActive: true,
       selectPersona: false,
       services: false,
-      userDetails: true,
+      userDetails: false,
       questions: false,
       signupLast: false,
       signupSuccessful: false,
