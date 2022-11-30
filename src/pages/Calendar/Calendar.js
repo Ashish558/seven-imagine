@@ -89,7 +89,7 @@ export default function Calendar() {
 
    const fetchSessions = (id, role) => {
       // console.log(id)
-      setSearchedUser({id, role})
+      setSearchedUser({ id, role })
       const url = `/api/session/${role}/${id}`;
       // console.log(url)
       fetchUserSessions(url).then((res) => {
@@ -105,13 +105,21 @@ export default function Calendar() {
             const startHours = parseInt(startTime.split(":")[0]);
             const startMinutes = parseInt(startTime.split(":")[1]);
 
+            const endHours = parseInt(endTime.split(":")[0]);
+            const endMinutes = parseInt(endTime.split(":")[1]);
+
             let startDate = new Date(session.date);
             startHours !== NaN && startDate.setHours(startHours);
             startMinutes !== NaN && startDate.setMinutes(startMinutes);
 
+            let endDate = new Date(session.date);
+            endHours !== NaN && endDate.setHours(endHours);
+            endMinutes !== NaN && endDate.setMinutes(endMinutes);
+
             let eventObj = {
                id: session._id,
                start: startDate,
+               // end: endDate,
                title: session.tutorName,
                description: `${strtTime12HFormat} - ${endTime}`,
             };
@@ -326,7 +334,7 @@ export default function Calendar() {
          <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">
             <div className="py-14 pl-5 calendar flex">
                <div className="p-10 pl-0 pr-3 w-1/5 w-[320px]">
-                  <div className="w-[290px]" >
+                  <div className="w-[280px]" >
                      <SimpleCalendar currentDate={currentDate} setCurrentDate={setCurrentDate} />
                   </div>
                   {persona === "parent" || persona === "tutor" ? (

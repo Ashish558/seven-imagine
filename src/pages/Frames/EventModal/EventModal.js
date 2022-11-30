@@ -118,8 +118,7 @@ export default function EventModal({
    const [tutor, setTutor] = useState("");
 
    const [submitSession, sessionResponse] = useSubmitSessionMutation();
-   const [updateUserSession, updateUserSessionResp] =
-      useUpdateSessionMutation();
+   const [updateUserSession, updateUserSessionResp] = useUpdateSessionMutation();
 
    const [student, setStudent] = useState("");
 

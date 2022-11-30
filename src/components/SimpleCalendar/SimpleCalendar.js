@@ -2,25 +2,23 @@ import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./simpleCalendar.css";
-import moment from "moment";
+import LeftIcon from '../../assets/calendar/left.svg'
+import RightIcon from '../../assets/calendar/right.svg'
 
-export default function SimpleCalendar({currentDate, setCurrentDate }) {
+export default function SimpleCalendar({ currentDate, setCurrentDate }) {
 
-    const changeDate = (e) => {
-        setCurrentDate(e);
-    };
-    return (
-        <>
-            <Calendar value={currentDate} onChange={changeDate}
-                // formatWeekday={day => 'd'}
-                // formatShortWeekday={day => `${day}`}
-                formatShortWeekday={(locale, value) => ['S', 'M', 'T', 'W', 'T', 'F', 'S'][value.getDay()]
-                }
-            // formatDay={day => console.log(day)}
-            // formatShortWeekday
-            // formatDay={day => console.log(day)}
-            />
-            {/* <p>Current selected date is <b>{moment(dateState).format('MMMM Do YYYY')}</b></p> */}
-        </>
-    );
+   const changeDate = (e) => {
+      setCurrentDate(e);
+   };
+   return (
+      <>
+         <Calendar value={currentDate} onChange={changeDate}
+            prevLabel={<img src={LeftIcon} />}
+            nextLabel={<img src={RightIcon} />}
+            formatShortWeekday={(locale, value) => ['S', 'M', 'T', 'W', 'T', 'F', 'S'][value.getDay()]
+            }
+
+         />
+      </>
+   );
 }
