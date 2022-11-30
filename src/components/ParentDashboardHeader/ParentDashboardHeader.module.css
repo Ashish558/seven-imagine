@@ -115,3 +115,26 @@
     font-size: 12px;
     font-weight: 400;
 }
+
+
+
+
+.student {
+    background: linear-gradient(95.17deg, #a455f2 3.84%, #981dac 92.55%);
+    border-radius: 20px;
+    padding: 37px;
+    color: #fff;
+}
+
+.student h2 {
+    font-family: "Inter", sans-serif;
+    color: white !important;
+    font-size: 18px;
+    font-weight: 700;
+    /* margin-bottom: 25px; */
+}
+
+.student img {
+    width: 150px !important;
+    height: 150px;
+}

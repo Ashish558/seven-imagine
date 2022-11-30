@@ -6,8 +6,7 @@ import downloadImage from "../../assets/icons/download.png";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import josephBrown from "../../assets/images/joseph-brown.png";
-import rightArrow from "../../assets/icons/arrow-down.png";
+import shivam from "./../../assets/images/tutors/shivam-shrivastab.png";
 
 const ConceptSection = () => {
     const [subject, setSubject] = useState("Maths");
@@ -228,7 +227,7 @@ const ConceptSection = () => {
 
             <div className="w-1/3">
                 <div className="concept" id={styles.studentCarousel}>
-                    <div
+                    {/* <div
                         className="flex justify-between"
                         id={styles.yourStudent}
                     >
@@ -311,7 +310,63 @@ const ConceptSection = () => {
                                 </div>
                             </div>
                         </div>
-                    </OwlCarousel>
+                    </OwlCarousel> */}
+
+
+<div id={styles.tutor}>
+            <h2>Your Tutor</h2>
+            <OwlCarousel className="owl-theme" loop margin={30} items={1}>
+               <div class="item flex" style={{ width: "100%" }}>
+                  <div className="w-1/2">
+                     <h5 className={styles.tag}>
+                        WIZARD TUTOR | UNDERGRADUATE
+                     </h5>
+                     <h3>Shivam Srivastava</h3>
+                     <p>
+                        Lorem ipsum dolor sit amet, consectetur
+                        adipiscing elit.
+                     </p>
+                     <button className="btn-gold">View Profile</button>
+                  </div>
+                  <div className="w-1/2">
+                     <img src={shivam} className="mx-auto" alt="" />
+                  </div>
+               </div>
+               <div class="item flex" style={{ width: "100%" }}>
+                  <div className="w-1/2">
+                     <h5 className={styles.tag}>
+                        WIZARD TUTOR | UNDERGRADUATE
+                     </h5>
+                     <h3>Shivam Srivastava</h3>
+                     <p>
+                        Lorem ipsum dolor sit amet, consectetur
+                        adipiscing elit.
+                     </p>
+                     <button className="btn-gold">View Profile</button>
+                  </div>
+                  <div className="w-1/2">
+                     <img src={shivam} className="mx-auto" alt="" />
+                  </div>
+               </div>
+               <div class="item flex" style={{ width: "100%" }}>
+                  <div className="w-1/2">
+                     <h5 className={styles.tag}>
+                        WIZARD TUTOR | UNDERGRADUATE
+                     </h5>
+                     <h3>Shivam Srivastava</h3>
+                     <p>
+                        Lorem ipsum dolor sit amet, consectetur
+                        adipiscing elit.
+                     </p>
+                     <button className="btn-gold">View Profile</button>
+                  </div>
+                  <div className="w-1/2">
+                     <img src={shivam} className="mx-auto" alt="" />
+                  </div>
+               </div>
+            </OwlCarousel>
+         </div>
+
                 </div>
                 <div id={styles.practiceTestContainer}>
                     <h2 id={styles.practiceTestHeader}>Practice Test</h2>

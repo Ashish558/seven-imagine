@@ -33,7 +33,7 @@
 }
 
 #conceptChart {
-    padding: 0 38px;
+    padding: 0 76px;
     padding-left: 0;
 }
 
@@ -161,4 +161,46 @@
 }
 #rightArrow img {
     transform: rotate(270deg);
+}
+
+
+#tutor {
+    background-color: #7152eb;
+    padding: 19px 23px;
+    border-radius: 20px;
+    color: white;
+}
+
+#tutor h2 {
+    font-family: "Inter", sans-serif;
+    font-size: 21px;
+    font-weight: 600;
+}
+
+#tutor img {
+    width: 165px;
+    height: 165px;
+    margin: 0 auto;
+}
+
+.tag {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    margin-top: 10px;
+    margin-bottom: 19px;
+}
+
+#tutor h3 {
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+#tutor p {
+    font-family: "Inter", sans-serif;
+    font-style: italic;
+    font-size: 12px;
+    font-weight: 400;
 }
