@@ -19,6 +19,7 @@ import ParentDashboard from "./../pages/ParentDashboard/ParentDashboard";
 import SetPassword from "../pages/Frames/SetPassword/SetPassword";
 import StudentDashboard from "../pages/StudentDashboard/StudentDashboard";
 import Ledger from "../pages/Ledger/Ledger";
+import Settings from "../pages/Settings/Settings";
 
 const PrivateRoutes = [
    {
@@ -107,6 +108,7 @@ const AppRoutes = () => {
                path="/student-dashboard"
                element={<StudentDashboard />}
             />
+            <Route path="/settings" element={<Settings />} />
 
             {/* <Route
                   path="/profile"
