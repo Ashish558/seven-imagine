@@ -164,7 +164,7 @@ export default function TableItem({ item, dataFor, onClick }) {
                   <button
                      className="px-2.5 py-1.8 rounded-md flex items-center leading-none bg-primary text-white"
                   >
-                     Test details
+                     View Report
                   </button>
                </td>
             </tr>
