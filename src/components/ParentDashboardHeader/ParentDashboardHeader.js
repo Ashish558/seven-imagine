@@ -44,13 +44,13 @@ const ParentDashboardHeader = () => {
                   </div>
 
                   <div id={styles.creditBalance}>
-                     - 200 USD
+                     820 USD
                      <p className="text-[13.17px] font-bold cursor-pointer"
                         onClick={() => navigate('/ledger')}>
                         View details
                      </p>
                   </div>
-                  <button className={styles.btnRed}>
+                  <button className={styles.btnDark}>
                      Pay Now: $ 2600
                   </button>
                </div>
