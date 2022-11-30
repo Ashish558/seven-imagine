@@ -35,7 +35,7 @@ export default function TableItem({ item, dataFor, onClick }) {
       <>
          {dataFor === "allUsers" && (
             <tr className="odd:bg-white shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-8">
-               <td className="font-semibold px-1  min-w-14 py-4 text-primaryBlue text-left">
+               <td className="font-semibold text-sm px-1  min-w-14 py-4 text-primaryBlue text-left">
                   <span
                      className="inline-block cursor-pointer pl-4"
                      onClick={() => navigate(`/profile/213`)}
@@ -43,26 +43,40 @@ export default function TableItem({ item, dataFor, onClick }) {
                      {item.name}
                   </span>
                </td>
-               <td className="font-medium px-1  min-w-14 py-4">
-                  {item.userType}
+               <td className="font-medium text-sm px-1 min-w-14 py-4">
+                  <div className="my-[6px]">
+                     {item.userType}
+                  </div>
                </td>
-               <td className="font-medium px-1  min-w-14 py-4">
-                  {item.email}
+               <td className="font-medium text-sm px-1  min-w-14 py-4">
+                  <div className="my-[6px]">
+                     {item.email}
+                  </div>
                </td>
-               <td className="font-medium px-1  min-w-14 py-4">
-                  {item.phone}
+               <td className="font-medium text-sm px-1  min-w-14 py-4">
+                  <div className="my-[6px]">
+                     {item.phone}
+                  </div>
                </td>
-               <td className="font-medium px-1  min-w-14 py-4">
-                  {item.assignedTutor}
+               <td className="font-medium text-sm px-1  min-w-14 py-4">
+                  <div className="my-[6px]">
+                     {item.assignedTutor}
+                  </div>
                </td>
-               <td className="font-medium px-1  min-w-14 py-4">
-                  {item.leadStatus}
+               <td className="font-medium text-sm px-1  min-w-14 py-4">
+                  <div className="my-[6px]">
+                     {item.leadStatus}
+                  </div>
                </td>
-               <td className="font-medium px-1  min-w-14 py-4">
-                  {item.tutorStatus}
+               <td className="font-medium text-sm px-1  min-w-14 py-4">
+                  <div className="my-[6px]">
+                     {item.tutorStatus}
+                  </div>
                </td>
-               <td className="font-medium px-1  min-w-14 py-4">
-                  {item.services}
+               <td className="font-medium text-sm px-1  min-w-14 py-4">
+                  <div className="my-[6px]">
+                     {item.services}
+                  </div>
                </td>
             </tr>
          )}

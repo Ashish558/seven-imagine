@@ -32,7 +32,7 @@ const initialState = {
    firstName: '',
    lastName: '',
    phone: '',
-   userType: 'tutor',
+   userType: '',
 }
 export default function Users() {
 
@@ -166,7 +166,7 @@ export default function Users() {
          <div className='py-14 px-5'>
             <div className='flex justify-between items-center'>
                <p className='font-bold text-4xl text-primary-dark'>All Users</p>
-               <button className='bg-primary py-3.5 text-lg px-6 flex items-center text-white font-semibold rounded-lg mr-55'
+               <button className='bg-primary py-3.5 text-lg px-[21px] flex items-center text-white font-semibold rounded-lg mr-55'
                   onClick={() => setModalActive(true)}>
                   Add new User
                   <img src={AddIcon} className='ml-3' />
@@ -177,11 +177,12 @@ export default function Users() {
                   IconRight={SearchIcon}
                   placeholder='Type Name'
                   parentClassName='w-full mr-4'
-                  inputContainerClassName='bg-white'
+                  inputContainerClassName='pt-[15px] pb-[15px] bg-white  w-[290px]'
                   type='text'
                   value={filterData.typeName}
                   onChange={e => setFilterData({ ...filterData, typeName: e.target.value })} />
                <InputSelect optionData={userTypesList}
+                  inputContainerClassName='pt-[15px] pb-[15px]'
                   placeholder='User Type'
                   parentClassName='w-full mr-4'
                   type='select'
@@ -190,6 +191,7 @@ export default function Users() {
                <InputSelect optionData={optionData}
                   placeholder='Lead Status'
                   parentClassName='w-full mr-4'
+                  inputContainerClassName='pt-[15px] pb-[15px]'
                   type='select'
                   value={filterData.status}
                   onChange={val => setFilterData({ ...filterData, status: val })} />
@@ -197,12 +199,14 @@ export default function Users() {
                   placeholder='Services'
                   parentClassName='w-full mr-4'
                   type='select'
+                  inputContainerClassName='pt-[15px] pb-[15px]'
                   value={filterData.services}
                   onChange={val => setFilterData({ ...filterData, services: val })} />
                <InputSelect optionData={optionData}
                   placeholder='Tutor'
                   parentClassName='w-full mr-4'
                   type='select'
+                  inputContainerClassName='pt-[15px] pb-[15px]'
                   value={filterData.tutor}
                   onChange={val => setFilterData({ ...filterData, tutor: val })} />
             </div>
@@ -233,7 +237,7 @@ export default function Users() {
                }}
                handleClose={handleClose}
                body={
-                  <form id='add-user-form' onSubmit={handleSubmit}>
+                  <form id='add-user-form' onSubmit={handleSubmit} className='px-[3px] mb-0.5' >
                      <div className='grid grid-cols-1 md:grid-cols-2  gap-x-2 md:gap-x-3 gap-y-2 gap-y-4 mb-5'>
                         <div>
                            <InputField label='First Name'

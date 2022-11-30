@@ -10,7 +10,9 @@ export function TableHeader({ header, dataFor }) {
          > {header}
          </th>
          :
-         <th className={`px-2 py-3 font-semibold opacity-60 ${header === 'Full Name' || header === 'Name' ? 'text-left pl-7' : ''}
+         <th className={`px-2 py-3 font-semibold opacity-60
+         ${header === 'Full Name' || header === 'Name' ? 'text-left pl-7' : ''}
+         ${dataFor === 'allUsers' ? 'text-sm' : ''}
        `}>
             {header}
          </th>
