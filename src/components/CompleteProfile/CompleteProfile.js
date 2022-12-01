@@ -27,14 +27,14 @@ const CompleteProfile = () => {
                     style={{ width: profileProgress }}
                 ></div>
             </div>
-
+{/* 
             <div id={styles.practiceTest}>
                 <h1>Practice Tests</h1>
 
                 <div id={styles.practiceTestContainer}>
                     <ListData />
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };

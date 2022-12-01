@@ -1,5 +1,5 @@
 #sessionFeedback {
-    margin-top: 27px;
+    /* margin-top: 27px; */
 }
 
 #sessionFeedback h1 {
@@ -14,7 +14,7 @@
     background-color: #fff;
     border-radius: 20px;
     padding: 0 28px;
-    height: 218px;
+    height: 383px;
     overflow: auto;
 }
 
@@ -54,20 +54,20 @@
     border-radius: 6px;
 }
 
-#feedbacks::-webkit-scrollbar {
+#sessionFeedback::-webkit-scrollbar {
     width: 10px;
 }
 
-#feedbacks::-webkit-scrollbar-track {
+#sessionFeedback::-webkit-scrollbar-track {
     background: #6da8ff26;
     border-radius: 20px;
 }
 
-#feedbacks::-webkit-scrollbar-thumb {
+#sessionFeedback::-webkit-scrollbar-thumb {
     background: #6da8ff99;
     border-radius: 20px;
 }
 
-#feedbacks::-webkit-scrollbar-thumb:hover {
+#sessionFeedback::-webkit-scrollbar-thumb:hover {
     background: #5582c599;
 }

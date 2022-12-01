@@ -3,70 +3,18 @@ import styles from "./SessionFeedback.module.css";
 import starGold from "./../../assets/icons/star-gold.png";
 import starDark from "./../../assets/icons/star-dark.png";
 import starLight from "./../../assets/icons/star-light.png";
+import { TestItem } from "../TestItem/TestItem";
 
 const SessionFeedback = () => {
     return (
-        <div id={styles.sessionFeedback} className="w-10/12">
-            <h1>Session Feedback</h1>
-
-            <div id={styles.feedbacks}>
-                <div className={styles.feedback}>
-                    <div className="flex items-center justify-between">
-                        <h1>Service Name \w Tutor Name</h1>
-                        <h3>MMM DD, YYYY</h3>
-                    </div>
-                    <div className="flex justify-between items-center">
-                        <div className={styles.stars}>
-                            <img src={starGold} alt="" />
-                            <img src={starGold} alt="" />
-                            <img src={starGold} alt="" />
-                            <img src={starGold} alt="" />
-                            <img src={starDark} alt="" />
-                        </div>
-
-                        <div className={styles.details}>
-                            <button>Details</button>
-                        </div>
-                    </div>
-                </div>
-                <div className={styles.feedback}>
-                    <div className="flex items-center justify-between">
-                        <h1>ACT \w Shivam</h1>
-                        <h3>June 20, 2022</h3>
-                    </div>
-                    <div className="flex justify-between items-center">
-                        <div className={styles.stars}>
-                            <img src={starLight} alt="" />
-                            <img src={starLight} alt="" />
-                            <img src={starLight} alt="" />
-                            <img src={starLight} alt="" />
-                            <img src={starLight} alt="" />
-                        </div>
-
-                        <div className={styles.details}>
-                            <button>Details</button>
-                        </div>
-                    </div>
-                </div>
-                <div className={styles.feedback}>
-                    <div className="flex items-center justify-between">
-                        <h1>Shivam Srivastava</h1>
-                        <h3>Test Prep, June 20, 2022</h3>
-                    </div>
-                    <div className="flex justify-between items-center">
-                        <div className={styles.stars}>
-                            <img src={starLight} alt="" />
-                            <img src={starLight} alt="" />
-                            <img src={starLight} alt="" />
-                            <img src={starLight} alt="" />
-                            <img src={starLight} alt="" />
-                        </div>
-
-                        <div className={styles.details}>
-                            <button>Details</button>
-                        </div>
-                    </div>
-                </div>
+        <div id={styles.sessionFeedbackContainer} className="h-[382px] bg-white w-10/12 py-[21px] mt-[33px] rounded-[20px]">
+            <div id={styles.sessionFeedback} className="bg-white px-[28px] rounded-[20px] h-full overflow-y-auto">
+                <TestItem name="name" status="due date" date="june 20, 2022" action="Start" marks="1250/1250" />
+                <TestItem name="SAT Series #01" status="due date" date="june 20, 2022" action="Continue" />
+                <TestItem name="Ex. Starte" status="due date" date="june 20, 2022" action="Start" marks="1250/1250" />
+                <TestItem name="SAT B2" status="Completed" date="june 20, 2022" marks="1250/1250" />
+                <TestItem name="name" status="Completed" date="june 20, 2022" marks="1250/1250" />
+               
             </div>
         </div>
     );
