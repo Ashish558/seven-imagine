@@ -34,6 +34,17 @@ const ConceptSection = () => {
         document.getElementsByClassName("owl-prev")[1].click();
     };
 
+    const buttons = document.getElementsByClassName("button")
+    // console.log(buttons);
+    useEffect(() => {
+        for (let i = 0; i < buttons.length; i++) {
+            // console.log(buttons[i].innerText);
+            buttons[i].innerText === "Not Started" && buttons[i].classList.add("text-[#E02B1D]");
+            buttons[i].innerText === "Started" && buttons[i].classList.add("text-[#F6A429]");
+            buttons[i].innerText === "1250 / 1250" && buttons[i].classList.add("text-[#0671E0]");
+        }
+    }, [buttons, buttons.length])
+
     return (
         <div
             className="flex justify-between "
@@ -369,7 +380,7 @@ const ConceptSection = () => {
 
                 </div>
                 <div id={styles.practiceTestContainer}>
-                    <h2 id={styles.practiceTestHeader}>Practice Test</h2>
+                    <h2 className="mb-[6px]" id={styles.practiceTestHeader}>Practice Test</h2>
                     <div id={styles.listedData}>
                         <div
                             className="flex items-center justify-between"
@@ -393,9 +404,9 @@ const ConceptSection = () => {
                                     style={{ gap: "12px" }}
                                 >
                                     <img src={downloadImage} alt="" />
-                                    <button className={styles.btnGreen}>
-                                        Start
-                                    </button>
+                                    <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
+                                        Not Started
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -421,9 +432,9 @@ const ConceptSection = () => {
                                     style={{ gap: "12px" }}
                                 >
                                     <img src={downloadImage} alt="" />
-                                    <button className={styles.btnGreen}>
-                                        Start
-                                    </button>
+                                    <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
+                                        Started
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -449,9 +460,38 @@ const ConceptSection = () => {
                                     style={{ gap: "12px" }}
                                 >
                                     <img src={downloadImage} alt="" />
-                                    <button className={styles.btnGreen}>
-                                        Start
-                                    </button>
+                                    <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
+                                        1250 / 1250
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div
+                            className="flex items-center justify-between"
+                            style={{ padding: "10px 0" }}
+                        >
+                            <div className="w-1/2">
+                                <div className={styles.listedDataItem}>
+                                    <h1>SAT B2</h1>
+                                    <div
+                                        className="flex"
+                                        style={{ gap: "12px" }}
+                                    >
+                                        <h2>Due Date</h2>
+                                        <h3>June 20, 2022</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="w-1/2">
+                                <div
+                                    className="flex items-center justify-end"
+                                    style={{ gap: "12px" }}
+                                >
+                                    <img src={downloadImage} alt="" />
+                                    <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
+                                        Not Started
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -477,9 +517,9 @@ const ConceptSection = () => {
                                     style={{ gap: "12px" }}
                                 >
                                     <img src={downloadImage} alt="" />
-                                    <button className={styles.btnGreen}>
-                                        Start
-                                    </button>
+                                    <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
+                                        Started
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -505,40 +545,13 @@ const ConceptSection = () => {
                                     style={{ gap: "12px" }}
                                 >
                                     <img src={downloadImage} alt="" />
-                                    <button className={styles.btnGreen}>
-                                        Start
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            className="flex items-center justify-between"
-                            style={{ padding: "10px 0" }}
-                        >
-                            <div className="w-1/2">
-                                <div className={styles.listedDataItem}>
-                                    <h1>SAT B2</h1>
-                                    <div
-                                        className="flex"
-                                        style={{ gap: "12px" }}
-                                    >
-                                        <h2>Due Date</h2>
-                                        <h3>June 20, 2022</h3>
+                                    <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
+                                        1250 / 1250
                                     </div>
                                 </div>
                             </div>
-                            <div className="w-1/2">
-                                <div
-                                    className="flex items-center justify-end"
-                                    style={{ gap: "12px" }}
-                                >
-                                    <img src={downloadImage} alt="" />
-                                    <button className={styles.btnGreen}>
-                                        Start
-                                    </button>
-                                </div>
-                            </div>
                         </div>
+                       
                     </div>
                 </div>
             </div>
