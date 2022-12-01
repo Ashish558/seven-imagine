@@ -17,7 +17,7 @@ export const TestItem = ({name, status, date, action, marks}) => {
           {status !== "Completed"? <img src={Download} width="34px" height="34px" alt="download" />:<img src={Stat} width='34px' height="34px" alt="Stat" />}
           {action === 'Start' && <div className="w-full bg-[#F6A429CC] px-[34px] py-[10px] text-center text-white rounded-[6px]">{action}</div>}
           {action === 'Continue' && <div className="w-full bg-[#32D583] px-[34px] py-[10px] text-center text-white rounded-[6px]">{action}</div>}
-          {status === 'Completed' && <div className="w-full bg-[#CBC0F5] px-[34px] py-[10px] text-center text-black rounded-[6px]">{marks}</div>}
+          {/* {status === 'Completed' && <div className="w-full bg-[#CBC0F5] px-[34px] py-[10px] text-center text-black rounded-[6px]">{marks}</div>} */}
         </div>
       </div>
     </div>
