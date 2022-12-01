@@ -77,7 +77,8 @@ export default function EventModal({
    persona,
    isUpdating,
    sessionToUpdate,
-   refetchSessions
+   refetchSessions,
+   defaultEventData
 }) {
    const [data, setData] = useState({
       studentName: "",
@@ -137,6 +138,42 @@ export default function EventModal({
       });
       return checkedItems;
    };
+
+   useEffect(() => {
+      if (defaultEventData !== null && !isUpdating) {
+         console.log(defaultEventData)
+         const { date } = defaultEventData
+         let formattedDate = date.getDate()
+         if (formattedDate < 10) {
+            formattedDate = `0${formattedDate}`
+         }
+         let defDate = `${date.getFullYear()}-${date.getMonth() + 1}-${formattedDate}`
+         
+         let hours = defaultEventData.date.getHours()
+         if (hours < 10) {
+            hours = `0${hours}`
+         }
+         let formattedTime = tConvert(`${hours}:00`)
+
+         console.log(defDate)
+         console.log(formattedTime)
+
+         setData({
+            ...data,
+            date: defDate,
+            time: {
+               ...data.time,
+               start: {
+                  ...formattedTime
+               },
+               end:{
+                  ...formattedTime
+               }
+            },
+         })
+
+      }
+   }, [defaultEventData])
 
    useEffect(() => {
       fetchSettings().then((res) => {

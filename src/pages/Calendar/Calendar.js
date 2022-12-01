@@ -56,6 +56,7 @@ export default function Calendar() {
 
    const [eventModalActive, setEventModalActive] = useState(false);
    const [updateEventModalActive, setUpdateEventModalActive] = useState(false);
+   const [defaultEventData, setDefaultEventData] = useState(null)
 
    const [fetchNames, namesResponse] = useLazyGetUsersByNameQuery();
    const [fetchUserSessions, fetchUserSessionsResponse] =
@@ -215,6 +216,8 @@ export default function Calendar() {
    };
 
    const handleDateClick = (arg) => {
+      console.log(arg)
+      setDefaultEventData({ date: arg.date })
       if (persona === "admin" || persona === "tutor") {
          setEventModalActive(true);
       }
@@ -448,6 +451,7 @@ export default function Calendar() {
          </div>
          {eventModalActive && (
             <EventModal
+               defaultEventData={defaultEventData}
                setEventModalActive={setEventModalActive}
                persona={persona}
                refetchSessions={refetchSessions}
