@@ -2,13 +2,28 @@ import React, { useState } from "react";
 // import Chart from "../Chart/Chart";
 import explore from "./../../assets/images/explore-bg.png";
 import styles from "./StudentDashboardHeader.module.css";
+import starGold from "./../../assets/icons/star-gold.png";
+import starDark from "./../../assets/icons/star-dark.png";
+import starLight from "./../../assets/icons/star-light.png";
+import { TutorItem } from "../TutorItem/TutorItem";
 
 const StudentDashboardHeader = () => {
     const [subject, setSubject] = useState("Maths");
     const [slot, setSlot] = useState("Jun 20, 2022 - Jul 30, 2022 ");
 
+    const tutors = [
+        {name: "Shivam Shrivasaba", designation:"Subject Tutoring at 17:00 on Nov 21"},
+        {name: "Rohit Ransore", designation:"{{Service}} on MM/DD/YY HH:MM"},
+        {name: "Shivam Shrivasaba", designation:"Subject Tutoring at 17:00 on Nov 21"},
+        {name: "Rohit Ransore", designation:"{{Service}} on MM/DD/YY HH:MM"},
+        {name: "Shivam Shrivasaba", designation:"Subject Tutoring at 17:00 on Nov 21"},
+        {name: "Rohit Ransore", designation:"{{Service}} on MM/DD/YY HH:MM"},
+        {name: "Shivam Shrivasaba", designation:"Subject Tutoring at 17:00 on Nov 21"},
+        {name: "Rohit Ransore", designation:"{{Service}} on MM/DD/YY HH:MM"},
+    ]
+
     return (
-        <div className="flex" id={styles.StudentDashboardHeader}>
+        <div className="flex h-[250px]" id={styles.StudentDashboardHeader}>
             <div id={styles.admissionExpert} className="w-3/5">
                 <div className="flex">
                     <div className="w-2/4">
@@ -20,30 +35,9 @@ const StudentDashboardHeader = () => {
                     </div>
                 </div>
             </div>
-            <div className="w-2/5" id={styles.nextSession}>
-                <div className="flex align-baseline">
-                    <div className="w-2/3" id="nextSessionText">
-                        <h1>Next Session</h1>
-                        <h6>
-                            SAT Preparation <span>{"{{Service}}"}</span>
-                        </h6>
-                        <h6>
-                            Subtype here <span>{"{{Subtype}}"}</span>
-                        </h6>
-                        <h2>Shivam S.</h2>
-                        <h6 style={{ fontStyle: "italic", fontWeight: 400 }}>
-                            26th November, 2022 <br /> 01:00 PM - 02:45 PM
-                        </h6>
-                        <button className="btn-gold">View Details</button>
-                    </div>
-                    <div className="w-1/3 mt-auto">
-                        <div className="text-center" id={styles.dateContainer}>
-                            <h1>
-                                26 <sup>th</sup>
-                            </h1>
-                            <h2>Nov</h2>
-                        </div>
-                    </div>
+            <div className="w-2/5 bg-white rounded-[20px] p-[22px] pr-0 h-[100%]">
+                <div className="overflow-y-scroll h-[100%] pr-[22px]" id={styles.tutorList}>
+                    {tutors.map(({name, designation}) => <TutorItem tutorName={name} designation={designation} />)}
                 </div>
             </div>
         </div>

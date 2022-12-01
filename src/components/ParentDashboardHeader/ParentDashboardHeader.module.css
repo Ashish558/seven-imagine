@@ -6,6 +6,7 @@
     background-image: linear-gradient(to right, #7306e0, #8d68f3);
     border-radius: 20px;
     overflow: hidden;
+    padding: 24px 0;
     position: relative;
 }
 
@@ -20,12 +21,13 @@
     font-size: 26px;
     color: #f3f5f7;
     margin: 24px 44px;
+    margin-top: 0;
     margin-right: 0;
     font-family: "GilroySemiBold", sans-serif;
 }
 
 #availableCredit {
-    background-color: #f36262;
+    background-color: #4BBD94;
     padding: 23px;
     border-radius: 16.4662px;
     box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.05);
@@ -45,7 +47,7 @@
 
 #creditBalance {
     background-color: rgba(255, 255, 255, 0.2);
-    padding: 28px 17px;
+    padding: 9px 42px;
     font-size: 36.23px;
     font-weight: 700;
     color: white;
@@ -54,9 +56,9 @@
     margin: 18px 0;
 }
 
-.btnRed {
+.btnDark {
     display: inline-block;
-    background-color: #bb2f2f;
+    background-color:  #095740;
     width: 100%;
     padding: 8px 0;
     text-align: center;
@@ -112,4 +114,27 @@
     font-style: italic;
     font-size: 12px;
     font-weight: 400;
+}
+
+
+
+
+.student {
+    background: linear-gradient(95.17deg, #a455f2 3.84%, #981dac 92.55%);
+    border-radius: 20px;
+    padding: 13px 32px;
+    color: #fff;
+}
+
+.student h2 {
+    font-family: "Inter", sans-serif;
+    color: white !important;
+    font-size: 18px;
+    font-weight: 700;
+    /* margin-bottom: 25px; */
+}
+
+.student img {
+    width: 150px !important;
+    height: 150px;
 }
