@@ -86,3 +86,23 @@
     font-size: 21px;
     font-weight: 600;
 }
+
+#tutorList::-webkit-scrollbar {
+    width: 10px;
+}
+
+#tutorList::-webkit-scrollbar-track {
+    background: #6da8ff26;
+    margin-left: 16px;
+    margin-right: 40px;
+    border-radius: 20px;
+}
+
+#tutorList::-webkit-scrollbar-thumb {
+    background-color: rgba(109, 168, 255, 0.6);
+    border-radius: 20px;
+}
+
+#tutorList::-webkit-scrollbar-thumb:hover {
+    background: rgba(40, 68, 109, 0.6);
+}
