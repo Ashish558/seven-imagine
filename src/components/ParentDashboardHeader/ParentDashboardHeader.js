@@ -55,7 +55,7 @@ const ParentDashboardHeader = () => {
                   </button>
                </div>
             </div>
-         </div>
+         </div>       
          <div className="w-1/3" id={styles.tutor}>
             <h2>Your Tutor</h2>
             <OwlCarousel className="owl-theme" loop margin={30} items={1}>

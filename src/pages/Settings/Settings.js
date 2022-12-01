@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PrimaryButton from '../../components/Buttons/PrimaryButton'
 import EditIcon from '../../assets/icons/edit-white.svg'
 import SettingsCard from '../../components/SettingsCard/SettingsCard'
@@ -6,6 +6,9 @@ import AddTag from '../../components/Buttons/AddTag'
 import FilterItems from '../../components/FilterItems/filterItems'
 import InputField from '../../components/InputField/inputField'
 import Modal from '../../components/Modal/Modal'
+import { useLazyGetSettingsQuery } from '../../app/services/session'
+import { useUpdateSettingMutation } from '../../app/services/settings'
+import { getSessionTagName } from '../../utils/utils'
 
 const testFilters = [
    {
@@ -74,10 +77,10 @@ const initialState = {
 export default function Settings() {
 
    const [modalActive, setModalActive] = useState(false)
+   const [settingsData, setSettingsData] = useState({})
+   const [getSettings, getSettingsResp] = useLazyGetSettingsQuery()
+   const [updateSetting, updateSettingResp] = useUpdateSettingMutation()
 
-   const onRemoveFilter = item => {
-      console.log(item);
-   }
    const [modalData, setModalData] = useState(initialState)
 
    const handleClose = () => setModalActive(false)
@@ -87,10 +90,75 @@ export default function Settings() {
       console.log(modalData);
    }
 
+   const fetchSettings = () => {
+      getSettings()
+         .then(res => {
+            setSettingsData(res.data.data.setting)
+         })
+   }
+
+   const onRemoveFilter = (item, key, idx) => {
+      
+      if(key === undefined || item === undefined) return
+      // let updatedField = settingsData[key].filter(text => text !== item)
+      let updatedField = settingsData[key].filter((text, i) => i !== idx)
+      let updatedSetting = {
+         [key]: updatedField
+      }
+      updateAndFetchsettings(updatedSetting)
+   }
+
+
+   const onRemoveSessionTag = (item, key, idx ) => {
+      let updatedSessionTag = { ...settingsData.sessionTags }
+      // let updatedField = settingsData.sessionTags[key].filter(text => text !== item)
+      let updatedField = settingsData.sessionTags[key].filter((text, i) => i !== idx)
+      updatedSessionTag[key] = updatedField
+
+      const updatedSetting = { sessionTags: updatedSessionTag }
+      updateAndFetchsettings(updatedSetting)
+
+   }
+
+   const handleAddTag = (text, key) => {
+      let tempSettings = { ...settingsData }
+      let updatedSetting = {
+         [key]: [...tempSettings[key], text]
+      }
+      updateAndFetchsettings(updatedSetting)
+   }
+
+   const handleSessionAddTag = (text, key) => {
+      let tempSettings = { ...settingsData }
+      let updatedSessionTag = {
+         ...tempSettings.sessionTags,
+         [key]: [...tempSettings.sessionTags[key], text]
+      }
+      const updatedSetting = { sessionTags: updatedSessionTag }
+      updateAndFetchsettings(updatedSetting)
+   }
+
+   const updateAndFetchsettings = updatedSetting => {
+      updateSetting(updatedSetting)
+         .then(res => {
+            setSettingsData(res.data.data.setting)
+         })
+   }
+
+   useEffect(() => {
+      fetchSettings()
+   }, [])
+
+
+   if (Object.keys(settingsData).length === 0) return <></>
+   const { classes, serviceSpecialisation, sessionTags, leadStatus, tutorStatus } = settingsData
+
+   // console.log(settingsData)
+
    return (
       <>
 
-         <div className='ml-pageLeft bg-lightWhite min-h-screen px-8 pt-[50px] pb-[50px]'>
+         <div className='lg:ml-pageLeft bg-lightWhite min-h-screen px-8 pt-[50px] pb-[50px]'>
             <div className='flex justify-between items-center mb-[56px]'>
 
                <div>
@@ -126,9 +194,12 @@ export default function Settings() {
             <div>
                <SettingsCard title='Lead Status Items'
                   body={
-                     <div className='flex items-center'>
-                        <AddTag />
-                        <FilterItems items={testFilters}
+                     <div className='flex items-center [&>*]:mb-[10px]'>
+                        <AddTag onAddTag={handleAddTag} keyName='leadStatus' />
+                        <FilterItems onlyItems={true}
+                           isString={true}
+                           items={leadStatus}
+                           keyName='leadStatus'
                            onRemoveFilter={onRemoveFilter}
                            className='pt-1 pb-1 mr-15' />
                      </div>
@@ -136,9 +207,12 @@ export default function Settings() {
 
                <SettingsCard title='Tutor Status Items'
                   body={
-                     <div className='flex items-center'>
-                        <AddTag />
-                        <FilterItems items={testFilters}
+                     <div className='flex items-center [&>*]:mb-[10px]'>
+                        <AddTag onAddTag={handleAddTag} keyName='tutorStatus' />
+                        <FilterItems onlyItems={true}
+                           isString={true}
+                           items={tutorStatus}
+                           keyName='tutorStatus'
                            onRemoveFilter={onRemoveFilter}
                            className='pt-1 pb-1 mr-15' />
                      </div>
@@ -148,13 +222,18 @@ export default function Settings() {
                   titleClassName='text-[21px] mb-[15px]'
                   body={
                      <div>
-                        {sessionTags.map(tag => {
+                        {Object.keys(sessionTags).map((tag, i) => {
                            return <div>
-                              <p className='font-bold text-primary-dark mb-[25px]'> {tag.name} </p>
-                              <div className='flex items-center mb-2.5'>
-                                 <AddTag />
-                                 <FilterItems items={tag.items}
-                                    onRemoveFilter={onRemoveFilter}
+                              <p className='font-bold text-primary-dark mb-[25px]'>
+                                 {getSessionTagName(Object.keys(sessionTags)[i])}
+                              </p>
+                              <div className='flex items-center flex-wrap [&>*]:mb-[10px]'>
+                                 <AddTag onAddTag={handleSessionAddTag}
+                                    keyName={Object.keys(sessionTags)[i]} />
+                                 <FilterItems isString={true} onlyItems={true}
+                                    keyName={Object.keys(sessionTags)[i]}
+                                    items={sessionTags[tag]}
+                                    onRemoveFilter={onRemoveSessionTag}
                                     className='pt-1 pb-1 mr-15' />
                               </div>
                            </div>
@@ -164,9 +243,11 @@ export default function Settings() {
 
                <SettingsCard title='Service Specialisation'
                   body={
-                     <div className='flex items-center'>
-                        <AddTag />
-                        <FilterItems items={testFilters}
+                     <div className='flex items-center [&>*]:mb-[10px]'>
+                        <AddTag keyName='serviceSpecialisation' onAddTag={handleAddTag} />
+                        <FilterItems isString={true} onlyItems={true}
+                           items={serviceSpecialisation}
+                           keyName='serviceSpecialisation'
                            onRemoveFilter={onRemoveFilter}
                            className='pt-1 pb-1 mr-15' />
                      </div>
@@ -174,9 +255,12 @@ export default function Settings() {
 
                <SettingsCard title='Classes'
                   body={
-                     <div className='flex items-center'>
-                        <AddTag />
-                        <FilterItems items={testFilters}
+                     <div className='flex items-center [&>*]:mb-[10px]'>
+                        <AddTag onAddTag={handleAddTag} keyName='classes' />
+                        <FilterItems isString={true}
+                           onlyItems={true}
+                           keyName='classes'
+                           items={classes}
                            onRemoveFilter={onRemoveFilter}
                            className='pt-1 pb-1 mr-15' />
                      </div>
@@ -184,9 +268,11 @@ export default function Settings() {
 
                <SettingsCard title='Images in Offer Slide'
                   body={
-                     <div className='flex items-center'>
+                     <div className='flex items-center [&>*]:mb-[10px]'>
                         <AddTag />
-                        <FilterItems items={testFilters}
+                        <FilterItems
+                           onlyItems={true}
+                           items={testFilters}
                            onRemoveFilter={onRemoveFilter}
                            className='pt-1 pb-1 mr-15' />
                      </div>

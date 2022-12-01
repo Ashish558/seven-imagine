@@ -29,6 +29,7 @@ export default function ForgotPassword({
                 label="Email Address"
                 labelClassname="ml-2 mb-2"
                 inputClassName="bg-transparent"
+                inputContainerClassName='border'
                 onChange={(e) => setEmail(e.target.value)}
             />
 

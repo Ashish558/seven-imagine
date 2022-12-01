@@ -52,6 +52,7 @@ export default function UserDetails({
          <div className="flex">
             <InputField
                placeholder="First Name"
+               inputContainerClassName='border'
                parentClassName="mb-6 mr-5"
                required={persona === "student" ? true : false}
                label={`${personaText} First Name`}
@@ -65,8 +66,9 @@ export default function UserDetails({
                }
             />
             <InputField
-               placeholder="Last Name "
+               placeholder="Last Name"
                parentClassName="mb-6"
+               inputContainerClassName='border'
                label={`${personaText} Last Name`}
                required={persona === "student" ? true : false}
                labelClassname="ml-2 mb-2"
@@ -84,6 +86,7 @@ export default function UserDetails({
             placeholder="Email address"
             parentClassName="mb-6"
             label={`${personaText} Email Address`}
+            inputContainerClassName='border'
             required={persona === "student" ? true : false}
             labelClassname="ml-2 mb-2"
             value={otherDetails.Email}
@@ -97,7 +100,7 @@ export default function UserDetails({
             label={`${personaText} Phone Number ${persona !== "parent" ? "(For tutor correspondence)" : ""
                } `}
             labelClassname="ml-2 mb-2"
-            inputContainerClassName="relative"
+            inputContainerClassName="relative border"
             inputClassName="ml-80"
             required={persona === "student" ? true : false}
             inputLeftField={

@@ -54,18 +54,25 @@ export const getFormattedDate = argDate => {
    if (dateNum < 10) {
       dateNum = `0${dateNum}`
    }
-   let dateFormatted = `${year}-${month+1}-${dateNum}`
+   let dateFormatted = `${year}-${month + 1}-${dateNum}`
    return dateFormatted
 }
 
 export function capitalize(str) {
    var splitStr = str.toLowerCase().split(' ');
    for (var i = 0; i < splitStr.length; i++) {
-       // You do not need to check if i is larger than splitStr length, as your for does that for you
-       // Assign it back to the array
-       splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+      // You do not need to check if i is larger than splitStr length, as your for does that for you
+      // Assign it back to the array
+      splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
    }
    // Directly return the joined string
-   return splitStr.join(' '); 
+   return splitStr.join(' ');
 }
 //  tConvert ('18:00:00');
+
+export const getSessionTagName = name => {
+   return name === 'topicsCovered' ? 'Topics Covered' :
+      name === 'studentMode' ? 'Student Mood' :
+         name === 'homeworkAssigned' ? 'Homework Assigned' :
+            name === 'wasProductive' && 'Was the Session Productive'
+}

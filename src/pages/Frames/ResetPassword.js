@@ -23,6 +23,7 @@ export default function ResetPassword({
                 parentClassName="mb-6"
                 type="password"
                 placeholder="minimum 8 characters"
+                inputContainerClassName='border'
                 label="Set New Password"
                 labelClassname="ml-2 mb-2"
             />
@@ -32,6 +33,7 @@ export default function ResetPassword({
                 parentClassName="mb-2.5"
                 type="password"
                 placeholder="Confirm Password"
+                inputContainerClassName='border'
                 label="Confirm Password"
                 labelClassname="ml-2 mb-2"
             />

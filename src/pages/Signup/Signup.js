@@ -134,7 +134,8 @@ export default function Signup() {
                            <InputField
                               placeholder="First Name"
                               parentClassName="mb-6 mr-5"
-                              label="First Name"
+                              label="First Name" 
+                              inputContainerClassName='border'
                               labelClassname="ml-2 mb-2"
                               value={values.firstName}
                               onChange={(e) =>
@@ -149,6 +150,7 @@ export default function Signup() {
                               parentClassName="mb-6"
                               label="Last Name"
                               labelClassname="ml-2 mb-2"
+                              inputContainerClassName='border'
                               value={values.lastName}
                               onChange={(e) =>
                                  setValues({
@@ -163,6 +165,7 @@ export default function Signup() {
                            placeholder="email@example.com"
                            parentClassName="mb-6"
                            label="Email Address"
+                           inputContainerClassName='border'
                            value={values.email}
                            onChange={(e) =>
                               setValues({
@@ -177,7 +180,7 @@ export default function Signup() {
                            parentClassName="mb-6"
                            label="Phone Number (For tutor correspondence)"
                            labelClassname="ml-2 mb-2"
-                           inputContainerClassName="relative"
+                           inputContainerClassName="relative border"
                            inputClassName="ml-80"
                            inputLeftField={
                               <div
@@ -205,6 +208,7 @@ export default function Signup() {
                            placeholder=""
                            parentClassName="mb-6"
                            label="Please enter the subscription code required to access Seven Square Learning and starting prep."
+                           inputContainerClassName='border'
                            value={values.subscriptionCode}
                            onChange={(e) =>
                               setValues({

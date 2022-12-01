@@ -157,7 +157,7 @@ export default function AllTests() {
                   optionData={optionData}
                   placeholder="Test Name"
                   parentClassName="w-290 mr-4"
-                  inputContainerClassName="bg-white"
+                  inputContainerClassName="bg-white border pt-[15px] pb-[15px]"
                   type="select"
                />
             </div>
@@ -193,6 +193,8 @@ export default function AllTests() {
                            optionData={optionData}
                            placeholder="Type Test Name"
                            parentClassName="w-full mr-4"
+                           inputContainerClassName=" bg-primary-50"
+                           inputClassName='bg-transparent'
                            type="select"
                            isRequired={true}
                            value={modalData.testName}
@@ -209,7 +211,9 @@ export default function AllTests() {
                            labelClassname="ml-2 mb-1.2"
                            optionData={testTypeOptions}
                            placeholder="Select Test Type"
+                           inputContainerClassName=" bg-primary-50"
                            parentClassName="w-full mr-4"
+                           inputClassName='bg-transparent'
                            isRequired={true}
                            type="select"
                            value={modalData.testType}

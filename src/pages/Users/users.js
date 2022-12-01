@@ -177,12 +177,12 @@ export default function Users() {
                   IconRight={SearchIcon}
                   placeholder='Type Name'
                   parentClassName='w-full mr-4'
-                  inputContainerClassName='pt-[15px] pb-[15px] bg-white  w-[290px]'
+                  inputContainerClassName='pt-[15px] pb-[15px] bg-white border w-[290px]'
                   type='text'
                   value={filterData.typeName}
                   onChange={e => setFilterData({ ...filterData, typeName: e.target.value })} />
                <InputSelect optionData={userTypesList}
-                  inputContainerClassName='pt-[15px] pb-[15px]'
+                  inputContainerClassName='border bg-white pt-[15px] pb-[15px]'
                   placeholder='User Type'
                   parentClassName='w-full mr-4'
                   type='select'
@@ -191,7 +191,7 @@ export default function Users() {
                <InputSelect optionData={optionData}
                   placeholder='Lead Status'
                   parentClassName='w-full mr-4'
-                  inputContainerClassName='pt-[15px] pb-[15px]'
+                  inputContainerClassName='border bg-white pt-[15px] pb-[15px]'
                   type='select'
                   value={filterData.status}
                   onChange={val => setFilterData({ ...filterData, status: val })} />
@@ -199,14 +199,14 @@ export default function Users() {
                   placeholder='Services'
                   parentClassName='w-full mr-4'
                   type='select'
-                  inputContainerClassName='pt-[15px] pb-[15px]'
+                  inputContainerClassName='border bg-white pt-[15px] pb-[15px]'
                   value={filterData.services}
                   onChange={val => setFilterData({ ...filterData, services: val })} />
                <InputSelect optionData={optionData}
                   placeholder='Tutor'
                   parentClassName='w-full mr-4'
                   type='select'
-                  inputContainerClassName='pt-[15px] pb-[15px]'
+                  inputContainerClassName='border bg-white pt-[15px] pb-[15px]'
                   value={filterData.tutor}
                   onChange={val => setFilterData({ ...filterData, tutor: val })} />
             </div>

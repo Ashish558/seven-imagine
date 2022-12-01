@@ -34,7 +34,7 @@ export default function InputField({
             )}
          </label>
          <div
-            className={`py-[16px] px-[21px] border flex items-center rounded-10 ${inputContainerClassName ? inputContainerClassName : ""
+            className={`py-[16px] px-[21px] flex items-center rounded-10 ${inputContainerClassName ? inputContainerClassName : ""
                }`}
          >
             {Icon && <img src={Icon} className="mr-6" />}
