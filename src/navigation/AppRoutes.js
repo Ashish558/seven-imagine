@@ -20,6 +20,7 @@ import SetPassword from "../pages/Frames/SetPassword/SetPassword";
 import StudentDashboard from "../pages/StudentDashboard/StudentDashboard";
 import Ledger from "../pages/Ledger/Ledger";
 import Settings from "../pages/Settings/Settings";
+import StartTest from "../pages/StartTest/StartTest";
 
 const PrivateRoutes = [
    {
@@ -90,7 +91,7 @@ const AppRoutes = () => {
                }
             />
             <Route
-               path="/assigned-tests/student/:id"
+               path="/assigned-tests/:id/report"
                element={<CompletedTest />}
             />
             <Route path="/all-tests" element={<AllTests />} />
@@ -107,6 +108,7 @@ const AppRoutes = () => {
                element={<StudentDashboard />}
             />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/all-tests/start-section" element={<StartTest />} />
 
             {/* <Route
                   path="/profile"

@@ -35,31 +35,6 @@ const studentTableHeaders = [
    "",
 ];
 
-const parentTestInfo = [
-   {
-      bg: '#CBC0F5',
-      text: 'Not Started'
-   },
-   {
-      bg: '#F6A429',
-      text: 'Started'
-   },
-   {
-      bg: '#32D583',
-      text: 'Completed'
-   },
-]
-const parentStudents = [
-   {
-      name: 'Sarina Darper',
-      selected: true,
-   },
-   {
-      name: 'Joseph Brown',
-      selected: false,
-   },
-]
-
 export default function AssignedTests() {
    const [filterData, setFilterData] = useState([
       "Student",
@@ -69,7 +44,6 @@ export default function AssignedTests() {
    const [tableData, setTableData] = useState([])
    const [tableHeaders, setTableHeaders] = useState([])
 
-   const [studentsData, setStudentsData] = useState(studentsDataTable);
    const [assignTestModalActive, setAssignTestModalActive] = useState(false);
    const [resendModalActive, setResendModalActive] = useState(false);
 
@@ -116,13 +90,10 @@ export default function AssignedTests() {
    };
 
    useEffect(() => {
-      if (persona === 'admin' || persona === 'tutor') {
-         setTableData(tempTableData)
-         setTableHeaders(tempTableHeaders)
-      } else {
-         setTableData(studentsDataTable)
-         setTableHeaders(studentTableHeaders)
-      }
+
+      setTableData(tempTableData)
+      setTableHeaders(tempTableHeaders)
+
    }, [])
 
    return (
@@ -130,97 +101,69 @@ export default function AssignedTests() {
          <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">
             <div className="py-14 px-5">
                <div className="flex justify-between items-center">
-                  <p
-                     className={`font-bold ${persona === "student" || persona === "parent" ? 'text-[96px]' : 'text-4xl'} `}
-                     style={{ color: "#25335A" }}
+                  <p className={`font-bold text-4xl text-primary-dark`}
+                  // style={{ color: "#25335A" }}
                   >
-                     {persona === "student" || persona === "parent" ? 'Tests' : 'Assigned Tests'}
+                     Assigned Tests
                   </p>
-                  {persona === "student" ? (
-                     <div className="flex flex-col items-center">
-                        {parentTestInfo.map(item => {
-                           return <div className="flex items-center mb-[20px]">
-                              <div className="w-[20px] h-[20px] rounded-full mr-[20px]" style={{ backgroundColor: item.bg }}></div>
-                              <div className="font-semibold w-[90px]"> {item.text} </div>
-                           </div>
-                        })}
-                     </div>
-                  ) : persona === 'parent' ?
-                     <div>
-                        <div className="flex items-center">
-                           {parentTestInfo.map(item => {
-                              return <>
-                                 <div className="w-[20px] h-[20px] rounded-full mr-[20px]" style={{ backgroundColor: item.bg }}></div>
-                                 <div className="mr-[20px] font-semibold"> {item.text} </div>
-                              </>
-                           })}
-                        </div>
-                        <div className="flex mt-[29px]">
-                           {parentStudents.map(student => {
-                              return <div key={student.name} className='border w-[230px] py-[7px] flex justify-center' >
-                                 <p className={`text-lg ${student.selected ? 'font-bold underline underline-offset-3' : ''}`}> {student.name} </p>
-                              </div>
-                           })}
-                        </div>
-                     </div>
-                     :
-                     (
-                        <button
-                           className="bg-primaryOrange flex items-center text-white font-semibold rounded-lg mr-55"
-                           onClick={() => setAssignTestModalActive(true)}
-                           style={{ padding: "17px 24px", fontSize: "18px" }}
-                        >
-                           Assign new test
-                           <img src={AddIcon} className="ml-3" />
-                        </button>
-                     )}
+
+                  <button
+                     className="bg-primaryOrange flex items-center text-white font-semibold rounded-lg mr-55"
+                     onClick={() => setAssignTestModalActive(true)}
+                     style={{ padding: "17px 24px", fontSize: "18px" }}
+                  >
+                     Assign new test
+                     <img src={AddIcon} className="ml-3" />
+                  </button>
+
                </div>
-               {persona === 'admin' || persona === 'tutor' &&
-                  <div className="flex align-center mt-8">
-                     <InputField
-                        value={studentName}
-                        IconRight={SearchIcon}
-                        onChange={updateStudentName}
-                        optionData={optionData}
-                        placeholder="Student Name"
-                        inputContainerClassName="bg-white"
-                        parentClassName="w-full mr-4"
-                        type="text"
-                     />
-                     <InputField
-                        value={testName}
-                        IconRight={SearchIcon}
-                        onChange={updateTestName}
-                        optionData={optionData}
-                        placeholder="Test Name"
-                        inputContainerClassName="bg-white"
-                        parentClassName="w-full mr-4"
-                        type="text"
-                     />
-                     <InputField
-                        value={tutor}
-                        onChange={updateTutor}
-                        IconRight={SearchIcon}
-                        parentClassName="w-full mr-4"
-                        inputContainerClassName="bg-white"
-                        optionData={optionData}
-                        placeholder="Tutor Name"
-                        type="text"
-                     />
-                     <InputSelect
-                        value={status}
-                        onChange={updateStatus}
-                        optionData={optionData}
-                        placeholder="Completion Status"
-                        parentClassName="w-full mr-4"
-                        type="select"
-                     />
-                  </div>
-               }
+
+               <div className="flex align-center mt-8">
+                  <InputField
+                     value={studentName}
+                     IconRight={SearchIcon}
+                     onChange={updateStudentName}
+                     optionData={optionData}
+                     placeholder="Student Name"
+                     inputContainerClassName="bg-white"
+                     parentClassName="w-full mr-4"
+                     type="text"
+                  />
+                  <InputField
+                     value={testName}
+                     IconRight={SearchIcon}
+                     onChange={updateTestName}
+                     optionData={optionData}
+                     placeholder="Test Name"
+                     inputContainerClassName="bg-white"
+                     parentClassName="w-full mr-4"
+                     type="text"
+                  />
+                  <InputField
+                     value={tutor}
+                     onChange={updateTutor}
+                     IconRight={SearchIcon}
+                     parentClassName="w-full mr-4"
+                     inputContainerClassName="bg-white"
+                     optionData={optionData}
+                     placeholder="Tutor Name"
+                     type="text"
+                  />
+                  <InputSelect
+                     value={status}
+                     onChange={updateStatus}
+                     optionData={optionData}
+                     inputContainerClassName="bg-white"
+                     placeholder="Completion Status"
+                     parentClassName="w-full mr-4"
+                     type="select"
+                  />
+               </div>
+
                <div className="mt-6">
                   <Table
                      onClick={{ handleResend }}
-                     dataFor={persona === 'admin' || persona === 'tutor' ? 'assignedTests' : 'assignedTestsStudents'}
+                     dataFor='assignedTests'
                      data={tableData}
                      tableHeaders={tableHeaders}
                      maxPageSize={10}

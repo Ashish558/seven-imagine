@@ -14,6 +14,7 @@ import Papa from "papaparse";
 import axios from "axios";
 import { useAddPdfMutation, useAddTestMutation } from "../../app/services/test";
 import { BASE_URL } from "../../app/constants/constants";
+import StudentTest from "../StudentTest/StudentTest";
 
 const optionData = ["option 1", "option 2", "option 3", "option 4", "option 5"];
 const testTypeOptions = ["SAT"];
@@ -43,6 +44,8 @@ export default function AllTests() {
 
    const handleClose = () => setModalActive(false);
    const closeRemoveModal = () => setRemoveQuestionModal(false);
+
+   const persona = sessionStorage.getItem("role");
 
    const openRemoveTestModal = (item) => {
       setRemoveQuestionModal(true);
@@ -128,8 +131,7 @@ export default function AllTests() {
       fetchTests();
    }, []);
 
-   // console.log(pdfFile)
-   // console.log(csvFile)
+   if (persona === 'parent' || persona === 'student') return <StudentTest />
 
    return (
       <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">

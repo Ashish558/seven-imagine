@@ -50,6 +50,7 @@ module.exports = {
             primaryRed: '#E02B1D',
             danger: "rgba(255, 91, 79, 1)",
             primaryDark: "#4715D7",
+            primaryYellow: '#F7A429',
             primaryLight: "#E9E3FF",
             secondary: "#403DED",
             secondaryLight: "#D9BBFF",

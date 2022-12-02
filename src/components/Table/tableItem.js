@@ -113,7 +113,7 @@ export default function TableItem({ item, dataFor, onClick }) {
                   <button
                      className="px-2.5 py-1.8 rounded-md flex items-center leading-none bg-primary text-white"
                      onClick={() =>
-                        navigate("/assigned-tests/student/321")
+                        navigate("/assigned-tests/321/report")
                      }
                   >
                      Test details

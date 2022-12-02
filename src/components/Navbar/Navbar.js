@@ -75,7 +75,7 @@ const studentNav = [
    },
    {
       icon: StudentTest,
-      path: "/assigned-tests",
+      path: "/all-tests",
    },
    {
       icon: Bubble,
