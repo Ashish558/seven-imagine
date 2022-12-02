@@ -430,7 +430,7 @@ export default function Calendar() {
                         year: "numeric",
                      }}
                      expandRows={true}
-                     contentHeight={3250}
+                     contentHeight={1850}
                      dayHeaderFormat={{
                         day: "2-digit",
                         month: "narrow",

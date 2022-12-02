@@ -58,3 +58,11 @@
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+
+.fc .fc-timegrid-slot-minor{
+    border-top-style: none !important;
+}
+
+.fc-direction-ltr .fc-timegrid-slot-label-frame{
+    transform: translateY(17px) !important;
+}

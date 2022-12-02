@@ -178,7 +178,7 @@ export default function Settings() {
      let updatedSetting = {
       offerImages: updatedField
      }
-     console.log(updatedSetting)
+   //   console.log(updatedSetting)
      updateAndFetchsettings(updatedSetting)
    }
 
