@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import PrimaryButton from '../../components/Buttons/PrimaryButton'
 import EditIcon from '../../assets/icons/edit-white.svg'
 import SettingsCard from '../../components/SettingsCard/SettingsCard'
@@ -7,8 +7,10 @@ import FilterItems from '../../components/FilterItems/filterItems'
 import InputField from '../../components/InputField/inputField'
 import Modal from '../../components/Modal/Modal'
 import { useLazyGetSettingsQuery } from '../../app/services/session'
-import { useUpdateSettingMutation } from '../../app/services/settings'
+import { useUpdateOfferImageMutation, useUpdateSettingMutation } from '../../app/services/settings'
 import { getSessionTagName } from '../../utils/utils'
+import { BASE_URL } from '../../app/constants/constants'
+import axios from 'axios'
 
 const testFilters = [
    {
@@ -78,8 +80,11 @@ export default function Settings() {
 
    const [modalActive, setModalActive] = useState(false)
    const [settingsData, setSettingsData] = useState({})
+   const inputRef = useRef()
+   const [image, setImage] = useState(null)
    const [getSettings, getSettingsResp] = useLazyGetSettingsQuery()
    const [updateSetting, updateSettingResp] = useUpdateSettingMutation()
+   const [updateImage, updateImageResp] = useUpdateOfferImageMutation()
 
    const [modalData, setModalData] = useState(initialState)
 
@@ -98,8 +103,8 @@ export default function Settings() {
    }
 
    const onRemoveFilter = (item, key, idx) => {
-      
-      if(key === undefined || item === undefined) return
+
+      if (key === undefined || item === undefined) return
       // let updatedField = settingsData[key].filter(text => text !== item)
       let updatedField = settingsData[key].filter((text, i) => i !== idx)
       let updatedSetting = {
@@ -109,7 +114,7 @@ export default function Settings() {
    }
 
 
-   const onRemoveSessionTag = (item, key, idx ) => {
+   const onRemoveSessionTag = (item, key, idx) => {
       let updatedSessionTag = { ...settingsData.sessionTags }
       // let updatedField = settingsData.sessionTags[key].filter(text => text !== item)
       let updatedField = settingsData.sessionTags[key].filter((text, i) => i !== idx)
@@ -145,13 +150,45 @@ export default function Settings() {
          })
    }
 
+   const handleImageUpload = () => {
+      inputRef.current.click()
+   }
+
+   const onImageChange = e => {
+      //   console.log(e.target.files[0])
+      setImage(e.target.files[0])
+      const formData = new FormData();
+      formData.append("offer", e.target.files[0])
+      // updateImage(formData)
+      //    .then(res => {
+      //       console.log(res)
+      //       setSettingsData(res.data.data.setting)
+      //    })
+      axios.patch(`${BASE_URL}api/user/setting/addimage`, formData)
+         .then((res) => {
+            // console.log(res)
+            setImage(null)
+            fetchSettings()
+         })
+   }
+
+   const onRemoveImage = (item, i) => {
+     console.log(item, i)
+     let updatedField = settingsData.offerImages.filter(text => text !== item)
+     let updatedSetting = {
+      offerImages: updatedField
+     }
+     console.log(updatedSetting)
+     updateAndFetchsettings(updatedSetting)
+   }
+
    useEffect(() => {
       fetchSettings()
    }, [])
 
 
    if (Object.keys(settingsData).length === 0) return <></>
-   const { classes, serviceSpecialisation, sessionTags, leadStatus, tutorStatus } = settingsData
+   const { classes, serviceSpecialisation, sessionTags, leadStatus, tutorStatus, offerImages } = settingsData
 
    // console.log(settingsData)
 
@@ -269,11 +306,14 @@ export default function Settings() {
                <SettingsCard title='Images in Offer Slide'
                   body={
                      <div className='flex items-center [&>*]:mb-[10px]'>
-                        <AddTag />
-                        <FilterItems
+                        <input type='file' ref={inputRef} className='hidden' accept="image/*"
+                           onChange={e => onImageChange(e)} />
+                        <AddTag isFile={true} onAddTag={handleImageUpload} />
+                        <FilterItems isString={true}
                            onlyItems={true}
-                           items={testFilters}
-                           onRemoveFilter={onRemoveFilter}
+                           sliceText={true}
+                           items={offerImages}
+                           onRemoveFilter={onRemoveImage}
                            className='pt-1 pb-1 mr-15' />
                      </div>
                   } />

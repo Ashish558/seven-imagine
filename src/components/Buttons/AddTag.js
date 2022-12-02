@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import { useState } from 'react'
 import AddIcon from '../../assets/Settings/add.svg'
 
-export default function AddTag({ keyName, onAddTag }) {
+export default function AddTag({ keyName, onAddTag, isFile }) {
 
   const [isClicked, setIsClicked] = useState(false)
   const [size, setSize] = useState(1)
@@ -25,9 +25,13 @@ export default function AddTag({ keyName, onAddTag }) {
     }
   }
 
+  const handleClick = () => {
+    isFile ? onAddTag() : setIsClicked(true)
+  }
+
   return (
     <button className={`bg-primaryLight flex items-center text-primary font-bold text-sm py-1.4 px-3 rounded-7 mr-[15px] ${isClicked ? 'justify-center' : ''}`}
-      onClick={() => { setIsClicked(true) }} >
+      onClick={handleClick} >
       {
         !isClicked ?
           <>

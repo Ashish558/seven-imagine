@@ -11,11 +11,21 @@ export const settingsServicesApi = createApi({
     
       updateSetting: builder.mutation({
          query: (body) => ({
-            url: `/api/user/setting `,
+            url: `/api/user/setting`,
             method: "PATCH",
             body: body,
             headers: {
                "Content-type": "application/json; charset=UTF-8",
+            },
+         })
+      }),
+      updateOfferImage: builder.mutation({
+         query: (body) => ({
+            url: `/api/user/setting/addimage`,
+            method: "PATCH",
+            body: body,
+            headers: {
+               "Content-type": "multipart/form-data",
             },
          })
       }),
@@ -26,4 +36,5 @@ export const settingsServicesApi = createApi({
 
 export const {
    useUpdateSettingMutation,
+   useUpdateOfferImageMutation
 } = settingsServicesApi;
