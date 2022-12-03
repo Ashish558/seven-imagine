@@ -40,9 +40,9 @@ export default function CompletedTest() {
    const handleChange = (item) => {
       let tempdata = subjects.map(sub => {
          if (sub.text === item.text) {
-            return { ...sub, selected: !item.selected }
+            return { ...sub, selected: true }
          } else {
-            return { ...sub }
+            return { ...sub, selected: false }
          }
       })
       setSubjects(tempdata)
