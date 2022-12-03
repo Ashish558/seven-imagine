@@ -88,8 +88,8 @@ export default function TableItem({ item, dataFor, onClick }) {
                      {item.name}
                   </span>
                </td>
-               <td className="font-medium px-1  min-w-14 py-4">
-                  {item.assigedOn}
+               <td className={`font-medium px-1  min-w-14 py-4 relative ${sessionStorage.getItem('role') === "admin" && item.late && 'text-[#EE3434]'}`}>
+                  {sessionStorage.getItem('role') === "admin" && item.late && <span className="absolute left-[56px] top-0 bottom-0 m-auto inline-block w-[20px] h-[20px] rounded-full bg-[#EE3434]"></span>} {item.assigedOn}
                </td>
                <td className="font-medium px-1  min-w-14 py-4">
                   {item.testName}

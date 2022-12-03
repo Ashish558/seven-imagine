@@ -7,6 +7,7 @@ export const tempTableData = [
       duration: 'Regular',
       status: [0, 1],
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       name: 'Joseph Brown 2',
@@ -15,6 +16,7 @@ export const tempTableData = [
       duration: 'Regular',
       status: [2, 1],
       score: 'V720 M650 | C1370',
+      late: true
    },
    {
       name: 'Joseph Brown 3',
@@ -23,6 +25,7 @@ export const tempTableData = [
       duration: 'Regular',
       status: [3, 1],
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       name: 'Joseph Brown 4',
@@ -31,6 +34,7 @@ export const tempTableData = [
       duration: 'Regular',
       status: [3,2],
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       name: 'Joseph Brown 5',
@@ -39,6 +43,7 @@ export const tempTableData = [
       duration: 'Regular',
       status: [0, 1],
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       name: 'Joseph Brown 6',
@@ -47,6 +52,7 @@ export const tempTableData = [
       duration: 'Regular',
       status: [0, 3],
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       name: 'Joseph Brown 7',
@@ -55,6 +61,7 @@ export const tempTableData = [
       duration: 'Regular',
       status: [3, 2],
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       name: 'Joseph Brown 8',
@@ -63,6 +70,7 @@ export const tempTableData = [
       duration: 'Regular',
       status: [3, 1],
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       name: 'Joseph Brown 9',
@@ -71,6 +79,7 @@ export const tempTableData = [
       duration: 'Regular',
       status: [1, 2],
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       name: 'Joseph Brown 10',
@@ -79,6 +88,7 @@ export const tempTableData = [
       duration: 'Regular',
       status: [0, 1],
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       name: 'Joseph Brown 11',
@@ -87,6 +97,7 @@ export const tempTableData = [
       duration: 'Regular',
       status: [0, 1],
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       name: 'Joseph Brown 12',
@@ -95,6 +106,7 @@ export const tempTableData = [
       duration: 'Regular',
       status: [0, 1],
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       name: 'Joseph Brown 13',
@@ -103,6 +115,7 @@ export const tempTableData = [
       duration: 'Regular',
       status: [0, 1],
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       name: 'Joseph Brown 14',
@@ -111,6 +124,7 @@ export const tempTableData = [
       duration: 'Regular',
       status: [0, 1],
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       name: 'Joseph Brown 15',
@@ -119,6 +133,7 @@ export const tempTableData = [
       duration: 'Regular',
       status: [0, 1],
       score: 'V720 M650 | C1370',
+      late: false
    },
 ]
 
@@ -130,6 +145,7 @@ export const studentsDataTable=[
       duration: 'Regular',
       status: 'status',
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       testName: 'test',
@@ -138,6 +154,7 @@ export const studentsDataTable=[
       duration: 'Regular',
       status: 'status',
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       testName: 'test',
@@ -146,6 +163,7 @@ export const studentsDataTable=[
       duration: 'Regular',
       status: 'status',
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       testName: 'test',
@@ -154,6 +172,7 @@ export const studentsDataTable=[
       duration: 'Regular',
       status: 'status',
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       testName: 'test',
@@ -162,6 +181,7 @@ export const studentsDataTable=[
       duration: 'Regular',
       status: 'status',
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       testName: 'test',
@@ -170,6 +190,7 @@ export const studentsDataTable=[
       duration: 'Regular',
       status: 'status',
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       testName: 'test',
@@ -178,6 +199,7 @@ export const studentsDataTable=[
       duration: 'Regular',
       status: 'status',
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       testName: 'test',
@@ -186,6 +208,7 @@ export const studentsDataTable=[
       duration: 'Regular',
       status: 'status',
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       testName: 'test',
@@ -194,6 +217,7 @@ export const studentsDataTable=[
       duration: 'Regular',
       status: 'status',
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       testName: 'test',
@@ -202,6 +226,7 @@ export const studentsDataTable=[
       duration: 'Regular',
       status: 'status',
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       testName: 'test',
@@ -210,6 +235,7 @@ export const studentsDataTable=[
       duration: 'Regular',
       status: 'status',
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       testName: 'test',
@@ -218,6 +244,7 @@ export const studentsDataTable=[
       duration: 'Regular',
       status: 'status',
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       testName: 'test',
@@ -226,6 +253,7 @@ export const studentsDataTable=[
       duration: 'Regular',
       status: 'status',
       score: 'V720 M650 | C1370',
+      late: false
    },
    {
       testName: 'test',
@@ -234,5 +262,6 @@ export const studentsDataTable=[
       duration: 'Regular',
       status: 'status',
       score: 'V720 M650 | C1370',
+      late: false
    },
 ]
