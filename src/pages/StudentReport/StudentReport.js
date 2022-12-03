@@ -3,12 +3,10 @@ import SecondaryButton from '../../components/Buttons/SecondaryButton'
 import BackIcon from '../../assets/assignedTests/back.svg'
 import PrimaryButton from '../../components/Buttons/PrimaryButton'
 import styles from './style.module.css'
-import { tableData } from './tempData'
+import { tableData, answerTableData, timeTakenSeries, ttOptions, accuracySeries, accuracyOptions } from './tempData'
 import Table from '../../components/Table/Table'
 import { useNavigate } from 'react-router-dom'
-import StudentReport from '../StudentReport/StudentReport'
 import BarGraph from '../../components/BarGraph/BarGraph'
-import { accuracyOptions, accuracySeries, timeTakenSeries, ttOptions } from '../StudentReport/tempData'
 
 const tempsubjects = [
    { text: 'Trigonometry', selected: true },
@@ -18,16 +16,20 @@ const tempsubjects = [
 ]
 
 const tableHeaders = [
-   'Q No.', 'Correct Answer', 'Student Response', 'Accuracy', 'Concept', 'Strategy', 'Time', 'Solution'
+   'Q No.', 'Accuracy', 'Concept', 'Strategy', 'Time Taken',
+]
+const answerTableHeaders = [
+   'Q No.', 'Correct Answer', 'Student Response', 'Accuracy', 'Concept', 'Strategy', 'Time Taken',
 ]
 
-export default function CompletedTest() {
+
+export default function StudentReport() {
 
    const [testData, setTestData] = useState(tableData)
+   const [answersData, setAnswersData] = useState(answerTableData)
+
    const navigate = useNavigate()
    const [subjects, setSubjects] = useState(tempsubjects)
-
-   const persona = sessionStorage.getItem('role')
 
    const getSelectedString = (arr) => {
       let strArr = []
@@ -54,7 +56,6 @@ export default function CompletedTest() {
       setTestData(tempData)
    }, [subjects])
 
-   if (persona === 'student' || persona === 'parent') return <StudentReport />
    // console.log(testData)
    return (
       <div className='ml-pageLeft bg-lightWhite min-h-screen'>
@@ -121,8 +122,8 @@ export default function CompletedTest() {
 
                <div className='mt-7'>
                   <p className='text-lg font-bold mb-2'>Score: 55/75</p>
-                  <div className='flex bg-primary-300 py-4 px-4 rounded-10' >
-                     <div className='flex flex-col mr-272'>
+                  <div className='flex bg-[#EBEDEE] py-4 px-4 rounded-10' >
+                     <div className='flex flex-col mr-[64px]'>
                         <p className='font-semibold text-primary mb-2.2'>Concepts</p>
                         <p className='font-semibold mb-2'>Punctuating Clauses</p>
                         <p className='font-semibold mb-2'>Apostrophies</p>
@@ -137,24 +138,38 @@ export default function CompletedTest() {
                         <p className='font-semibold mb-2'>4/7</p>
                         <p className='font-semibold mb-2'>5/7</p>
                         <p className='font-semibold mb-2'>5/7</p>
+                     </div>
+                     <div className='flex flex-col items-cener ml-auto mr-[145px]'>
+                        <p className='font-semibold text-primary mb-2.2'> Section Started</p>
+                        <p className='font-semibold mb-2'>July 22, 2022</p>
+                        <p className='font-semibold mb-2 opacity-60'>04:25 PM EST</p>
+                        <p className='font-semibold text-primary mb-2.2 mt-6'> Section Duration</p>
+                        <p className='font-semibold mb-2'>J45:00</p>
+                     </div>
+                     <div className='flex flex-col items-cener mr-12'>
+                        <p className='font-semibold text-primary mb-2.2'> Section Accuracy</p>
+                        <p className='font-semibold mb-2'>55/75</p>
 
                      </div>
+
                   </div>
                </div>
 
-               <div className='mt-4'>
-                  <Table dataFor='tests' hidePagination={true} data={testData}
+               <div className='mt-4 max-w-[900px]'>
+                  <Table dataFor='studentTestsReport' hidePagination={true} data={testData}
                      tableHeaders={tableHeaders} maxPageSize={10} />
+               </div>
+               <div className='mt-10'>
+                  <Table dataFor='studentTestsAnswers' hidePagination={true} data={answersData}
+                     tableHeaders={answerTableHeaders} maxPageSize={10} />
                </div>
                <div className='bg-white mt-6 rounded-20 py-5 px-5 '>
                   <p className='text-primary-dark font-bold text-3xl text-center mb-6 mt-2'>Time Taken</p>
                   <BarGraph series={timeTakenSeries} options={ttOptions} height='600px' />
                </div>
                <div className='bg-white mt-6 rounded-20 py-5 px-5 max-w-[1100px]'>
-                  <p className='text-primary-dark font-bold text-3xl text-center mb-6 mt-2'>
-                     Conceptual Accuracy
-                  </p>
-                  <BarGraph series={accuracySeries} options={accuracyOptions} height='522px' />
+                  <p className='text-primary-dark font-bold text-3xl text-center mb-6 mt-2'>Conceptual Accuracy</p>
+                  <BarGraph series={accuracySeries} options={accuracyOptions} height='522px'  />
                </div>
             </div>
          </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./ParentDashboardHeader.module.css";
 import explore from "./../../assets/images/explore-bg.png";
 import i from "./../../assets/icons/i.png";
@@ -9,10 +9,22 @@ import shivam from "./../../assets/images/tutors/shivam-shrivastab.png";
 import { useNavigate } from "react-router-dom";
 import josephBrown from "../../assets/images/joseph-brown.png";
 import rightArrow from "../../assets/icons/arrow-down.png";
+import { useLazyGetSettingsQuery } from "../../app/services/session";
+import ImageSlideshow from "../ImageSlideshow/ImageSlideshow";
 
 const ParentDashboardHeader = () => {
    const navigate = useNavigate()
+   const [fetchSettings, fetchSettingsResp] = useLazyGetSettingsQuery()
+   const [images, setImages] = useState([])
 
+   useEffect(() => {
+      fetchSettings()
+         .then(res => {
+            setImages(res.data.data.setting.offerImages)
+         })
+   }, [])
+
+   console.log(images)
    return (
       <div
          className="flex gap-[78px]"
@@ -32,8 +44,15 @@ const ParentDashboardHeader = () => {
                            Know More {">"}
                         </button>
                      </div>
-                     <div className="w-1/2" id={styles.exploreBg}>
-                        <img src={explore} alt="" />
+                     <div className="w-1/2 flex items-center px-2 pr-4" id={styles.exploreBgDisable}>
+                        {/* <div className="relative w-full h-fll">
+                           {
+                              images.length > 0 ? <img src={images[0]} alt="" />
+                                 :
+                                 <img src={explore} alt="" />
+                           }
+                        </div> */}
+                        <ImageSlideshow images={images} />
                      </div>
                   </div>
                </div>

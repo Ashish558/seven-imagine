@@ -60,7 +60,7 @@ const tempnavdata = [
    },
 ];
 
-const studentNav = [
+const parentNav = [
    {
       icon: Dashboard,
       path: "/",
@@ -78,12 +78,27 @@ const studentNav = [
       path: "/all-tests",
    },
    {
-      icon: Bubble,
-      path: "/graph",
-   },
-   {
       icon: Percentage,
       path: "/a",
+   },
+]
+
+const studentNav = [
+   {
+      icon: Dashboard,
+      path: "/",
+   },
+   {
+      icon: Profile,
+      path: "/profile",
+   },
+   {
+      icon: Calendar,
+      path: "/calendar",
+   },
+   {
+      icon: StudentTest,
+      path: "/all-tests",
    },
 ]
 export default function Navbar() {
@@ -96,8 +111,11 @@ export default function Navbar() {
    const persona = sessionStorage.getItem('role')
 
    useEffect(() => {
-      if(persona === 'student' || persona === 'parent' || persona === 'tutor'){
+      if(persona === 'student'){
          setNavData(studentNav)
+      }
+      if(persona === 'parent' || persona === 'tutor'){
+         setNavData(parentNav)
       }
   
    }, [persona])

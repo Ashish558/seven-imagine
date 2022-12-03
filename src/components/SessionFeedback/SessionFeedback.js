@@ -13,7 +13,7 @@ const SessionFeedback = () => {
                 <TestItem name="SAT Series #01" status="due date" date="june 20, 2022" action="Continue" />
                 <TestItem name="Ex. Starte" status="due date" date="june 20, 2022" action="Start" marks="1250/1250" />
                 <TestItem name="SAT B2" status="Completed" date="june 20, 2022" />
-                <TestItem name="name" status="Completed" date="june 20, 2022" />
+              
                
             </div>
         </div>

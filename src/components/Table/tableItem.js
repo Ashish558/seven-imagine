@@ -161,6 +161,24 @@ export default function TableItem({ item, dataFor, onClick }) {
                </td>
             </tr>
          )}
+         {dataFor === "studentTestsReport" && (
+            <tr className="odd:bg-white shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
+               {mapData(item)}
+            </tr>
+         )}
+         {dataFor === "studentTestsAnswers" && (
+            <tr className="odd:bg-white shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
+               {mapData(item)}
+               <td className="font-medium px-1 min-w-14 py-4 flex justify-center items-center">
+                  <button className="flex items-center">
+                     <span className="inline-block mr-3 text-textBlue">
+                        Upload Answer
+                     </span>
+                     <img src={UploadIcon} />
+                  </button>
+               </td>
+            </tr>
+         )}
          {dataFor === "assignedTestsStudents" && (
             <tr className="odd:bg-white shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
                {Object.keys(item).map((key, i) =>
@@ -175,11 +193,18 @@ export default function TableItem({ item, dataFor, onClick }) {
                )
                )}
                <td className="font-medium px-1  min-w-14 py-4">
-                  <button
-                     className="px-2.5 py-1.8 rounded-md flex items-center leading-none bg-primary text-white"
-                  >
-                     View Report
-                  </button>
+                  <div className="flex items-center">
+
+                     <img src={UploadIcon} />
+                     <button
+                        className="px-2.5 py-1.8 rounded-md flex items-center leading-none bg-primary text-white ml-4"
+                        onClick={() =>
+                           navigate("/assigned-tests/321/report")
+                        }
+                     >
+                        View Report
+                     </button>
+                  </div>
                </td>
             </tr>
          )}
@@ -221,4 +246,31 @@ export default function TableItem({ item, dataFor, onClick }) {
          )}
       </>
    );
+}
+
+const mapData = (data) => {
+
+   return Object.keys(data).map((key, i) =>
+   (
+      key === "Accuracy" ? (
+         <td className="font-medium px-1  min-w-14 py-4">
+            <div className="flex items-center justify-center">
+               <img
+                  src={
+                     data[key] > 80
+                        ? SuccessIcon
+                        : FailIcon
+                  }
+                  className="flex"
+               />
+            </div>
+         </td>
+      ) : (
+         <td className="font-medium px-1  min-w-14 py-4">
+            {data[key]}
+         </td>
+      )
+   )
+   )
+
 }
