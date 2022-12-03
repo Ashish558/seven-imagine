@@ -51,8 +51,10 @@ const ParentDashboardHeader = () => {
                                  :
                                  <img src={explore} alt="" />
                            }
-                        </div> */}
-                        <ImageSlideshow images={images} />
+                        </div> */}{
+                           images.length >= 1 &&
+                           <ImageSlideshow images={images} />
+                        }
                      </div>
                   </div>
                </div>
