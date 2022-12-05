@@ -111,10 +111,10 @@ export default function Navbar() {
    const persona = sessionStorage.getItem('role')
 
    useEffect(() => {
-      if(persona === 'student'){
+      if(persona === 'student' || persona === 'tutor'){
          setNavData(studentNav)
       }
-      if(persona === 'parent' || persona === 'tutor'){
+      if(persona === 'parent' ){
          setNavData(parentNav)
       }
   

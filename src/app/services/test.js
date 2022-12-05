@@ -9,23 +9,35 @@ export const testServicesApi = createApi({
    }),
 
    endpoints: (builder) => ({
-      // getTutorsByName: builder.query({
-      //    query: (name) => ({
-      //       url: `api/user/tutor`,
-      //       params: {
-      //          search: name
-      //       },
-      //       method: "GET",
-      //    }),
-      // }),headers: {
+      getTestsByName: builder.query({
+         query: (name) => ({
+            url: `api/test/`,
+            params: {
+               search: name
+            },
+            method: "GET",
+         }),
+      }),
 
       addTest: builder.mutation({
          query: (body) => ({
-            url: `/api/test `,
+            url: `/api/test`,
             method: "POST",
             body: body,
             headers: {
                "Content-type": "application/json; charset=UTF-8",
+               // "Authorization": sessionStorage.getItem('token'),
+            },
+         })
+      }),
+      assignTest: builder.mutation({
+         query: (body) => ({
+            url: `/api/test/assigntest`,
+            method: "POST",
+            body: body,
+            headers: {
+               "Content-type": "application/json; charset=UTF-8",
+               // "Authorization": sessionStorage.getItem('token'),
             },
          })
       }),
@@ -36,6 +48,36 @@ export const testServicesApi = createApi({
             body: body.formData,
             headers: {
                "Content-type": "multipart/form-data",
+               // "Authorization": sessionStorage.getItem('token'),
+            },
+         })
+      }),
+      attendTest: builder.mutation({
+         query: (body) => ({
+            url: `/api/test/attendtest/${body.id}`,
+            method: "POST",
+            body: body.reqbody,
+            headers: {
+               "Authorization": sessionStorage.getItem('token'),
+            },
+         })
+      }),
+      updateTime: builder.mutation({
+         query: (body) => ({
+            url: `/api/test/updatetime/${body.id}`,
+            method: "POST",
+            body: body.reqbody,
+            headers: {
+               "Authorization": sessionStorage.getItem('token'),
+            },
+         })
+      }),
+      getTime: builder.query({
+         query: (id) => ({
+            url: `/api/test/gettime/${id}`,
+            method: "GET",
+            headers: {
+               "Authorization": sessionStorage.getItem('token'),
             },
          })
       }),
@@ -44,6 +86,11 @@ export const testServicesApi = createApi({
 });
 
 export const {
+   useLazyGetTestsByNameQuery,
+   useAssignTestMutation,
    useAddTestMutation,
-   useAddPdfMutation
+   useAddPdfMutation,
+   useAttendTestMutation,
+   useUpdateTimeMutation,
+   useLazyGetTimeQuery
 } = testServicesApi;

@@ -10,6 +10,9 @@ import { tempTableData, studentsDataTable } from "./tempData";
 import InputField from "../../components/InputField/inputField";
 import axios from "axios";
 import { BASE_URL } from "../../app/constants/constants";
+import { useAssignTestMutation, useLazyGetTestsByNameQuery } from "../../app/services/test";
+import { useLazyGetStudentsByNameQuery } from "../../app/services/session";
+import InputSearch from "../../components/InputSearch/InputSearch";
 
 const optionData = ["1", "2", "3", "4", "5"];
 const testData = ["SAT", "ACT"];
@@ -36,11 +39,7 @@ const studentTableHeaders = [
 ];
 
 export default function AssignedTests() {
-   const [filterData, setFilterData] = useState([
-      "Student",
-      "Parent",
-      "Active",
-   ]);
+
    const [tableData, setTableData] = useState([])
    const [tableHeaders, setTableHeaders] = useState([])
 
@@ -50,17 +49,15 @@ export default function AssignedTests() {
    const persona = sessionStorage.getItem("role");
 
    const handleClose = () => setAssignTestModalActive(false);
+   
+   const [filterData, setFilterData] = useState({
+      studentName: '',
+      testName: '',
+      tutor: '',
+      status: '',
+   })
 
-   const [studentName, setStudentName] = useState("");
-   const [testName, setTestName] = useState("");
-   const [tutor, setTutor] = useState("");
-   const [status, setStatus] = useState("");
-   const [id, setId] = useState("");
-
-   const updateStudentName = (e) => setStudentName(e.target.val);
-   const updateTestName = (e) => setTestName(e.target.val);
-   const updateTutor = (e) => setTutor(e.target.val);
-   const updateStatus = (val) => setStatus(val);
+   const [assignTest, assignTestResp] = useAssignTestMutation()
 
    const [modalData, setModalData] = useState({
       name: "",
@@ -69,31 +66,70 @@ export default function AssignedTests() {
       test: "",
    });
 
+   const [fetchStudents, studentResponse] = useLazyGetStudentsByNameQuery();
+   const [students, setStudents] = useState([]);
+
+   const [fetchTests, fetchTestsResp] = useLazyGetTestsByNameQuery()
+   const [testsData, setTestsData] = useState([]);
+
+   useEffect(() => {
+      if (modalData.name.length > 2) {
+         fetchStudents(modalData.name).then((res) => {
+            // console.log(res.data.data)
+            let tempData = res.data.data.students.map((student) => {
+               return {
+                  _id: student._id,
+                  value: `${student.firstName} ${student.lastName}`,
+               };
+            });
+            setStudents(tempData);
+         });
+      }
+   }, [modalData.name]);
+
+   useEffect(() => {
+      if (modalData.test.length > 2) {
+         fetchTests(modalData.test).then((res) => {
+            let tempData = res.data.data.test.map((test) => {
+               return {
+                  _id: test._id,
+                  value: test.testName,
+                  testType: test.testType
+               };
+            });
+            setTestsData(tempData);
+         });
+      }
+   }, [modalData.test]);
+
    const handleResend = (item) => {
       console.log(item);
       setResendModalActive(true);
    };
 
-   const assignTest = () => {
-      // console.log("userId");
-      const newTest = new FormData();
-      newTest.append("studentId", localStorage.getItem("userId"));
-      newTest.append("testId", modalData.test);
-      newTest.append("timeLimit", modalData.limit);
-      newTest.append("dueDate", modalData.date);
-
-      console.log(modalData.name);
-
-      axios
-         .get(`${BASE_URL}api/test?search=tes`)
-         .then((res) => console.log(res.data));
+   const handleResendTestSubmit = (item) => {
+      setResendModalActive(false);
    };
 
-   useEffect(() => {
+   const handleAssignTestSubmit = () => {
+      console.log(modalData)
+      const body = {
+         studentId: modalData.studentId,
+         testId: modalData.testId,
+         dueDate: modalData.date,
+         timeLimit: modalData.limit,
+      }
+      assignTest(body)
+         .then(res => {
+            console.log(res.data.data.assign)
+            setAssignTestModalActive(false)
+         })
 
+   }
+
+   useEffect(() => {
       setTableData(tempTableData)
       setTableHeaders(tempTableHeaders)
-
    }, [])
 
    return (
@@ -120,9 +156,9 @@ export default function AssignedTests() {
 
                <div className="flex align-center mt-8">
                   <InputField
-                     value={studentName}
+                     value={filterData.studentName}
                      IconRight={SearchIcon}
-                     onChange={updateStudentName}
+                     onChange={e => setFilterData({...filterData, studentName: e.target.value})}
                      optionData={optionData}
                      placeholder="Student Name"
                      inputContainerClassName="bg-white"
@@ -130,9 +166,9 @@ export default function AssignedTests() {
                      type="text"
                   />
                   <InputField
-                     value={testName}
+                     value={filterData.testName}
                      IconRight={SearchIcon}
-                     onChange={updateTestName}
+                     onChange={e => setFilterData({...filterData, testName: e.target.value})}
                      optionData={optionData}
                      placeholder="Test Name"
                      inputContainerClassName="bg-white"
@@ -140,8 +176,8 @@ export default function AssignedTests() {
                      type="text"
                   />
                   <InputField
-                     value={tutor}
-                     onChange={updateTutor}
+                     value={filterData.tutor}
+                     onChange={e => setFilterData({...filterData, tutor: e.target.value})}
                      IconRight={SearchIcon}
                      parentClassName="w-full mr-4"
                      inputContainerClassName="bg-white"
@@ -150,8 +186,8 @@ export default function AssignedTests() {
                      type="text"
                   />
                   <InputSelect
-                     value={status}
-                     onChange={updateStatus}
+                     value={filterData.status}
+                     onChange={val => setFilterData({...filterData, status: val})}
                      optionData={optionData}
                      inputContainerClassName="bg-white"
                      placeholder="Completion Status"
@@ -179,13 +215,13 @@ export default function AssignedTests() {
                primaryBtn={{
                   text: "Assign",
                   className: "max-w-140",
-                  onClick: () => setResendModalActive(true),
+                  onClick: () => handleAssignTestSubmit(),
                }}
                handleClose={handleClose}
                body={
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-2 md:gap-x-3 gap-y-2 gap-y-4 mb-5">
                      <div>
-                        <InputField
+                        <InputSearch
                            label="Student Name"
                            value={modalData.name}
                            onChange={(val) =>
@@ -194,7 +230,14 @@ export default function AssignedTests() {
                                  name: val.target.value,
                               })
                            }
-                           optionData={optionData}
+                           optionData={students}
+                           onOptionClick={(item) => {
+                              setModalData({
+                                 ...modalData,
+                                 name: item.value,
+                                 studentId: item._id
+                              })
+                           }}
                            parentClassName="w-full mr-4"
                            labelClassname="ml-2 mb-0.5"
                            inputContainerClassName="px-5 bg-primary-50 border-0"
@@ -242,15 +285,22 @@ export default function AssignedTests() {
                         />
                      </div>
                      <div>
-                        <InputSelect
-                           optionData={testData}
+                        <InputSearch
+                           optionData={testsData}
                            value={modalData.test}
-                           onChange={(val) =>
+                           onChange={(e) =>
                               setModalData({
                                  ...modalData,
-                                 test: val,
+                                 test: e.target.value,
                               })
                            }
+                           onOptionClick={(item) => {
+                              setModalData({
+                                 ...modalData,
+                                 test: item.value,
+                                 testId: item._id
+                              })
+                           }}
                            label="Test"
                            placeholder="Type Test Name"
                            parentClassName="w-full mr-4"
@@ -279,7 +329,7 @@ export default function AssignedTests() {
                primaryBtn={{
                   text: "Assign",
                   className: "max-w-140",
-                  onclick: assignTest,
+                  onClick: () => handleResendTestSubmit(),
                }}
                handleClose={() => setResendModalActive(false)}
                classname={"max-w-567 mx-auto"}

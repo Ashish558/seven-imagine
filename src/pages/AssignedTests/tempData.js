@@ -5,7 +5,7 @@ export const tempTableData = [
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: [0, 1],
+      status: [0],
       score: 'V720 M650 | C1370',
    },
    {
@@ -13,7 +13,7 @@ export const tempTableData = [
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: [2, 1],
+      status: [2],
       score: 'V720 M650 | C1370',
    },
    {
@@ -21,7 +21,7 @@ export const tempTableData = [
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: [3, 1],
+      status: [3],
       score: 'V720 M650 | C1370',
    },
    {
@@ -29,7 +29,7 @@ export const tempTableData = [
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: [3,2],
+      status: [3],
       score: 'V720 M650 | C1370',
    },
    {
@@ -37,7 +37,7 @@ export const tempTableData = [
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: [0, 1],
+      status: [0],
       score: 'V720 M650 | C1370',
    },
    {
@@ -45,7 +45,7 @@ export const tempTableData = [
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: [0, 3],
+      status: [0],
       score: 'V720 M650 | C1370',
    },
    {
@@ -53,7 +53,7 @@ export const tempTableData = [
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: [3, 2],
+      status: [3],
       score: 'V720 M650 | C1370',
    },
    {
@@ -61,7 +61,7 @@ export const tempTableData = [
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: [3, 1],
+      status: [3],
       score: 'V720 M650 | C1370',
    },
    {
@@ -69,7 +69,7 @@ export const tempTableData = [
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: [1, 2],
+      status: [1],
       score: 'V720 M650 | C1370',
    },
    {
@@ -77,7 +77,7 @@ export const tempTableData = [
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: [0, 1],
+      status: [0],
       score: 'V720 M650 | C1370',
    },
    {
@@ -85,7 +85,7 @@ export const tempTableData = [
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: [0, 1],
+      status: [0],
       score: 'V720 M650 | C1370',
    },
    {
@@ -93,7 +93,7 @@ export const tempTableData = [
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: [0, 1],
+      status: [0],
       score: 'V720 M650 | C1370',
    },
    {
@@ -101,7 +101,7 @@ export const tempTableData = [
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: [0, 1],
+      status: [0],
       score: 'V720 M650 | C1370',
    },
    {
@@ -109,7 +109,7 @@ export const tempTableData = [
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: [0, 1],
+      status: [0],
       score: 'V720 M650 | C1370',
    },
    {
@@ -117,7 +117,7 @@ export const tempTableData = [
       assigedOn: '06/27/22',
       testName: 'SAT 0',
       duration: 'Regular',
-      status: [0, 1],
+      status: [0],
       score: 'V720 M650 | C1370',
    },
 ]

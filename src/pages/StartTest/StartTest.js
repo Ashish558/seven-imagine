@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SecondaryButton from '../../components/Buttons/SecondaryButton'
 
@@ -7,6 +7,7 @@ import PrimaryButton from '../../components/Buttons/PrimaryButton'
 import { TestDetail } from '../../components/TestDetail/TestDetail'
 import { testData } from './tempData'
 import TestOption from '../../components/TestOption/TestOption'
+import { useAttendTestMutation, useLazyGetTimeQuery, useUpdateTimeMutation } from '../../app/services/test'
 const tempsubjects = [
    { text: 'Trigonometry', selected: true },
    { text: 'Mathematics', selected: false },
@@ -21,9 +22,21 @@ export default function StartTest() {
    const [subjects, setSubjects] = useState(tempsubjects)
    const [testStarted, setTestStarted] = useState(false)
 
+   const [attendTest, attendTestResp] = useAttendTestMutation()
+   const [updateTime, updateTimeResp] = useUpdateTimeMutation()
+   const [getTime, getTimeResp] = useLazyGetTimeQuery()
+
    const handleStartTest = (item) => {
       setTestStarted(true)
    }
+
+   useEffect(() => {
+      getTime('637663fe90241bf60305bd36')
+      .then(res => {
+         console.log(res);
+      })
+   }, [])
+  
    const handleChange = (item) => {
       let tempdata = subjects.map(sub => {
          if (sub.text === item.text) {
@@ -35,7 +48,7 @@ export default function StartTest() {
       setSubjects(tempdata)
    }
 
-   console.log(testStarted)
+   // console.log(testStarted)
 
    return (
       <div className='ml-pageLeft bg-lightWhite min-h-screen'>
@@ -123,7 +136,7 @@ export default function StartTest() {
                                           Mark for Review
                                        </button> :
                                        <button className='w-[210px] font-semibold text-xl py-3 rounded-lg bg-primaryOrange text-white ml-4' >
-                                         Unmark
+                                          Unmark
                                        </button>
                                     }
                                  </div>
