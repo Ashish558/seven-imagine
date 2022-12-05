@@ -199,7 +199,7 @@ export default function Settings() {
             <div className='flex justify-between items-center mb-[56px]'>
 
                <div>
-                  <p className='font-bold text-4xl mb-[54px]'> Settings </p>
+                  <p className='font-bold text-4xl mb-[54px] text-[#25335A]'> Settings </p>
                   <div className='text-lg'>
                      <div className='flex items-center mb-4'>
                         <p className='opacity-60  mr-[15px]'> Full Name:</p>
@@ -221,7 +221,7 @@ export default function Settings() {
                   onClick={() => setModalActive(true)}
                   children={
                      <div className='flex items-center justify-center'>
-                        <p className='mr-3 text-lf font-semibold whitespace-nowrap'>
+                        <p className='mr-3 text-lf font-semibold whitespace-nowrap text-[18px]'>
                            Edit Details
                         </p>
                         <img src={EditIcon} />
