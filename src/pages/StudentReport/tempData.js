@@ -197,26 +197,28 @@ export const answerTableData = [
 
 export const timeTakenSeries = [
    {
-      name: '',
-      data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
-   }, {
-      name: '',
-      data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+      name: 'Score',
+      data: [44, 55, 57, 56, 61, 58, 63, 60, 66, 76, 85, 101, 98, 87, 105, 91, 114, 94, 76, 85, 101, 98, 87, 105, 91, 114, 94]
    },
-   {
-      name: '',
-      data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
-   },
-   {
-      name: '',
-      data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
-   },
-   {
-      name: '',
-      data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
-   },
+   //  {
+   //    name: '',
+   //    data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+   // },
+   // {
+   //    name: '',
+   //    data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+   // },
+   // {
+   //    name: '',
+   //    data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+   // },
+   // {
+   //    name: '',
+   //    data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+   // },
 ]
 export const ttOptions = {
+
    chart: {
       type: 'bar',
       events: {
@@ -243,14 +245,16 @@ export const ttOptions = {
       toolbar: {
          show: false
       },
-      fontFamily: 'Inter'
+      fontFamily: 'Inter',
    },
    plotOptions: {
       bar: {
+         // colors: ['#8E76ED', '#8ADCFF'],
          horizontal: false,
-         columnWidth: '75%',
+         columnWidth: '40px',
          endingShape: 'rounded',
-         borderRadius: 8,
+         distributed: true,
+         borderRadius: 7,
          borderRadiusApplication: 'end',
          borderRadiusWhenStacked: 'all'
       },
@@ -260,9 +264,10 @@ export const ttOptions = {
    },
    stroke: {
       show: true,
-      width: 2,
+      width: 1,
    },
-   colors: ['#8E76ED', '#8ADCFF', ],
+   colors: ['#8E76ED', '#8ADCFF'],
+   
    yaxis: {
       tickAmount: 5,
       labels: {
@@ -274,8 +279,40 @@ export const ttOptions = {
       },
    },
    xaxis: {
-      categories: ['5', '10', '15', '20', '25', '30', '35', '40', '45'],
+      categories : [''],
+      group: {
+         groups:  [{
+            title: "5",
+            cols: 5
+          }, 
+          {
+            title: "10",
+            cols: 5
+          },
+          {
+            title: "15",
+            cols: 5
+          },
+          {
+            title: "20",
+            cols: 5
+          },
+          {
+            title: "25",
+            cols: 5
+          },
+         ],
+         style: {
+           fontSize: '16px',
+           fontFamily: 'Inter',
+           fontWeight: 500,
+           color: '#8E76ED',
+           fontFamily: undefined,
+           cssClass: ''
+         }
+       },
       labels: {
+         // show: false,
          style: {
             fontFamily: 'Inter',
             fontWeight: 500,
@@ -378,3 +415,17 @@ export const accuracyOptions = {
       show: false
    }
 }
+
+   // colors: [function({ value, seriesIndex, w }) {
+   //    if (value === 55) {
+   //        return '#7E36AF'
+   //    } else {
+   //        return '#D9534F'
+   //    }
+   //  }, function({ value, seriesIndex, w }) {
+   //    if (value === 44) {
+   //        return '#7E36AF'
+   //    } else {
+   //        return '#D9534F'
+   //    }
+   //  }],

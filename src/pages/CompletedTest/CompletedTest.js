@@ -148,7 +148,7 @@ export default function CompletedTest() {
                </div>
                <div className='bg-white mt-6 rounded-20 py-5 px-5 '>
                   <p className='text-primary-dark font-bold text-3xl text-center mb-6 mt-2'>Time Taken</p>
-                  <BarGraph series={timeTakenSeries} options={ttOptions} height='600px' />
+                  <BarGraph series={timeTakenSeries} options={ttOptions} height='500px' />
                </div>
                <div className='bg-white mt-6 rounded-20 py-5 px-5 max-w-[1100px]'>
                   <p className='text-primary-dark font-bold text-3xl text-center mb-6 mt-2'>
