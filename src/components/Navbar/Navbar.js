@@ -77,10 +77,6 @@ const parentNav = [
       icon: StudentTest,
       path: "/all-tests",
    },
-   {
-      icon: Percentage,
-      path: "/a",
-   },
 ]
 
 const studentNav = [
