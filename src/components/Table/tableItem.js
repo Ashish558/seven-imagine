@@ -8,6 +8,7 @@ import YellowIcon from "../../assets/assignedTests/yellow.svg";
 import RedIcon from "../../assets/assignedTests/red.svg";
 import GreenIcon from "../../assets/assignedTests/green.svg";
 import GrayIcon from "../../assets/assignedTests/gray.svg";
+import RemoveIcon from "../../assets/icons/remove.svg"
 
 //can b made dynamic
 export default function TableItem({ item, dataFor, onClick }) {
@@ -82,8 +83,8 @@ export default function TableItem({ item, dataFor, onClick }) {
          )}
 
          {dataFor === "assignedTests" && (
-            <tr className="odd:bg-white shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-8">
-               <td className="px-1  min-w-14 py-4 text-left">
+            <tr className="odd:bg-white text-sm shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-8">
+               <td className="px-1 font-medium  min-w-14 py-4 text-left">
                   <span className="inline-block cursor-pointer pl-4">
                      {item.name}
                   </span>
@@ -130,7 +131,7 @@ export default function TableItem({ item, dataFor, onClick }) {
          )}
 
          {dataFor === "tests" && (
-            <tr className="odd:bg-white shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
+            <tr className="odd:bg-white text-sm shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
                {Object.keys(item).map((key, i) =>
                   key === "Accuracy" ? (
                      <td className="font-medium px-1  min-w-14 py-4">
@@ -161,13 +162,21 @@ export default function TableItem({ item, dataFor, onClick }) {
                </td>
             </tr>
          )}
+         {dataFor === "assignedStudents" && (
+            <tr className="odd:bg-white text-sm shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
+               {mapData(item, 'assignedStudents')}
+               <td>
+                  <img src={RemoveIcon} />
+               </td>
+            </tr>
+         )}
          {dataFor === "studentTestsReport" && (
-            <tr className="odd:bg-white shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
+            <tr className="odd:bg-white text-sm shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
                {mapData(item)}
             </tr>
          )}
          {dataFor === "studentTestsAnswers" && (
-            <tr className="odd:bg-white shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
+            <tr className="odd:bg-white text-sm shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
                {mapData(item)}
                <td className="font-medium px-1 min-w-14 py-4 flex justify-center items-center">
                   <button className="flex items-center">
@@ -180,7 +189,7 @@ export default function TableItem({ item, dataFor, onClick }) {
             </tr>
          )}
          {dataFor === "assignedTestsStudents" && (
-            <tr className="odd:bg-white shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
+            <tr className="odd:bg-white shadow-sm text-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
                {Object.keys(item).map((key, i) =>
                (
                   <td className="font-medium px-1  min-w-14 py-4">
@@ -210,7 +219,7 @@ export default function TableItem({ item, dataFor, onClick }) {
          )}
 
          {dataFor === "allTests" && (
-            <tr className="odd:bg-white shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl lead">
+            <tr className="odd:bg-white font-medium text-sm shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl lead">
                {/* {Object.keys(item).map((key, i) => (
             <td className='font-medium px-1  min-w-14 py-4'>
               {item[key]}
@@ -248,7 +257,7 @@ export default function TableItem({ item, dataFor, onClick }) {
    );
 }
 
-const mapData = (data) => {
+const mapData = (data, dataFor) => {
 
    return Object.keys(data).map((key, i) =>
    (
@@ -265,11 +274,19 @@ const mapData = (data) => {
                />
             </div>
          </td>
-      ) : (
-         <td className="font-medium px-1  min-w-14 py-4">
-            {data[key]}
-         </td>
-      )
+      ) :
+         dataFor === 'assignedStudents' && key === 'name' || key === 'parent' ? (
+            <td className='font-medium px-1 text-primaryBlue min-w-14 py-4'>
+               <p className={`pl-4 ${key === 'name' ? 'text-left' : ''} font-semibold`}>
+                  {data[key]}
+               </p>
+            </td>
+         ) :
+            (
+               <td className="font-medium px-1  min-w-14 py-4">
+                  {data[key]}
+               </td>
+            )
    )
    )
 

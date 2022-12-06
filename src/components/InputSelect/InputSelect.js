@@ -52,7 +52,7 @@ export default function InputSelect({
                )}
             </div>
             {selected && (
-               <div className={styles.options}>
+               <div className={`scrollbar-content scrollbar-vertical ${styles.options}`}>
                   {optionData.map((option, idx) => {
                      return (
                         <div

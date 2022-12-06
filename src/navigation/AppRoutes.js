@@ -21,6 +21,7 @@ import StudentDashboard from "../pages/StudentDashboard/StudentDashboard";
 import Ledger from "../pages/Ledger/Ledger";
 import Settings from "../pages/Settings/Settings";
 import StartTest from "../pages/StartTest/StartTest";
+import AssignedStudents from "../pages/AssignedStudents/assignedStudents";
 
 const PrivateRoutes = [
    {
@@ -108,6 +109,7 @@ const AppRoutes = () => {
                element={<StudentDashboard />}
             />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/assigned-students" element={<AssignedStudents />} />
             <Route path="/all-tests/start-section" element={<StartTest />} />
 
             {/* <Route

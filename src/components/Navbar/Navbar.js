@@ -19,6 +19,7 @@ import Dashboard from "../../assets/Navbar/dashboard";
 import Profile from "../../assets/Navbar/profile";
 import StudentTest from "../../assets/Navbar/studentTest";
 import Percentage from "../../assets/Navbar/percentage";
+import AssignedStudents from "../../assets/Navbar/assignedStudents";
 
 const tempnavdata = [
    {
@@ -97,6 +98,28 @@ const studentNav = [
       path: "/all-tests",
    },
 ]
+const tutorNav = [
+   {
+      icon: Dashboard,
+      path: "/",
+   },
+   {
+      icon: Profile,
+      path: "/profile",
+   },
+   {
+      icon: AssignedStudents,
+      path: "/assigned-students",
+   },
+   {
+      icon: Calendar,
+      path: "/calendar",
+   },
+   {
+      icon: StudentTest,
+      path: "/all-tests",
+   },
+]
 export default function Navbar() {
    const [navData, setNavData] = useState(tempnavdata)
    const location = useLocation()
@@ -107,8 +130,11 @@ export default function Navbar() {
    const persona = sessionStorage.getItem('role')
 
    useEffect(() => {
-      if(persona === 'student' || persona === 'tutor'){
+      if(persona === 'student'){
          setNavData(studentNav)
+      }
+      if(persona === 'tutor'){
+         setNavData(tutorNav)
       }
       if(persona === 'parent' ){
          setNavData(parentNav)

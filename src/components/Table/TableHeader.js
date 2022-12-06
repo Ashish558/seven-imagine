@@ -11,8 +11,8 @@ export function TableHeader({ header, dataFor }) {
          </th>
          :
          <th className={`px-2 py-3 font-semibold opacity-60
-         ${header === 'Full Name' || header === 'Name' ? 'text-left pl-7' : ''}
-         ${dataFor === 'allUsers' ? 'text-sm' : ''}
+         ${header === 'Full Name' || header === 'Name' || header === 'Student Name'  ? 'text-left pl-7' : ''}
+         ${dataFor === 'allUsers' ? 'text-sm' : 'text-sm'}
        `}>
             {header}
          </th>

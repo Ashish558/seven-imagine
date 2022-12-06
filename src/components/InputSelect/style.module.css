@@ -21,3 +21,7 @@
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+
+.options > div:hover {
+    background-color: rgba(197, 195, 195, 0.171);
+}
