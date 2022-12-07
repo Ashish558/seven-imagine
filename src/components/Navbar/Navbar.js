@@ -61,6 +61,42 @@ const tempnavdata = [
    },
 ];
 
+const adminNavData = [
+   {
+      icon: Dashboard,
+      path: "/",
+   },
+   {
+      icon: Calendar,
+      path: "/calendar",
+   },
+   {
+      icon: TestsIcon,
+      path: "/assigned-tests",
+   },
+   {
+      icon: Document,
+      path: "/all-tests",
+   },
+   {
+      icon: SettingsIcon,
+      path: "/settings",
+   },
+   {
+      icon: People,
+      path: "/users",
+   },
+   {
+      icon: DollarIcon,
+      path: "/dollar",
+   },
+   {
+      icon: Exit,
+      path: "/exit",
+      parentClassName: "mt-auto",
+   },
+];
+
 const parentNav = [
    {
       icon: Dashboard,
@@ -138,6 +174,9 @@ export default function Navbar() {
       }
       if(persona === 'parent' ){
          setNavData(parentNav)
+      }
+      if(persona === 'admin' ){
+         setNavData(adminNavData)
       }
   
    }, [persona])
