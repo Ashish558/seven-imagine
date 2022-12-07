@@ -47,10 +47,10 @@ const ConceptSection = () => {
 
     return (
         <div
-            className="flex justify-between "
+            className="flex justify-between px-[20px] py-[15px] 2xl:px-[42px] 2xl:py-[30px] rounded-tl-[20px] rounded-bl-[20px]"
             id={styles.conceptSectionContainer}
         >
-            <div className="w-2/3" id={styles.conceptChart}>
+            <div className="w-2/3 px-[50px] 2xl:px-[76px]" id={styles.conceptChart}>
                 <div className="flex items-center" style={{ gap: "20px" }}>
                     <h1>Concept Chart</h1>
 
@@ -230,7 +230,7 @@ const ConceptSection = () => {
                 </div>
 
                 <div id={styles.chartContainer}>
-                    <div id={styles.chart}>
+                    <div id={styles.chart} className="ml-[18px]">
                         <Chart />
                     </div>
                 </div>
@@ -324,7 +324,7 @@ const ConceptSection = () => {
                     </OwlCarousel> */}
 
 
-<div id={styles.tutor}>
+        <div id={styles.tutor}>
             <h2>Your Tutor</h2>
             <OwlCarousel className="owl-theme" loop margin={30} items={1}>
                <div class="item flex" style={{ width: "100%" }}>
@@ -381,22 +381,22 @@ const ConceptSection = () => {
                 </div>
                 <div id={styles.practiceTestContainer}>
                     <h2 className="mb-[6px]" id={styles.practiceTestHeader}>Practice Test</h2>
-                    <div id={styles.listedData}>
+                    <div id={styles.listedData} className="py-[25px] 2xl:py-[38px] px-[18px] 2xl:px-[28px]">
                         <div
                             className="flex items-center justify-between"
                             style={{ padding: "10px 0" }}
                         >
                             <div className="w-1/2">
-                                <div className={styles.listedDataItem}>
+                                {/* <div className={styles.listedDataItem}> */}
                                     <h1>SAT B2</h1>
                                     <div
                                         className="flex"
                                         style={{ gap: "12px" }}
                                     >
-                                        <h2>Due Date</h2>
+                                        <h2 className="2xl:text-[18px]">Due Date</h2>
                                         <h3>June 20, 2022</h3>
                                     </div>
-                                </div>
+                                {/* </div> */}
                             </div>
                             <div className="w-1/2">
                                 <div
@@ -421,7 +421,7 @@ const ConceptSection = () => {
                                         className="flex"
                                         style={{ gap: "12px" }}
                                     >
-                                        <h2>Due Date</h2>
+                                        <h2 className="2xl:text-[18px]">Due Date</h2>
                                         <h3>June 20, 2022</h3>
                                     </div>
                                 </div>
@@ -449,7 +449,7 @@ const ConceptSection = () => {
                                         className="flex"
                                         style={{ gap: "12px" }}
                                     >
-                                        <h2>Due Date</h2>
+                                        <h2 className="2xl:text-[18px]">Due Date</h2>
                                         <h3>June 20, 2022</h3>
                                     </div>
                                 </div>
@@ -478,7 +478,7 @@ const ConceptSection = () => {
                                         className="flex"
                                         style={{ gap: "12px" }}
                                     >
-                                        <h2>Due Date</h2>
+                                        <h2 className="2xl:text-[18px]">Due Date</h2>
                                         <h3>June 20, 2022</h3>
                                     </div>
                                 </div>
@@ -506,7 +506,7 @@ const ConceptSection = () => {
                                         className="flex"
                                         style={{ gap: "12px" }}
                                     >
-                                        <h2>Due Date</h2>
+                                        <h2 className="2xl:text-[18px]">Due Date</h2>
                                         <h3>June 20, 2022</h3>
                                     </div>
                                 </div>
@@ -534,7 +534,7 @@ const ConceptSection = () => {
                                         className="flex"
                                         style={{ gap: "12px" }}
                                     >
-                                        <h2>Due Date</h2>
+                                        <h2 className="2xl:text-[18px]">Due Date</h2>
                                         <h3>June 20, 2022</h3>
                                     </div>
                                 </div>
