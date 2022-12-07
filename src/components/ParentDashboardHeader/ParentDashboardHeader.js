@@ -27,20 +27,20 @@ const ParentDashboardHeader = () => {
    console.log(images)
    return (
       <div
-         className="flex gap-[78px]"
+         className="flex 2xl:gap-[78px] xl:gap-[50px]"
          id={styles.parentDashboardHeader}
       >
          <div className="w-2/3">
-            <div className="flex" style={{ gap: 16 }}>
+            <div className="flex gap-[16px]">
                <div className="w-2/3" id={styles.explore}>
                   <div className="flex">
                      <div className="w-1/2" id={styles.exploreLeft}>
-                        <h2 className="w-6/12">
+                        <h2 className="w-1/2 text-[20px] 2xl:text-[26px] font-bold text-[#f3f5f7] mb-[18px] 2xl:mb-[24px] ml-[32px] 2xl:ml-[44px]">
                            This fall get help from our Admission
                            Experts.
                         </h2>
 
-                        <button className={styles.knowMore}>
+                        <button className="ml-[32px] 2xl:ml-[46px] bg-[#f3f5f7] rounded-[5px] py-[8px] px-[15px]">
                            Know More {">"}
                         </button>
                      </div>
@@ -61,11 +61,11 @@ const ParentDashboardHeader = () => {
 
                <div className="w-1/3" id={styles.availableCredit}>
                   <div className="flex justify-between">
-                     <h3>Available Credit</h3>
+                     <h3 className="2xl:text-[19.6px] font-semibold">Available Credit</h3>
                      <img src={i} alt="" />
                   </div>
 
-                  <div id={styles.creditBalance}>
+                  <div id={styles.creditBalance} className='text-[36.23px] 2xl:py-[9px] 2xl:px-[42px]'>
                      820 USD
                      <p className="text-[13.17px] font-bold cursor-pointer"
                         onClick={() => navigate('/ledger')}>
@@ -81,13 +81,12 @@ const ParentDashboardHeader = () => {
 
          <div
             className="w-1/3"
-            id={styles.yourStudent}
          >
             <div className="flex justify-between items-center px-[11px]">
                <h2 className="text-[#4715D7] font-semibold text-[21px] mt-[16px] mb-[15px]">Your Student</h2>
                <img src={rightArrow} className="h-[15px] w-[15px]" alt="" />
             </div>
-            <div class={`item ${styles.student} w-100`}>
+            <div class={`item ${styles.student} w-100 px-[22px] 2xl:px-[32px] 2xl:py-[13px]`}>
                <div className="flex items-center">
                   <div className="w-1/2">
                      <h2>Joseph Brown</h2>
