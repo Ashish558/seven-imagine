@@ -1,0 +1,58 @@
+.profileCard {
+   background-image: linear-gradient(
+       94.33deg,
+       #7152eb 10.45%,
+       rgba(247, 125, 86, 0.99) 84.22%
+   );
+   padding-top: 139px;
+}
+.backBtn{
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    z-index: 1000;
+}
+.imgContent{
+    position: absolute;
+    z-index: 20;
+    left: 0;
+    bottom: 0;
+    padding-bottom: 60px;
+    width: 100%;
+    text-align: center;
+    background-image: linear-gradient(to bottom, transparent, #F3F5F7, #F3F5F7);
+}
+.profileIcon{
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+@media only screen and (min-width: 1024px) {
+   .profileCard {
+       border-radius: 20px;
+       background-image: linear-gradient(
+           94.33deg,
+           #7152eb 10.45%,
+           rgba(247, 125, 86, 0.99) 84.22%
+       );
+   }
+
+   .imgContainer {
+       position: static;
+       left: 50%;
+       transform: translate(0, 0);
+       display: flex;
+   }
+
+   .imgContainer img {
+       width: 165px;
+       height: 165px;
+       border-radius: 50%;
+   }
+
+   .profileCard {
+       padding-top: 44px;
+       padding-bottom: 45px;
+   }
+}

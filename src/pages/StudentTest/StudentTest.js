@@ -11,7 +11,8 @@ const studentTableHeaders = [
    "Duration",
    "Status",
    "Scores",
-   "",
+   " ",
+   " ",
 ];
 
 const parentTestInfo = [

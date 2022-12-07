@@ -1,14 +1,14 @@
 import React from 'react'
-import ProfileCard from '../../components/ProfileCard/ProfileCard'
-import styles from './style.module.css'
-
-import ProfileImg from '../../assets/images/profile.png'
-import EditIcon from '../../assets/icons/edit.svg'
-import MailIcon from '../../assets/icons/mail.svg'
-import WhatsappIcon from '../../assets/icons/whatsapp.svg'
-import EditableText from '../../components/EditableText/EditableText'
 import { useNavigate } from 'react-router-dom'
+import styles from '../style.module.css'
 
+import ProfileCard from '../../../components/ProfileCard/ProfileCard'
+import ProfileImg from '../../../assets/images/profile.png'
+import EditIcon from '../../../assets/icons/edit.svg'
+import MailIcon from '../../../assets/icons/mail.svg'
+import WhatsappIcon from '../../../assets/icons/whatsapp.svg'
+import EditableText from '../../../components/EditableText/EditableText'
+ 
 const students = [
    {
       id: 1,
@@ -22,7 +22,7 @@ const students = [
    },
 ]
 
-export default function Profile() {
+export default function ParentProfile() {
 
    const navigate = useNavigate()
 

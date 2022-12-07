@@ -1,12 +1,14 @@
 import React from 'react'
 
-export default function ProfileCard({ title, titleClassName, className, body }) {
+export default function ProfileCard({ title, titleClassName, className, body, hideShadow, bgClass }) {
 
 
    return (
-      <div className={`rounded-2xl shadow-white py-6 px-4 lg:px-8 bg-white lg:shadow-light lg:bg-textGray-30 ${className ? className : ''}
+      <div className={`rounded-2xl ${!hideShadow && 'shadow-white'} py-6 px-4 lg:px-8 
+      bg-white  ${!hideShadow && 'lg:shadow-light'} relative bg-white lg:bg-textGray-30
+       ${className ? className : ''}
       `}>
-         <p className={`text-primary text-center font-bold text-21 ${titleClassName ? titleClassName : ""}`}>
+         <p className={`text-primary font-bold text-21 ${titleClassName ? titleClassName : "text-center"}`}>
             {title}
          </p>
          {body && body}

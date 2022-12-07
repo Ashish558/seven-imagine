@@ -8,14 +8,10 @@ export default function SecondaryButton({
 }) {
     return (
         <button
-            className={`bg-secondaryLight font-medium rounded-md py-4 px-12 ${className}`}
+            className={`bg-secondaryLight text-lg font-medium rounded-md py-4 px-8 ${className}`}
             onClick={onClick}
             type={type ? type : "button"}
-            style={{
-                fontSize: "21px",
-                paddingLeft: "35px",
-                paddingRight: "35px",
-            }}
+           
         >
             {children}
         </button>
