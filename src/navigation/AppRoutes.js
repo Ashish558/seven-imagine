@@ -122,7 +122,7 @@ const AppRoutes = () => {
             />
             <Route path="/settings" element={<Settings />} />
             <Route path="/assigned-students" element={<AssignedStudents />} />
-            <Route path="/all-tests/start-section" element={<StartTest />} />
+            <Route path="/all-tests/start-section/:id" element={<StartTest />} />
 
             {/* <Route
                   path="/profile"

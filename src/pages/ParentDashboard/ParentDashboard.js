@@ -7,7 +7,7 @@ const ParentDashboard = () => {
     return (
         <div
             id={styles.ParentDashboardContainer}
-            className="flex-auto w-11/12 ml-auto"
+            className="flex-auto lg:ml-pageLeft pl-5"
         >
             <ParentDashboardHeader />
             <ConceptSection />

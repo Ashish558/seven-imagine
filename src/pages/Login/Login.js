@@ -53,7 +53,7 @@ export default function Login({ setLoginFormActive }) {
             </div>
             <div className="flex items-center">
                {loginActive ? (
-                  <div className="w-full px-148">
+                  <div className="w-full px-[120px]">
                      <p className="font-bold text-5xl leading-snug mb-7">
                         Login
                      </p>
