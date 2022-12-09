@@ -49,8 +49,8 @@
 
 #availableCredit h3 {
     font-family: "Inter", sans-serif;
-    font-weight: 600;
-    font-size: 19.76px;
+    /* font-weight: 600; */
+    /* font-size: 19.76px; */
     color: white;
 }
 
@@ -132,7 +132,7 @@
 .student {
     background: linear-gradient(95.17deg, #a455f2 3.84%, #981dac 92.55%);
     border-radius: 20px;
-    padding: 13px 32px;
+    /* padding: 13px 32px; */
     color: #fff;
 }
 

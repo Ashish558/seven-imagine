@@ -34,7 +34,7 @@
 }
 
 #conceptChart {
-    padding: 0 76px;
+    /* padding: 0 76px; */
     padding-left: 0;
 }
 
@@ -82,7 +82,7 @@
     border-radius: 20px;
     height: 360px;
     overflow-y: scroll;
-    padding: 38px 28px;
+    /* padding: 38px 28px; */
     color: black;
     padding-top: 20px;
 }
@@ -97,11 +97,11 @@
 
 #listedData h2 {
     color: black;
-    font-size: 18px;
+    /* font-size: 18px; */
     font-weight: 600;
     display: block;
     padding: 0;
-    margin-right: 12px;
+    /* margin-right: 12px; */
 }
 
 #listedData h1 {
