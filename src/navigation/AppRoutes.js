@@ -23,6 +23,7 @@ import StartTest from "../pages/StartTest/StartTest";
 import AssignedStudents from "../pages/AssignedStudents/assignedStudents";
 import ParentProfile from "../pages/Profiles/ParentProfile/ParentProfile";
 import TutorProfile from "../pages/Profiles/Tutor/TutorProfile";
+import Invoice from "../pages/Invoice/Invoice";
 
 const PrivateRoutes = [
    {
@@ -74,6 +75,7 @@ const AppRoutes = () => {
             />
           
             <Route path="/users" element={<Users />} />
+            <Route path="/invoice" element={<Invoice />} />
        
             <Route
                path="/calendar"

@@ -52,7 +52,7 @@ const tempnavdata = [
    },
    {
       icon: DollarIcon,
-      path: "/dollar",
+      path: "/invoice",
    },
    {
       icon: Exit,

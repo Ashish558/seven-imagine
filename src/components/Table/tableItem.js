@@ -31,7 +31,9 @@ export default function TableItem({ item, dataFor, onClick }) {
          <></>
       );
    };
+
    const toExcludes = ['testId', '_id', 'isCompleted']
+   const invoiceExcludes = ['isLate']
 
    return (
       <>
@@ -230,15 +232,13 @@ export default function TableItem({ item, dataFor, onClick }) {
                </td>
             </tr>
          )}
-
+         {dataFor === "invoice" && (
+            <tr className="odd:bg-white text-sm shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
+               {mapData(item, dataFor)}
+            </tr>
+         )}
          {dataFor === "allTests" && (
             <tr className="odd:bg-white font-medium text-sm shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl lead">
-               {/* {Object.keys(item).map((key, i) => (
-            <td className='font-medium px-1  min-w-14 py-4'>
-              {item[key]}
-            </td>
-          ))} */}
-
                <td>{item.testName}</td>
                <td>{item.updatedAt.split("T")[0]}</td>
                <td>{item.testType}</td>
@@ -288,19 +288,26 @@ const mapData = (data, dataFor) => {
             </div>
          </td>
       ) :
-         dataFor === 'assignedStudents' && key === 'name' || key === 'parent' ? (
-            <td className='font-medium px-1 text-primaryBlue min-w-14 py-4'>
-               <p className={`pl-4 ${key === 'name' ? 'text-left' : ''} font-semibold`}>
+         dataFor === 'invoice' && key === 'currentBalance' ? (
+            <td className='font-medium px-1 text-[#009262]  py-4'>
+               <p className={`font-semibold`}>
+                  {console.log(data[key])}
                   {data[key]}
                </p>
             </td>
          ) :
-            (
-               <td className="font-medium px-1  min-w-14 py-4">
-                  {data[key]}
+            dataFor === 'assignedStudents' && key === 'name' || key === 'parent' ? (
+               <td className='font-medium px-1 text-primaryBlue min-w-14 py-4'>
+                  <p className={`pl-4 ${key === 'name' ? 'text-left' : ''} font-semibold`}>
+                     {data[key]}
+                  </p>
                </td>
-            )
-   )
-   )
+            ) :
+               (
+                  <td className="font-medium px-1  min-w-14 py-4">
+                     {data[key]}
+                  </td>
+               )
+   ))
 
 }
