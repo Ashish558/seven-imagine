@@ -39,10 +39,6 @@ const tempnavdata = [
       path: "/all-tests",
    },
    {
-      icon: Bubble,
-      path: "/graph",
-   },
-   {
       icon: SettingsIcon,
       path: "/settings",
    },
