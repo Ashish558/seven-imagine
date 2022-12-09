@@ -69,7 +69,7 @@ export default function Login({ setLoginFormActive }) {
                         label="Email Address"
                         labelClassname="ml-2 mb-2"
                         inputClassName="bg-transparent"
-                        inputContainerClassName='border'
+                        inputContainerClassName='border pt-3.5 pb-3.5'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                      />
@@ -82,7 +82,7 @@ export default function Login({ setLoginFormActive }) {
                         type='password'
                         labelClassname="ml-2 mb-2"
                         inputClassName="bg-transparent" 
-                        inputContainerClassName='border'
+                        inputContainerClassName='border pt-3.5 pb-3.5'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                      />

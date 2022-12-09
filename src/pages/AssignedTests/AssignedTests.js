@@ -163,7 +163,7 @@ export default function AssignedTests() {
                      optionData={optionData}
                      placeholder="Student Name"
                      inputContainerClassName="bg-white"
-                     parentClassName="w-full mr-4"
+                     parentClassName="w-full mr-4 text-sm"
                      type="text"
                   />
                   <InputField
@@ -173,14 +173,14 @@ export default function AssignedTests() {
                      optionData={optionData}
                      placeholder="Test Name"
                      inputContainerClassName="bg-white"
-                     parentClassName="w-full mr-4"
+                     parentClassName="w-full mr-4 text-sm"
                      type="text"
                   />
                   <InputField
                      value={filterData.tutor}
                      onChange={e => setFilterData({...filterData, tutor: e.target.value})}
                      IconRight={SearchIcon}
-                     parentClassName="w-full mr-4"
+                     parentClassName="w-full mr-4 text-sm"
                      inputContainerClassName="bg-white"
                      optionData={optionData}
                      placeholder="Tutor Name"
@@ -192,7 +192,7 @@ export default function AssignedTests() {
                      optionData={optionData}
                      inputContainerClassName="bg-white"
                      placeholder="Completion Status"
-                     parentClassName="w-full mr-4"
+                     parentClassName="w-full mr-4 text-sm"
                      type="select"
                   />
                </div>
@@ -211,11 +211,12 @@ export default function AssignedTests() {
          {assignTestModalActive && (
             <Modal
                title="Assign New Test"
+               classname={"max-w-[760px] mx-auto"}
                cancelBtn={true}
                cancelBtnClassName="max-w-140"
                primaryBtn={{
                   text: "Assign",
-                  className: "max-w-140",
+                  className: "max-w-140 pl-8 pr-8",
                   onClick: () => handleAssignTestSubmit(),
                }}
                handleClose={handleClose}
@@ -241,7 +242,7 @@ export default function AssignedTests() {
                            }}
                            parentClassName="w-full mr-4"
                            labelClassname="ml-2 mb-0.5"
-                           inputContainerClassName="px-5 bg-primary-50 border-0"
+                           inputContainerClassName="px-5 pt-3.5 pb-3.5 text-sm bg-primary-50 border-0"
                            inputClassName="bg-transparent"
                            placeholder="Student Name"
                            type="select"
@@ -251,16 +252,11 @@ export default function AssignedTests() {
                         <InputSelect
                            label="Time Limit"
                            value={modalData.limit}
-                           onChange={(val) =>
-                              setModalData({
-                                 ...modalData,
-                                 limit: val,
-                              })
-                           }
+                           onChange={(val) =>  setModalData({ ...modalData, limit: val,}) }
                            optionData={timeLimits}
-                           parentClassName="w-full mr-4"
+                           parentClassName="w-full mr-4 "
                            labelClassname="ml-2 mb-0.5"
-                           inputContainerClassName="px-5 bg-primary-50 border-0"
+                           inputContainerClassName="px-5 text-sm pt-3.5 pb-3.5 bg-primary-50 border-0"
                            inputClassName="bg-transparent"
                            placeholder="Select Time Limit"
                            type="select"
@@ -278,8 +274,8 @@ export default function AssignedTests() {
                            }
                            parentClassName="w-full mr-4"
                            labelClassname="ml-2 mb-0.5"
-                           inputContainerClassName="px-5 bg-primary-50 border-0"
-                           inputClassName="bg-transparent"
+                           inputContainerClassName="px-5 pt-3.5 pb-3.5 bg-primary-50 border-0"
+                           inputClassName="bg-transparent text-sm"
                            optionData={optionData}
                            placeholder="Date"
                            type="date"
@@ -306,14 +302,13 @@ export default function AssignedTests() {
                            placeholder="Type Test Name"
                            parentClassName="w-full mr-4"
                            labelClassname="ml-2 mb-0.5"
-                           inputContainerClassName="px-5 bg-primary-50 border-0"
+                           inputContainerClassName="px-5 pt-3.5 pb-3.5 text-sm bg-primary-50 border-0"
                            inputClassName="bg-transparent"
                            type="select"
                         />
                      </div>
                   </div>
                }
-               classname={"max-w-840 mx-auto"}
             />
          )}
          {resendModalActive && (

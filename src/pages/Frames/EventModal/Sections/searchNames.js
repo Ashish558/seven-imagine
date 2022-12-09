@@ -47,7 +47,7 @@ export default function SearchNames({ setStudent, setData, student, tutor,data, 
             labelClassname="ml-3"
             placeholder="Student Name"
             parentClassName="w-full mr-[18.48px]"
-            inputContainerClassName="bg-lightWhite border-0 pt-4 pb-4"
+            inputContainerClassName="bg-lightWhite border-0 pt-3.5 pb-3.5"
             inputClassName="bg-transparent"
             type="text"
             value={student}
@@ -63,7 +63,7 @@ export default function SearchNames({ setStudent, setData, student, tutor,data, 
             labelClassname="ml-3"
             placeholder="Tutor Name"
             parentClassName="w-full"
-            inputContainerClassName="bg-lightWhite border-0 pt-4 pb-4"
+            inputContainerClassName="bg-lightWhite border-0 pt-3.5 pb-3.5 text-s"
             inputClassName="bg-transparent"
             type="text"
             value={tutor}

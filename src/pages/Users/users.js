@@ -177,12 +177,12 @@ export default function Users() {
                   IconRight={SearchIcon}
                   placeholder='Type Name'
                   parentClassName='w-full mr-4'
-                  inputContainerClassName='pt-[15px] pb-[15px] bg-white border w-[290px]'
+                  inputContainerClassName='text-sm pt-[12px] text-sm pb-[12px] bg-white border w-[290px]'
                   type='text'
                   value={filterData.typeName}
                   onChange={e => setFilterData({ ...filterData, typeName: e.target.value })} />
                <InputSelect optionData={userTypesList}
-                  inputContainerClassName='border bg-white pt-[15px] pb-[15px]'
+                  inputContainerClassName='text-sm border bg-white pt-[12px] pb-[12px]'
                   placeholder='User Type'
                   parentClassName='w-full mr-4'
                   type='select'
@@ -191,7 +191,7 @@ export default function Users() {
                <InputSelect optionData={optionData}
                   placeholder='Lead Status'
                   parentClassName='w-full mr-4'
-                  inputContainerClassName='border bg-white pt-[15px] pb-[15px]'
+                  inputContainerClassName='text-sm border bg-white pt-[12px] pb-[12px]'
                   type='select'
                   value={filterData.status}
                   onChange={val => setFilterData({ ...filterData, status: val })} />
@@ -199,14 +199,14 @@ export default function Users() {
                   placeholder='Services'
                   parentClassName='w-full mr-4'
                   type='select'
-                  inputContainerClassName='border bg-white pt-[15px] pb-[15px]'
+                  inputContainerClassName='text-sm border bg-white pt-[12px] pb-[12px]'
                   value={filterData.services}
                   onChange={val => setFilterData({ ...filterData, services: val })} />
                <InputSelect optionData={optionData}
                   placeholder='Tutor'
                   parentClassName='w-full mr-4'
                   type='select'
-                  inputContainerClassName='border bg-white pt-[15px] pb-[15px]'
+                  inputContainerClassName='text-sm border bg-white pt-[12px] pb-[12px]'
                   value={filterData.tutor}
                   onChange={val => setFilterData({ ...filterData, tutor: val })} />
             </div>
@@ -224,7 +224,7 @@ export default function Users() {
          {
             modalActive &&
             <Modal
-               classname={'max-w-840 mx-auto'}
+               classname={'max-w-[780px] mx-auto'}
                title='Add a New User'
                cancelBtn={true}
                cancelBtnClassName='w-140'
@@ -238,12 +238,12 @@ export default function Users() {
                handleClose={handleClose}
                body={
                   <form id='add-user-form' onSubmit={handleSubmit} className='px-[3px] mb-0.5' >
-                     <div className='grid grid-cols-1 md:grid-cols-2  gap-x-2 md:gap-x-3 gap-y-2 gap-y-4 mb-5'>
+                     <div className='grid grid-cols-1 md:grid-cols-2  gap-x-2 md:gap-x-3 gap-y-3 gap-y-4 mb-5'>
                         <div>
                            <InputField label='First Name'
                               labelClassname='ml-4 mb-0.5'
                               placeholder='First Name'
-                              inputContainerClassName='px-5 bg-primary-50 border-0'
+                              inputContainerClassName='text-sm pt-3.5 pb-3.5 px-5 bg-primary-50 border-0'
                               inputClassName='bg-transparent'
                               parentClassName='w-full mr-4' type='text'
                               value={modalData.firstName}
@@ -255,7 +255,7 @@ export default function Users() {
                               labelClassname='ml-4 mb-0.5'
                               isRequired={true}
                               placeholder='Last Name'
-                              inputContainerClassName='px-5 bg-primary-50 border-0'
+                              inputContainerClassName='text-sm pt-3.5 pb-3.5 px-5 bg-primary-50 border-0'
                               inputClassName='bg-transparent'
                               parentClassName='w-full mr-4' type='text'
                               value={modalData.lastName}
@@ -266,24 +266,12 @@ export default function Users() {
                               labelClassname='ml-4 mb-0.5'
                               isRequired={true}
                               placeholder='Email Addresss'
-                              inputContainerClassName='px-5 bg-primary-50 border-0'
+                              inputContainerClassName='text-sm pt-3.5 pb-3.5 px-5 bg-primary-50 border-0'
                               inputClassName='bg-transparent'
                               parentClassName='w-full mr-4' type='text'
                               value={modalData.email}
                               onChange={e => setModalData({ ...modalData, email: e.target.value })} />
                         </div>
-                        {/* <div>
-                           <InputField label='Password'
-                              labelClassname='ml-4 mb-0.5'
-                              isRequired={true}
-                              optionData={optionData}
-                              placeholder='minimum 8 characters'
-                              inputContainerClassName='px-5 bg-primary-50 border-0'
-                              inputClassName='bg-transparent'
-                              parentClassName='w-full mr-4' type='password'
-                              value={modalData.password}
-                              onChange={e => setModalData({ ...modalData, password: e.target.value })} />
-                        </div> */}
                         <div>
                            <InputSelect value={modalData.userType}
                               onChange={val => setModalData({ ...modalData, userType: val })}
@@ -293,7 +281,7 @@ export default function Users() {
                               label='User Type'
                               labelClassname='ml-4 mb-0.5'
                               optionData={userTypeOptions}
-                              inputContainerClassName=' bg-primary-50 px-5 border-0'
+                              inputContainerClassName='text-sm pt-3.5 pb-3.5 bg-primary-50 px-5 border-0'
                               parentClassName='w-full mr-4' />
                         </div>
                      </div>

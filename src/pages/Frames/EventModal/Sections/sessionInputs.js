@@ -15,7 +15,7 @@ export default function SessionInputs({ data, setData, status }) {
                labelClassname="ml-3"
                placeholder="Session Link"
                parentClassName="w-full mr-8"
-               inputContainerClassName="bg-lightWhite border-0 pt-4 pb-4"
+               inputContainerClassName="bg-lightWhite border-0 pt-3.5 pb-3.5"
                inputClassName="bg-transparent"
                type="text"
                value={data.session}
@@ -39,7 +39,7 @@ export default function SessionInputs({ data, setData, status }) {
                      optionData={status}
                      label="Session Status"
                      labelClassname="ml-2"
-                     inputContainerClassName="bg-lightWhite border-0 font-medium pr-3 pt-4 pb-4"
+                     inputContainerClassName="bg-lightWhite border-0 font-medium pr-3 pt-3.5 pb-3.5"
                      inputClassName="bg-transparent appearance-none font-medium"
                      placeholder="Session Status"
                      parentClassName="w-full mr-4"
@@ -67,7 +67,7 @@ export default function SessionInputs({ data, setData, status }) {
                         })
                      }
                      optionData={status}
-                     inputContainerClassName="bg-lightWhite border-0 font-medium pr-3 pt-4 pb-4"
+                     inputContainerClassName="bg-lightWhite border-0 font-medium pr-3 pt-3.5 pb-3.5"
                      inputClassName="bg-transparent appearance-none font-medium"
                      placeholder="Session Status"
                      parentClassName="w-full mr-4"

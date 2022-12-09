@@ -25,7 +25,7 @@ export default function InputField({
    return (
       <div className={` ${parentClassName && parentClassName}`}>
          <label
-            className={`inline-block font-semibold ${labelClassname} w-2/3 ml-3`}
+            className={`inline-block font-semibold ${labelClassname} ml-3`}
             style={style}
          >
             {label}

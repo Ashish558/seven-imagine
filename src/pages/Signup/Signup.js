@@ -150,7 +150,7 @@ export default function Signup() {
                               placeholder="First Name"
                               parentClassName="mb-6 mr-5"
                               label="First Name"
-                              inputContainerClassName='border'
+                              inputContainerClassName='border pt-3.5 pb-3.5'
                               labelClassname="ml-2 mb-2"
                               value={values.firstName}
                               onChange={(e) =>
@@ -165,7 +165,7 @@ export default function Signup() {
                               parentClassName="mb-6"
                               label="Last Name"
                               labelClassname="ml-2 mb-2"
-                              inputContainerClassName='border'
+                              inputContainerClassName='border pt-3.5 pb-3.5'
                               value={values.lastName}
                               onChange={(e) =>
                                  setValues({
@@ -180,7 +180,7 @@ export default function Signup() {
                            placeholder="email@example.com"
                            parentClassName="mb-6"
                            label="Email Address"
-                           inputContainerClassName='border'
+                           inputContainerClassName='border pt-3.5 pb-3.5'
                            value={values.email}
                            onChange={(e) =>
                               setValues({
@@ -195,7 +195,7 @@ export default function Signup() {
                            parentClassName="mb-6 relative"
                            label="Phone Number (For tutor correspondence)"
                            labelClassname="ml-2 mb-2"
-                           inputContainerClassName="relative border"
+                           inputContainerClassName="relative border pt-3.5 pb-3.5"
                            inputClassName="ml-80"
                            inputLeftField={
                               <div ref={selectRef}
@@ -246,10 +246,10 @@ export default function Signup() {
                            placeholder=""
                            parentClassName="mb-6"
                            label="Please enter the subscription code required to access Seven Square Learning and starting prep."
-                           inputContainerClassName='border'
+                           inputContainerClassName='border pt-3.5 pb-3.5'
                            value={values.subscriptionCode}
                            onChange={(e) => setValues({ ...values, subscriptionCode: e.target.value })}
-                           labelClassname="ml-2 mb-[11px]"
+                           labelClassname="ml-2 mb-[11px] pr-5"
                         />
 
                         <div className="flex items-center">

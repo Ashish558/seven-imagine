@@ -40,7 +40,7 @@ export default function Modal({
                      <SecondaryButton
                         onClick={handleClose}
                         children="Cancel"
-                        className={cancelBtnClassName}
+                        className={`pt-3 pb-3 ${cancelBtnClassName}`}
                         type="button"
                      />
                   )}
@@ -49,12 +49,8 @@ export default function Modal({
                         onClick={primaryBtn.onClick ? primaryBtn.onClick : null}
                         form={primaryBtn.form ? primaryBtn.form : null}
                         type={primaryBtn.type ? primaryBtn.type : "button"}
-                        className={`bg-primary rounded-md font-medium text-white py-4 px-12 ml-12 ${primaryBtn.className ? primaryBtn.className : ""}`}
-                        style={{
-                           fontSize: "21px",
-                           paddingLeft: "35px",
-                           paddingRight: "35px",
-                        }}
+                        className={`bg-primary rounded-md text-lg font-medium text-white py-3 px-12 ml-12 ${primaryBtn.className ? primaryBtn.className : ""}`}
+                      
                      >
                         {primaryBtn.text}
                      </button>

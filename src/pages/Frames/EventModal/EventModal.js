@@ -363,7 +363,7 @@ export default function EventModal({
    return (
       <>
          <Modal
-            classname="max-w-840 mx-auto xl:max-h-750 overflow-y-auto scrollbar-content scrollbar-vertical"
+            classname="max-w-[800px] mx-auto xl:max-h-750 overflow-y-auto scrollbar-content scrollbar-vertical"
             handleClose={() => setEventModalActive(false)}
             title={isUpdating ? "Update Session" : "Create a New Session"}
             body={
@@ -398,7 +398,7 @@ export default function EventModal({
                            setData({ ...data, service: val })
                         }
                         optionData={services}
-                        inputContainerClassName={`bg-lightWhite border-0 font-medium pr-3
+                        inputContainerClassName={`bg-lightWhite pt-3.5 pb-3.5 border-0 font-medium pr-3
                        `}
                         inputClassName="bg-transparent appearance-none font-medium pt-4 pb-4"
                         placeholder="Service"
@@ -551,7 +551,7 @@ export default function EventModal({
                            </div>
                         </div>
 
-                        <div className="mb-12">
+                        <div className="mb-8">
                            <p className="font-medium mb-2.5">
                               Session Notes
                            </p>
@@ -575,7 +575,7 @@ export default function EventModal({
                         <div className="flex justify-center">
                            <PrimaryButton
                               children="Schedule"
-                              className="text-21 py-3 pl-2 pr-2 font-medium px-7 h-[57px] w-[140px]"
+                              className="text-lg py-3 pl-2 pr-2 font-medium px-7 h-[50px] w-[140px]"
                               onClick={handleSubmit}
                            />
                         </div>

@@ -34,7 +34,7 @@
 }
 
 #conceptChart {
-    /* padding: 0 76px; */
+    padding: 0 50px;
     padding-left: 0;
 }
 
@@ -82,7 +82,7 @@
     border-radius: 20px;
     height: 360px;
     overflow-y: scroll;
-    /* padding: 38px 28px; */
+    padding: 25px 25px;
     color: black;
     padding-top: 20px;
 }
