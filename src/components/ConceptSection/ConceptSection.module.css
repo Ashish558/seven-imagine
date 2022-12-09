@@ -1,16 +1,17 @@
 #conceptSectionContainer {
     background-color: rgba(217, 217, 217, 0.2);
-    /* padding: 42px 30px; */
-    margin-top: 46px;
-    /* border-radius: 20px 0 0 20px; */
+    padding: 20px 30px 20px;
+    margin-top: 20px;
+    border-radius: 20px 0 0 20px;
     font-family: "Inter";
 }
 
 #conceptSectionContainer h1 {
     color: #4715d7;
-    padding-left: 34px;
-    padding-right: 56px;
+    padding-left: 20px;
+    padding-right: 30px;
     font-size: 21px;
+    white-space: nowrap;
     font-weight: 600;
 }
 
@@ -21,7 +22,7 @@
 }
 
 #dropdownHeading {
-    gap: 60px;
+    gap: 30px;
     background-color: rgba(217, 217, 217, 0.5);
     padding: 10px 12px;
     border-radius: 10px;
@@ -37,13 +38,20 @@
     padding-left: 0;
 }
 
+@media only screen and (min-width: 1300px) {
+    #conceptChart {
+        padding: 0 78px;
+        padding-left: 0;
+    }
+}
+
 #chart {
     background-color: #fff;
     width: 100%;
     height: 100%;
     margin-top: 19px;
     border-radius: 20px;
-    padding: 40px 20px;
+    padding: 10px 20px 20px 20px;
     overflow-x: scroll;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
@@ -76,6 +84,7 @@
     overflow-y: scroll;
     /* padding: 38px 28px; */
     color: black;
+    padding-top: 20px;
 }
 
 #listedData h1 {
@@ -85,6 +94,7 @@
     display: block;
     padding: 0;
 }
+
 #listedData h2 {
     color: black;
     /* font-size: 18px; */
@@ -93,6 +103,7 @@
     padding: 0;
     /* margin-right: 12px; */
 }
+
 #listedData h1 {
     color: black;
     font-size: 18px;
@@ -159,6 +170,7 @@
 #leftArrow img {
     transform: rotate(90deg);
 }
+
 #rightArrow img {
     transform: rotate(270deg);
 }
@@ -169,6 +181,7 @@
     padding: 19px 23px;
     border-radius: 20px;
     color: white;
+    padding-bottom: 0px;
 }
 
 #tutor h2 {
@@ -188,7 +201,7 @@
     font-weight: 600;
     font-size: 10px;
     margin-top: 10px;
-    margin-bottom: 19px;
+    margin-bottom: 10px;
 }
 
 #tutor h3 {

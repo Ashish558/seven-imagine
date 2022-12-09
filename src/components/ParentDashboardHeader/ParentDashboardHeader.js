@@ -31,11 +31,11 @@ const ParentDashboardHeader = () => {
          id={styles.parentDashboardHeader}
       >
          <div className="w-2/3">
-            <div className="flex gap-[16px]">
-               <div className="w-2/3" id={styles.explore}>
+            <div className="flex" style={{ gap: 16 }}>
+               <div className="w- flex items-center" id={styles.explore}>
                   <div className="flex">
                      <div className="w-1/2" id={styles.exploreLeft}>
-                        <h2 className="w-1/2 text-[20px] 2xl:text-[26px] font-bold text-[#f3f5f7] mb-[18px] 2xl:mb-[24px] ml-[32px] 2xl:ml-[44px]">
+                        <h2 className="">
                            This fall get help from our Admission
                            Experts.
                         </h2>
@@ -59,14 +59,16 @@ const ParentDashboardHeader = () => {
                   </div>
                </div>
 
-               <div className="w-1/3" id={styles.availableCredit}>
+               <div className="w-" id={styles.availableCredit}>
                   <div className="flex justify-between">
                      <h3 className="2xl:text-[19.6px] font-semibold">Available Credit</h3>
                      <img src={i} alt="" />
                   </div>
 
-                  <div id={styles.creditBalance} className='text-[36.23px] 2xl:py-[9px] 2xl:px-[42px]'>
+                  <div id={styles.creditBalance}>
+                     <p className="whitespace-nowrap leading-none mb-1" >
                      820 USD
+                     </p>
                      <p className="text-[13.17px] font-bold cursor-pointer"
                         onClick={() => navigate('/ledger')}>
                         View details

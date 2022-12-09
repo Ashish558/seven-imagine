@@ -8,7 +8,6 @@ import Calendar from "../pages/Calendar/Calendar";
 import CompletedTest from "../pages/CompletedTest/CompletedTest";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
-import Profile from "../pages/Profile/Profile";
 import Signup from "../pages/Signup/Signup";
 import StudentProfile from "../pages/StudentProfile/StudentProfile";
 import TestDetail from "../pages/TestDetail/TestDetail";
@@ -22,6 +21,8 @@ import Ledger from "../pages/Ledger/Ledger";
 import Settings from "../pages/Settings/Settings";
 import StartTest from "../pages/StartTest/StartTest";
 import AssignedStudents from "../pages/AssignedStudents/assignedStudents";
+import ParentProfile from "../pages/Profiles/ParentProfile/ParentProfile";
+import TutorProfile from "../pages/Profiles/Tutor/TutorProfile";
 
 const PrivateRoutes = [
    {
@@ -53,7 +54,8 @@ const PrivateRoutes = [
 const AppRoutes = () => {
    const { isLoggedIn } = useSelector((state) => state.user);
    const [loginFormActive, setLoginFormActive] = useState(true);
-   
+   const persona = sessionStorage.getItem('role')
+
    return (
       <BrowserRouter>
          <Navbar />
@@ -97,10 +99,20 @@ const AppRoutes = () => {
             />
             <Route path="/all-tests" element={<AllTests />} />
             <Route path="/all-tests/:id" element={<TestDetail />} />
-            <Route path="/profile/:id" element={<Profile />} />
+            <Route path="/profile" element={
+               persona ==='parent' ? <ParentProfile /> : persona ==='student' ? <StudentProfile /> : persona === 'tutor' ? <TutorProfile /> : <></>
+               } />
             <Route
                path="/profile/student/:id"
                element={<StudentProfile />}
+            />
+            <Route
+               path="/profile/parent/:id"
+               element={<ParentProfile />}
+            />
+            <Route
+               path="/profile/tutor/:id"
+               element={<TutorProfile />}
             />
             <Route path="/parent-dashboard" element={<ParentDashboard />} />
             <Route path="/ledger" element={<Ledger />} />
@@ -110,7 +122,7 @@ const AppRoutes = () => {
             />
             <Route path="/settings" element={<Settings />} />
             <Route path="/assigned-students" element={<AssignedStudents />} />
-            <Route path="/all-tests/start-section" element={<StartTest />} />
+            <Route path="/all-tests/start-section/:id" element={<StartTest />} />
 
             {/* <Route
                   path="/profile"

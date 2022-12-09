@@ -30,6 +30,15 @@ export const testServicesApi = createApi({
             },
          })
       }),
+      getTestDetails: builder.query({
+         query: (id) => ({
+            url: `/api/test/${id}`,
+            method: "GET",
+            headers: {
+               "Authorization": sessionStorage.getItem('token'),
+            },
+         })
+      }),
       assignTest: builder.mutation({
          query: (body) => ({
             url: `/api/test/assigntest`,
@@ -72,6 +81,17 @@ export const testServicesApi = createApi({
             },
          })
       }),
+
+      getAssignedTest: builder.query({
+         query: (id) => ({
+            url: `/api/test/assigntest/${sessionStorage.getItem('userId')}`,
+            method: "GET",
+            headers: {
+               "Authorization": sessionStorage.getItem('token'),
+            },
+         })
+      }),
+
       getTime: builder.query({
          query: (id) => ({
             url: `/api/test/gettime/${id}`,
@@ -92,5 +112,7 @@ export const {
    useAddPdfMutation,
    useAttendTestMutation,
    useUpdateTimeMutation,
-   useLazyGetTimeQuery
+   useLazyGetAssignedTestQuery,
+   useLazyGetTimeQuery,
+   useLazyGetTestDetailsQuery
 } = testServicesApi;

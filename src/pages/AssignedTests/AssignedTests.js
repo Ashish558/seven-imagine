@@ -15,6 +15,7 @@ import { useLazyGetStudentsByNameQuery } from "../../app/services/session";
 import InputSearch from "../../components/InputSearch/InputSearch";
 
 const optionData = ["1", "2", "3", "4", "5"];
+const timeLimits = [30, 40, 50]
 const testData = ["SAT", "ACT"];
 
 const tempTableHeaders = [
@@ -256,7 +257,7 @@ export default function AssignedTests() {
                                  limit: val,
                               })
                            }
-                           optionData={optionData}
+                           optionData={timeLimits}
                            parentClassName="w-full mr-4"
                            labelClassname="ml-2 mb-0.5"
                            inputContainerClassName="px-5 bg-primary-50 border-0"

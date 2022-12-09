@@ -9,554 +9,457 @@ import "owl.carousel/dist/assets/owl.theme.default.css";
 import shivam from "./../../assets/images/tutors/shivam-shrivastab.png";
 
 const ConceptSection = () => {
-    const [subject, setSubject] = useState("Maths");
-    const [slot, setSlot] = useState("Jun 20, 2022 - Jul 30, 2022 ");
+   const [subject, setSubject] = useState("Maths");
+   const [slot, setSlot] = useState("Jun 20, 2022 - Jul 30, 2022 ");
 
-    const [leftOpacity, setLeftOpacityy] = useState(1);
-    const [rightOpacity, setRightOpacity] = useState(1);
-    const [subVisisbility, setSubVisisbility] = useState("hidden");
-    const [dateVisibility, setDateVisibility] = useState("hidden");
+   const [leftOpacity, setLeftOpacityy] = useState(1);
+   const [rightOpacity, setRightOpacity] = useState(1);
+   const [subVisisbility, setSubVisisbility] = useState("hidden");
+   const [dateVisibility, setDateVisibility] = useState("hidden");
 
-    // const rightOpacity = document
-    //     .getElementsByClassName("owl-next")[1]
-    //     ?.classList.contains("disabled")
-    //     ? 0.5
-    //     : 1;
+   // const rightOpacity = document
+   //     .getElementsByClassName("owl-next")[1]
+   //     ?.classList.contains("disabled")
+   //     ? 0.5
+   //     : 1;
 
-    // useEffect(() => {
-    //     console.log(dateVisibility);
-    // }, [dateVisibility]);
+   // useEffect(() => {
+   //     console.log(dateVisibility);
+   // }, [dateVisibility]);
 
-    const goNext = () => {
-        document.getElementsByClassName("owl-next")[1].click();
-    };
-    const goPrev = () => {
-        document.getElementsByClassName("owl-prev")[1].click();
-    };
+   const goNext = () => {
+      document.getElementsByClassName("owl-next")[1].click();
+   };
+   const goPrev = () => {
+      document.getElementsByClassName("owl-prev")[1].click();
+   };
 
-    const buttons = document.getElementsByClassName("button")
-    // console.log(buttons);
-    useEffect(() => {
-        for (let i = 0; i < buttons.length; i++) {
-            // console.log(buttons[i].innerText);
-            buttons[i].innerText === "Not Started" && buttons[i].classList.add("text-[#E02B1D]");
-            buttons[i].innerText === "Started" && buttons[i].classList.add("text-[#F6A429]");
-            buttons[i].innerText === "1250 / 1250" && buttons[i].classList.add("text-[#0671E0]");
-        }
-    }, [buttons, buttons.length])
+   const buttons = document.getElementsByClassName("button")
+   // console.log(buttons);
+   useEffect(() => {
+      for (let i = 0; i < buttons.length; i++) {
+         // console.log(buttons[i].innerText);
+         buttons[i].innerText === "Not Started" && buttons[i].classList.add("text-[#E02B1D]");
+         buttons[i].innerText === "Started" && buttons[i].classList.add("text-[#F6A429]");
+         buttons[i].innerText === "1250 / 1250" && buttons[i].classList.add("text-[#0671E0]");
+      }
+   }, [buttons, buttons.length])
 
-    return (
-        <div
-            className="flex justify-between px-[20px] py-[15px] 2xl:px-[42px] 2xl:py-[30px] rounded-tl-[20px] rounded-bl-[20px]"
-            id={styles.conceptSectionContainer}
-        >
-            <div className="w-2/3 px-[50px] 2xl:px-[76px]" id={styles.conceptChart}>
-                <div className="flex items-center" style={{ gap: "20px" }}>
-                    <h1>Concept Chart</h1>
+   return (
+      <div
+         className="flex justify-between "
+         id={styles.conceptSectionContainer}
+      >
+         <div className="w-2/3" id={styles.conceptChart}>
+            <div className="flex items-center" style={{ gap: "20px" }}>
+               <h1>Concept Chart</h1>
 
-                    <div className="dropdown" id={styles.subject}>
-                        <label
-                            className="flex items-center"
-                            id={styles.dropdownHeading}
-                            tabIndex={0}
-                            htmlFor="subVisisbility"
-                        >
-                            {subject}
-                            <img
-                                id={styles.arrowDown}
-                                src={arrowDown}
-                                style={
-                                    subVisisbility === "visible"
-                                        ? { transform: "rotate(180deg)" }
-                                        : { transform: "rotate(0)" }
-                                }
-                                alt=""
-                            />
-                        </label>
-                        <input
-                            type="checkbox"
-                            className="hidden"
-                            id="subVisisbility"
-                            onChange={(e) =>
-                                setSubVisisbility(
-                                    e.target.checked === true
-                                        ? "visible"
-                                        : "hidden"
-                                )
-                            }
-                        />
-                        <ul
-                            tabIndex={0}
-                            className={`dropdown-content menu p-2 shadow bg-base-100 rounded-box absolute bg-white z-10 w-52 ${subVisisbility}`}
-                        >
-                            <li
-                                onClick={(e) => {
-                                    setSubject(e.target.innerText);
-                                    setSubVisisbility("hidden");
-                                    document
-                                        .getElementById("subVisisbility")
-                                        .click();
-                                }}
-                                className="py-2 cursor-pointer"
-                            >
-                                Math
-                            </li>
+               <div className="dropdown" id={styles.subject}>
+                  <label
+                     className="flex items-center text-[15px]"
+                     id={styles.dropdownHeading}
+                     tabIndex={0}
+                     htmlFor="subVisisbility"
+                  >
+                     {subject}
+                     <img className="mr-2" id={styles.arrowDown}
+                        src={arrowDown}
+                        style={subVisisbility === "visible"
+                           ? { transform: "rotate(180deg)" }
+                           : { transform: "rotate(0)" }
+                        }
+                        alt=""
+                     />
+                  </label>
+                  <input
+                     type="checkbox"
+                     className="hidden"
+                     id="subVisisbility"
+                     onChange={(e) => setSubVisisbility(e.target.checked === true ? "visible" : "hidden")}
+                  />
+                  <ul
+                     tabIndex={0}
+                     className={`dropdown-content menu p-2 shadow bg-base-100 rounded-box absolute bg-white z-10 w-52 ${subVisisbility}`}
+                  >
+                     <li
+                        onClick={(e) => {
+                           setSubject(e.target.innerText);
+                           setSubVisisbility("hidden");
+                           document
+                              .getElementById("subVisisbility")
+                              .click();
+                        }}
+                        className="py-2 cursor-pointer"
+                     >
+                        Math
+                     </li>
+                     <li
+                        onClick={(e) => {
+                           setSubject(e.target.innerText);
+                           setSubVisisbility("hidden");
+                           document
+                              .getElementById("subVisisbility")
+                              .click();
+                        }}
+                        className="py-2 cursor-pointer"
+                     >
+                        Physic
+                     </li>
+                     <li
+                        onClick={(e) => {
+                           setSubject(e.target.innerText);
+                           setSubVisisbility("hidden");
+                           document
+                              .getElementById("subVisisbility")
+                              .click();
+                        }}
+                        className="py-2 cursor-pointer"
+                     >
+                        Biology
+                     </li>
+                     <li
+                        onClick={(e) => {
+                           setSubject(e.target.innerText);
+                           setSubVisisbility("hidden");
+                           document
+                              .getElementById("subVisisbility")
+                              .click();
+                        }}
+                        className="py-2 cursor-pointer"
+                     >
+                        Chemistry
+                     </li>
+                  </ul>
+               </div>
 
-                            <li
-                                onClick={(e) => {
-                                    setSubject(e.target.innerText);
-                                    setSubVisisbility("hidden");
-                                    document
-                                        .getElementById("subVisisbility")
-                                        .click();
-                                }}
-                                className="py-2 cursor-pointer"
-                            >
-                                Physic
-                            </li>
-                            <li
-                                onClick={(e) => {
-                                    setSubject(e.target.innerText);
-                                    setSubVisisbility("hidden");
-                                    document
-                                        .getElementById("subVisisbility")
-                                        .click();
-                                }}
-                                className="py-2 cursor-pointer"
-                            >
-                                Biology
-                            </li>
-                            <li
-                                onClick={(e) => {
-                                    setSubject(e.target.innerText);
-                                    setSubVisisbility("hidden");
-                                    document
-                                        .getElementById("subVisisbility")
-                                        .click();
-                                }}
-                                className="py-2 cursor-pointer"
-                            >
-                                Chemistry
-                            </li>
-                        </ul>
-                    </div>
+               <div className="dropdown" id={styles.data}>
+                  <label
+                     className="flex items-center text-[15px]"
+                     id={styles.dropdownHeading}
+                     tabIndex={0}
+                     htmlFor="dateVisisbility"
+                  >
+                     {slot.length > 18 ? `${slot.substring(0,18)}...` : slot }
+                     <img
+                        id={styles.arrowDown}
+                        src={arrowDown}
+                        style={dateVisibility === "visible"
+                           ? { transform: "rotate(180deg)" }
+                           : { transform: "rotate(0)" }
+                        }
+                        alt=""
+                     />
+                  </label>
+                  <input
+                     type="checkbox"
+                     className="hidden"
+                     id="dateVisisbility"
+                     onChange={(e) =>
+                        setDateVisibility(e.target.checked === true ? "visible" : "hidden")
+                     }
+                  />
+                  <ul
+                     tabIndex={0}
+                     className={`dropdown-content menu p-2 shadow bg-base-100 rounded-box absolute bg-white w-60 z-10 ${dateVisibility}`}
+                  >
+                     <li
+                        onClick={(e) => {
+                           setSlot(e.target.innerText);
+                           setDateVisibility("hidden");
+                           document
+                              .getElementById("dateVisisbility")
+                              .click();
+                        }}
+                        className="py-2 cursor-pointer"
+                     >
+                        Jan 20, 2022 - Fab 30, 2022
+                     </li>
 
-                    <div className="dropdown" id={styles.data}>
-                        <label
-                            className="flex items-center"
-                            id={styles.dropdownHeading}
-                            tabIndex={0}
-                            htmlFor="dateVisisbility"
-                        >
-                            {slot}
-                            <img
-                                id={styles.arrowDown}
-                                src={arrowDown}
-                                style={
-                                    dateVisibility === "visible"
-                                        ? { transform: "rotate(180deg)" }
-                                        : { transform: "rotate(0)" }
-                                }
-                                alt=""
-                            />
-                        </label>
-                        <input
-                            type="checkbox"
-                            className="hidden"
-                            id="dateVisisbility"
-                            onChange={(e) =>
-                                setDateVisibility(
-                                    e.target.checked === true
-                                        ? "visible"
-                                        : "hidden"
-                                )
-                            }
-                        />
-                        <ul
-                            tabIndex={0}
-                            className={`dropdown-content menu p-2 shadow bg-base-100 rounded-box absolute bg-white w-60 z-10 ${dateVisibility}`}
-                        >
-                            <li
-                                onClick={(e) => {
-                                    setSlot(e.target.innerText);
-                                    setDateVisibility("hidden");
-                                    document
-                                        .getElementById("dateVisisbility")
-                                        .click();
-                                }}
-                                className="py-2 cursor-pointer"
-                            >
-                                Jan 20, 2022 - Fab 30, 2022
-                            </li>
-
-                            <li
-                                onClick={(e) => {
-                                    setSlot(e.target.innerText);
-                                    setDateVisibility("hidden");
-                                    document
-                                        .getElementById("dateVisisbility")
-                                        .click();
-                                }}
-                                className="py-2 cursor-pointer"
-                            >
-                                Feb 20, 2022 - Mar 30, 2022
-                            </li>
-                            <li
-                                onClick={(e) => {
-                                    setSlot(e.target.innerText);
-                                    setDateVisibility("hidden");
-                                    document
-                                        .getElementById("dateVisisbility")
-                                        .click();
-                                }}
-                                className="py-2 cursor-pointer"
-                            >
-                                Mar 20, 2022 - Apr 30, 2022
-                            </li>
-                            <li
-                                onClick={(e) => {
-                                    setSlot(e.target.innerText);
-                                    setDateVisibility("hidden");
-                                    document
-                                        .getElementById("dateVisisbility")
-                                        .click();
-                                }}
-                                className="py-2 cursor-pointer"
-                            >
-                                Apr 20, 2022 - May 30, 2022
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div id={styles.chartContainer}>
-                    <div id={styles.chart} className="ml-[18px]">
-                        <Chart />
-                    </div>
-                </div>
+                     <li
+                        onClick={(e) => {
+                           setSlot(e.target.innerText);
+                           setDateVisibility("hidden");
+                           document
+                              .getElementById("dateVisisbility")
+                              .click();
+                        }}
+                        className="py-2 cursor-pointer"
+                     >
+                        Feb 20, 2022 - Mar 30, 2022
+                     </li>
+                     <li
+                        onClick={(e) => {
+                           setSlot(e.target.innerText);
+                           setDateVisibility("hidden");
+                           document
+                              .getElementById("dateVisisbility")
+                              .click();
+                        }}
+                        className="py-2 cursor-pointer"
+                     >
+                        Mar 20, 2022 - Apr 30, 2022
+                     </li>
+                     <li
+                        onClick={(e) => {
+                           setSlot(e.target.innerText);
+                           setDateVisibility("hidden");
+                           document
+                              .getElementById("dateVisisbility")
+                              .click();
+                        }}
+                        className="py-2 cursor-pointer"
+                     >
+                        Apr 20, 2022 - May 30, 2022
+                     </li>
+                  </ul>
+               </div>
             </div>
 
-            <div className="w-1/3">
-                <div className="concept" id={styles.studentCarousel}>
-                    {/* <div
-                        className="flex justify-between"
-                        id={styles.yourStudent}
-                    >
-                        <h2>Your Student</h2>
-
-                        <div className="flex" style={{ gap: 11.12 }}>
-                            <button
-                                id={styles.leftArrow}
-                                className="cursor-pointer"
-                                onClick={goPrev}
-                            >
-                                <img
-                                    src={rightArrow}
-                                    width="15px"
-                                    height="15px"
-                                    alt=""
-                                    style={{ opacity: leftOpacity }}
-                                />
-                            </button>
-                            <button
-                                id={styles.rightArrow}
-                                className="cursor-pointer"
-                                onClick={goNext}
-                            >
-                                <img
-                                    src={rightArrow}
-                                    width="15px"
-                                    height="15px"
-                                    alt=""
-                                    style={{ opacity: rightOpacity }}
-                                />
-                            </button>
-                        </div>
-                    </div>
-
-                    <OwlCarousel
-                        className="owl-theme"
-                        loop={false}
-                        margin={10}
-                        nav
-                        items={1}
-                        dots={false}
-                    >
-                        <div class={`item ${styles.student} first`}>
-                            <div className="flex items-center">
-                                <div className="w-1/2">
-                                    <h2>Joseph Brown</h2>
-                                    <a href="#" className="btn-gold">
-                                        View Profile
-                                    </a>
-                                </div>
-                                <div className="w-1/2 flex justify-end">
-                                    <img src={josephBrown} alt="" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class={`item ${styles.student}`}>
-                            <div className="flex items-center">
-                                <div className="w-1/2">
-                                    <h2>Joseph Brown</h2>
-                                    <a href="#" className="btn-gold">
-                                        View Profile
-                                    </a>
-                                </div>
-                                <div className="w-1/2 flex justify-end">
-                                    <img src={josephBrown} alt="" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class={`item ${styles.student} third`}>
-                            <div className="flex items-center">
-                                <div className="w-1/2">
-                                    <h2>Joseph Brown</h2>
-                                    <a href="#" className="btn-gold">
-                                        View Profile
-                                    </a>
-                                </div>
-                                <div className="w-1/2 flex justify-end">
-                                    <img src={josephBrown} alt="" />
-                                </div>
-                            </div>
-                        </div>
-                    </OwlCarousel> */}
-
-
-        <div id={styles.tutor}>
-            <h2>Your Tutor</h2>
-            <OwlCarousel className="owl-theme" loop margin={30} items={1}>
-               <div class="item flex" style={{ width: "100%" }}>
-                  <div className="w-1/2">
-                     <h5 className={styles.tag}>
-                        WIZARD TUTOR | UNDERGRADUATE
-                     </h5>
-                     <h3>Shivam Srivastava</h3>
-                     <p>
-                        Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit.
-                     </p>
-                     <button className="btn-gold">View Profile</button>
-                  </div>
-                  <div className="w-1/2">
-                     <img src={shivam} className="mx-auto" alt="" />
+            <div id={styles.chartContainer} className='scrollbar-content' >
+               <div id={styles.chart} className='scrollbar-content' >
+                  <div>
+                     <Chart />
                   </div>
                </div>
-               <div class="item flex" style={{ width: "100%" }}>
-                  <div className="w-1/2">
-                     <h5 className={styles.tag}>
-                        WIZARD TUTOR | UNDERGRADUATE
-                     </h5>
-                     <h3>Shivam Srivastava</h3>
-                     <p>
-                        Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit.
-                     </p>
-                     <button className="btn-gold">View Profile</button>
-                  </div>
-                  <div className="w-1/2">
-                     <img src={shivam} className="mx-auto" alt="" />
-                  </div>
-               </div>
-               <div class="item flex" style={{ width: "100%" }}>
-                  <div className="w-1/2">
-                     <h5 className={styles.tag}>
-                        WIZARD TUTOR | UNDERGRADUATE
-                     </h5>
-                     <h3>Shivam Srivastava</h3>
-                     <p>
-                        Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit.
-                     </p>
-                     <button className="btn-gold">View Profile</button>
-                  </div>
-                  <div className="w-1/2">
-                     <img src={shivam} className="mx-auto" alt="" />
-                  </div>
-               </div>
-            </OwlCarousel>
+            </div>
          </div>
 
-                </div>
-                <div id={styles.practiceTestContainer}>
-                    <h2 className="mb-[6px]" id={styles.practiceTestHeader}>Practice Test</h2>
-                    <div id={styles.listedData} className="py-[25px] 2xl:py-[38px] px-[18px] 2xl:px-[28px]">
-                        <div
-                            className="flex items-center justify-between"
-                            style={{ padding: "10px 0" }}
-                        >
-                            <div className="w-1/2">
-                                {/* <div className={styles.listedDataItem}> */}
-                                    <h1>SAT B2</h1>
-                                    <div
-                                        className="flex"
-                                        style={{ gap: "12px" }}
-                                    >
-                                        <h2 className="2xl:text-[18px]">Due Date</h2>
-                                        <h3>June 20, 2022</h3>
-                                    </div>
-                                {/* </div> */}
-                            </div>
-                            <div className="w-1/2">
-                                <div
-                                    className="flex items-center justify-end"
-                                    style={{ gap: "12px" }}
-                                >
-                                    <img src={downloadImage} alt="" />
-                                    <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
-                                        Not Started
-                                    </div>
-                                </div>
-                            </div>
+         <div className="w-1/3">
+            <div className="concept" id={styles.studentCarousel}>
+
+               <div id={styles.tutor}>
+                  <h2>Your Tutor</h2>
+                  <OwlCarousel className="owl-theme" loop margin={30} items={1}>
+                     <div class="item flex" style={{ width: "100%" }}>
+                        <div className="w-1/2">
+                           <h5 className={styles.tag}>
+                              WIZARD TUTOR | UNDERGRADUATE
+                           </h5>
+                           <h3>Shivam Srivastava</h3>
+                           <p>
+                              Lorem ipsum dolor sit amet, consectetur
+                              adipiscing elit.
+                           </p>
+                           <button className="btn-gold" style={{padding: '7px 9px'}}>View Profile</button>
                         </div>
-                        <div
-                            className="flex items-center justify-between"
-                            style={{ padding: "10px 0" }}
-                        >
-                            <div className="w-1/2">
-                                <div className={styles.listedDataItem}>
-                                    <h1>SAT B2</h1>
-                                    <div
-                                        className="flex"
-                                        style={{ gap: "12px" }}
-                                    >
-                                        <h2 className="2xl:text-[18px]">Due Date</h2>
-                                        <h3>June 20, 2022</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="w-1/2">
-                                <div
-                                    className="flex items-center justify-end"
-                                    style={{ gap: "12px" }}
-                                >
-                                    <img src={downloadImage} alt="" />
-                                    <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
-                                        Started
-                                    </div>
-                                </div>
-                            </div>
+                        <div className="w-1/2">
+                           <img src={shivam} className="mx-auto" alt="" />
                         </div>
-                        <div
-                            className="flex items-center justify-between"
-                            style={{ padding: "10px 0" }}
-                        >
-                            <div className="w-1/2">
-                                <div className={styles.listedDataItem}>
-                                    <h1>SAT B2</h1>
-                                    <div
-                                        className="flex"
-                                        style={{ gap: "12px" }}
-                                    >
-                                        <h2 className="2xl:text-[18px]">Due Date</h2>
-                                        <h3>June 20, 2022</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="w-1/2">
-                                <div
-                                    className="flex items-center justify-end"
-                                    style={{ gap: "12px" }}
-                                >
-                                    <img src={downloadImage} alt="" />
-                                    <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
-                                        1250 / 1250
-                                    </div>
-                                </div>
-                            </div>
+                     </div>
+                     <div class="item flex" style={{ width: "100%" }}>
+                        <div className="w-1/2">
+                           <h5 className={styles.tag}>
+                              WIZARD TUTOR | UNDERGRADUATE
+                           </h5>
+                           <h3>Shivam Srivastava</h3>
+                           <p>
+                              Lorem ipsum dolor sit amet, consectetur
+                              adipiscing elit.
+                           </p>
+                           <button className="btn-gold" style={{padding: '7px 9px'}} >View Profile</button>
                         </div>
-                       
-                        <div
-                            className="flex items-center justify-between"
-                            style={{ padding: "10px 0" }}
-                        >
-                            <div className="w-1/2">
-                                <div className={styles.listedDataItem}>
-                                    <h1>SAT B2</h1>
-                                    <div
-                                        className="flex"
-                                        style={{ gap: "12px" }}
-                                    >
-                                        <h2 className="2xl:text-[18px]">Due Date</h2>
-                                        <h3>June 20, 2022</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="w-1/2">
-                                <div
-                                    className="flex items-center justify-end"
-                                    style={{ gap: "12px" }}
-                                >
-                                    <img src={downloadImage} alt="" />
-                                    <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
-                                        Not Started
-                                    </div>
-                                </div>
-                            </div>
+                        <div className="w-1/2">
+                           <img src={shivam} className="mx-auto" alt="" />
                         </div>
-                        <div
-                            className="flex items-center justify-between"
-                            style={{ padding: "10px 0" }}
-                        >
-                            <div className="w-1/2">
-                                <div className={styles.listedDataItem}>
-                                    <h1>SAT B2</h1>
-                                    <div
-                                        className="flex"
-                                        style={{ gap: "12px" }}
-                                    >
-                                        <h2 className="2xl:text-[18px]">Due Date</h2>
-                                        <h3>June 20, 2022</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="w-1/2">
-                                <div
-                                    className="flex items-center justify-end"
-                                    style={{ gap: "12px" }}
-                                >
-                                    <img src={downloadImage} alt="" />
-                                    <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
-                                        Started
-                                    </div>
-                                </div>
-                            </div>
+                     </div>
+                     <div class="item flex" style={{ width: "100%" }}>
+                        <div className="w-1/2">
+                           <h5 className={styles.tag}>
+                              WIZARD TUTOR | UNDERGRADUATE
+                           </h5>
+                           <h3>Shivam Srivastava</h3>
+                           <p>
+                              Lorem ipsum dolor sit amet, consectetur
+                              adipiscing elit.
+                           </p>
+                           <button className="btn-gold" style={{padding: '7px 9px'}}> View Profile</button>
                         </div>
-                        <div
-                            className="flex items-center justify-between"
-                            style={{ padding: "10px 0" }}
-                        >
-                            <div className="w-1/2">
-                                <div className={styles.listedDataItem}>
-                                    <h1>SAT B2</h1>
-                                    <div
-                                        className="flex"
-                                        style={{ gap: "12px" }}
-                                    >
-                                        <h2 className="2xl:text-[18px]">Due Date</h2>
-                                        <h3>June 20, 2022</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="w-1/2">
-                                <div
-                                    className="flex items-center justify-end"
-                                    style={{ gap: "12px" }}
-                                >
-                                    <img src={downloadImage} alt="" />
-                                    <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
-                                        1250 / 1250
-                                    </div>
-                                </div>
-                            </div>
+                        <div className="w-1/2">
+                           <img src={shivam} className="mx-auto" alt="" />
                         </div>
-                       
-                    </div>
-                </div>
+                     </div>
+                  </OwlCarousel>
+               </div>
+
             </div>
-        </div>
-    );
+            <div id={styles.practiceTestContainer}>
+               <h2 className="mb-[6px]" id={styles.practiceTestHeader}>Practice Test</h2>
+               <div id={styles.listedData}>
+                  <div
+                     className="flex items-center justify-between"
+                     style={{ padding: "10px 0" }}
+                  >
+                     <div className="w-1/2">
+                        <div className={styles.listedDataItem}>
+                           <h1>SAT B2</h1>
+                           <div
+                              className="flex"
+                              style={{ gap: "12px" }}
+                           >
+                             <p className="text-xs font-semibold opacity-50">Due Date</p>
+                              <h3 className="opacity-60 text-xs font-semibold">June 20, 2022</h3>
+                           </div>
+                        </div>
+                     </div>
+                     <div className="w-1/2">
+                        <div
+                           className="flex items-center justify-end"
+                           style={{ gap: "12px" }}
+                        >
+                           <img src={downloadImage} alt="" />
+                           <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
+                              Not Started
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div
+                     className="flex items-center justify-between"
+                     style={{ padding: "10px 0" }}
+                  >
+                     <div className="w-1/2">
+                        <div className={styles.listedDataItem}>
+                           <h1>SAT B2</h1>
+                           <div
+                              className="flex"
+                              style={{ gap: "12px" }}
+                           >
+                             <p className="text-xs font-semibold opacity-50">Due Date</p>
+                              <h3 className="opacity-60 text-xs font-semibold">June 20, 2022</h3>
+                           </div>
+                        </div>
+                     </div>
+                     <div className="w-1/2">
+                        <div
+                           className="flex items-center justify-end"
+                           style={{ gap: "12px" }}
+                        >
+                           <img src={downloadImage} alt="" />
+                           <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
+                              Started
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div
+                     className="flex items-center justify-between"
+                     style={{ padding: "10px 0" }}
+                  >
+                     <div className="w-1/2">
+                        <div className={styles.listedDataItem}>
+                           <h1>SAT B2</h1>
+                           <div
+                              className="flex"
+                              style={{ gap: "12px" }}
+                           >
+                             <p className="text-xs font-semibold opacity-50">Due Date</p>
+                              <h3 className="opacity-60 text-xs font-semibold">June 20, 2022</h3>
+                           </div>
+                        </div>
+                     </div>
+                     <div className="w-1/2">
+                        <div
+                           className="flex items-center justify-end"
+                           style={{ gap: "12px" }}
+                        >
+                           <img src={downloadImage} alt="" />
+                           <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
+                              1250 / 1250
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div
+                     className="flex items-center justify-between"
+                     style={{ padding: "10px 0" }}
+                  >
+                     <div className="w-1/2">
+                        <div className={styles.listedDataItem}>
+                           <h1>SAT B2</h1>
+                           <div
+                              className="flex"
+                              style={{ gap: "12px" }}
+                           >
+                             <p className="text-xs font-semibold opacity-50">Due Date</p>
+                              <h3 className="opacity-60 text-xs font-semibold">June 20, 2022</h3>
+                           </div>
+                        </div>
+                     </div>
+                     <div className="w-1/2">
+                        <div
+                           className="flex items-center justify-end"
+                           style={{ gap: "12px" }}
+                        >
+                           <img src={downloadImage} alt="" />
+                           <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
+                              Not Started
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div
+                     className="flex items-center justify-between"
+                     style={{ padding: "10px 0" }}
+                  >
+                     <div className="w-1/2">
+                        <div className={styles.listedDataItem}>
+                           <h1>SAT B2</h1>
+                           <div
+                              className="flex"
+                              style={{ gap: "12px" }}
+                           >
+                             <p className="text-xs font-semibold opacity-50">Due Date</p>
+                              <h3 className="opacity-60 text-xs font-semibold">June 20, 2022</h3>
+                           </div>
+                        </div>
+                     </div>
+                     <div className="w-1/2">
+                        <div
+                           className="flex items-center justify-end"
+                           style={{ gap: "12px" }}
+                        >
+                           <img src={downloadImage} alt="" />
+                           <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
+                              Started
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div
+                     className="flex items-center justify-between"
+                     style={{ padding: "10px 0" }}
+                  >
+                     <div className="w-1/2">
+                        <div className={styles.listedDataItem}>
+                           <h1>SAT B2</h1>
+                           <div
+                              className="flex"
+                              style={{ gap: "12px" }}
+                           >
+                             <p className="text-xs font-semibold opacity-50">Due Date</p>
+                              <h3 className="opacity-60 text-xs font-semibold">June 20, 2022</h3>
+                           </div>
+                        </div>
+                     </div>
+                     <div className="w-1/2">
+                        <div
+                           className="flex items-center justify-end"
+                           style={{ gap: "12px" }}
+                        >
+                           <img src={downloadImage} alt="" />
+                           <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
+                              1250 / 1250
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+               </div>
+            </div>
+         </div>
+      </div>
+   );
 };
 
 export default ConceptSection;

@@ -31,6 +31,7 @@ export default function TableItem({ item, dataFor, onClick }) {
          <></>
       );
    };
+   const toExcludes = ['testId', '_id', 'isCompleted']
 
    return (
       <>
@@ -191,28 +192,40 @@ export default function TableItem({ item, dataFor, onClick }) {
          {dataFor === "assignedTestsStudents" && (
             <tr className="odd:bg-white shadow-sm text-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
                {Object.keys(item).map((key, i) =>
-               (
-                  <td className="font-medium px-1  min-w-14 py-4">
-                     {key === 'status' ?
-                        <img className="first:mr-2 mx-auto inline-block" src={GreenIcon} />
-                        :
-                        item[key]
-                     }
-                  </td>
-               )
+                  toExcludes.includes(key) ? <></> :
+                     (
+                        <td className="font-medium px-1  min-w-14 py-4">
+                           {key === 'status' ?
+                              <img className="first:mr-2 mx-auto inline-block" src={GreenIcon} />
+                              :
+
+                              item[key]
+                           }
+                        </td>
+                     )
                )}
                <td className="font-medium px-1  min-w-14 py-4">
                   <div className="flex items-center">
-
                      <img src={UploadIcon} />
-                     <button
-                        className="px-2.5 py-1.8 rounded-md flex items-center leading-none bg-primary text-white ml-4"
-                        onClick={() =>
-                           navigate("/assigned-tests/321/report")
-                        }
-                     >
-                        View Report
-                     </button>
+                     {
+                        item.isCompleted ?
+                           <button
+                              className="px-2.5 py-1.8 rounded-md flex items-center leading-none bg-primary text-white ml-4"
+                              onClick={() =>
+                                 navigate("/assigned-tests/321/report")
+                              }
+                           >
+                              View Report
+                           </button> :
+                           <button
+                              className="px-2.5 py-1.8 rounded-md flex items-center leading-none bg-primary text-white ml-4"
+                              onClick={() =>
+                                 navigate(`/all-tests/start-section/${item.testId}`)
+                              }
+                           >
+                              Start Test
+                           </button>
+                     }
                   </div>
                </td>
             </tr>

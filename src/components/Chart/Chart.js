@@ -19,44 +19,44 @@ const Chart = () => {
                 <div id={styles.prob2}></div>
 
                 <div className={styles.chartRow}>
-                    <h4 className="w-5">100</h4>
+                    <h4 className="w-5 text-sm">100</h4>
                     <div className={styles.hr}></div>
                 </div>
                 <div className={styles.chartRow}>
-                    <h4 className="w-5">80</h4>
+                    <h4 className="w-5 text-sm">80</h4>
                     <div className={styles.hr}></div>
                 </div>
                 <div className={styles.chartRow}>
-                    <h4 className="w-5">60</h4>
+                    <h4 className="w-5 text-sm">60</h4>
                     <div className={styles.hr}></div>
                 </div>
                 <div className={styles.chartRow}>
-                    <h4 className="w-5">40</h4>
+                    <h4 className="w-5 text-sm">40</h4>
                     <div className={styles.hr}></div>
                 </div>
                 <div className={styles.chartRow}>
-                    <h4 className="w-5">20</h4>
+                    <h4 className="w-5 text-sm">20</h4>
                     <div className={styles.hr}></div>
                 </div>
-                <div className={styles.chartRow}>
-                    <h4 className="w-5">0</h4>
+                <div className={`${styles.chartRow}`} style={{marginBottom: '12px'}} >
+                    <h4 className="w-5 text-sm">0</h4>
                     <div className={styles.hr}></div>
                 </div>
             </div>
 
             <div className="flex ml-12 gap-20">
-                <div className="w-1/12">Algebra</div>
-                <div className="w-1/12">Adv. Math</div>
-                <div className="w-1/12">Geometry</div>
-                <div className="w-1/12">Trigonometry</div>
-                <div className="w-1/12">Statistics</div>
-                <div className="w-1/12">Probability</div>
-                <div className="w-1/12">Algebra</div>
-                <div className="w-1/12">Adv. Math</div>
-                <div className="w-1/12">Geometry</div>
-                <div className="w-1/12">Trigonometry</div>
-                <div className="w-1/12">Statistics</div>
-                <div className="w-1/12">Probability</div>
+                <div className="w-1/12 text-base font-semibold">Algebra</div>
+                <div className="w-1/12 text-base font-semibold whitespa">Math</div>
+                <div className="w-1/12 text-base font-semibold">Geometry</div>
+                <div className="w-1/12 text-base font-semibold">Trigonometry</div>
+                <div className="w-1/12 text-base font-semibold">Statistics</div>
+                <div className="w-1/12 text-base font-semibold">Probability</div>
+                <div className="w-1/12 text-base font-semibold">Algebra</div>
+                <div className="w-1/12 text-base font-semibold">Adv. Math</div>
+                <div className="w-1/12 text-base font-semibold">Geometry</div>
+                <div className="w-1/12 text-base font-semibold">Trigonometry</div>
+                <div className="w-1/12 text-base font-semibold">Statistics</div>
+                <div className="w-1/12 text-base font-semibold">Probability</div>
             </div>
         </div>
     );

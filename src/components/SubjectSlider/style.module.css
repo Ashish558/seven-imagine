@@ -1,0 +1,32 @@
+.circle{
+   width: 127px;
+   height: 127px;
+   position: relative;
+   border-radius: 50%;
+   overflow: hidden;
+   z-index: 30;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.circleContent{
+   z-index: 10;
+   width: 115px;
+   height: 115px;
+   background-color: rgb(241, 241, 241);
+   border-radius: 50%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+.circleInner{
+   width: 127px;
+   height: 127px;
+   position: absolute;
+   top: 0;
+   left: 0;
+   border-radius: 50%;
+   background-color: rgb(185, 100, 140);
+   z-index: -1;
+}

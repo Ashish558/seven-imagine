@@ -112,6 +112,9 @@ module.exports = {
          borderWidth: {
             3: "3px",
          },
+         backgroundImage: {
+            'tutor-img': "url('./assets/images/tutor.png')",
+          }
       },
    },
    plugins: [],

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import InputField from "../../components/InputField/inputField";
 import styles from "./signup.module.css";
 
@@ -14,6 +14,8 @@ import CCheckbox from "../../components/CCheckbox/CCheckbox";
 
 import DownArrow from "../../assets/icons/down-chevron.svg";
 
+import selectStyles from "../../components/InputSelect/style.module.css"
+
 import {
    useAddUserDetailsMutation,
    useSignupUserMutation,
@@ -21,6 +23,8 @@ import {
 import { servicesSeeking } from "../Frames/SelectServices/data";
 import { apQuestions, hearAboutUslist, motivesList } from "./data";
 import { getCheckedString } from "../../utils/utils";
+import InputSelect from "../../components/InputSelect/InputSelect";
+import useOutsideAlerter from "../../useOutsideAlerter";
 
 export default function Signup() {
    const [frames, setFrames] = useState({
@@ -54,8 +58,8 @@ export default function Signup() {
    });
 
    useEffect(() => {
-      window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-   }, [frames]) 
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+   }, [frames])
    const [signupUser, signupUserResp] = useSignupUserMutation();
    const [addUserDetails, addUserDetailsResp] = useAddUserDetailsMutation();
 
@@ -69,6 +73,7 @@ export default function Signup() {
 
    //temparory
    const [redirectLink, setRedirectLink] = useState("");
+   const [numberPrefix, setNumberPrefix] = useState('+91')
 
    const handleClick = () => {
       let reqBody = {
@@ -103,15 +108,25 @@ export default function Signup() {
          window.open(redirectLink);
       });
    };
+
+
+   const [selected, setSelected] = useState(false);
+   const selectRef = useRef();
+   useOutsideAlerter(selectRef, () => setSelected(false));
+
+   useEffect(() => setSelected(false), [numberPrefix]);
+
+
    const props = { persona, setFrames, setcurrentStep };
    const valueProps = { values, setValues };
    const otherDetailsProps = { otherDetails, setOtherDetails };
+
    return (
       <div className="min-h-screen" id={styles.signUp}>
          <div className="grid grid-cols-2 min-h-screen">
             <div className="bg-primary"></div>
             <div className="flex items-center">
-               <div className="w-full px-148 py-8">
+               <div className="w-full px-[120px] py-8">
                   <h1>
                      {frames.signupActive
                         ? "Sign Up"
@@ -134,7 +149,7 @@ export default function Signup() {
                            <InputField
                               placeholder="First Name"
                               parentClassName="mb-6 mr-5"
-                              label="First Name" 
+                              label="First Name"
                               inputContainerClassName='border'
                               labelClassname="ml-2 mb-2"
                               value={values.firstName}
@@ -177,31 +192,54 @@ export default function Signup() {
                         />
                         <InputField
                            placeholder="Phone Number"
-                           parentClassName="mb-6"
+                           parentClassName="mb-6 relative"
                            label="Phone Number (For tutor correspondence)"
                            labelClassname="ml-2 mb-2"
                            inputContainerClassName="relative border"
                            inputClassName="ml-80"
                            inputLeftField={
-                              <div
-                                 className={styles.phoneNumberField}
+                              <div ref={selectRef}
+                                 className={`${selected && "relative z-5000"} ${styles.phoneNumberField} `}
+                                 onClick={() => setSelected(true)}
                               >
-                                 <div className="flex-1 flex justify-center items-center font-medium">
-                                    +91
-                                    <img
-                                       src={DownArrow}
-                                       className="w-3 ml-3"
-                                    />
+                                 <div
+                                    className={`py-[16px] w-full px-2 pl-3 flex justify-center items-center rounded-10 relative cursor-pointer z-50`}
+                                 >
+                                    {
+                                       <img
+                                          src={DownArrow}
+                                          className={selectStyles.downArrow}
+                                          style={{right: '16px'}}
+                                          alt="down-arrow"
+                                          onClick={() => setSelected(!selected)}
+                                       />
+                                    }
+                                    <div className="outline-0 relative font-medium mr-4" name={'nm'}>
+                                       {numberPrefix}
+                                    </div>
+                                    {selected && (
+                                       <div className={`scrollbar-content scrollbar-vertical ${selectStyles.options}`} style={{top : '100%' }} >
+                                          {['+91', '+1'].map((option, idx) => {
+                                             return (
+                                                <div
+                                                   className="outline-0 border-0 py-2 px-4"
+                                                   key={idx}
+                                                   onClick={() => setNumberPrefix(option) }
+                                                >
+                                                   {" "}
+                                                   {option}{" "}
+                                                </div>
+                                             );
+                                          })}
+                                       </div>
+                                    )}
                                  </div>
                               </div>
+
                            }
                            value={values.phone}
                            onChange={(e) =>
-                              setValues({
-                                 ...values,
-                                 phone: e.target.value,
-                              })
-                           }
+                              setValues({ ...values, phone: e.target.value, })}
                         />
 
                         <InputField
@@ -210,24 +248,14 @@ export default function Signup() {
                            label="Please enter the subscription code required to access Seven Square Learning and starting prep."
                            inputContainerClassName='border'
                            value={values.subscriptionCode}
-                           onChange={(e) =>
-                              setValues({
-                                 ...values,
-                                 subscriptionCode: e.target.value,
-                              })
-                           }
+                           onChange={(e) => setValues({ ...values, subscriptionCode: e.target.value })}
                            labelClassname="ml-2 mb-[11px]"
                         />
 
                         <div className="flex items-center">
                            <CCheckbox
                               checked={values.checked}
-                              onChange={() =>
-                                 setValues({
-                                    ...values,
-                                    checked: !values.checked,
-                                 })
-                              }
+                              onChange={() => setValues({ ...values, checked: !values.checked })}
                            />
                            <label htmlFor="check">
                               I don't have one.

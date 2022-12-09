@@ -244,62 +244,40 @@ export default function AllTests() {
                                     }
                                  >
                                     Upload PDF
-                                    <img
-                                       src={upload}
-                                       alt="Upload"
-                                    />
+                                    <img src={upload} alt="Upload" />
                                  </label>
                                  <div className={styles.error}>
                                     {PDFError}
                                  </div>
-
                                  <input
                                     id="pdf"
                                     type="file"
                                     accept="application/pdf"
-                                    onChange={(e) =>
-                                       handlePDFFile(
-                                          e.target.files[0]
-                                       )
-                                    }
+                                    onChange={e => handlePDFFile(e.target.files[0])}
                                  />
                               </div>
                               <div id={styles.csvUpload}>
                                  <label
                                     htmlFor="csv"
-                                    className={
-                                       csvFile.name &&
-                                       styles.fileUploaded
-                                    }
-                                 >
+                                    className={csvFile.name && styles.fileUploaded}>
                                     Upload CSV
-                                    <img
-                                       src={upload}
-                                       alt="Upload"
-                                    />
+                                    <img src={upload} alt="Upload" />
                                  </label>
                                  <div className={styles.error}>
                                     {csvError}
                                  </div>
-                                 <input
-                                    id="csv"
+                                 <input id="csv"
                                     type="file"
-                                    onChange={(e) => {
-                                       handleCSVFile(
-                                          e.target.files[0]
-                                       );
-                                       Papa.parse(
-                                          e.target.files[0],
-                                          {
-                                             complete: function (
-                                                results
-                                             ) {
-                                                console.log(
-                                                   results.data
-                                                );
-                                             },
-                                          }
-                                       );
+                                    onChange={e => {
+                                       // handleCSVFile(e.target.files[0]);
+                                       Papa.parse(e.target.files[0], {
+                                          complete: function (
+                                             results
+                                          ) {
+                                             setCSVFile(results)
+                                             console.log(results.data);
+                                          },
+                                       });
                                     }}
                                  />
                               </div>
