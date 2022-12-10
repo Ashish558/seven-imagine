@@ -178,12 +178,14 @@ export default function AllTests() {
          {modalActive && (
             <Modal
                title="Create a New Test"
+               classname={"max-w-[700px] mx-auto"}
                cancelBtn={true}
                primaryBtn={{
                   text: "Assign",
                   form: "add-test-form",
                   onClick: handleSubmit,
                   type: "submit",
+                  className: 'w-[123px] pl-6 pr-6'
                }}
                handleClose={handleClose}
                body={
@@ -195,7 +197,7 @@ export default function AllTests() {
                            optionData={optionData}
                            placeholder="Type Test Name"
                            parentClassName="w-full mr-4"
-                           inputContainerClassName=" bg-primary-50"
+                           inputContainerClassName="pt-3 pb-3 bg-primary-50"
                            inputClassName='bg-transparent'
                            type="select"
                            isRequired={true}
@@ -213,7 +215,7 @@ export default function AllTests() {
                            labelClassname="ml-2 mb-1.2"
                            optionData={testTypeOptions}
                            placeholder="Select Test Type"
-                           inputContainerClassName=" bg-primary-50"
+                           inputContainerClassName="pt-3 pb-3 bg-primary-50"
                            parentClassName="w-full mr-4"
                            inputClassName='bg-transparent'
                            isRequired={true}
@@ -290,7 +292,7 @@ export default function AllTests() {
                      </div>
                   </form>
                }
-               classname={"max-w-840 mx-auto"}
+           
             />
          )}
          {removeQuestionModal && (
