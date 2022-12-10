@@ -11,7 +11,7 @@ export default function NavLink({ width, icon: Icon, path, parentClassName }) {
    const location = useLocation();
    return (
       <button
-         className={`${path !== "/exit" ? "lg:mb-14" : "lg:mt-32"
+         className={`${path !== "/exit" ? "lg:mb-12" : "lg:mt-32"
             } z-20 relative ${styles.navLink} ${parentClassName ? parentClassName : ""
             } 
       ${location.pathname === path ? styles.selectedNavLink : ""}

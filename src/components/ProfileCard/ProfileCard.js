@@ -8,7 +8,7 @@ export default function ProfileCard({ title, titleClassName, className, body, hi
       bg-white  ${!hideShadow && 'lg:shadow-light'} relative bg-white lg:bg-textGray-30
        ${className ? className : ''}
       `}>
-         <p className={`text-primary font-bold text-21 ${titleClassName ? titleClassName : "text-center"}`}>
+         <p className={`text-primary font-bold text-lg ${titleClassName ? titleClassName : "text-center"}`}>
             {title}
          </p>
          {body && body}

@@ -122,15 +122,17 @@ export default function StudentProfile() {
                   </div>
                   <div className='flex items-center mt-67 lg:mt-4'>
                      <p className='text-primary text-center font-bold text-21 lg:text-40 lg:text-white'>
-                        Phill Brown
+                        Joseph Brown
                      </p>
                   </div>
-                  <p className='font-semibold text-sm mt-4 mb-1'>
-                     11th Grade
-                  </p>
-                  <p className='font-semibold text-sm'>
-                     Cambridge High School
-                  </p>
+                  <div className='flex items-center text-white'>
+                     <p className='font-semibold text-sm mr-4'>
+                        11th Grade
+                     </p>
+                     <p className='font-semibold text-sm'>
+                        Cambridge High School
+                     </p>
+                  </div>
                </div>
             </div>
 
@@ -140,13 +142,13 @@ export default function StudentProfile() {
                   body={
                      <div className='flex justify-center flex-col'>
                         <div className='flex flex-1 flex-col mr-8'>
-                           <p className='text-primary text-center font-bold flex lg:text-21 whitespace-nowrap mb-1.5'>
+                           <p className='text-primary text-center font-bold flex lg:text-lg whitespace-nowrap mb-1.5'>
                               Birth year
                            </p>
                            <p className=' font-medium text-sm lg:opacity-60 mb-5'>1984</p>
                         </div>
                         <div className='flex flex-1 flex-col'>
-                           <p className='text-primary text-center font-bold flex lg:text-21 mb-2'>
+                           <p className='text-primary text-center font-bold flex lg:text-lg mb-2'>
                               Subjects
                            </p>
                            <div className='grid grid-cols-2'>
@@ -165,7 +167,7 @@ export default function StudentProfile() {
                         <img src={ProfileImg} />
                      </div>
                      <p className='font-bold text-21 mb-1'>Phil Brown</p>
-                  
+
                      <div className='flex items-center'>
                         <span className='text-xs font-semibold opacity-60 inline-block mr-1'>
                            View Profile
@@ -232,30 +234,6 @@ export default function StudentProfile() {
                      </div>
                   }
                />
-
-               {/* <ProfileCard
-                  className='mt-4  lg:mt-0'
-                  body={
-                     <div className='grid grid-cols-2 justify-center'>
-                        <div className='flex flex-col mr-8 mb-5'>
-                           <p className='text-primary text-center font-bold flex lg:text-21 whitespace-nowrap'>
-                              Birth year
-                           </p>
-                           <p className='mt-1 font-medium text-sm lg:mt-6 lg:opacity-60'>1984</p>
-                        </div>
-                        <div className='flex flex-col'>
-                           <p className='text-primary text-center font-bold flex lg:text-21'>
-                              Industry
-                           </p>
-                           <p className='mt-1 font-medium text-sm lg:mt-6 lg:opacity-60'>Medical</p>
-                        </div>
-                        <div>
-                           <EditableText text='Accomodations' />
-                           <p className='mt-1 font-medium text-sm lg:mt-6 lg:opacity-60'>N/A</p>
-                        </div>
-                     </div>
-                  }
-               /> */}
 
                <ProfileCard className='mt-53 col-span-3 lg:mt-0'
                   body={
