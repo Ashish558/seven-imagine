@@ -56,7 +56,7 @@ const ConceptSection = () => {
 
                <div className="dropdown ml-auto" id={styles.subject}>
                   <label
-                     className="flex items-center text-[15px]"
+                     className="flex items-center text-sm"
                      id={styles.dropdownHeading}
                      tabIndex={0}
                      htmlFor="subVisisbility"
@@ -79,7 +79,7 @@ const ConceptSection = () => {
                   />
                   <ul
                      tabIndex={0}
-                     className={`dropdown-content menu p-2 shadow bg-base-100 rounded-box absolute bg-white z-10 w-52 ${subVisisbility}`}
+                     className={`dropdown-content menu p-2 shadow bg-base-100 rounded-box absolute bg-white z-10 text-sm w-52 ${subVisisbility}`}
                   >
                      <li
                         onClick={(e) => {
@@ -134,7 +134,7 @@ const ConceptSection = () => {
 
                <div className="dropdown" id={styles.data}>
                   <label
-                     className="flex items-center text-[15px]"
+                     className="flex items-center text-sm"
                      id={styles.dropdownHeading}
                      tabIndex={0}
                      htmlFor="dateVisisbility"
@@ -160,7 +160,7 @@ const ConceptSection = () => {
                   />
                   <ul
                      tabIndex={0}
-                     className={`dropdown-content menu p-2 shadow bg-base-100 rounded-box absolute bg-white w-60 z-10 ${dateVisibility}`}
+                     className={`dropdown-content menu p-2 shadow bg-base-100 rounded-box absolute bg-white w-60 z-10 text-sm  ${dateVisibility}`}
                   >
                      <li
                         onClick={(e) => {

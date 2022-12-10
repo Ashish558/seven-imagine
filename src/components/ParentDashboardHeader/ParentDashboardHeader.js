@@ -66,7 +66,7 @@ const ParentDashboardHeader = () => {
                   </div>
 
                   <div id={styles.creditBalance}>
-                     <p className="whitespace-nowrap leading-none mb-1" >
+                     <p className="whitespace-nowrap text-3xl leading-none mb-1" >
                      820 USD
                      </p>
                      <p className="text-[13.17px] font-bold cursor-pointer"
