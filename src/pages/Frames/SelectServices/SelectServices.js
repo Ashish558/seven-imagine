@@ -107,7 +107,7 @@ export default function SelectServices({
                labelClassname="ml-3"
                placeholder=""
                parentClassName="w-full mr-4 mb-5"
-               inputContainerClassName="border"
+               inputContainerClassName="pt-3 pb-3 border"
                inputClassName="bg-transparent"
                type="text"
                value={otherDetails.schoolName}
@@ -127,7 +127,7 @@ export default function SelectServices({
                   setOtherDetails({ ...otherDetails, grade: val })
                }
                optionData={grades}
-               inputContainerClassName="font-medium pr-3 bg-transparent border"
+               inputContainerClassName="pt-3 pb-3 font-medium pr-3 bg-transparent border"
                inputClassName="appearance-none font-medium"
                placeholder="Select"
                parentClassName="w-full max-w-150"
@@ -137,12 +137,12 @@ export default function SelectServices({
             <div className="flex items-center mt-12">
                <SecondaryButton
                   children="Back"
-                  className="text-21 text-white mr-6 w-140"
+                  className="text-lg pt-3 pb-3 text-white mr-6 w-140"
                   onClick={handleBack}
                />
                <PrimaryButton
                   children="Next"
-                  className="text-21 font-semibold text-white mr-6 w-140"
+                  className="text-lg pt-3 pb-3 font-semibold text-white mr-6 w-140"
                   onClick={() => handleSubmit()}
                />
             </div>

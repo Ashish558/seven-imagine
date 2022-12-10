@@ -196,11 +196,11 @@ export default function Settings() {
       <>
 
          <div className='lg:ml-pageLeft bg-lightWhite min-h-screen px-8 pt-[50px] pb-[50px]'>
-            <div className='flex justify-between items-center mb-[56px]'>
+            <div className='flex justify-between items-center mb-[45px]'>
 
                <div>
                   <p className='font-bold text-4xl mb-[54px] text-[#25335A]'> Settings </p>
-                  <div className='text-lg'>
+                  <div className='text-base'>
                      <div className='flex items-center mb-4'>
                         <p className='opacity-60  mr-[15px]'> Full Name:</p>
                         <p className='font-bold'> Kartik Sarda</p>

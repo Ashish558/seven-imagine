@@ -4,7 +4,7 @@ export default function TutorSchedule({ header, studentName, date, time, timeZon
 
 
    return (
-      <div className='flex justify-between bg-[#D9D9D9]/20 rounded-[15px] mb-6 py-[38px] px-[43px]'>
+      <div className='flex justify-between bg-[#D9D9D9]/20 rounded-[15px] mb-6 py-[30px] px-[43px]'>
 
          <div className='flex flex-col'>
             <p className='text-primary text-2xl font-bold mb-4'> {header} </p>

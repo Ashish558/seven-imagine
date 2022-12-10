@@ -34,7 +34,7 @@
 }
 
 #conceptChart {
-    padding: 0 50px;
+    padding: 0 40px;
     padding-left: 0;
 }
 
@@ -82,7 +82,7 @@
     border-radius: 20px;
     height: 360px;
     overflow-y: scroll;
-    padding: 25px 25px;
+    padding: 25px 20px;
     color: black;
     padding-top: 20px;
 }
@@ -114,8 +114,8 @@
 }
 
 #listedData img {
-    width: 33px;
-    height: 33px;
+    width: 28px;
+    height: 28px;
 }
 
 .btnGreen {

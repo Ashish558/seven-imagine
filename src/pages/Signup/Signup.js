@@ -150,8 +150,8 @@ export default function Signup() {
                               placeholder="First Name"
                               parentClassName="mb-6 mr-5"
                               label="First Name"
-                              inputContainerClassName='border pt-3.5 pb-3.5'
-                              labelClassname="ml-2 mb-2"
+                              inputContainerClassName='border pt-3 pb-3'
+                              labelClassname="ml-2 mb-0.5 text-sm"
                               value={values.firstName}
                               onChange={(e) =>
                                  setValues({
@@ -164,8 +164,8 @@ export default function Signup() {
                               placeholder="Last Name "
                               parentClassName="mb-6"
                               label="Last Name"
-                              labelClassname="ml-2 mb-2"
-                              inputContainerClassName='border pt-3.5 pb-3.5'
+                              labelClassname="ml-2 mb-0.5 text-sm"
+                              inputContainerClassName='border pt-3 pb-3'
                               value={values.lastName}
                               onChange={(e) =>
                                  setValues({
@@ -180,7 +180,7 @@ export default function Signup() {
                            placeholder="email@example.com"
                            parentClassName="mb-6"
                            label="Email Address"
-                           inputContainerClassName='border pt-3.5 pb-3.5'
+                           inputContainerClassName='border pt-3 pb-3'
                            value={values.email}
                            onChange={(e) =>
                               setValues({
@@ -188,14 +188,14 @@ export default function Signup() {
                                  email: e.target.value,
                               })
                            }
-                           labelClassname="ml-2 mb-2"
+                           labelClassname="ml-2 mb-0.5 text-sm"
                         />
                         <InputField
                            placeholder="Phone Number"
                            parentClassName="mb-6 relative"
                            label="Phone Number (For tutor correspondence)"
-                           labelClassname="ml-2 mb-2"
-                           inputContainerClassName="relative border pt-3.5 pb-3.5"
+                           labelClassname="ml-2 mb-0.5 text-sm"
+                           inputContainerClassName="relative border pt-3 pb-3"
                            inputClassName="ml-80"
                            inputLeftField={
                               <div ref={selectRef}
@@ -246,10 +246,10 @@ export default function Signup() {
                            placeholder=""
                            parentClassName="mb-6"
                            label="Please enter the subscription code required to access Seven Square Learning and starting prep."
-                           inputContainerClassName='border pt-3.5 pb-3.5'
+                           inputContainerClassName='border pt-3 pb-3'
                            value={values.subscriptionCode}
                            onChange={(e) => setValues({ ...values, subscriptionCode: e.target.value })}
-                           labelClassname="ml-2 mb-[11px] pr-5"
+                           labelClassname="ml-2 mb-0.5 text-sm11px] pr-5"
                         />
 
                         <div className="flex items-center">
@@ -266,7 +266,7 @@ export default function Signup() {
                            disabled={
                               values.email === "" ? true : false
                            }
-                           className="w-full bg-primaryDark disabled:bg-pink py-3 mt-12 rounded-10 text-white text-21 font-medium"
+                           className="w-full bg-primaryDark disabled:bg-pink py-3 mt-12 rounded-10 text-white text-lg font-medium"
                            onClick={handleClick}
                         >
                            Submit

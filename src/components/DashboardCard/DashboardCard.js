@@ -10,17 +10,17 @@ export default function DashboardCard({ className, data, header, subHeader }) {
       // }} 
       >
 
-         <div className='self-stretch min-w-[100px] h-[100px] text-center bg-white/20 rounded-[15px] flex flex-col justify-center'>
-            <p className={`font-bold leading-none ${data.titleClassName ? data.titleClassName : 'text-[48px]' }`}>
+         <div className='self-stretch min-w-[80px] h-[80px] text-center bg-white/20 rounded-[15px] flex flex-col justify-center'>
+            <p className={`font-bold leading-none ${data.titleClassName ? data.titleClassName : 'text-[30px]' }`}>
                {data.title}
             </p>
-            <p className='text-2xl font-bold'>
+            <p className='text-xl font-bold'>
                {data.subtitle}
             </p>
          </div>
 
          <div className='px-6'>
-            <p className='pt-[13px] font-bold text-[27px]'>
+            <p className='pt-[6px] font-bold text-[27px]'>
                {header}
             </p>
             <p className='text-lg font-semibold'>

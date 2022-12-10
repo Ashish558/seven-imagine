@@ -1,9 +1,9 @@
 .selectedIcon {
     position: absolute;
-    right: -57px;
-    top: -35px;
+    right: -53px;
+    top: -33px;
     z-index: -1;
-    min-width: 113.32px;
+    min-width: 105.32px;
 }
 
 .selectedNavLink {
@@ -20,10 +20,11 @@
 .navLink svg {
     transition: 0.2s;
 }
+
+.navLink svg {
+    max-width: 30px;
+}
 @media only screen and (max-width: 1024px) {
-    .navLink svg {
-        max-width: 24px;
-    }
 
     .selectedIcon {
         display: flex;

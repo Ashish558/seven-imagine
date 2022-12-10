@@ -24,9 +24,9 @@ export default function NavLink({ width, icon: Icon, path, parentClassName }) {
          {/* <img src={icon} className={Selected ? styles.selectedNavLink : ''} /> */}
          <Icon />
          {location.pathname === path && (
-            <img
+            <img 
                src={width > desktop ? Selected : SelectedMobile}
-               className={styles.selectedIcon}
+               className={`${styles.selectedIcon}`}
             />
          )}
       </button>

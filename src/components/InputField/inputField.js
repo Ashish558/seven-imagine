@@ -5,6 +5,7 @@ export default function InputField({
    parentClassName,
    inputContainerClassName,
    Icon,
+   iconSize,
    value,
    placeholder,
    label,
@@ -37,7 +38,7 @@ export default function InputField({
             className={`py-[16px] px-[21px] flex items-center rounded-10 ${inputContainerClassName ? inputContainerClassName : ""
                }`}
          >
-            {Icon && <img src={Icon} className="mr-6" />}
+            {Icon && <img src={Icon} className={`mr-5 ${iconSize === 'medium' ? 'w-[28px]' : 'w-[28px]'}`}  />}
             {inputLeftField && inputLeftField}
             <input
                className={`outline-0 w-full ${inputClassName ? inputClassName : "" }`}
@@ -47,7 +48,7 @@ export default function InputField({
                value={value}
                required={isRequired ? true : false}
             />
-            {type === 'password' && <img src={EyeIcon} className="ml-4"
+            {type === 'password' && <img src={EyeIcon} className="ml-4 w-[20px]"
                onClick={() => inputType === 'password' ? setInputType('text') : setInputType('password')}
             />}
             {IconRight && <img src={IconRight} className="ml-4" />}

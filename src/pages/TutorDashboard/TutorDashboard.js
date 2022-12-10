@@ -82,7 +82,7 @@ export default function TutorDashboard() {
                         header='Completed'
                         subHeader='this month'
                         className='bg-[#7E82F0]' />
-                     <DashboardCard data={{ title: '2.4k', subtitle: 'INR', titleClassName: 'text-4xl' }}
+                     <DashboardCard data={{ title: '2.4k', subtitle: 'INR', titleClassName: 'text-[30px]' }}
                         header='Earned'
                         subHeader='this month'
                         className='bg-[#4BBD94]' />
@@ -119,12 +119,12 @@ export default function TutorDashboard() {
                         Rank
                      </p>
                      <div className={`max-w-[500px] py-[17px] px-[19px] flex flex-1 text-white rounded-20  first:mr-[30px] bg-primary`}>
-                        <div className='self-stretch min-w-[100px] h-[100px] text-center bg-black/20 rounded-[15px] flex flex-col justify-center'>
-                           <img src={HatIcon} />
+                        <div className='self-stretch min-w-[80px] h-[80px] text-center bg-black/20 rounded-[15px] flex flex-col justify-center'>
+                           <img src={HatIcon} className='objects-contain' />
                         </div>
 
                         <div className='px-6'>
-                           <p className='pt-[13px] font-bold text-[27px]'>
+                           <p className='pt-[6px] font-bold text-[27px]'>
                               Tutor Rank
                            </p>
                            <p className='text-xs font-semibold'>
@@ -137,20 +137,20 @@ export default function TutorDashboard() {
                      </div>
                   </div>
 
-                  <div className='px-8 mt-8'>
+                  <div className='px-8 pr-4 mt-8'>
                      <p className='text-primary font-semibold text-[21px] mb-4'>
                         Latest Practice Test
                      </p>
-                     <div className='px-[31px] py-[44px] bg-white rounded-20'>
+                     <div className='px-[25px] py-[25px] bg-white rounded-20'>
                         {studentsData.map(item => {
                            return (
                               <div className='flex items-center mb-8'>
                                  <div>
                                     <img src={item.img} className='w-[62px] h-[62px] rounded-full' />
                                  </div>
-                                 <div className='ml-[21px] flex-1'>
+                                 <div className='ml-[21px] mr-[8px] flex-1'>
                                     <p className='font-semibold text-lg mb-1'> SAT B2 </p>
-                                    <div className='text-sm font-semibold flex opacity-50'>
+                                    <div className='text-xs font-semibold flex opacity-50'>
                                        <p>Due Date</p>
                                        <p className='ml-3'> {item.dueDate} </p>
                                     </div>

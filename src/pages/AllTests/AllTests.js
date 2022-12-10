@@ -159,7 +159,7 @@ export default function AllTests() {
                   optionData={optionData}
                   placeholder="Test Name"
                   parentClassName="w-290 mr-4"
-                  inputContainerClassName="bg-white border pt-[15px] pb-[15px]"
+                  inputContainerClassName="bg-white border pt-3.5 pb-3.5"
                   type="select"
                />
             </div>
@@ -306,7 +306,7 @@ export default function AllTests() {
                cancelBtnClassName="py-4"
                primaryBtn={{
                   text: "Remove",
-                  className: "bg-danger",
+                  className: "bg-danger w-[123px] pl-4 pr-4",
                   onClick: removeTest,
                }}
                handleClose={closeRemoveModal}

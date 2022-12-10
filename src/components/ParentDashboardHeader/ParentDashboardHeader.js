@@ -30,7 +30,7 @@ const ParentDashboardHeader = () => {
          className="flex 2xl:gap-[78px] xl:gap-[50px]"
          id={styles.parentDashboardHeader}
       >
-         <div className="w-2/3">
+         <div className="w-2/3 flex">
             <div className="flex" style={{ gap: 16 }}>
                <div className="w- flex items-center" id={styles.explore}>
                   <div className="flex">
@@ -40,7 +40,7 @@ const ParentDashboardHeader = () => {
                            Experts.
                         </h2>
 
-                        <button className="ml-[32px] 2xl:ml-[46px] bg-[#f3f5f7] rounded-[5px] py-[8px] px-[15px]">
+                        <button className="ml-[32px] text-sm 2xl:ml-[46px] bg-[#f3f5f7] rounded-[5px] py-[8px] px-[15px]">
                            Know More {">"}
                         </button>
                      </div>
@@ -105,109 +105,6 @@ const ParentDashboardHeader = () => {
 
          </div>
 
-
-
-         {/* <OwlCarousel
-                        className="owl-theme"
-                        loop={false}
-                        margin={10}
-                        nav
-                        items={1}
-                        dots={false}
-                    >
-                        <div class={`item ${styles.student} first`}>
-                            <div className="flex items-center">
-                                <div className="w-1/2">
-                                    <h2>Joseph Brown</h2>
-                                    <a href="#" className="btn-gold">
-                                        View Profile
-                                    </a>
-                                </div>
-                                <div className="w-1/2 flex justify-end">
-                                    <img src={josephBrown} alt="" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class={`item ${styles.student}`}>
-                            <div className="flex items-center">
-                                <div className="w-1/2">
-                                    <h2>Joseph Brown</h2>
-                                    <a href="#" className="btn-gold">
-                                        View Profile
-                                    </a>
-                                </div>
-                                <div className="w-1/2 flex justify-end">
-                                    <img src={josephBrown} alt="" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class={`item ${styles.student} third`}>
-                            <div className="flex items-center">
-                                <div className="w-1/2">
-                                    <h2>Joseph Brown</h2>
-                                    <a href="#" className="btn-gold">
-                                        View Profile
-                                    </a>
-                                </div>
-                                <div className="w-1/2 flex justify-end">
-                                    <img src={josephBrown} alt="" />
-                                </div>
-                            </div>
-                        </div>
-                    </OwlCarousel> */}
-         {/* <div className="w-1/3" id={styles.tutor}>
-            <h2>Your Tutor</h2>
-            <OwlCarousel className="owl-theme" loop margin={30} items={1}>
-               <div class="item flex" style={{ width: "100%" }}>
-                  <div className="w-1/2">
-                     <h5 className={styles.tag}>
-                        WIZARD TUTOR | UNDERGRADUATE
-                     </h5>
-                     <h3>Shivam Srivastava</h3>
-                     <p>
-                        Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit.
-                     </p>
-                     <button className="btn-gold">View Profile</button>
-                  </div>
-                  <div className="w-1/2">
-                     <img src={shivam} className="mx-auto" alt="" />
-                  </div>
-               </div>
-               <div class="item flex" style={{ width: "100%" }}>
-                  <div className="w-1/2">
-                     <h5 className={styles.tag}>
-                        WIZARD TUTOR | UNDERGRADUATE
-                     </h5>
-                     <h3>Shivam Srivastava</h3>
-                     <p>
-                        Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit.
-                     </p>
-                     <button className="btn-gold">View Profile</button>
-                  </div>
-                  <div className="w-1/2">
-                     <img src={shivam} className="mx-auto" alt="" />
-                  </div>
-               </div>
-               <div class="item flex" style={{ width: "100%" }}>
-                  <div className="w-1/2">
-                     <h5 className={styles.tag}>
-                        WIZARD TUTOR | UNDERGRADUATE
-                     </h5>
-                     <h3>Shivam Srivastava</h3>
-                     <p>
-                        Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit.
-                     </p>
-                     <button className="btn-gold">View Profile</button>
-                  </div>
-                  <div className="w-1/2">
-                     <img src={shivam} className="mx-auto" alt="" />
-                  </div>
-               </div>
-            </OwlCarousel>
-         </div> */}
       </div>
    );
 };

@@ -52,7 +52,7 @@ export default function UserDetails({
          <div className="flex">
             <InputField
                placeholder="First Name"
-               inputContainerClassName='border'
+               inputContainerClassName='pt-3 pb-3 border'
                parentClassName="mb-6 mr-5"
                required={persona === "student" ? true : false}
                label={`${personaText} First Name`}
@@ -68,7 +68,7 @@ export default function UserDetails({
             <InputField
                placeholder="Last Name"
                parentClassName="mb-6"
-               inputContainerClassName='border'
+               inputContainerClassName='pt-3 pb-3 border'
                label={`${personaText} Last Name`}
                required={persona === "student" ? true : false}
                labelClassname="ml-2 mb-2"
@@ -86,7 +86,7 @@ export default function UserDetails({
             placeholder="Email address"
             parentClassName="mb-6"
             label={`${personaText} Email Address`}
-            inputContainerClassName='border'
+            inputContainerClassName='pt-3 pb-3 border'
             required={persona === "student" ? true : false}
             labelClassname="ml-2 mb-2"
             value={otherDetails.Email}
@@ -100,7 +100,7 @@ export default function UserDetails({
             label={`${personaText} Phone Number ${persona !== "parent" ? "(For tutor correspondence)" : ""
                } `}
             labelClassname="ml-2 mb-2"
-            inputContainerClassName="relative border"
+            inputContainerClassName="pt-3 pb-3 relative border"
             inputClassName="ml-80"
             required={persona === "student" ? true : false}
             inputLeftField={
@@ -120,12 +120,12 @@ export default function UserDetails({
          <div className="flex items-center mt-120">
             <SecondaryButton
                children="Back"
-               className="text-21 py-3.2 text-white mr-6 w-140"
+               className="text-lg pt-3 pb-3 text-white mr-6 w-140"
                onClick={handleBack}
             />
             <PrimaryButton
                children="Next"
-               className="text-21 py-3.2 font-semibold text-white mr-6 w-140"
+               className="text-lg pt-3 pb-3 font-semibold text-white mr-6 w-140"
                onClick={() => handleClick()}
             />
          </div>

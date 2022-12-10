@@ -31,9 +31,9 @@
 }
 
 #signUp h1 {
-    font-size: 48px;
+    font-size: 30px;
     font-weight: 700;
-    margin-bottom: 43px;
+    margin-bottom: 36px;
 }
 
 #signUp h6 {
@@ -44,7 +44,7 @@
 
 #signUp label {
     margin-left: 10px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: rgba(0, 0, 0, 0.9);
 }

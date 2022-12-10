@@ -64,25 +64,27 @@ export default function Login({ setLoginFormActive }) {
 
                      <InputField
                         Icon={EmailIcon}
+                        iconSize='medium'
                         placeholder="Email address"
                         parentClassName="mb-6"
                         label="Email Address"
                         labelClassname="ml-2 mb-2"
                         inputClassName="bg-transparent"
-                        inputContainerClassName='border pt-3.5 pb-3.5'
+                        inputContainerClassName='border pt-3 pb-3'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                      />
 
                      <InputField
                         Icon={Passwordicon}
+                        iconSize='medium'
                         parentClassName="mb-1 relative"
                         placeholder="Password"
                         label="Password"
                         type='password'
                         labelClassname="ml-2 mb-2"
                         inputClassName="bg-transparent" 
-                        inputContainerClassName='border pt-3.5 pb-3.5'
+                        inputContainerClassName='border pt-3 pb-3'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                      />
@@ -97,7 +99,7 @@ export default function Login({ setLoginFormActive }) {
 
                      <button
                         disabled={false}
-                        className="w-full bg-primaryDark disabled:bg-pink  py-4 mt-12 rounded-10 text-white text-21"
+                        className="w-full bg-primaryDark disabled:bg-pink pt-3.5 pb-3.5 mt-12 rounded-10 text-white text-lg"
                         onClick={handleSubmit}
                      >
                         Login

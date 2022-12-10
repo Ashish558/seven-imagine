@@ -145,9 +145,9 @@ export default function AssignedTests() {
                   </p>
 
                   <button
-                     className="bg-primaryOrange flex items-center text-white font-semibold rounded-lg mr-55"
+                     className="bg-primaryOrange text-lg flex pt-4 pb-4 px-5 items-center text-white font-semibold rounded-lg mr-55"
                      onClick={() => setAssignTestModalActive(true)}
-                     style={{ padding: "17px 24px", fontSize: "18px" }}
+                    
                   >
                      Assign new test
                      <img src={AddIcon} className="ml-3" />
@@ -162,7 +162,7 @@ export default function AssignedTests() {
                      onChange={e => setFilterData({...filterData, studentName: e.target.value})}
                      optionData={optionData}
                      placeholder="Student Name"
-                     inputContainerClassName="bg-white"
+                     inputContainerClassName="pt-3.5 pb-3.5 bg-white"
                      parentClassName="w-full mr-4 text-sm"
                      type="text"
                   />
@@ -172,7 +172,7 @@ export default function AssignedTests() {
                      onChange={e => setFilterData({...filterData, testName: e.target.value})}
                      optionData={optionData}
                      placeholder="Test Name"
-                     inputContainerClassName="bg-white"
+                     inputContainerClassName="pt-3.5 pb-3.5 bg-white"
                      parentClassName="w-full mr-4 text-sm"
                      type="text"
                   />
@@ -181,7 +181,7 @@ export default function AssignedTests() {
                      onChange={e => setFilterData({...filterData, tutor: e.target.value})}
                      IconRight={SearchIcon}
                      parentClassName="w-full mr-4 text-sm"
-                     inputContainerClassName="bg-white"
+                     inputContainerClassName="pt-3.5 pb-3.5 bg-white"
                      optionData={optionData}
                      placeholder="Tutor Name"
                      type="text"
@@ -190,7 +190,7 @@ export default function AssignedTests() {
                      value={filterData.status}
                      onChange={val => setFilterData({...filterData, status: val})}
                      optionData={optionData}
-                     inputContainerClassName="bg-white"
+                     inputContainerClassName="pt-3.5 pb-3.5 bg-white"
                      placeholder="Completion Status"
                      parentClassName="w-full mr-4 text-sm"
                      type="select"

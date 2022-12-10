@@ -51,10 +51,10 @@ const ConceptSection = () => {
          id={styles.conceptSectionContainer}
       >
          <div className="w-2/3" id={styles.conceptChart}>
-            <div className="flex items-center" style={{ gap: "20px" }}>
+            <div className="flex items-center" >
                <h1>Concept Chart</h1>
 
-               <div className="dropdown" id={styles.subject}>
+               <div className="dropdown ml-auto" id={styles.subject}>
                   <label
                      className="flex items-center text-[15px]"
                      id={styles.dropdownHeading}
@@ -213,6 +213,7 @@ const ConceptSection = () => {
                      </li>
                   </ul>
                </div>
+
             </div>
 
             <div id={styles.chartContainer} className='scrollbar-content' >
@@ -229,9 +230,9 @@ const ConceptSection = () => {
 
                <div id={styles.tutor}>
                   <h2>Your Tutor</h2>
-                  <OwlCarousel className="owl-theme" loop margin={30} items={1}>
+                  <OwlCarousel className="owl-theme" loop margin={8} items={1}>
                      <div class="item flex" style={{ width: "100%" }}>
-                        <div className="w-1/2">
+                        <div className="w-3/5">
                            <h5 className={styles.tag}>
                               WIZARD TUTOR | UNDERGRADUATE
                            </h5>
@@ -242,12 +243,12 @@ const ConceptSection = () => {
                            </p>
                            <button className="btn-gold" style={{padding: '7px 9px'}}>View Profile</button>
                         </div>
-                        <div className="w-1/2">
-                           <img src={shivam} className="mx-auto" alt="" />
+                        <div className="w-2/5">
+                           <img src={shivam} className="mx-auto w-full object-contain	" alt="" />
                         </div>
                      </div>
                      <div class="item flex" style={{ width: "100%" }}>
-                        <div className="w-1/2">
+                        <div className="w-3/5">
                            <h5 className={styles.tag}>
                               WIZARD TUTOR | UNDERGRADUATE
                            </h5>
@@ -256,28 +257,13 @@ const ConceptSection = () => {
                               Lorem ipsum dolor sit amet, consectetur
                               adipiscing elit.
                            </p>
-                           <button className="btn-gold" style={{padding: '7px 9px'}} >View Profile</button>
+                           <button className="btn-gold" style={{padding: '7px 9px'}}>View Profile</button>
                         </div>
-                        <div className="w-1/2">
-                           <img src={shivam} className="mx-auto" alt="" />
-                        </div>
-                     </div>
-                     <div class="item flex" style={{ width: "100%" }}>
-                        <div className="w-1/2">
-                           <h5 className={styles.tag}>
-                              WIZARD TUTOR | UNDERGRADUATE
-                           </h5>
-                           <h3>Shivam Srivastava</h3>
-                           <p>
-                              Lorem ipsum dolor sit amet, consectetur
-                              adipiscing elit.
-                           </p>
-                           <button className="btn-gold" style={{padding: '7px 9px'}}> View Profile</button>
-                        </div>
-                        <div className="w-1/2">
-                           <img src={shivam} className="mx-auto" alt="" />
+                        <div className="w-2/5">
+                           <img src={shivam} className="mx-auto w-full object-contain	" alt="" />
                         </div>
                      </div>
+                    
                   </OwlCarousel>
                </div>
 
@@ -293,8 +279,8 @@ const ConceptSection = () => {
                         <div className={styles.listedDataItem}>
                            <h1>SAT B2</h1>
                            <div
-                              className="flex"
-                              style={{ gap: "12px" }}
+                              className="flex mr-2"
+                              style={{ gap: "6px" }}
                            >
                              <p className="text-xs font-semibold opacity-50">Due Date</p>
                               <h3 className="opacity-60 text-xs font-semibold">June 20, 2022</h3>
@@ -304,10 +290,10 @@ const ConceptSection = () => {
                      <div className="w-1/2">
                         <div
                            className="flex items-center justify-end"
-                           style={{ gap: "12px" }}
+                           style={{ gap: "10px" }}
                         >
                            <img src={downloadImage} alt="" />
-                           <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
+                           <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-sm font-semibold">
                               Not Started
                            </div>
                         </div>
@@ -321,8 +307,8 @@ const ConceptSection = () => {
                         <div className={styles.listedDataItem}>
                            <h1>SAT B2</h1>
                            <div
-                              className="flex"
-                              style={{ gap: "12px" }}
+                              className="flex mr-2"
+                              style={{ gap: "6px" }}
                            >
                              <p className="text-xs font-semibold opacity-50">Due Date</p>
                               <h3 className="opacity-60 text-xs font-semibold">June 20, 2022</h3>
@@ -332,10 +318,10 @@ const ConceptSection = () => {
                      <div className="w-1/2">
                         <div
                            className="flex items-center justify-end"
-                           style={{ gap: "12px" }}
+                           style={{ gap: "10px" }}
                         >
                            <img src={downloadImage} alt="" />
-                           <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
+                           <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-sm font-semibold">
                               Started
                            </div>
                         </div>
@@ -349,8 +335,8 @@ const ConceptSection = () => {
                         <div className={styles.listedDataItem}>
                            <h1>SAT B2</h1>
                            <div
-                              className="flex"
-                              style={{ gap: "12px" }}
+                              className="flex mr-2"
+                              style={{ gap: "6px" }}
                            >
                              <p className="text-xs font-semibold opacity-50">Due Date</p>
                               <h3 className="opacity-60 text-xs font-semibold">June 20, 2022</h3>
@@ -360,10 +346,10 @@ const ConceptSection = () => {
                      <div className="w-1/2">
                         <div
                            className="flex items-center justify-end"
-                           style={{ gap: "12px" }}
+                           style={{ gap: "10px" }}
                         >
                            <img src={downloadImage} alt="" />
-                           <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
+                           <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-sm font-semibold">
                               1250 / 1250
                            </div>
                         </div>
@@ -378,8 +364,8 @@ const ConceptSection = () => {
                         <div className={styles.listedDataItem}>
                            <h1>SAT B2</h1>
                            <div
-                              className="flex"
-                              style={{ gap: "12px" }}
+                              className="flex mr-2"
+                              style={{ gap: "6px" }}
                            >
                              <p className="text-xs font-semibold opacity-50">Due Date</p>
                               <h3 className="opacity-60 text-xs font-semibold">June 20, 2022</h3>
@@ -389,10 +375,10 @@ const ConceptSection = () => {
                      <div className="w-1/2">
                         <div
                            className="flex items-center justify-end"
-                           style={{ gap: "12px" }}
+                           style={{ gap: "10px" }}
                         >
                            <img src={downloadImage} alt="" />
-                           <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
+                           <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-sm font-semibold">
                               Not Started
                            </div>
                         </div>
@@ -406,8 +392,8 @@ const ConceptSection = () => {
                         <div className={styles.listedDataItem}>
                            <h1>SAT B2</h1>
                            <div
-                              className="flex"
-                              style={{ gap: "12px" }}
+                              className="flex mr-2"
+                              style={{ gap: "6px" }}
                            >
                              <p className="text-xs font-semibold opacity-50">Due Date</p>
                               <h3 className="opacity-60 text-xs font-semibold">June 20, 2022</h3>
@@ -417,10 +403,10 @@ const ConceptSection = () => {
                      <div className="w-1/2">
                         <div
                            className="flex items-center justify-end"
-                           style={{ gap: "12px" }}
+                           style={{ gap: "10px" }}
                         >
                            <img src={downloadImage} alt="" />
-                           <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
+                           <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-sm font-semibold">
                               Started
                            </div>
                         </div>
@@ -434,8 +420,8 @@ const ConceptSection = () => {
                         <div className={styles.listedDataItem}>
                            <h1>SAT B2</h1>
                            <div
-                              className="flex"
-                              style={{ gap: "12px" }}
+                              className="flex mr-2"
+                              style={{ gap: "6px" }}
                            >
                              <p className="text-xs font-semibold opacity-50">Due Date</p>
                               <h3 className="opacity-60 text-xs font-semibold">June 20, 2022</h3>
@@ -445,10 +431,10 @@ const ConceptSection = () => {
                      <div className="w-1/2">
                         <div
                            className="flex items-center justify-end"
-                           style={{ gap: "12px" }}
+                           style={{ gap: "10px" }}
                         >
                            <img src={downloadImage} alt="" />
-                           <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-[16px] font-semibold">
+                           <div className="button bg-[#EFECF9] p-[10px] rounded-[6px] w-[111px] text-sm font-semibold">
                               1250 / 1250
                            </div>
                         </div>

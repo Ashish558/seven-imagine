@@ -25,7 +25,7 @@ module.exports = {
             90: "90px",
             110: "110px",
             120: "100px",
-            pageLeft: "125px",
+            pageLeft: "115px",
             138: "128px",
             130: "130px",
             140: "140px",
