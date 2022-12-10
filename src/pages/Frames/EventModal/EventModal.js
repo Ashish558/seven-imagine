@@ -363,7 +363,7 @@ export default function EventModal({
    return (
       <>
          <Modal
-            classname="max-w-[800px] mx-auto xl:max-h-[95vh] overflow-y-auto scrollbar-content scrollbar-vertical"
+            classname="max-w-[800px] mx-auto xl:max-h-[90vh] lg:max-h-[700px] overflow-y-auto scrollbar-content scrollbar-vertical"
             handleClose={() => setEventModalActive(false)}
             title={isUpdating ? "Update Session" : "Create a New Session"}
             body={
