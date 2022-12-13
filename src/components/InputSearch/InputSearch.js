@@ -19,7 +19,8 @@ export default function InputSearch({
    right,
    required,
    optionData,
-   onOptionClick
+   onOptionClick,
+   optionPrefix
 }) {
    
    const [optionsVisible, setOptionsVisible] = useState(false)
@@ -60,10 +61,15 @@ export default function InputSearch({
                <div className={`${styles.options} shadow-xl rounded-t-none`}>
                   {optionData.map((option, idx) => {
                      return (
-                        <div className='outline-0 border-0 py-2 px-4' key={idx}
+                        <div className='outline-0 border-0 py-2 px-4 flex justify-between' key={idx}
                            onClick={() =>{ onOptionClick(option);handleClose()} }
                         >
+                           <p>
                            {option.value}
+                           </p>
+                           <p className="text-sm opacity-60">
+                           {optionPrefix ? `${optionPrefix}${option._id.slice(-5)}` : option._id.slice(-5) }
+                           </p>
                         </div>
                      )
                   })}

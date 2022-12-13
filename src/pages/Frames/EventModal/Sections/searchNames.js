@@ -50,6 +50,7 @@ export default function SearchNames({ setStudent, setData, student, tutor,data, 
             inputContainerClassName="bg-lightWhite border-0 pt-3.5 pb-3.5"
             inputClassName="bg-transparent"
             type="text"
+            optionPrefix='s'
             value={student}
             onChange={(e) => setStudent(e.target.value)}
             optionData={students}
@@ -66,6 +67,7 @@ export default function SearchNames({ setStudent, setData, student, tutor,data, 
             inputContainerClassName="bg-lightWhite border-0 pt-3.5 pb-3.5 text-s"
             inputClassName="bg-transparent"
             type="text"
+            optionPrefix='t'
             value={tutor}
             onChange={(e) => setTutor(e.target.value)}
             optionData={tutors}
