@@ -1,0 +1,12 @@
+.titleContainer{
+   position: absolute;
+   top: 0;
+   left: 0;
+   background: #7152EB;
+   width: 100%;
+   padding: 16px;
+   text-align: center;
+   font-size: 21px;
+   color: white;
+   font-weight: 600;
+}

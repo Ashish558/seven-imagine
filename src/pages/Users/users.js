@@ -11,6 +11,8 @@ import SearchIcon from '../../assets/icons/search.svg'
 import { tableData, userTypesList } from './tempData'
 import { useAddUserMutation, useLazyGetAllUsersQuery } from '../../app/services/users'
 import { useSignupUserMutation } from '../../app/services/auth'
+import { useNavigate } from 'react-router-dom'
+import { roles } from '../../constants/constants'
 
 const optionData = [
    'option 1',
@@ -39,7 +41,7 @@ export default function Users() {
    // const [filterItems, setFilterItems] = useState(['Student', 'Parent', 'Active'])
    const [modalActive, setModalActive] = useState(false)
    // const [modalUserType, setModalUserType] = useState('')
-
+   const navigate = useNavigate()
    const [modalData, setModalData] = useState(initialState)
 
    const [usersData, setUsersData] = useState([])
@@ -161,6 +163,13 @@ export default function Users() {
 
    const handleClose = () => setModalActive(false)
 
+   const redirect = item => {
+      console.log(item)
+      if (roles.includes(item.userType)) {
+         navigate(`/profile/${item.userType}/${item._id}`)
+      }
+   }
+
    return (
       <div className='lg:ml-pageLeft bg-lightWhite min-h-screen'>
          <div className='py-14 px-5'>
@@ -216,6 +225,7 @@ export default function Users() {
             <div className='mt-6'>
                <Table dataFor='allUsers'
                   data={filteredUsersData}
+                  onClick={{ redirect }}
                   tableHeaders={tableHeaders}
                   maxPageSize={10} />
             </div>

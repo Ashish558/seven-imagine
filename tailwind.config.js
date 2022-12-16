@@ -117,7 +117,11 @@ module.exports = {
          },
          backgroundImage: {
             'tutor-img': "url('./assets/images/tutor.png')",
+          },
+          gridTemplateColumns: {
+            '13': 'repeat(13, minmax(0, 1fr))',
           }
+    
       },
    },
    plugins: [],
