@@ -16,7 +16,6 @@ export default function TableItem({ item, dataFor, onClick }) {
    // console.log(onClick)
 
    const navigate = useNavigate();
-   console.log(item)
    // console.log(dataFor)
 
    const returnStatus = (status) => {
@@ -235,7 +234,7 @@ export default function TableItem({ item, dataFor, onClick }) {
             </tr>
          )}
          {dataFor === "invoice" && (
-            <tr className="odd:bg-white text-sm shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
+            <tr className="bg-white text-sm shadow-sm shadow-slate-200 rounded-2xl leading-7 mt-[10px]">
                {mapData(item, dataFor, toExcludeInvoice)}
             </tr>
          )}
