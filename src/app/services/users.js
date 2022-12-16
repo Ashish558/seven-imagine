@@ -15,6 +15,22 @@ export const userServicesApi = createApi({
             method: "GET",
          }),
       }),
+      getUserDetail: builder.query({
+         query: (body) => ({
+            url: `api/user/${body.id}`,
+            method: "GET",
+         }),
+      }),
+      updateUserFields: builder.mutation({
+         query: (body) => ({
+            url: `api/user/updatedetails/${body.id}`,
+            method: "PATCH",
+            body: body.fields,
+            headers: {
+               "Content-type": "application/json; charset=UTF-8",
+            },
+         })
+      }),
       addUser: builder.mutation({
          query: (body) => ({
             url: `/api/user/addtutor`,
@@ -25,10 +41,13 @@ export const userServicesApi = createApi({
             },
          })
       }),
+
    }),
 });
 
 export const {
    useLazyGetAllUsersQuery,
-   useAddUserMutation
+   useAddUserMutation,
+   useLazyGetUserDetailQuery,
+   useUpdateUserFieldsMutation
 } = userServicesApi;

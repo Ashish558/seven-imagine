@@ -12,7 +12,7 @@ import NavLink from "./NavLink";
 import { useLocation } from "react-router-dom";
 import styles from "./navbar.module.css";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
-import { desktop } from "../../constants/breakpoints";
+import { desktop } from "../../constants/constants";
 import Options from "../../assets/Navbar/options";
 import { useSelector } from "react-redux";
 import Dashboard from "../../assets/Navbar/dashboard";

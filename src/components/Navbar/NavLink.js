@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Selected from "../../assets/Navbar/selected.svg";
 import SelectedMobile from "../../assets/Navbar/selected-mobile.svg";
-import { desktop } from "../../constants/breakpoints";
+import { desktop } from "../../constants/constants";
 import styles from "./navbar.module.css";
 
 export default function NavLink({ width, icon: Icon, path, parentClassName }) {
