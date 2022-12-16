@@ -233,7 +233,7 @@ export default function TableItem({ item, dataFor, onClick }) {
             </tr>
          )}
          {dataFor === "invoice" && (
-            <tr className="odd:bg-white text-sm shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
+            <tr className="odd:bg-white text-[16px] shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl mt-[15px]">
                {mapData(item, dataFor)}
             </tr>
          )}
@@ -290,9 +290,8 @@ const mapData = (data, dataFor) => {
       ) :
          dataFor === 'invoice' && key === 'currentBalance' ? (
             <td className='font-medium px-1 text-[#009262]  py-4'>
-               <p className={`font-semibold`}>
-                  {console.log(data[key])}
-                  {data[key]}
+               <p className={`font-semibold ${data.status === 'Paid' && "text-[#E02B1D]"} ${data.status === 'Unpaid' && "text-[#009262]"} ${data.status === 'Cancelled' && "text-[#E48900]"}`}>
+                  {data.status === "Paid" && "-"}{data[key]}
                </p>
             </td>
          ) :
@@ -304,8 +303,9 @@ const mapData = (data, dataFor) => {
                </td>
             ) :
                (
-                  <td className="font-medium px-1  min-w-14 py-4">
+                  <td className={`font-medium px-1 ${data[key] === "Unpaid" && 'text-[#E02B1D]'} ${data[key] === "Paid" && 'text-[#009262]'} ${data[key] === "Cancelled" && 'text-[#7C859C]'} min-w-14 py-4 ${key === "paidOn" && "text-[16px]"}`}>
                      {data[key]}
+                     {/* {console.log(data.paidOn)} */}
                   </td>
                )
    ))

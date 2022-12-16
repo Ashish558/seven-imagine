@@ -8,7 +8,7 @@ export default function SecondaryButton({
 }) {
     return (
         <button
-            className={`bg-secondaryLight text-lg font-medium rounded-md py-4 px-8 ${className}`}
+            className={`bg-secondaryLight text-lg font-medium rounded-md py-4 px-8 ${className} text-[#636363]`}
             onClick={onClick}
             type={type ? type : "button"}
            

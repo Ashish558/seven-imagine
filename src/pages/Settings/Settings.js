@@ -328,7 +328,7 @@ export default function Settings() {
                cancelBtn={true}
                cancelBtnClassName='w-140'
                primaryBtn={{
-                  text: "Add",
+                  text: "Save",
                   className: 'w-140',
                   form: 'settings-form',
                   type: 'submit',
