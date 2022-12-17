@@ -100,6 +100,16 @@ export default function Invoice() {
    }
 
    useEffect(() => {
+      if (invoiceData.invoiceType === 'hourly') {
+         setInvoiceData({
+            ...invoiceData,
+            balance: invoiceData.amountDue
+         })
+      }
+      // console.log(invoiceData)
+   }, [invoiceData.invoiceType, invoiceData.amountDue])
+
+   useEffect(() => {
       fetchInvoices()
    }, [])
 
@@ -131,6 +141,7 @@ export default function Invoice() {
                         labelClassname="ml-2 mb-1.2"
                         inputContainerClassName="relative border bg-white border pt-2.5 pb-2.5"
                         inputClassName="ml-10"
+                        type='number'
                         inputLeftField={
                            <div className={`relative z-5000 flex items-center justify-center ${inputStyle.phoneNumberField}`}
                               style={{ width: '50px' }} >
@@ -166,6 +177,8 @@ export default function Invoice() {
                         labelClassname="ml-2 mb-1.2"
                         inputContainerClassName="relative border bg-white border pt-2.5 pb-2.5"
                         inputClassName="ml-10"
+                        type='number'
+                        disabled={invoiceData.invoiceType === 'hourly' ? true : false}
                         inputLeftField={
                            <div className={`relative z-5000 flex items-center justify-center ${inputStyle.phoneNumberField}`}
                               style={{ width: '50px' }} >

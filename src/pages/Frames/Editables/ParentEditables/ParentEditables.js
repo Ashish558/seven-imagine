@@ -5,7 +5,7 @@ import Modal from '../../../../components/Modal/Modal'
 import styles from './style.module.css'
 
 
-export default function ParentEditables({ userId, setToEdit, toEdit }) {
+export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetails }) {
    const [title, setTitle] = useState('')
    const [currentField, setCurrentField] = useState({})
    const [currentToEdit, setCurrentToEdit] = useState({})
@@ -74,20 +74,22 @@ export default function ParentEditables({ userId, setToEdit, toEdit }) {
       })
       setToEdit(tempToEdit)
    }
-
    const handleSubmit = e => {
       e.preventDefault()
       let reqBody = { ...currentToEdit }
       delete reqBody['active']
-      console.log(reqBody);
+      // console.log(reqBody);
       updateFields({ id: userId, fields: reqBody })
       .then(res => {
-         console.log(res);
+         console.log(res)
+         fetchDetails(true)
+         handleClose()
       })
    }
+   
+   // console.log(toEdit);
 
    return (
-
       Object.keys(toEdit).map(key => {
          return toEdit[key].active === true &&
             <Modal

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import SeacrchIcon from '../../assets/icons/search.svg'
-import useOutsideAlerter from "../../useOutsideAlerter";
+import useOutsideAlerter from "../../hooks/useOutsideAlerter";
 import styles from '../InputSelect/style.module.css'
 
 export default function InputSearch({

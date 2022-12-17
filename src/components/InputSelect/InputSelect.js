@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./style.module.css";
 import DownArrow from "../../assets/icons/down-chevron.svg";
-import useOutsideAlerter from "../../useOutsideAlerter";
+import useOutsideAlerter from "../../hooks/useOutsideAlerter";
 
 export default function InputSelect({
    parentClassName,

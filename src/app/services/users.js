@@ -12,6 +12,9 @@ export const userServicesApi = createApi({
       getAllUsers: builder.query({
          query: () => ({
             url: `api/user`,
+            params: {
+               limit: 200
+            },
             method: "GET",
          }),
       }),
