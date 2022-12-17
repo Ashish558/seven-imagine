@@ -12,10 +12,10 @@ import RemoveIcon from "../../assets/icons/remove.svg"
 
 //can b made dynamic
 export default function TableItem({ item, dataFor, onClick }) {
+
    // console.log(onClick)
 
    const navigate = useNavigate();
-   // console.log(item)
    // console.log(dataFor)
 
    const returnStatus = (status) => {
@@ -234,7 +234,7 @@ export default function TableItem({ item, dataFor, onClick }) {
             </tr>
          )}
          {dataFor === "invoice" && (
-            <tr className="odd:bg-white text-sm shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
+            <tr className="bg-white text-sm shadow-sm shadow-slate-200 rounded-2xl leading-7 mt-[10px]">
                {mapData(item, dataFor, toExcludeInvoice)}
             </tr>
          )}
@@ -272,8 +272,9 @@ export default function TableItem({ item, dataFor, onClick }) {
 }
 
 const mapData = (data, dataFor, exclude = []) => {
-
+   Object.keys(data).map((key, i) => console.log(key));
    return Object.keys(data).map((key, i) =>
+   
       dataFor === 'invoice' && exclude.includes(key) ? <></> :
       (
          key === "Accuracy" ? (
@@ -292,20 +293,20 @@ const mapData = (data, dataFor, exclude = []) => {
          ) :
             dataFor === 'invoice' && key === 'currentBalance' ? (
                <td className='font-medium px-1 text-[#009262]  py-4'>
-                  <p className={`font-semibold`}>
-                     {data[key]}
+                  <p className={`font-semibold ${data.status === 'Paid' && "text-[#E02B1D]"} ${data.status === 'Unpaid' && "text-[#009262]"} ${data.status === 'Cancelled' && "text-[#E48900]"}`}>
+                     {data[key] === "Paid" && "-"}{data[key]}
                   </p>
                </td>
             ) :
                dataFor === 'assignedStudents' && key === 'name' || key === 'parent' ? (
-                  <td className='font-medium px-1 text-primaryBlue min-w-14 py-4'>
+                  <td className={`font-medium px-1 ${data[key] === "Unpaid" && 'text-[#E02B1D]'} ${data[key] === "Paid" && 'text-[#009262]'} ${data[key] === "Cancelled" && 'text-[#7C859C]'} min-w-14 py-4 ${key === "paidOn" && "text-[16px]"}`}>
                      <p className={`pl-4 ${key === 'name' ? 'text-left' : ''} font-semibold`}>
                         {data[key]}
                      </p>
                   </td>
                ) :
                   (
-                     <td className="font-medium px-1  min-w-14 py-4">
+                     <td className={`font-medium px-1 ${data[key] === "Unpaid" && "text-[#E02B1D]"} ${data[key] === 'Paid' && "text-[#009262]"} ${data[key] === 'Cancelled' && "text-[#7C859C]"} min-w-14 py-4`}>
                         {data[key]}
                      </td>
                   )

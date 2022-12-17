@@ -115,11 +115,17 @@ export default function Invoice() {
 
    return (
       <>
-         <div className='lg:ml-pageLeft bg-lightWhite min-h-screen px-8 lg:pl-6 pt-[30px] pb-[50px]'>
+
+         {/* // <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pt-[30px] pb-[50px] pl-[66px] pr-[41px]'>
+         //    <div className=''>
+         //       <p className='font-bold text-[48px] mb-[30px] text-[#25335A]'> Invoices </p>
+         //       <div className='flex'>
+         //          <div className='grid grid-cols-2 flex-1 gap-x-[46px] gap-y-[16px] mr-[50px]'> */}
+         <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pt-[30px] pb-[50px] pl-[66px] pr-[41px]'>
             <div className=''>
-               <p className='font-bold text-4xl mb-[30px] text-[#25335A]'> Invoice </p>
+               <p className='font-bold text-[48px] mb-[30px] text-[#25335A]'> Invoice </p>
                <form className='flex' onSubmit={handleSubmit} >
-                  <div className='grid grid-cols-2 flex-1 gap-[18px] mr-5'>
+                  <div className='grid grid-cols-2 flex-1 gap-x-[46px] gap-y-[16px] mr-[50px]'>
 
                      <InputSearch
                         label="Client Name"
@@ -146,7 +152,7 @@ export default function Invoice() {
                            <div className={`relative z-5000 flex items-center justify-center ${inputStyle.phoneNumberField}`}
                               style={{ width: '50px' }} >
                               <div className='flex items-center justify-center ' >
-                                 <p> $ </p>
+                                 <p className='text-[18px] font-semibold'> $ </p>
                               </div>
                            </div>
 
@@ -183,7 +189,7 @@ export default function Invoice() {
                            <div className={`relative z-5000 flex items-center justify-center ${inputStyle.phoneNumberField}`}
                               style={{ width: '50px' }} >
                               <div className='flex items-center justify-center ' >
-                                 <p> $ </p>
+                                 <p className='text-[18px] font-semibold'> $ </p>
                               </div>
                            </div>
 
@@ -206,8 +212,10 @@ export default function Invoice() {
                            className="resize-none scrollbar-content scrollbar-vertical bg-white flex-1 border w-full outline-0 px-5 py-4 rounded-10"
                         ></textarea>
                      </div>
-                     <div className='ml-4 mt-[30px]'>
-                        <PrimaryButton type='submit' children='Create' className='pt-2.5 pb-2.5' />
+                     {/* <div className='ml-[36px] mt-[30px]'>
+                        <PrimaryButton children='Create' className='py-[13.5px] px-[43px]' /> */}
+                     <div className='ml-[36px] mt-[30px]'>
+                        <PrimaryButton type='submit' children='Create' className='py-[13.5px] px-[43px]' />
                      </div>
                   </div>
                </form>
