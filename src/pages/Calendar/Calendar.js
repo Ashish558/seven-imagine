@@ -399,6 +399,7 @@ export default function Calendar() {
                         timeGridWeek,
                         interactionPlugin,
                      ]}
+                     firstDay={1}
                      customButtons={{
                         prevButton: {
                            text: (

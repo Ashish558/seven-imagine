@@ -69,6 +69,10 @@ export default function ParentProfile() {
          active: false,
          text: '',
       },
+      associatedStudents: {
+         active: false,
+         students: ['637b8fd1e9beff25e9c2aa43']
+      }
    })
 
    useEffect(() => {
@@ -92,6 +96,7 @@ export default function ParentProfile() {
             const { firstName, lastName } = res.data.data.user
             setUser(res.data.data.user)
             setToEdit({
+               ...toEdit,
                fullName: {
                   ...toEdit.fullName, firstName, lastName,
                },
@@ -126,6 +131,7 @@ export default function ParentProfile() {
    }
    // console.log(user)
    // console.log(userDetail)
+   // console.log(toEdit)
 
    useEffect(() => {
       fetchDetails()
@@ -256,9 +262,12 @@ export default function ParentProfile() {
                      className=' row-span-2 lg:order-1 lg:col-span-3'
                      bgClassName='bg-primary-light'
                      body={
-                        <div className='flex py-49 h-full lg:flex-col scrollbar-content overflow-x-auto lg:py-0'>
-                           <p className='hidden lg:block text-21 text-primary font-bold text-center mb-10'>
-                              Associated Students
+                        <div className='flex py-49 h-full lg:flex-col scrollbar-content overflow-x-hidden lg:py-0'>
+                           <p className='hidden lg:block text-21 text-primaryDark font-bold text-center mb-10'>
+                              <EditableText editable={false}
+                                 onClick={() => setToEdit({ ...toEdit, associatedStudents: { ...toEdit.associatedStudents, active: true } })}
+                                 text='Associated Students'
+                                 className='lg:text-21 text-center' />
                            </p>
                            <div className={`${styles.studentsContainer} min-h-[200px] w-full`}>
                               <img src={LeftIcon}

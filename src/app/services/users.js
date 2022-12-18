@@ -26,11 +26,11 @@ export const userServicesApi = createApi({
       }),
       updateUserFields: builder.mutation({
          query: (body) => ({
-            url: `api/user/updatedetails/${body.id}`,
+            url: `api/user`,
             method: "PATCH",
             body: body.fields,
             headers: {
-               "Content-type": "application/json; charset=UTF-8",
+               "Authorization": sessionStorage.getItem('token'),
             },
          })
       }),

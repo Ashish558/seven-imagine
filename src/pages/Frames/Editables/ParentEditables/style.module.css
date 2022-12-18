@@ -9,4 +9,6 @@
    font-size: 21px;
    color: white;
    font-weight: 600;
+   border-top-left-radius: 20px;
+   border-top-right-radius: 20px;
 }

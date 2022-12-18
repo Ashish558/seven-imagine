@@ -272,9 +272,8 @@ export default function TableItem({ item, dataFor, onClick }) {
 }
 
 const mapData = (data, dataFor, exclude = []) => {
-   Object.keys(data).map((key, i) => console.log(key));
-   return Object.keys(data).map((key, i) =>
    
+   return Object.keys(data).map((key, i) =>
       dataFor === 'invoice' && exclude.includes(key) ? <></> :
       (
          key === "Accuracy" ? (

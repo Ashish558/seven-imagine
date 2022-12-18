@@ -83,7 +83,7 @@ export default function Invoice() {
             const tempinvoices = res.data.data.invoice.map(invoice => {
                const { _id, createdAt, isPaid, amountDue, balanceChange, type } = invoice
                return {
-                  _id: _id,
+                  _id,
                   name: '-',
                   currentBalance: '$230',
                   invoiceId: _id.slice(-8),
@@ -91,8 +91,8 @@ export default function Invoice() {
                   status: isPaid ? 'Paid' : 'Unpaid',
                   paidOn: '-',
                   type: checkIfExist(type),
-                  amountDue: amountDue,
-                  balanceCredit: balanceChange,
+                  amountDue: `$${amountDue}`,
+                  balanceCredit: `$${balanceChange}`,
                }
             })
             setAllInvoices(tempinvoices)
@@ -121,7 +121,7 @@ export default function Invoice() {
          //       <p className='font-bold text-[48px] mb-[30px] text-[#25335A]'> Invoices </p>
          //       <div className='flex'>
          //          <div className='grid grid-cols-2 flex-1 gap-x-[46px] gap-y-[16px] mr-[50px]'> */}
-         <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pt-[30px] pb-[50px] pl-[66px] pr-[41px]'>
+         <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pt-[30px] pb-[50px] pl-[20px] pr-[41px]'>
             <div className=''>
                <p className='font-bold text-[48px] mb-[30px] text-[#25335A]'> Invoice </p>
                <form className='flex' onSubmit={handleSubmit} >

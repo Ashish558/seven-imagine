@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react'
+import { useLazyGetStudentsByNameQuery } from '../../../../app/services/session'
 import { useUpdateUserFieldsMutation } from '../../../../app/services/users'
 import InputField from '../../../../components/InputField/inputField'
+import InputSearch from '../../../../components/InputSearch/InputSearch'
 import Modal from '../../../../components/Modal/Modal'
 import styles from './style.module.css'
 
-
+// 637b9df1e9beff25e9c2aa83
 export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetails }) {
    const [title, setTitle] = useState('')
    const [currentField, setCurrentField] = useState({})
    const [currentToEdit, setCurrentToEdit] = useState({})
+
+   const [student, setStudent] = useState('')
+   const [fetchStudents, studentResponse] = useLazyGetStudentsByNameQuery()
+   const [students, setStudents] = useState([]);
 
    const [updateFields, updateFieldsResp] = useUpdateUserFieldsMutation()
    const handleChange = () => {
@@ -43,9 +49,14 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
          name: 'address',
          title: 'Time',
       },
+      {
+         name: 'associatedStudents',
+         title: 'Associated Students',
+      },
    ]
 
-   // console.log(currentField);
+   // console.log(currentField)
+
    const getCurrentField = keyName => {
       Object.keys(data).map(key => {
          if (data[key].name === keyName) {
@@ -59,13 +70,12 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
       Object.keys(toEdit).map(key => {
          if (toEdit[key].active === true) {
             getCurrentField(key)
+            // console.log(toEdit);
             // setEditFieldValue(toEdit[key])
             setCurrentToEdit(toEdit[key])
          }
       })
    }, [toEdit])
-
-
 
    const handleClose = () => {
       let tempToEdit = {}
@@ -74,27 +84,54 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
       })
       setToEdit(tempToEdit)
    }
+
+
+   useEffect(() => {
+      if (student.length > 2) {
+         fetchStudents(student).then((res) => {
+            let tempData = res.data.data.students.map((tutor) => {
+               return {
+                  _id: tutor._id,
+                  value: `${tutor.firstName} ${tutor.lastName}`,
+               };
+            });
+            setStudents(tempData);
+         });
+      }
+   }, [student]);
+
+   const handleStudentsChange = item => {
+      let tempStudents = [...currentToEdit.students]
+      if (tempStudents.includes(item._id)) {
+         // console.log(tempStudents);
+         tempStudents=  tempStudents.filter(student => student !== item._id)
+      } else {
+         tempStudents.push(item._id)
+      }
+      setCurrentToEdit({ ...currentToEdit, students: tempStudents })
+   }
+
    const handleSubmit = e => {
       e.preventDefault()
       let reqBody = { ...currentToEdit }
       delete reqBody['active']
       // console.log(reqBody);
       updateFields({ id: userId, fields: reqBody })
-      .then(res => {
-         console.log(res)
-         fetchDetails(true)
-         handleClose()
-      })
+         .then(res => {
+            console.log(res)
+            fetchDetails(true)
+            handleClose()
+         })
    }
-   
-   // console.log(toEdit);
+
+   // console.log(currentToEdit)
 
    return (
       Object.keys(toEdit).map(key => {
          return toEdit[key].active === true &&
             <Modal
                key={key}
-               classname={'max-w-[500px] md:pb-5 mx-auto overflow-hidden'}
+               classname={'max-w-[500px] md:pb-5 mx-auto overflow-visible'}
                title=''
                cancelBtn={false}
                primaryBtn={{
@@ -136,6 +173,42 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                     value={currentToEdit.lastName}
                                     onChange={e => setCurrentToEdit({ ...currentToEdit, lastName: e.target.value })} />
                               </div>
+                           </div>
+                        }
+                        {currentField.name === 'associatedStudents' &&
+                           <div>
+                              <div className=' mb-5'>
+                                 {/* <p className='font-medium mr-4'> Associated Students </p> */}
+                                 <div>
+                                    {currentToEdit.students.map(student => {
+                                     return  <p>
+                                          {student}
+                                       </p>
+                                    })}
+                                 </div>
+                                 <InputSearch
+                                    placeholder="Type Student Name"
+                                    parentClassName="w-full  mb-10"
+                                    inputContainerClassName="bg-lightWhite border-0 pt-3.5 pb-3.5"
+                                    inputClassName="bg-transparent"
+                                    type="text"
+                                    optionPrefix='s'
+                                    value={student}
+                                    checkbox={{
+                                       visible: true,
+                                       name: 'name',
+                                       match: currentToEdit.students
+                                    }}
+                                    onChange={(e) => setStudent(e.target.value)}
+                                    optionData={students}
+                                    onOptionClick={(item) => {
+                                       // setStudent(item.value);
+                                       handleStudentsChange(item)
+                                       // setCurrentToEdit({ ...currentToEdit, students: [... item._id] });
+                                    }}
+                                 />
+                              </div>
+
                            </div>
                         }
 
