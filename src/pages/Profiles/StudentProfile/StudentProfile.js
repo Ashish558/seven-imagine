@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import styles from '../style.module.css'
-
 import ProfileCard from '../../../components/ProfileCard/ProfileCard'
+import styles from './style.module.css'
+import EditableText from '../../../components/EditableText/EditableText'
+
 import ProfileImg from '../../../assets/images/profile.png'
 import EditIcon from '../../../assets/icons/edit.svg'
 import MailIcon from '../../../assets/icons/mail.svg'
 import WhatsappIcon from '../../../assets/icons/whatsapp.svg'
-import LeftIcon from '../../../assets/profile/left.svg'
-import RightIcon from '../../../assets/profile/right.svg'
+import RightIcon from '../../../assets/icons/chevron-right.svg'
 
-import EditableText from '../../../components/EditableText/EditableText'
-import { act } from 'react-dom/test-utils'
-import ParentEditables from '../../Frames/Editables/ParentEditables/ParentEditables'
+import ValueOneIcon from '../../../assets/images/val-1.svg'
+import ValueTwoIcon from '../../../assets/images/val-2.svg'
+import ValueThreeIcon from '../../../assets/images/val-3.svg'
+
+import InterestOneIcon from '../../../assets/images/int-1.svg'
+import InterestTwoIcon from '../../../assets/images/int-2.svg'
+import InterestThreeIcon from '../../../assets/images/int-3.svg'
+import SubjectSlider from '../../../components/SubjectSlider/SubjectSlider'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useLazyGetUserDetailQuery } from '../../../app/services/users'
-import { useLazyGetSettingsQuery } from '../../../app/services/session'
 import { useSelector } from 'react-redux'
-
+import ParentEditables from '../../Frames/Editables/ParentEditables/ParentEditables'
+import { useLazyGetSettingsQuery } from '../../../app/services/session'
 const students = [
    {
       id: 1,
@@ -24,35 +29,104 @@ const students = [
       image: '/images/student-1.png',
    },
    {
-      id: 2,
+      id: 1,
       name: 'Rebecca Brown',
       image: '/images/student-2.png',
    },
 ]
 
-export default function ParentProfile({ isOwn }) {
+const values = [
+   {
+      icon: ValueOneIcon,
+      text: 'Honesty',
+      bg: '#A5A3F6'
+   },
+   {
+      icon: ValueTwoIcon,
+      text: 'Confidence',
+      bg: '#85C396'
+   },
+   {
+      icon: ValueThreeIcon,
+      text: 'Brave',
+      bg: '#FFA7C1'
+   },
+]
+const interests = [
+   {
+      icon: InterestOneIcon,
+      text: 'Video Game',
+      bg: '#F6D0A3'
+   },
+   {
+      icon: InterestTwoIcon,
+      text: 'Cooking',
+      bg: '#7BEA9A'
+   },
+   {
+      icon: InterestThreeIcon,
+      text: 'Yoga',
+      bg: '#AADFEB'
+   },
+]
+
+const subjects = [
+   'Biology',
+   'Biology',
+   'Chemistry',
+   'Chemistry',
+   'Physics',
+   'Physics',
+]
+const subjects1 = [
+   {
+      marks: 200,
+      name: 'Verbal Score',
+      bg: '#FEDCC3'
+   },
+   {
+      marks: 300,
+      name: 'Maths Score',
+      bg: '#DACDFF'
+   },
+]
+
+const subjects2 = [
+   {
+      marks: 200,
+      name: 'Verbal',
+      bg: '#FFCBCB'
+   },
+   {
+      marks: 300,
+      name: 'Maths',
+      bg: '#A7EAF9'
+   },
+   {
+      marks: 200,
+      name: 'Verbal',
+      bg: '#FFF38B'
+   },
+   {
+      marks: 300,
+      name: 'Maths',
+      bg: '#A4FFA7'
+   },
+]
+export default function StudentProfile({ isOwn }) {
 
    const navigate = useNavigate()
    const [editable, setEditable] = useState(false)
    const persona = sessionStorage.getItem('role')
-   const [activeIndex, setActiveIndex] = useState(0)
-   const [getUserDetail, userDetailResp] = useLazyGetUserDetailQuery()
-   const params = useParams()
    const [user, setUser] = useState({})
    const [userDetail, setUserDetail] = useState({})
    const [settings, setSettings] = useState({})
+
+   const params = useParams()
+   const [getUserDetail, userDetailResp] = useLazyGetUserDetailQuery()
    const [fetchSettings, settingsResp] = useLazyGetSettingsQuery()
-   const [associatedStudents, setAssociatedStudents] = useState([])
+
    const { id } = useSelector(state => state.user)
-
-   // console.log(id)
-
-   useEffect(() => {
-      fetchSettings()
-         .then(res => {
-            setSettings(res.data.data.setting)
-         })
-   }, [])
 
    const [toEdit, setToEdit] = useState({
       fullName: {
@@ -64,17 +138,13 @@ export default function ParentProfile({ isOwn }) {
          active: false,
          timeZone: '',
       },
-      subscriptionType: {
+      subscribeType: {
          active: false,
-         text: '',
+         subscribeType: ''
       },
       birthYear: {
          active: false,
          birthyear: '',
-      },
-      industry: {
-         active: false,
-         industry: '',
       },
       contact: {
          active: false,
@@ -85,33 +155,23 @@ export default function ParentProfile({ isOwn }) {
          active: false,
          residentialAddress: '',
       },
-      associatedStudents: {
+      accomodations: {
          active: false,
-         assiginedStudents: []
-      },
-      notes: {
-         active: false,
-         notes: ''
+         accomodations: ''
       },
       service: {
          active: false,
          service: []
       },
-      subscribeType: {
-         active: false,
-         subscribeType: ''
-      },
       leadStatus: {
          active: false,
          leadStatus: ''
+      },
+      associatedParent: {
+         active: false,
+         associatedParent: ''
       }
    })
-
-   useEffect(() => {
-      if (persona === 'admin' || isOwn) {
-         setEditable(true)
-      }
-   }, [])
 
    const handleClose = () => {
       let tempToEdit = {}
@@ -121,6 +181,12 @@ export default function ParentProfile({ isOwn }) {
       setToEdit(tempToEdit)
    }
 
+   useEffect(() => {
+      if (persona === 'admin' || isOwn) {
+         setEditable(true)
+      }
+   }, [])
+
    const fetchDetails = (closeModal) => {
       let userId = ''
       if (isOwn) {
@@ -128,56 +194,36 @@ export default function ParentProfile({ isOwn }) {
       } else {
          userId = params.id
       }
-      // console.log('USERID', userId);
       getUserDetail({ id: userId })
          .then(res => {
             console.log('response', res.data.data);
             const { firstName, lastName } = res.data.data.user
             setUser(res.data.data.user)
-            const { phone, email, assiginedStudents } = res.data.data.user
 
-            let studentsData = []
-            if (assiginedStudents === undefined || assiginedStudents.length === 0) setAssociatedStudents(students)
-
-            assiginedStudents !== undefined && assiginedStudents.map(student => {
-               getUserDetail({ id: student })
-                  .then(res => {
-                     studentsData.push({
-                        _id: res.data.data.user._id,
-                        value: `${res.data.data.user.firstName} ${res.data.data.user.lastName}`
-                     })
-                  })
-            })
+            const { phone, email } = res.data.data.user
+            const { service } = res.data.data.userdetails
 
             setToEdit({
                ...toEdit,
                fullName: {
-                  ...toEdit.fullName, firstName, lastName,
+                  ...toEdit.fullName,
+                  firstName,
+                  lastName,
                },
                timeZone: {
                   ...toEdit.timeZone,
-               },
-               birthYear: {
-                  ...toEdit.birthYear,
-               },
-               industry: {
-                  ...toEdit.industry,
                },
                contact: {
                   ...toEdit.contact,
                   email: email,
                   phone: phone === null ? '' : phone
                },
-               address: {
-                  ...toEdit.address,
-               },
                notes: {
                   ...toEdit.notes,
                },
-               associatedStudents: {
-                  ...toEdit.associatedStudents,
-                  assiginedStudents: res.data.data.user.assiginedStudents,
-                  studentsData: studentsData
+               service: {
+                  ...toEdit.service,
+                  service: service ? [...service] : []
                }
             })
             setUserDetail(res.data.data.userdetails)
@@ -185,203 +231,238 @@ export default function ParentProfile({ isOwn }) {
          })
    }
 
-   // console.log('userdetail', userDetail)
-   // console.log('user', user) 
-   // console.log(toEdit)
-   // console.log(associatedStudents)
-
-   useEffect(() => {
-      if (user.assiginedStudents === undefined) return
-
-      const fetch = () => {
-         let studentsData = []
-         const students = user.assiginedStudents.map(student => {
-            getUserDetail({ id: student })
-               .then(res => {
-                  studentsData.push({
-                     _id: res.data.data.user._id,
-                     name: `${res.data.data.user.firstName} ${res.data.data.user.lastName}`
-                  })
-               })
-         })
-         setAssociatedStudents(studentsData)
-         setActiveIndex(0)
-      }
-      fetch()
-   }, [user])
-
    useEffect(() => {
       fetchDetails()
    }, [params.id])
 
+   useEffect(() => {
+      fetchSettings()
+         .then(res => {
+            setSettings(res.data.data.setting)
+         })
+   }, [])
+
+   // console.log(user)
+   // console.log(userDetail)
+
    if (Object.keys(user).length < 1) return
    if (Object.keys(userDetail).length < 1) return
-   // if (userDetail === undefined) return
 
    return (
       <>
-         <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pb-[100px]'>
+         <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pb-120'>
             <div className='lg:px-5 lg:pt-10'>
 
-               <div className={styles.profileCard}  >
+               <div className={styles.profileCard}>
                   <div className='rounded-t-40 bg-lightWhite lg:bg-transparent flex flex-col items-center relative'>
                      <div className={styles.imgContainer}>
-                        <img src={ProfileImg} />
+                        <img src={`/images/student-1.png`} />
                      </div>
                      <div className='flex items-center mt-67 lg:mt-4'>
                         <EditableText text={`${user.firstName} ${user.lastName}`}
                            editable={editable}
                            onClick={() => setToEdit({ ...toEdit, fullName: { ...toEdit.fullName, active: true } })}
-                           className='text-21 justify-center text-primary text-center font-bold text-21 lg:text-40 lg:text-white'
+                           className='text-21 capitalize justify-center text-white text-center font-bold text-21 lg:text-40 lg:text-white'
                            textClassName='flex-1'
                            imgClass='ml-auto' />
+                     </div>
+                     <div className='flex items-center text-white'>
+                        <p className='font-semibold text-sm mr-4'>
+                           11th Grade
+                        </p>
+                        <p className='font-semibold text-sm'>
+                           Cambridge High School
+                        </p>
                      </div>
                   </div>
                </div>
 
-               <div className='lg:inline-grid lg:w-full lg:grid-cols-13 grid-cols-3 grid-rws-3 lg:mt-10 gap-8 lg:pl-3'>
+               <div className='lg:grid px-2 grid-cols-12 grid-ros-6 lg:mt-10 gap-5 lg:pl-3'>
 
-                  <ProfileCard className='mt-53 lg:h-140 lg:order-3 lg:mt-0 lg:col-span-5'
-                     title={
-                        <EditableText text='Contact' editable={editable}
-                           onClick={() => setToEdit({ ...toEdit, contact: { ...toEdit.contact, active: true } })}
-                           className='text-21 justify-center'
-                           textClassName='flex-1'
-                           imgClass='ml-auto' />
-                     }
+                  <ProfileCard className='col-span-3 py-6 px-4 mt-3  lg:mt-0'
                      body={
-                        <div className='flex justify-center mt-5 lg:mt-1'>
-                           <div className='flex flex-col items-center mr-8'>
-                              <img src={MailIcon} />
-                              <p className='mt-1 font-medium opacity-60 text-xs'>
-                                 {user.email !== null ? user.email : '-'}
-                              </p>
-                           </div>
-                           <div className='flex flex-col items-center'>
-                              <img src={WhatsappIcon} />
-                              <p className='mt-1 font-medium.4 opacity-60 text-xs'>
-                                 {user.phone !== null ? user.phone : '-'}
-                              </p>
-                           </div>
-                        </div>
-                     } />
-
-                  <ProfileCard className='py-6 lg:h-140 px-4 mt-3 lg:order-4 lg:mt-0 lg:col-span-5'
-                     body={
-                        <div className='flex justify-center'>
+                        <div className='flex justify-center flex-col'>
                            <div className='flex flex-1 flex-col mr-8'>
-                              {/* <p className='text-primary text-center font-bold flex lg:text-21 whitespace-nowrap'>
-                                 Birth year
-                                 <img src={EditIcon} className='ml-4' />
-                              </p> */}
+                              {/* <p className='text-primary text-center font-bold flex lg:text-lg whitespace-nowrap mb-1.5'>
+                              Birth year
+                           </p> */}
                               <EditableText editable={editable}
                                  onClick={() => setToEdit({ ...toEdit, birthYear: { ...toEdit.birthYear, active: true } })}
                                  text='Birth year'
-                                 className='text-21 justify-start'
-                              />
-                              <p className='mt-1 font-medium text-sm lg:mt-6 lg:opacity-60'>
+                                 className='text-lg mb-2' />
+                              <p className=' font-medium text-sm lg:opacity-60 mb-5'>
                                  {userDetail.birthyear ? userDetail.birthyear : '-'}
                               </p>
                            </div>
                            <div className='flex flex-1 flex-col'>
-                              <EditableText editable={editable}
-                                 onClick={() => setToEdit({ ...toEdit, industry: { ...toEdit.industry, active: true } })}
-                                 text='Industry'
-                                 className='text-21 justify-start'
-                              />
-                              <p className='mt-1 font-medium text-sm lg:mt-6 lg:opacity-60'>
-                                 {userDetail.industry ? userDetail.industry : '-'}
-                              </p>
+                              <EditableText editable={false}
+                                 onClick={() => setToEdit({ ...toEdit, subjects: { ...toEdit.subjects, active: true } })}
+                                 text='Subjects'
+                                 className='text-lg mb-2' />
+                              <div className='grid grid-cols-2'>
+                                 {subjects.map((sub, idx) => {
+                                    return <p key={idx} className='mt-1 gap-1 font-medium text-sm lg:mt-2 lg:opacity-60'>{sub} </p>
+                                 })}
+                              </div>
                            </div>
                         </div>
                      } />
 
-                  <ProfileCard
-                     className='mt-6 lg:h-140 lg:order-5 lg:mt-0 lg:col-span-5'
-                     title={
-                        <EditableText editable={editable}
-                           onClick={() => setToEdit({ ...toEdit, address: { ...toEdit.address, active: true } })}
-                           text='Residential Address'
-                           className='text-21 justify-between'
-                        />
-                     }
-                     body={
-                        <div className='overflow-x-auto scrollbar-content pb-7'>
-                           <p className='mt-2 lg:mt-6 font-medium text-sm whitespace-nowrap	'>
-                              {userDetail.residentialAddress ? userDetail.residentialAddress : '-'}
-                           </p>
+                  <div className='col-span-2 flex  justify-center items-center  scrollbar-content overflow-x-auto lg:py-5 bg-primary-light px-4 py-5 rounded-15'>
+                     <div className='flex flex-col items-center'>
+                        <p className='text-lg text-center text-primary font-semibold mb-5'>Associated Parent</p>
+                        <div>
+                           <img src={ProfileImg} />
                         </div>
-                     }
-                  />
+                        <p className='font-bold text-21 mb-1'>Phil Brown</p>
+
+                        <div className='flex items-center'>
+                           <span className='text-xs font-semibold opacity-60 inline-block mr-1'>
+                              View Profile
+                           </span>
+                           <img src={RightIcon} />
+                        </div>
+
+                     </div>
+
+                  </div>
+
+                  <div className='col-span-4 flex flex-col justify-between'>
+
+                     <ProfileCard className='lg:mt-0 flex-1'
+                        title={
+                           <EditableText editable={editable}
+                              onClick={() => setToEdit({ ...toEdit, contact: { ...toEdit.contact, active: true } })}
+                              text='Contact'
+                              className='text-lg mb-2 flex justify-center' />
+                        }
+                        body={
+                           <div className='flex justify-center mt-5 lg:mt-1'>
+                              <div className='flex flex-col items-center mr-8'>
+                                 <img src={MailIcon} />
+                                 <p className='mt-1 font-medium opacity-60 text-xs'>
+                                    {user.email !== null ? user.email : '-'}
+                                 </p>
+                              </div>
+                              <div className='flex flex-col items-center'>
+                                 <img src={WhatsappIcon} />
+                                 <p className='mt-1 font-medium.4 opacity-60 text-xs'>
+                                    {user.phone !== null ? user.phone : '-'}
+                                 </p>
+                              </div>
+                           </div>
+                        } />
+
+                     <ProfileCard className='mt-5 mt-auto flex-1'
+                        title='PSAT / P-ACT Scores'
+                        titleClassName='text-left'
+                        body={
+                           <div className='flex mt-5 lg:mt-5'>
+                              <p className=' font-semibold  text-lg'>
+                                 V640 M660 | C1300
+                              </p>
+                           </div>
+                        } />
+                  </div>
 
                   <ProfileCard
-                     className='mt-4 lg:h-140 lg:order-2 lg:mt-0 lg:col-span-5'
+                     className='col-span-3 mt-6 lg:mt-0'
+
                      body={
-                        <div className='flex'>
-                           <div className='flex-1 lg:mr-12'>
+                        <div className='overflow-x-auto scrollbar-content'>
+                           <div className='mb-6'>
                               <EditableText editable={editable}
                                  onClick={() => setToEdit({ ...toEdit, timeZone: { ...toEdit.timeZone, active: true } })}
                                  text='Time Zone'
-                                 className='lg:text-21 whitespace-nowrap' />
-                              <p className='font-medium text-sm mt-2 lg:mt-6 lg:opacity-60'>
+                                 className='text-lg mb-2' />
+                              <p className='mt-1.5  font-medium text-sm whitespace-nowrap'>
                                  {userDetail.timeZone ? userDetail.timeZone : '-'}
+
                               </p>
                            </div>
-                           <div className='flex-1'>
+                           <div className='mb-6'>
                               <EditableText editable={editable}
                                  onClick={() => setToEdit({ ...toEdit, subscribeType: { ...toEdit.subscribeType, active: true } })}
                                  text='Subscription'
-                                 className='text-21 justify-between'
-                              />
-                              {/* <p className='text-primary font-bold lg:text-21'>Subscription</p> */}
-                              <p className='text-sm font-medium mt-2 lg:mt-6 lg:opacity-60'>
+                                 className='text-lg mb-2' />
+                              <p className='mt-1.5 font-medium text-sm whitespace-nowrap'>
                                  {userDetail.subscribeType ? userDetail.subscribeType : '-'}
+                              </p>
+                           </div>
+                           <div>
+                              <p className='text-primary font-bold text-lg'>
+                                 <EditableText editable={false}
+                                    onClick={() => setToEdit({ ...toEdit, accomodations: { ...toEdit.accomodations, active: true } })}
+                                    text='Accomodations'
+                                    className='text-lg mb-2' />
+                              </p>
+                              <p className='mt-1.5 font-medium text-sm whitespace-nowrap'>
+                                 Accomodations
                               </p>
                            </div>
                         </div>
                      }
                   />
-                  <ProfileCard
-                     className=' row-span-2 lg:order-1 lg:col-span-3'
-                     bgClassName='bg-primary-light'
-                     body={
-                        <div className='flex py-49 h-full lg:flex-col scrollbar-content overflow-x-hidden lg:py-0'>
-                           <p className='hidden lg:block text-21 text-primaryDark font-bold text-center mb-10'>
-                              <EditableText editable={true}
-                                 onClick={() => setToEdit({ ...toEdit, associatedStudents: { ...toEdit.associatedStudents, active: true } })}
-                                 text='Associated Students'
-                                 className='lg:text-21 text-center' />
-                           </p>
-                           <div className={`${styles.studentsContainer} min-h-[200px] w-full`}>
-                              <img src={LeftIcon}
-                                 className={`${styles.sliderIcon} ${styles.sliderLeftIcon}`}
-                                 onClick={() => activeIndex !== 0 && setActiveIndex(activeIndex - 1)} />
-                              <img src={RightIcon}
-                                 className={`${styles.sliderIcon} ${styles.sliderRightIcon}`}
-                                 onClick={() => activeIndex < associatedStudents.length - 1 &&
-                                    setActiveIndex(activeIndex + 1)} />
 
-                              {associatedStudents !== undefined && associatedStudents.map((student, idx) => {
+                  <ProfileCard className='mt-53 col-span-3 lg:mt-0'
+                     body={
+                        <>
+                           <p className='text-primary font-bold lg:text-21 text-center mb-10'>Values</p>
+                           <div className='flex flex-col row-span-2 overflow-x-auto scrollbar-content'>
+                              {values.map((val, idx) => {
                                  return (
-                                    <div className={`${styles.student} ${activeIndex === idx ? styles.activeStudent : idx < activeIndex ? styles.previousStudent : styles.nextStudent} flex flex-col items-center px-10 lg:mb-10`}>
-                                       <div className={styles.studentImageContainer}>
-                                          <img src='/images/student-1.png' />
+                                    <div key={idx} className='flex flex-col items-center mb-10'>
+                                       <div className='flex h-90 w-90 rounded-full  items-center justify-center mb-3' style={{ backgroundColor: val.bg }}>
+                                          <img src={val.icon} />
                                        </div>
-                                       <div className='mt-6 opacity-60 font-inter text-center '
-                                       // onClick={() => navigate('/profile/student/12')}
-                                       >
-                                          <p className='font-bold text-lg whitespace-nowrap'>
-                                             {student.name}
-                                          </p>
-                                          <span className='underline cursor-pointer underline-offset-4 text-sm'> View Profile </span>
-                                       </div>
+                                       <p className='opacity-70 font-semibold text-lg'> {val.text} </p>
                                     </div>
                                  )
                               })}
                            </div>
-                        </div>
-                     }
-                  />
+                        </>
+                     } />
+
+                  <div className='col-span-6'>
+                     <ProfileCard title='Offical SAT Scores'
+                        titleClassName='text-left'
+                        className='mt-53 lg:mt-0'
+                        body={
+                           <>
+                              <SubjectSlider totalMarks={500} outOf={1600}
+                                 subjects={subjects1} title='Cumilative Score'
+                              />
+                           </>
+                        } />
+                     <ProfileCard title='Offical ACT Scores'
+                        titleClassName='text-left'
+                        className='mt-8 lg:mt-0'
+                        body={
+                           <>
+                              <SubjectSlider totalMarks={26} outOf={36}
+                                 subjects={subjects2} title='Cumilative Score'
+                              />
+                           </>
+                        } />
+                  </div>
+                  <ProfileCard className='mt-53 pb-0 col-span-3 lg:mt-0'
+                     body={
+                        <>
+                           <p className='text-primary font-bold lg:text-21 text-center mb-10'>Interest</p>
+                           <div className='flex flex-col overflow-x-auto scrollbar-content'>
+                              {interests.map((val, idx) => {
+                                 return (
+                                    <div key={idx} className='flex flex-col items-center mb-10 last:mb-0'>
+                                       <div className='flex h-90 w-90 rounded-full  items-center justify-center mb-3' style={{ backgroundColor: val.bg }}>
+                                          <img src={val.icon} />
+                                       </div>
+                                       <p className='opacity-70 font-semibold text-sm whitespace-nowrap'> {val.text} </p>
+                                    </div>
+                                 )
+                              })}
+                           </div>
+                        </>
+                     } />
                   {
                      persona === 'admin' &&
                      <>
@@ -397,7 +478,7 @@ export default function ParentProfile({ isOwn }) {
                                     <div className='font-medium text-sm mt-2 lg:mt-6 flex flex-wrap lg:opacity-60'>
                                        {/* {userDetail.subscribeType ? userDetail.subscribeType : '-'} */}
                                        {userDetail.service ? userDetail.service.map((service, idx) => {
-                                          return <p className='opacity-80 mb-1 mr-1'>
+                                          return <p key={idx} className='opacity-80 mb-1 mr-1'>
                                              {service}{idx < userDetail.service.length - 1 ? ',' : ''}
                                           </p>
                                        }) : '-'}
@@ -407,13 +488,13 @@ export default function ParentProfile({ isOwn }) {
                            }
                         />
                         <ProfileCard
-                           className='mt-4 lg:order-7 lg:mt-0 lg:col-span-10'
+                           className='mt-4 lg:order-7 lg:mt-0 lg:col-span-9'
                            body={
                               <div className='flex' >
                                  <div className='flex-1 lg:mr-12'>
                                     <EditableText editable={editable}
                                        onClick={() => setToEdit({ ...toEdit, notes: { ...toEdit.notes, active: true } })}
-                                       text='Notes'
+                                       text='Additional Note'
                                        className='lg:text-21 whitespace-nowrap' />
                                     <p className='font-medium text-sm mt-2 lg:mt-6 lg:opacity-60'>
                                        {userDetail.notes ? userDetail.notes : '-'}
@@ -440,7 +521,7 @@ export default function ParentProfile({ isOwn }) {
                            }
                         />
                         <ProfileCard
-                           className='mt-4 lg:order-9 lg:mt-5 lg:col-span-10'
+                           className='mt-4 lg:order-9 lg:mt-5 lg:col-span-9'
                            body={
                               <div className='flex' >
                                  <div className='flex-1 lg:mr-12'>
@@ -460,7 +541,7 @@ export default function ParentProfile({ isOwn }) {
                                        </div>
                                        <div className='mb-7'>
                                           <p className='font-semibold mb-2'>Are you a parent or student?</p>
-                                          <p className='opacity-80'> Parent </p>
+                                          <p className='opacity-80'> Student </p>
                                        </div>
                                        <div className='mb-7'>
                                           <p className='font-semibold mb-2'>Phone Number</p>
@@ -468,35 +549,36 @@ export default function ParentProfile({ isOwn }) {
                                        </div>
                                        <div className='mb-7 col-span-2'>
                                           <p className='font-semibold mb-2'>What service are you seeking?</p>
-                                          <div> {userDetail.serviceSeeking.map((service, idx) => {
-                                             return <p className='opacity-80 inline-block mr-1'>
-                                                {service}{idx < userDetail.serviceSeeking.length - 1 ? ',' : ''} </p>
-                                          })}
+                                          <div>
+                                             {userDetail.serviceSeeking.map((service, idx) => {
+                                                return <p key={idx} className='opacity-80 inline-block mr-1'>
+                                                   {service}{idx < userDetail.serviceSeeking.length - 1 ? ',' : ''} </p>
+                                             })}
                                           </div>
                                        </div>
 
                                        <div className='mb-7'>
-                                          <p className='font-semibold mb-2'>Student First Name</p>
+                                          <p className='font-semibold mb-2'>Parent First Name</p>
                                           <p className='opacity-80'> {userDetail.FirstName} </p>
                                        </div>
                                        <div className='mb-7'>
-                                          <p className='font-semibold mb-2'>Student Last Name  </p>
+                                          <p className='font-semibold mb-2'>Parent Last Name  </p>
                                           <p className='opacity-80'> {userDetail.LastName} </p>
                                        </div>
                                        <div className='mb-7'>
-                                          <p className='font-semibold mb-2'>Student Email</p>
+                                          <p className='font-semibold mb-2'>Parent Email</p>
                                           <p className='opacity-80'> {userDetail.Email} </p>
                                        </div>
                                        <div className='mb-7'>
-                                          <p className='font-semibold mb-2'>Student Phone </p>
+                                          <p className='font-semibold mb-2'>Parent Phone </p>
                                           <p className='opacity-80'> {userDetail.Phone} </p>
                                        </div>
                                        <div className='mb-7'>
-                                          <p className='font-semibold mb-2'>Student’s School Name</p>
+                                          <p className='font-semibold mb-2'>School Name</p>
                                           <p className='opacity-80'> {userDetail.schoolName} </p>
                                        </div>
                                        <div className='mb-7'>
-                                          <p className='font-semibold mb-2'>Student Grade</p>
+                                          <p className='font-semibold mb-2'> Grade</p>
                                           <p className='opacity-80'>{userDetail.grade}  </p>
                                        </div>
 
@@ -506,16 +588,17 @@ export default function ParentProfile({ isOwn }) {
                                        </div>
                                        <div className='mb-7 col-span-2'>
                                           <p className='font-semibold mb-2'> Is your child taking any AP courses in school? Please select all that apply.</p>
-                                          <div> {userDetail.apCourses.map((service, idx) => {
-                                             return <p className='opacity-80 inline-block mr-1'>
-                                                {service}{idx < userDetail.apCourses.length - 1 ? ',' : ''} </p>
-                                          })}
+                                          <div>
+                                             {userDetail.apCourses.map((service, idx) => {
+                                                return <p key={idx} className='opacity-80 inline-block mr-1'>
+                                                   {service}{idx < userDetail.apCourses.length - 1 ? ',' : ''} </p>
+                                             })}
                                           </div>
                                        </div>
                                        <div className='mb-7 col-span-2'>
                                           <p className='font-semibold mb-2'>Select if any of these apply to you </p>
                                           <div> {userDetail.motive.map((service, idx) => {
-                                             return <p className='opacity-80 mb-1'>
+                                             return <p key={idx} className='opacity-80 mb-1'>
                                                 {service}{idx < userDetail.motive.length - 1 ? ',' : ''}
                                              </p>
                                           })}
@@ -528,7 +611,7 @@ export default function ParentProfile({ isOwn }) {
                                        <div className='mb-7 col-span-2'>
                                           <p className='font-semibold mb-2'>How did you hear about us? </p>
                                           <div> {userDetail.hearAboutUs.map((service, idx) => {
-                                             return <p className='opacity-80 inline-block mr-1'>
+                                             return <p key={idx} className='opacity-80 inline-block mr-1'>
                                                 {service}{idx < userDetail.hearAboutUs.length - 1 ? ',' : ''} </p>
                                           })}
                                           </div>
@@ -541,12 +624,15 @@ export default function ParentProfile({ isOwn }) {
                         />
                      </>
                   }
+
                </div>
 
             </div>
          </div>
+
          <ParentEditables settings={settings} fetchDetails={fetchDetails}
             userId={isOwn ? id : params.id} toEdit={toEdit} setToEdit={setToEdit} />
       </>
+
    )
 }

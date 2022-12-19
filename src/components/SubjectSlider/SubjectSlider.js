@@ -10,7 +10,7 @@ export default function SubjectSlider({className, title, totalMarks, outOf, subj
    return (
       <div className={className ? className : ''} >
          <OwlCarousel className="owl-theme" loop margin={30} items={1}>
-            <div class="item px-2 mt-3">
+            <div className="item px-2 mt-3">
                <div className="flex items-center justify-between">
                   <div className="">
                      <div className={styles.circle} >
@@ -27,9 +27,9 @@ export default function SubjectSlider({className, title, totalMarks, outOf, subj
                   </div>
                   <div className='flex-1 ml-10'>
                      <div className='grid grid-cols-2 gap-x-4 gap-y-4'>
-                        {subjects.map(({ marks, name, bg }) => {
+                        {subjects.map(({ marks, name, bg }, idx) => {
                            return (
-                              <div className='py-2.5 px-8 rounded-10' style={{backgroundColor: bg}} >
+                              <div key={idx} className='py-2.5 px-8 rounded-10' style={{backgroundColor: bg}} >
                                  <p className='font-bold text-[32px] text-center mb-1 '> {marks} </p>
                                  <p className='text-sm font-bold text-center mb-1' > {name} </p>
                               </div>
