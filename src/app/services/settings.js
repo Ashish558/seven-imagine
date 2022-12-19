@@ -15,7 +15,7 @@ export const settingsServicesApi = createApi({
             method: "PATCH",
             body: body,
             headers: {
-               "Content-type": "application/json; charset=UTF-8",
+               "Authorization": sessionStorage.getItem('token'),
             },
          })
       }),
@@ -25,7 +25,7 @@ export const settingsServicesApi = createApi({
             method: "PATCH",
             body: body,
             headers: {
-               "Content-type": "multipart/form-data",
+               "Authorization": sessionStorage.getItem('token'),
             },
          })
       }),

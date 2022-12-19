@@ -1,31 +1,42 @@
 import AppRoutes from "./navigation/AppRoutes";
 import "./App.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { updateIsLoggedIn } from "./app/slices/user";
+import { updateIsLoggedIn, updateUserDetails } from "./app/slices/user";
+import { useLazyGetPersonalDetailQuery } from "./app/services/users";
 
 function App() {
-    const [loading, setLoading] = useState(true);
-    const dispatch = useDispatch();
+   const [loading, setLoading] = useState(true);
+   const [fetchPersonalDetails, personalDetailsResp] = useLazyGetPersonalDetailQuery()
+   const dispatch = useDispatch();
+   const { isLoggedIn } = useSelector(state => state.user)
 
-    useEffect(() => {
-        setLoading(true);
-        // console.log(sessionStorage.getItem('token'))
-        if (sessionStorage.getItem("token")) {
-            setLoading(false);
-            dispatch(updateIsLoggedIn(true));
-        } else {
-            setLoading(false);
-        }
-    }, []);
+   useEffect(() => {
+      setLoading(true);
+      // console.log(sessionStorage.getItem('token'))
+      if (sessionStorage.getItem('token')) {
+         fetchPersonalDetails()
+            .then(res => {
+               const { firstName, lastName, _id } = res.data.data.user
+               setLoading(false);
+               dispatch(updateIsLoggedIn(true));
+               dispatch(updateUserDetails({
+                  firstName, lastName, id: _id
+               }))
+            })
+      } else {
+         setLoading(false);
+      }
 
-    if (loading) return <></>;
+   }, [isLoggedIn]);
 
-    return (
-        <>
-            <AppRoutes />
-        </>
-    );
+   if (loading) return <></>;
+
+   return (
+      <>
+         <AppRoutes />
+      </>
+   );
 }
 
 export default App;

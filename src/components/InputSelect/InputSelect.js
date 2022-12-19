@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./style.module.css";
 import DownArrow from "../../assets/icons/down-chevron.svg";
 import useOutsideAlerter from "../../hooks/useOutsideAlerter";
+import CCheckbox from "../CCheckbox/CCheckbox";
 
 export default function InputSelect({
    parentClassName,
@@ -13,12 +14,16 @@ export default function InputSelect({
    optionData,
    inputContainerClassName,
    onChange,
+   radio,
+   checkbox
 }) {
    const [selected, setSelected] = useState(false);
    const selectRef = useRef();
    useOutsideAlerter(selectRef, () => setSelected(false));
 
-   useEffect(() => setSelected(false), [value]);
+   useEffect(() => {
+     if(!checkbox) setSelected(false)
+   }, [value]);
 
    return (
       <div
@@ -56,14 +61,32 @@ export default function InputSelect({
                   {optionData.map((option, idx) => {
                      return (
                         <div
-                           className="outline-0 border-0 py-2 px-4"
+                           className="outline-0 border-0 py-2 px-4 flex justify-between"
                            key={idx}
                            onClick={() => {
                               onChange(option);
                            }}
                         >
-                           {" "}
-                           {option}{" "}
+                           <p>
+                              {option}
+                           </p>
+                           {
+                              radio && <input type='radio' name='name' checked={option === value ? true : false} />
+                           }
+                           {
+                              checkbox &&
+                              <div className="flex mb-3">
+                                 <CCheckbox
+                                    checked={checkbox.match.includes(option) ? true : false}
+                                    name='student'
+                                 // onChange={() =>
+                                 //    setData({
+                                 //       ...data,
+                                 //       recurring: !data.recurring,
+                                 //    })}
+                                 />
+                              </div>
+                           }
                         </div>
                      );
                   })}
