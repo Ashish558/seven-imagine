@@ -12,7 +12,7 @@ import NavLink from "./NavLink";
 import { useLocation } from "react-router-dom";
 import styles from "./navbar.module.css";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
-import { desktop } from "../../constants/breakpoints";
+import { desktop } from "../../constants/constants";
 import Options from "../../assets/Navbar/options";
 import { useSelector } from "react-redux";
 import Dashboard from "../../assets/Navbar/dashboard";
@@ -22,10 +22,6 @@ import Percentage from "../../assets/Navbar/percentage";
 import AssignedStudents from "../../assets/Navbar/assignedStudents";
 
 const tempnavdata = [
-   {
-      icon: Dashboard,
-      path: "/",
-   },
    {
       icon: Calendar,
       path: "/calendar",
@@ -41,10 +37,11 @@ const tempnavdata = [
    {
       icon: SettingsIcon,
       path: "/settings",
+      excludes : ['student', 'parent', 'tutor']
    },
    {
       icon: People,
-      path: "/users",
+      path: "/",
    },
    {
       icon: DollarIcon,
@@ -74,6 +71,11 @@ const parentNav = [
       icon: StudentTest,
       path: "/all-tests",
    },
+   {
+      icon: Exit,
+      path: "/exit",
+      parentClassName: "mt-auto",
+   },
 ]
 
 const studentNav = [
@@ -92,6 +94,11 @@ const studentNav = [
    {
       icon: StudentTest,
       path: "/all-tests",
+   },
+   {
+      icon: Exit,
+      path: "/exit",
+      parentClassName: "mt-auto",
    },
 ]
 const tutorNav = [
@@ -114,6 +121,11 @@ const tutorNav = [
    {
       icon: StudentTest,
       path: "/all-tests",
+   },
+   {
+      icon: Exit,
+      path: "/exit",
+      parentClassName: "mt-auto",
    },
 ]
 export default function Navbar() {
@@ -152,7 +164,7 @@ export default function Navbar() {
       // className={styles.navContainer}
       >
          <div className="lg:min-h-full lg:w-[100px] w-full h-75 lg:h-auto bg-primary p-4 lg:rounded-20 rounded-30 overflow-x-hidden overflow-y-hidden lg:overflow-y-auto lg:pt-14">
-            <div className=" flex lg:flex-col items-center self-stretch justify-around ">
+            <div className="h-ful flex lg:flex-col items-center self-stretch justify-around ">
                {navData.map((item, idx) => {
                   if (width < desktop) {
                      return (
