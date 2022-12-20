@@ -22,6 +22,7 @@ import {
    useLazyGetUsersByNameQuery,
 } from "../../app/services/session";
 import { convertTime12to24 } from "../../utils/utils";
+import InputSelect from "../../components/InputSelect/InputSelect";
 // import styles from "./calendar.css";
 
 const days = ["S", "M", "T", "W", "T", "F", "S"];
@@ -72,6 +73,8 @@ export default function Calendar() {
    // const params = useParams()
    const [currentDate, setCurrentDate] = useState(new Date)
    const { isLoggedIn } = useSelector((state) => state.user);
+
+   const [timeZone, setTimeZone] = useState('IST')
 
    const [searchedUser, setSearchedUser] = useState({
       id: '',
@@ -360,7 +363,7 @@ export default function Calendar() {
                                        className="student-circle"
                                        style={{
                                           backgroundColor:
-                                             student.bg,
+                                             '#51D294',
                                        }}
                                     ></div>
                                  </div>
@@ -389,7 +392,7 @@ export default function Calendar() {
                      </div>
                   )}
                </div>
-               <div className="flex-1 w-4/5" id="calendarContainer">
+               <div className="flex-1 w-4/5 relative" id="calendarContainer">
                   <FullCalendar
                      events={events}
                      eventClick={(info) => handleEventClick(info)}
@@ -447,6 +450,13 @@ export default function Calendar() {
                      selectOverlap={false}
                      defaultTimedEventDuration="01:00"
                   />
+                  <div className="" style={{position: "absolute", top: '00px', right: '40px' }}>
+                     <InputSelect value={timeZone} optionData={['IST', 'US']}
+                     onChange={val => setTimeZone(val)}
+                     parentClassName='w-[100px]'
+                     inputContainerClassName='text-primaryDark font-bold text-xl'
+                      />
+                  </div>
                </div>
             </div>
          </div>

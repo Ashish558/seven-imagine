@@ -57,7 +57,9 @@ export default function Modal({
                      </button>
                   )}
                </div>
-               <button className={styles.cancelBtn} style={cancelBtnStyle ? { ...cancelBtnStyle } : ''} >
+               <button className={styles.cancelBtn} 
+                style={cancelBtnStyle}
+                >
                   <img src={CancelIcon} onClick={handleClose} />
                </button>
             </div>
