@@ -51,6 +51,7 @@ const students = [
 
 export default function Calendar() {
    const calendarRef = useRef(null);
+   const prevBtnRef = useRef(null);
    // console.log(calendarRef.current)
    const [events, setEvents] = useState([]);
    const [persona, setPersona] = useState("");
@@ -74,7 +75,7 @@ export default function Calendar() {
    const [currentDate, setCurrentDate] = useState(new Date)
    const { isLoggedIn } = useSelector((state) => state.user);
 
-   const [timeZone, setTimeZone] = useState('IST')
+   const [timeZone, setTimeZone] = useState('local')
 
    const [searchedUser, setSearchedUser] = useState({
       id: '',
@@ -335,6 +336,16 @@ export default function Calendar() {
       // calendarRef.current.gotoDate(currentDate)
    }, [currentDate])
 
+   useEffect(() => {
+      if(calendarRef.current === null) return
+      if(calendarRef.current === undefined) return
+    
+      // document.getElementById('calendarContainer').refetchEvents()
+      // calendarRef.refetchEvents()
+      // calendarRef.current.gotoDate('')
+      // calendarRef.current.setOption('timeZone', timeZone)
+   }, [timeZone])
+// console.log(calendarRef.current);
    return (
       <>
          <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">
@@ -395,6 +406,8 @@ export default function Calendar() {
                <div className="flex-1 w-4/5 relative" id="calendarContainer">
                   <FullCalendar
                      events={events}
+                     timeZone={timeZone}
+                     // timeZone={timeZone === 'IST' ? 'local' : timeZone }
                      eventClick={(info) => handleEventClick(info)}
                      ref={calendarRef}
                      plugins={[
@@ -406,7 +419,7 @@ export default function Calendar() {
                      customButtons={{
                         prevButton: {
                            text: (
-                              <span className="calendar-prevButton-custom">
+                              <span className="calendar-prevButton-custom" >
                                  <img src={LeftIcon} />
                               </span>
                            ),
@@ -421,7 +434,6 @@ export default function Calendar() {
                            click: handleNextClick,
                         },
                      }}
-
                      eventContent={eventContent}
                      initialView="timeGridWeek"
                      allDaySlot={false}
@@ -450,12 +462,12 @@ export default function Calendar() {
                      selectOverlap={false}
                      defaultTimedEventDuration="01:00"
                   />
-                  <div className="" style={{position: "absolute", top: '00px', right: '40px' }}>
-                     <InputSelect value={timeZone} optionData={['IST', 'US']}
-                     onChange={val => setTimeZone(val)}
-                     parentClassName='w-[100px]'
-                     inputContainerClassName='text-primaryDark font-bold text-xl'
-                      />
+                  <div className="" style={{ position: "absolute", top: '00px', right: '40px' }}>
+                     <InputSelect value={timeZone} optionData={['local', 'America/New_York']}
+                        onChange={val => setTimeZone(val)}
+                        parentClassName='w-[100px]'
+                        inputContainerClassName='text-primaryDark font-bold text-'
+                     />
                   </div>
                </div>
             </div>

@@ -61,7 +61,7 @@ export default function InputSelect({
                   {optionData.map((option, idx) => {
                      return (
                         <div
-                           className="outline-0 border-0 py-2 px-4 flex justify-between"
+                           className="outline-0 border-0 py-2.5 px-4 flex items-center justify-between"
                            key={idx}
                            onClick={() => {
                               onChange(option);
@@ -75,10 +75,11 @@ export default function InputSelect({
                            }
                            {
                               checkbox &&
-                              <div className="flex mb-3">
+                              <div className="flex">
                                  <CCheckbox
                                     checked={checkbox.match.includes(option) ? true : false}
                                     name='student'
+                                    
                                  // onChange={() =>
                                  //    setData({
                                  //       ...data,

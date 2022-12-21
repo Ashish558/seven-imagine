@@ -80,6 +80,16 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
          title: 'Lead Status',
          api: 'userDetail',
       },
+      {
+         name: 'subjects',
+         title: 'Subjects',
+         api: 'userDetail',
+      },
+      {
+         name: 'accomodations',
+         title: 'Accomodations',
+         api: 'userDetail',
+      },
    ]
 
    // console.log(currentField)
@@ -110,6 +120,7 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
          return tempToEdit[key] = { ...toEdit[key], active: false }
       })
       setToEdit(tempToEdit)
+      // setToEdit()
    }
 
 
@@ -152,6 +163,17 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
       setCurrentToEdit({ ...currentToEdit, service: tempService })
    }
 
+   const handleSubjectChange = item => {
+      let tempSubjects = [...currentToEdit.subjects]
+      if (tempSubjects.includes(item)) {
+         // console.log(tempSubjects);
+         tempSubjects = tempSubjects.filter(subject => subject !== item)
+      } else {
+         tempSubjects.push(item)
+      }
+      setCurrentToEdit({ ...currentToEdit, subjects: tempSubjects })
+   }
+
    const handleSubmit = e => {
       e.preventDefault()
       let reqBody = { ...currentToEdit }
@@ -162,15 +184,17 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
          updateFields({ id: userId, fields: reqBody })
             .then(res => {
                console.log(res)
-               fetchDetails(true)
-               handleClose()
+               fetchDetails(true, true)
+               // handleClose()
+               // setCurrentToEdit({})
             })
       } else {
          updateDetails({ id: userId, fields: reqBody })
             .then(res => {
                console.log(res)
-               fetchDetails(true)
-               handleClose()
+               fetchDetails(true, true)
+               // handleClose()
+               // setCurrentToEdit({})
             })
       }
    }
@@ -239,7 +263,7 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                  </div>
 
                                  <InputSearch
-                                 labelClassname='hidden'
+                                    labelClassname='hidden'
                                     placeholder="Type Student Name"
                                     parentClassName="w-full  mb-10"
                                     inputContainerClassName="bg-lightWhite border-0 pt-3.5 pb-3.5"
@@ -419,6 +443,36 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                               </div>
                            </div>
                         }
+                        {currentField.name === 'subjects' &&
+                           <div>
+                              <div className='flex items-center mb-5 pt-1 pb-5'>
+                                 <InputSelect
+                                    value={currentToEdit.subjects.length === 0 ? '' : currentToEdit.subjects[0]}
+                                    checkbox={{
+                                       visible: true,
+                                       name: 'subjects',
+                                       match: currentToEdit.subjects
+                                    }}
+                                    optionData={['Maths', 'English']}
+                                    inputContainerClassName="pt-3 pb-3 border bg-white"
+                                    placeholder="Subjects"
+                                    parentClassName="w-full mr-4"
+                                    type="select"
+                                    onChange={val =>
+                                       handleSubjectChange(val)
+                                       // setCurrentToEdit({ ...currentToEdit, service: val })
+                                    }
+                                    onOptionClick={(item) => {
+                                       // setStudent(item.value);
+                                       console.log(item);
+                                       // handleStudentsChange(item)
+                                       // setCurrentToEdit({ ...currentToEdit, students: [... item._id] });
+                                    }}
+                                 />
+
+                              </div>
+                           </div>
+                        }
                         {currentField.name === 'leadStatus' &&
                            <div>
                               <div className='flex items-center mb-5 pt-2'>
@@ -434,6 +488,21 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                     parentClassName="w-full mr-4"
                                     type="select"
                                  />
+                              </div>
+                           </div>
+                        }
+                        {currentField.name === 'accomodations' &&
+                           <div>
+                              <div className='flex items-center mb-5 pt-6'>
+                                 {/* <p className='font-medium mr-4 min-w-[60px]'>  </p> */}
+                                 <InputField
+                                    labelClassname='hidden'
+                                    placeholder='Accomodations'
+                                    inputContainerClassName='text-sm pt-3 pb-3 px-5 bg-primary-50 border-0'
+                                    inputClassName='bg-transparent'
+                                    parentClassName='flex-1 ' type='text'
+                                    value={currentToEdit.accomodations}
+                                    onChange={e => setCurrentToEdit({ ...currentToEdit, accomodations: e.target.value })} />
                               </div>
                            </div>
                         }
