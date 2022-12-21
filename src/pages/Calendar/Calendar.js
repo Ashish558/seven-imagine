@@ -463,9 +463,9 @@ export default function Calendar() {
                      defaultTimedEventDuration="01:00"
                   />
                   <div className="" style={{ position: "absolute", top: '00px', right: '40px' }}>
-                     <InputSelect value={timeZone} optionData={['local', 'America/New_York']}
+                     <InputSelect value={timeZone.substring(0,9)} optionData={['local', 'America/New_York']}
                         onChange={val => setTimeZone(val)}
-                        parentClassName='w-[100px]'
+                        parentClassName='w-[150px]'
                         inputContainerClassName='text-primaryDark font-bold text-'
                      />
                   </div>
