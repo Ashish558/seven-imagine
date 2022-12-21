@@ -48,7 +48,34 @@ const students = [
       bg: "#F6935A",
    },
 ];
-
+// const timeZones = [
+//  'local',
+//  'America/Hawaii',
+//  'PST',
+//  'PST',
+//  'ST',
+//  'MST',
+//  'America/Alaska',
+//  'America/California',
+//  'America/Florida',
+//  'America/Illinois',
+//  'America/Kentucky',
+//  'America/New_Jersey',
+//  'America/New_York',
+//  'America/Texas',
+//  'America/Washington',
+// ]
+const timeZones = [
+ 'local',
+ 'AST',
+ 'EST',
+ 'CST',
+ 'MST',
+ 'PST',
+ 'AKST',
+ 'HST',
+ 'UTC',
+]
 export default function Calendar() {
    const calendarRef = useRef(null);
    const prevBtnRef = useRef(null);
@@ -464,7 +491,9 @@ export default function Calendar() {
                      defaultTimedEventDuration="01:00"
                   />
                   <div className="" style={{ position: "absolute", top: '00px', right: '40px' }}>
-                     <InputSelect value={timeZone.substring(0,9)} optionData={['local', 'America/New_York']}
+                     <InputSelect value={timeZone.substring(0,9)}
+                     //  optionData={['local', 'America/New_York']}
+                      optionData={timeZones}
                         onChange={val => setTimeZone(val)}
                         parentClassName='w-[150px]'
                         inputContainerClassName='text-primaryDark font-bold text-'
