@@ -170,6 +170,10 @@ export default function StudentProfile({ isOwn }) {
       associatedParent: {
          active: false,
          associatedParent: ''
+      },
+      subjects: {
+         active: false,
+         subjects: []
       }
    })
 
@@ -197,12 +201,10 @@ export default function StudentProfile({ isOwn }) {
       getUserDetail({ id: userId })
          .then(res => {
             console.log('response', res.data.data);
-            const { firstName, lastName } = res.data.data.user
+            const { firstName, lastName, phone, email } = res.data.data.user
+            const { service, accomodations, timeZone, birthyear } = res.data.data.userdetails
+
             setUser(res.data.data.user)
-
-            const { phone, email } = res.data.data.user
-            const { service } = res.data.data.userdetails
-
             setToEdit({
                ...toEdit,
                fullName: {
@@ -212,11 +214,16 @@ export default function StudentProfile({ isOwn }) {
                },
                timeZone: {
                   ...toEdit.timeZone,
+                  timeZone: timeZone ? timeZone : ''
                },
                contact: {
                   ...toEdit.contact,
                   email: email,
                   phone: phone === null ? '' : phone
+               },
+               birthYear: {
+                  ...toEdit.birthYear,
+                  birthyear,
                },
                notes: {
                   ...toEdit.notes,
@@ -224,6 +231,10 @@ export default function StudentProfile({ isOwn }) {
                service: {
                   ...toEdit.service,
                   service: service ? [...service] : []
+               },
+               accomodations: {
+                  ...toEdit.accomodations,
+                  accomodations: accomodations
                }
             })
             setUserDetail(res.data.data.userdetails)
@@ -295,7 +306,7 @@ export default function StudentProfile({ isOwn }) {
                               </p>
                            </div>
                            <div className='flex flex-1 flex-col'>
-                              <EditableText editable={false}
+                              <EditableText editable={editable}
                                  onClick={() => setToEdit({ ...toEdit, subjects: { ...toEdit.subjects, active: true } })}
                                  text='Subjects'
                                  className='text-lg mb-2' />
@@ -391,13 +402,14 @@ export default function StudentProfile({ isOwn }) {
                            </div>
                            <div>
                               <p className='text-primary font-bold text-lg'>
-                                 <EditableText editable={false}
+                                 <EditableText editable={editable}
                                     onClick={() => setToEdit({ ...toEdit, accomodations: { ...toEdit.accomodations, active: true } })}
                                     text='Accomodations'
                                     className='text-lg mb-2' />
                               </p>
                               <p className='mt-1.5 font-medium text-sm whitespace-nowrap'>
-                                 Accomodations
+                                 {userDetail.accomodations ? userDetail.accomodations : '-'}
+
                               </p>
                            </div>
                         </div>

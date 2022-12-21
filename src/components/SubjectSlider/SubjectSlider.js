@@ -39,8 +39,7 @@ export default function SubjectSlider({className, title, totalMarks, outOf, subj
                   </div>
                </div>
             </div>
-
-
+            
          </OwlCarousel>
 
       </div>

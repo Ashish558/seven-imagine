@@ -27,7 +27,8 @@ export default function DaysEndDate({ days, setDays, data, setData }) {
                         key={idx}
                         id={day.id}
                         body={day.text}
-                        bodyClassName={`font-medium flex ${day.checked ? ' bg-primary text-white' : 'bg-lightWhite'} mr-1.4 justify-center items-center text-lg w-[54px] h-[54px] rounded-10`}
+                        bodyClassName={`font-medium flex ${day.checked ? ' bg-primary text-white' : 'bg-lightWhite'} mr-1.4 justify-center items-center text-lg w-[54px] h-[54px] rounded-10 `}
+                        className={`${!data.recurring ? 'opacity-50 pointer-events-none' : ''}`}
                         checked={day.checked}
                         onChange={handleDayChange}
                      />

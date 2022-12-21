@@ -28,7 +28,6 @@ export default function InputField({
       <div className={` ${parentClassName && parentClassName}`}>
          <label
             className={`inline-block font-semibold ${labelClassname} ml-3`}
-            style={style}
          >
             {label}
             {required && (

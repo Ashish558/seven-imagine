@@ -85,3 +85,12 @@ export function getCurrentDate(separator = '-') {
 
    return `${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date}`
 }
+
+export const getLocalTimeZone =() => {
+   const date = new Date();
+   const dateAsString = date.toString();
+   const timezone = dateAsString.match(/\(([^\)]+)\)$/)[1];
+   let localTimeZone = []
+   timezone.split(' ').map(item => localTimeZone.push(item.substring(0, 1)))
+   return localTimeZone.join('')
+}

@@ -61,6 +61,7 @@ module.exports = {
             lightGray: "#7C859C",
             primaryBlue: "#2A6CFB",
             primaryOrange: "#F6A429",
+            primaryOrangeDark: "#FF4300",
             lightWhite: "#F3F5F7",
             primaryWhite: {
                100: '#BEC2CE',
