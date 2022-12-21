@@ -21,7 +21,7 @@ import {
    useLazyGetTutorStudentsQuery,
    useLazyGetUsersByNameQuery,
 } from "../../app/services/session";
-import { convertTime12to24 } from "../../utils/utils";
+import { convertTime12to24, getLocalTimeZone } from "../../utils/utils";
 import InputSelect from "../../components/InputSelect/InputSelect";
 // import styles from "./calendar.css";
 
@@ -66,22 +66,21 @@ const students = [
 //  'America/Washington',
 // ]
 const timeZones = [
- 'local',
- 'AST',
- 'EST',
- 'CST',
- 'MST',
- 'PST',
- 'AKST',
- 'HST',
- 'UTC-11',
- 'UTC+10',
+   'local',
+   'AST',
+   'EST',
+   'CST',
+   'MST',
+   'PST',
+   'AKST',
+   'HST',
 ]
 export default function Calendar() {
    const calendarRef = useRef(null);
    // console.log(calendarRef.current)
    const [events, setEvents] = useState([]);
    const [persona, setPersona] = useState("");
+   // const [timeZones, setTimeZones] = useState(temptimeZones)
 
    const [eventModalActive, setEventModalActive] = useState(false);
    const [updateEventModalActive, setUpdateEventModalActive] = useState(false);
@@ -112,6 +111,11 @@ export default function Calendar() {
    const refetchSessions = () => {
       fetchSessions(searchedUser.id, searchedUser.role)
    }
+
+   // useEffect(() => {
+   //    let temp = timeZones.shi
+   //    setTimeZones()
+   // }, [])
    //change btn
    useEffect(() => {
       if (sessionStorage.getItem("role")) {
@@ -302,6 +306,7 @@ export default function Calendar() {
       if (persona === "tutor") {
          fetchStudents(userId).then((res) => {
             setEventDetails(res.data.data.session);
+            // console.log(res.data.data);
             let tempSession = res.data.data.session.map((session) => {
                const time = session.time;
                const strtTime12HFormat = `${time.start.time} ${time.start.timeType}`;
@@ -335,6 +340,7 @@ export default function Calendar() {
                   ])
                ).values(),
             ];
+            // console.log(arrayUniqueByKey);
 
             let tempstudents = arrayUniqueByKey.map((item) => {
                return {
@@ -364,8 +370,8 @@ export default function Calendar() {
    }, [currentDate])
 
    useEffect(() => {
-      if(calendarRef.current === null) return
-      if(calendarRef.current === undefined) return
+      if (calendarRef.current === null) return
+      if (calendarRef.current === undefined) return
       setEvents([...events])
       // document.getElementById('calendarContainer').refetchEvents()
       // calendarRef.refetchEvents()
@@ -373,7 +379,7 @@ export default function Calendar() {
       // calendarRef.current.setOption('timeZone', timeZone)
    }, [timeZone])
 
-// console.log(calendarRef.current);
+   // console.log(calendarRef.current);
    return (
       <>
          <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">
@@ -491,9 +497,9 @@ export default function Calendar() {
                      defaultTimedEventDuration="01:00"
                   />
                   <div className="" style={{ position: "absolute", top: '00px', right: '40px' }}>
-                     <InputSelect value={timeZone.substring(0,9)}
-                     //  optionData={['local', 'America/New_York']}
-                      optionData={timeZones}
+                     <InputSelect value={timeZone == 'local' ? getLocalTimeZone() : timeZone.substring(0, 9)}
+                        //  optionData={['local', 'America/New_York']}
+                        optionData={timeZones}
                         onChange={val => setTimeZone(val)}
                         parentClassName='w-[150px]'
                         inputContainerClassName='text-primaryDark font-bold text-'
