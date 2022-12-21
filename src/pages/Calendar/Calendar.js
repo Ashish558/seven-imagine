@@ -339,12 +339,13 @@ export default function Calendar() {
    useEffect(() => {
       if(calendarRef.current === null) return
       if(calendarRef.current === undefined) return
-    
+      setEvents([...events])
       // document.getElementById('calendarContainer').refetchEvents()
       // calendarRef.refetchEvents()
       // calendarRef.current.gotoDate('')
       // calendarRef.current.setOption('timeZone', timeZone)
    }, [timeZone])
+
 // console.log(calendarRef.current);
    return (
       <>
