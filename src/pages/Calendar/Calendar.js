@@ -74,11 +74,11 @@ const timeZones = [
  'PST',
  'AKST',
  'HST',
- 'UTC',
+ 'UTC-11',
+ 'UTC+10',
 ]
 export default function Calendar() {
    const calendarRef = useRef(null);
-   const prevBtnRef = useRef(null);
    // console.log(calendarRef.current)
    const [events, setEvents] = useState([]);
    const [persona, setPersona] = useState("");
