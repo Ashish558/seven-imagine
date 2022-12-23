@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import moment from "moment";
+import moment from "moment-timezone";
+
 import "./calendar.css";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import FullCalendar, { formatDate } from "@fullcalendar/react"; // must go before plugins
-import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
+// import { Calendar } from '@fullcalendar/core';
+import { toMoment } from '@fullcalendar/moment';
+import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridWeek from "@fullcalendar/timegrid";
@@ -24,6 +27,7 @@ import {
 import { convertTime12to24, getLocalTimeZone } from "../../utils/utils";
 import InputSelect from "../../components/InputSelect/InputSelect";
 // import styles from "./calendar.css";
+import momentTimezonePlugin from '@fullcalendar/moment-timezone';
 
 const days = ["S", "M", "T", "W", "T", "F", "S"];
 const students = [
@@ -48,32 +52,34 @@ const students = [
       bg: "#F6935A",
    },
 ];
+
+// CST - "America/Indiana/Indianapolis"
+//EST "America/New_York"
+//MST - "America/North_Dakota/Beulah"
+
 // const timeZones = [
-//  'local',
-//  'America/Hawaii',
-//  'PST',
-//  'PST',
-//  'ST',
-//  'MST',
-//  'America/Alaska',
-//  'America/California',
-//  'America/Florida',
-//  'America/Illinois',
-//  'America/Kentucky',
-//  'America/New_Jersey',
-//  'America/New_York',
-//  'America/Texas',
-//  'America/Washington',
+//    'local',
+//    'UTC-05:00',
+//    'UTC-06:00',
+//    'UTC-07:00',
+//    'UTC-08:00',
+//    'AST',
+//    'EST',
+//    'CST',
+//    'MST',
+//    'PST',
+//    'AKST',
+//    'HST',
 // ]
 const timeZones = [
-   'local',
-   'AST',
-   'EST',
-   'CST',
-   'MST',
-   'PST',
-   'AKST',
-   'HST',
+   'Asia/Kolkata',
+   // 'America/New_York',
+   'US/Alaska',
+   'US/Central',
+   'US/Eastern',
+   'US/Hawaii',
+   'US/Mountain',
+   'US/Pacific',
 ]
 export default function Calendar() {
    const calendarRef = useRef(null);
@@ -101,7 +107,8 @@ export default function Calendar() {
    const [currentDate, setCurrentDate] = useState(new Date)
    const { isLoggedIn } = useSelector((state) => state.user);
 
-   const [timeZone, setTimeZone] = useState('local')
+   const [timeZone, setTimeZone] = useState('Asia/Kolkata')
+   // console.log(moment.tz.zonesForCountry('US'))
 
    const [searchedUser, setSearchedUser] = useState({
       id: '',
@@ -112,11 +119,6 @@ export default function Calendar() {
       fetchSessions(searchedUser.id, searchedUser.role)
    }
 
-   // useEffect(() => {
-   //    let temp = timeZones.shi
-   //    setTimeZones()
-   // }, [])
-   //change btn
    useEffect(() => {
       if (sessionStorage.getItem("role")) {
          setPersona(sessionStorage.getItem("role"));
@@ -130,6 +132,7 @@ export default function Calendar() {
       // console.log(url)
       fetchUserSessions(url).then((res) => {
          setEventDetails(res.data.data.session);
+         // console.log(res.data.data.session)
          let tempSession = res.data.data.session.map((session) => {
             const time = session.time;
             const strtTime12HFormat = `${time.start.time} ${time.start.timeType}`;
@@ -145,17 +148,16 @@ export default function Calendar() {
             const endMinutes = parseInt(endTime.split(":")[1]);
 
             let startDate = new Date(session.date);
+            // let startDate = new Date(session.date).toUTCString()
             startHours !== NaN && startDate.setHours(startHours);
             startMinutes !== NaN && startDate.setMinutes(startMinutes);
 
             let endDate = new Date(session.date);
             endHours !== NaN && endDate.setHours(endHours);
             endMinutes !== NaN && endDate.setMinutes(endMinutes);
-
             let eventObj = {
                id: session._id,
                start: startDate,
-               // end: endDate,
                title: session.tutorName,
                description: `${strtTime12HFormat} - ${endTime}`,
             };
@@ -229,9 +231,15 @@ export default function Calendar() {
       const calendarAPI = calendarRef?.current?.getApi();
       calendarAPI?.next();
    };
-
    const eventContent = (arg) => {
       // console.log(arg)
+      // console.log(new Date(arg.event._instance.range.start).getHours())
+      let m = moment.tz(`${arg.event.start}`, "America/Los_Angeles").format();
+      // console.log(new Date(m).getHours())
+      // console.log(new Date(m).getMinutes())
+      // console.log(moment.tz(`${arg.event.start}`, timeZone).format())
+
+      let title = ''
       const description = arg.event._def.extendedProps.description;
       return (
          <div className="p-0.5 h-full">
@@ -372,14 +380,55 @@ export default function Calendar() {
    useEffect(() => {
       if (calendarRef.current === null) return
       if (calendarRef.current === undefined) return
-      setEvents([...events])
+      setEvents(prev => {
+         // console.log(eventDetails);
+         return prev.map(item => {
+            // console.log('item.start :', item.start)
+            const ev = eventDetails.find(ev => ev._id === item.id)
+            // // console.log('utc', new Date(ev.date).toUTCString())
+            // let startTime = item.start
+            // if (timeZone === 'IST' && ev.timeZone !== timeZone) {
+            //    startTime = moment.tz(`${item.start}`, 'Asia/Kolkata').format()
+            // } else {
+            //    startTime = moment.tz(`${item.start}`, timeZone).format()
+            // }
+            // if (ev.timeZone === timeZone) {
+            //    startTime = item.start
+            //    // console.log(ev)
+            //    // moment.tz(`${item.start}`, 'Indian').format()
+            // }
+            const time = ev.time;
+            const startTime = convertTime12to24(
+               `${time.start.time} ${time.start.timeType}`
+            );
+
+            const startHours = parseInt(startTime.split(":")[0]);
+            const startMinutes = parseInt(startTime.split(":")[1]);
+
+            let startDate = new Date(ev.date);
+            startHours !== NaN && startDate.setHours(startHours);
+            startMinutes !== NaN && startDate.setMinutes(startMinutes);
+
+            let date = new Date(new Date(
+               startDate.toLocaleString('en-US', {
+                 timeZone,
+               }),
+             ))
+            // console.log('updated date', date);
+            // console.log('item.start' ,item.start);
+            // console.log(date);
+            // console.log('startTime :', new Date(startTime).getHours())
+            // console.log(moment.utc().format('YYYY-MM-DD hh:mm:ss A'));
+            // console.log(moment.utc().format('YYYY-MM-DD hh:mm:ss A'));
+            return { ...item, start: date }
+         })
+      })
       // document.getElementById('calendarContainer').refetchEvents()
       // calendarRef.refetchEvents()
       // calendarRef.current.gotoDate('')
       // calendarRef.current.setOption('timeZone', timeZone)
-   }, [timeZone])
+   }, [timeZone, events.length])
 
-   // console.log(calendarRef.current);
    return (
       <>
          <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">
@@ -440,7 +489,7 @@ export default function Calendar() {
                <div className="flex-1 w-4/5 relative" id="calendarContainer">
                   <FullCalendar
                      events={events}
-                     timeZone={timeZone}
+                     // timeZone={timeZone === getLocalTimeZone() ? 'local' : timeZone}
                      // timeZone={timeZone === 'IST' ? 'local' : timeZone }
                      eventClick={(info) => handleEventClick(info)}
                      ref={calendarRef}
@@ -448,6 +497,7 @@ export default function Calendar() {
                         timeGridPlugin,
                         timeGridWeek,
                         interactionPlugin,
+                        // momentTimezonePlugin
                      ]}
                      firstDay={1}
                      customButtons={{
@@ -497,11 +547,13 @@ export default function Calendar() {
                      defaultTimedEventDuration="01:00"
                   />
                   <div className="" style={{ position: "absolute", top: '00px', right: '40px' }}>
-                     <InputSelect value={timeZone == 'local' ? getLocalTimeZone() : timeZone.substring(0, 9)}
+                     <InputSelect value={timeZone == 'local' ? getLocalTimeZone() : timeZone.substring(0, 20)}
                         //  optionData={['local', 'America/New_York']}
+                        // optionData={['Asia/Calcutta', ...moment.tz.zonesForCountry('US')]}
+                        // optionData={['Asia/Calcutta', ...moment.tz.zonesForCountry('US')]}
                         optionData={timeZones}
                         onChange={val => setTimeZone(val)}
-                        parentClassName='w-[150px]'
+                        parentClassName='w-[250px]'
                         inputContainerClassName='text-primaryDark font-bold text-'
                      />
                   </div>

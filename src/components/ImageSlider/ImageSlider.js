@@ -19,7 +19,7 @@ export default function ImageSlider({ images, className, pagination }) {
    
             {images.map((image, idx) => {
                return (
-                  <div className={`${styles.item}
+                  <div key={idx} className={`${styles.item}
                 ${idx === activeIndex ? styles.active : idx < activeIndex ? styles.previous : styles.inactive} w-full`} >
                      <img src={image} className='w-full' />
                   </div>
@@ -32,7 +32,7 @@ export default function ImageSlider({ images, className, pagination }) {
             <div className={styles.pagination} >
                <div className='flex items-center justify-center'>
                   {[...Array(images.length)].map((x, i) =>
-                     <div className='mr-[18px] cursor-pointer' >
+                     <div className='mr-[18px] cursor-pointer' key={i} >
                         <img src={i === activeIndex ? CircleActive : CircleInactive} 
                         onClick={()=> setActiveIndex(i) } />
                      </div>
