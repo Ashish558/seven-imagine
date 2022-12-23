@@ -86,11 +86,23 @@ export function getCurrentDate(separator = '-') {
    return `${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date}`
 }
 
-export const getLocalTimeZone =() => {
+export const getLocalTimeZone = () => {
    const date = new Date();
    const dateAsString = date.toString();
    const timezone = dateAsString.match(/\(([^\)]+)\)$/)[1];
    let localTimeZone = []
    timezone.split(' ').map(item => localTimeZone.push(item.substring(0, 1)))
-   return localTimeZone.join('')
+   let tz = localTimeZone.join('')
+   if(tz === 'IST') return 'Asia/Kolkata'
+   return tz
 }
+
+
+// // timezones
+// function getCurrentLocalDateTime() {
+//    return moment().format();
+// }
+
+// function convertLocalToUTC(dt, dtFormat) {
+//    return moment(dt, dtFormat).utc().format()
+// }
