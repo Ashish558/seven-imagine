@@ -83,7 +83,7 @@ export default function Invoice() {
             const tempinvoices = res.data.data.invoice.map(invoice => {
                const { _id, createdAt, isPaid, amountDue, balanceChange, type } = invoice
                return {
-                  _id: _id,
+                  _id,
                   name: '-',
                   currentBalance: '$230',
                   invoiceId: _id.slice(-8),
@@ -91,13 +91,23 @@ export default function Invoice() {
                   status: isPaid ? 'Paid' : 'Unpaid',
                   paidOn: '-',
                   type: checkIfExist(type),
-                  amountDue: amountDue,
-                  balanceCredit: balanceChange,
+                  amountDue: `$${amountDue}`,
+                  balanceCredit: `$${balanceChange}`,
                }
             })
             setAllInvoices(tempinvoices)
          })
    }
+
+   useEffect(() => {
+      if (invoiceData.invoiceType === 'hourly') {
+         setInvoiceData({
+            ...invoiceData,
+            balance: invoiceData.amountDue
+         })
+      }
+      // console.log(invoiceData)
+   }, [invoiceData.invoiceType, invoiceData.amountDue])
 
    useEffect(() => {
       fetchInvoices()
@@ -111,7 +121,7 @@ export default function Invoice() {
          //       <p className='font-bold text-[48px] mb-[30px] text-[#25335A]'> Invoices </p>
          //       <div className='flex'>
          //          <div className='grid grid-cols-2 flex-1 gap-x-[46px] gap-y-[16px] mr-[50px]'> */}
-         <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pt-[30px] pb-[50px] pl-[66px] pr-[41px]'>
+         <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pt-[30px] pb-[50px] pl-[20px] pr-[41px]'>
             <div className=''>
                <p className='font-bold text-[48px] mb-[30px] text-[#25335A]'> Invoice </p>
                <form className='flex' onSubmit={handleSubmit} >
@@ -137,6 +147,7 @@ export default function Invoice() {
                         labelClassname="ml-2 mb-1.2"
                         inputContainerClassName="relative border bg-white border pt-2.5 pb-2.5"
                         inputClassName="ml-10"
+                        type='number'
                         inputLeftField={
                            <div className={`relative z-5000 flex items-center justify-center ${inputStyle.phoneNumberField}`}
                               style={{ width: '50px' }} >
@@ -172,6 +183,8 @@ export default function Invoice() {
                         labelClassname="ml-2 mb-1.2"
                         inputContainerClassName="relative border bg-white border pt-2.5 pb-2.5"
                         inputClassName="ml-10"
+                        type='number'
+                        disabled={invoiceData.invoiceType === 'hourly' ? true : false}
                         inputLeftField={
                            <div className={`relative z-5000 flex items-center justify-center ${inputStyle.phoneNumberField}`}
                               style={{ width: '50px' }} >

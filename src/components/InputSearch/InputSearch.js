@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import SeacrchIcon from '../../assets/icons/search.svg'
-import useOutsideAlerter from "../../useOutsideAlerter";
+import useOutsideAlerter from "../../hooks/useOutsideAlerter";
+import CCheckbox from "../CCheckbox/CCheckbox";
 import styles from '../InputSelect/style.module.css'
 
 export default function InputSearch({
@@ -20,15 +21,17 @@ export default function InputSearch({
    required,
    optionData,
    onOptionClick,
-   optionPrefix
+   optionPrefix,
+   checkbox
 }) {
-   
+
    const [optionsVisible, setOptionsVisible] = useState(false)
    const inputRef = useRef()
    const handleClose = () => {
       setOptionsVisible(false)
    }
    useOutsideAlerter(inputRef, handleClose)
+
    return (
       <div className={` ${parentClassName && parentClassName}`} ref={inputRef} >
          <label
@@ -62,14 +65,28 @@ export default function InputSearch({
                   {optionData.map((option, idx) => {
                      return (
                         <div className='outline-0 border-0 py-2 px-4 flex justify-between' key={idx}
-                           onClick={() =>{ onOptionClick(option);handleClose()} }
+                           onClick={() => {return checkbox ? onOptionClick(option) : (onOptionClick(option), handleClose()) }}
                         >
                            <p>
-                           {option.value}
+                              {option.value}
                            </p>
-                           <p className="text-sm opacity-60">
-                           {optionPrefix ? `${optionPrefix}${option._id.slice(-5)}` : option._id.slice(-5) }
+                           <p className={`text-sm opacity-60 ${checkbox ? 'mr-auto ml-4' : ''}`}>
+                              {optionPrefix ? `${optionPrefix}${option._id.slice(-5)}` : option._id.slice(-5)}
                            </p>
+                           {
+                              checkbox &&
+                              <div className="flex mb-3">
+                                 <CCheckbox 
+                                 checked={checkbox.match.includes(option._id) ? true : false}
+                                  name='student'
+                                    // onChange={() =>
+                                    //    setData({
+                                    //       ...data,
+                                    //       recurring: !data.recurring,
+                                    //    })}
+                                 />
+                              </div>
+                           }
                         </div>
                      )
                   })}

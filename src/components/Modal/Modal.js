@@ -12,6 +12,7 @@ export default function Modal({
    primaryBtn,
    handleClose,
    classname,
+   cancelBtnStyle
 }) {
    //disable body scroll if modal open
    useEffect(() => {
@@ -50,13 +51,15 @@ export default function Modal({
                         form={primaryBtn.form ? primaryBtn.form : null}
                         type={primaryBtn.type ? primaryBtn.type : "button"}
                         className={`bg-primary rounded-md text-lg font-medium text-white py-3 px-12 ml-12 ${primaryBtn.className ? primaryBtn.className : ""}`}
-                      
+
                      >
                         {primaryBtn.text}
                      </button>
                   )}
                </div>
-               <button className={styles.cancelBtn}>
+               <button className={styles.cancelBtn} 
+                style={cancelBtnStyle}
+                >
                   <img src={CancelIcon} onClick={handleClose} />
                </button>
             </div>

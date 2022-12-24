@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { useLazyGetStudentsByNameQuery, useLazyGetTutorsByNameQuery } from '../../../../app/services/session';
+import { useLazyGetStudentsByNameQuery, useLazyGetTutorsByNameQuery, useLazyGetTutorStudentsByNameQuery } from '../../../../app/services/session';
 import InputSearch from '../../../../components/InputSearch/InputSearch';
 
-export default function SearchNames({ setStudent, setData, student, tutor,data, setTutor }) {
+export default function SearchNames({ setStudent, setData, student, tutor, data, setTutor }) {
 
    const [fetchTutors, tutorResponse] = useLazyGetTutorsByNameQuery();
    const [tutors, setTutors] = useState([]);
 
    const [fetchStudents, studentResponse] = useLazyGetStudentsByNameQuery();
-   const [students, setStudents] = useState([]);
+   const [fetchTutorStudents, tutorStudentsResp] = useLazyGetTutorStudentsByNameQuery();
    
+   const [students, setStudents] = useState([]);
+   const persona = sessionStorage.getItem('role')
+
    useEffect(() => {
       if (tutor.length > 2) {
          fetchTutors(tutor).then((res) => {
@@ -27,16 +30,29 @@ export default function SearchNames({ setStudent, setData, student, tutor,data, 
 
    useEffect(() => {
       if (student.length > 2) {
-         fetchStudents(student).then((res) => {
-            // console.log(res.data.data)
-            let tempData = res.data.data.students.map((tutor) => {
-               return {
-                  _id: tutor._id,
-                  value: `${tutor.firstName} ${tutor.lastName}`,
-               };
+         if (persona === 'tutor') {
+            fetchTutorStudents(student).then((res) => {
+               // console.log(res.data.data)
+               let tempData = res.data.data.students.map((tutor) => {
+                  return {
+                     _id: tutor._id,
+                     value: `${tutor.firstName} ${tutor.lastName}`,
+                  };
+               });
+               setStudents(tempData);
             });
-            setStudents(tempData);
-         });
+         } else {
+            fetchStudents(student).then((res) => {
+               // console.log(res.data.data)
+               let tempData = res.data.data.students.map((tutor) => {
+                  return {
+                     _id: tutor._id,
+                     value: `${tutor.firstName} ${tutor.lastName}`,
+                  };
+               });
+               setStudents(tempData);
+            });
+         }
       }
    }, [student]);
 

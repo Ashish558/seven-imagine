@@ -24,7 +24,7 @@ import { servicesSeeking } from "../Frames/SelectServices/data";
 import { apQuestions, hearAboutUslist, motivesList } from "./data";
 import { getCheckedString } from "../../utils/utils";
 import InputSelect from "../../components/InputSelect/InputSelect";
-import useOutsideAlerter from "../../useOutsideAlerter";
+import useOutsideAlerter from "../../hooks/useOutsideAlerter";
 
 export default function Signup() {
    const [frames, setFrames] = useState({

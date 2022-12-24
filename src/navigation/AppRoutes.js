@@ -9,7 +9,7 @@ import CompletedTest from "../pages/CompletedTest/CompletedTest";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
-import StudentProfile from "../pages/StudentProfile/StudentProfile";
+import StudentProfile from "../pages/Profiles/StudentProfile/StudentProfile";
 import TestDetail from "../pages/TestDetail/TestDetail";
 import Users from "../pages/Users/users";
 
@@ -102,7 +102,7 @@ const AppRoutes = () => {
             <Route path="/all-tests" element={<AllTests />} />
             <Route path="/all-tests/:id" element={<TestDetail />} />
             <Route path="/profile" element={
-               persona ==='parent' ? <ParentProfile /> : persona ==='student' ? <StudentProfile /> : persona === 'tutor' ? <TutorProfile /> : <></>
+               persona ==='parent' ? <ParentProfile isOwn={true} /> : persona ==='student' ? <StudentProfile isOwn={true} /> : persona === 'tutor' ? <TutorProfile isOwn={true} /> : <></>
                } />
             <Route
                path="/profile/student/:id"

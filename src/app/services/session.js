@@ -27,6 +27,18 @@ export const sessionServicesApi = createApi({
             method: "GET",
          }),
       }),
+      getTutorStudentsByName: builder.query({
+         query: (name) => ({
+            url: `api/user/mystudents`,
+            method: "GET",
+            params: {
+               search: name
+            },
+            headers: {
+               "Authorization": sessionStorage.getItem('token'),
+            },
+         }),
+      }),
       getUsersByName: builder.query({
          query: (name) => ({
             url: `api/user`,
@@ -85,6 +97,7 @@ export const sessionServicesApi = createApi({
 export const {
    useLazyGetTutorsByNameQuery,
    useLazyGetStudentsByNameQuery,
+   useLazyGetTutorStudentsByNameQuery,
    useLazyGetSettingsQuery,
    useSubmitSessionMutation,
    useLazyGetUsersByNameQuery,

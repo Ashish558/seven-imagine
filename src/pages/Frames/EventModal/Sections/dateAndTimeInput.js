@@ -3,8 +3,16 @@ import InputField from '../../../../components/InputField/inputField';
 import InputSelect from '../../../../components/InputSelect/InputSelect';
 import { convertTime12to24, tConvert } from '../../../../utils/utils';
 
-
-const timeZones = ["IST"];
+const timeZones = [
+   'Asia/Kolkata',
+   // 'America/New_York',
+   'US/Alaska',
+   'US/Central',
+   'US/Eastern',
+   'US/Hawaii',
+   'US/Mountain',
+   'US/Pacific',
+]
 
 export default function DateAndTimeInput({ data, setData }) {
 

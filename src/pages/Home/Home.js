@@ -2,6 +2,7 @@ import React from 'react'
 import ParentDashboard from '../ParentDashboard/ParentDashboard'
 import StudentDashboard from '../StudentDashboard/StudentDashboard'
 import TutorDashboard from '../TutorDashboard/TutorDashboard'
+import Users from '../Users/users'
 
 export default function Home() {
 
@@ -16,9 +17,10 @@ export default function Home() {
             :
             persona === 'tutor' ?
                <TutorDashboard />
-               :
-               <div className='ml-pageLeft bg-lightWhite min-h-screen'>
+               : persona === 'admin' ?
+                  <Users /> :
+                  <div className='ml-pageLeft bg-lightWhite min-h-screen'>
 
-               </div>
+                  </div>
    )
 }

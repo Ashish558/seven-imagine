@@ -1,0 +1,39 @@
+
+.studentsContainer {
+   position: relative;
+   flex: 1;
+   overflow: hidden;
+}
+
+.student{
+   position: absolute;
+   top: 0;
+   width: 100%;
+   transition: 0.2s ease-out;
+}
+
+.activeStudent{
+   opacity: 1;
+   left: 0;
+}
+.previousStudent{
+   left: -100%;
+   opacity: 0;
+}
+.nextStudent{
+   left: 100%;
+   opacity: 0;
+}
+.sliderIcon{
+   position: absolute;
+   top: 40%;
+   transform: translateY(-50%);
+   cursor: pointer;
+   z-index: 20;
+}
+.sliderLeftIcon{
+   left: 10px;
+}
+.sliderRightIcon {
+   right: 10px;
+}

@@ -7,7 +7,7 @@ export default function CCheckbox({ checked, onChange, name }) {
    return (
       <div className={`${styles.container} `}
          onClick={onChange}>
-         <input checked={checked} type='checkbox' name={name ? name : 'moods'} value='' />
+         <input checked={checked} type='checkbox' name={name ? name : 'moods'} value='' onChange={(e)=>e.target.value} />
          <span className={styles.checkmark}></span>
       </div>
    )
