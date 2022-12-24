@@ -223,7 +223,7 @@ export default function ParentProfile({ isOwn }) {
          <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pb-[100px]'>
             <div className='lg:px-[56px] lg:pt-10'>
                <div className={styles.profileCard}>
-                  <button className='absolute bg-[#D9BBFF] px-[14px] py-[12px] rounded-[8px] text-[#636363] text-[18px] font-medium top-[16px] left-[22px] flex gap-[12px]'><img src={LeftIcon} alt="icon" /> Back</button>
+                  <button className='absolute bg-[#D9BBFF] px-[14px] py-[12px] rounded-[8px] text-[#636363] text-[18px] font-medium top-[16px] left-[22px] flex gap-[12px] cursor-pointer'><img src={LeftIcon} alt="icon" /> Back</button>
                   <div className='rounded-t-40 bg-lightWhite lg:bg-transparent flex flex-col items-center relative'>
                      <div className={styles.imgContainer}>
                         <img src={ProfileImg} />
@@ -232,7 +232,7 @@ export default function ParentProfile({ isOwn }) {
                         <EditableText text={`${user.firstName} ${user.lastName}`}
                            editable={editable}
                            onClick={() => setToEdit({ ...toEdit, fullName: { ...toEdit.fullName, active: true } })}
-                           className='text-21 justify-center text-primary text-center font-bold text-21 lg:text-40 lg:text-[#F3F5F7]'
+                           className='justify-center text-primary text-center font-bold text-21 lg:text-40 lg:text-[#F3F5F7]'
                            textClassName='flex-1'
                            imgClass='ml-auto' />
                      </div>
@@ -245,21 +245,21 @@ export default function ParentProfile({ isOwn }) {
                      title={
                         <EditableText text='Contact' editable={editable}
                            onClick={() => setToEdit({ ...toEdit, contact: { ...toEdit.contact, active: true } })}
-                           className='text-21 justify-center'
+                           className='text-21 justify-center text-left'
                            textClassName='flex-1'
                            imgClass='ml-auto' />
                      }
                      body={
-                        <div className='flex justify-center mt-5 lg:mt-1'>
-                           <div className='flex flex-col items-center mr-8'>
-                              <img src={MailIcon} />
-                              <p className='mt-1 font-medium opacity-60 text-xs'>
+                        <div className='flex flex-col gap-[9px] justify-start mt-5 lg:mt-1'>
+                           <div className='flex items-center gap-[11px]'>
+                              <img src={MailIcon} className='w-[19px]' />
+                              <p className='mt-1 font-medium opacity-60 text-[14px]'>
                                  {user.email !== null ? user.email : '-'}
                               </p>
                            </div>
-                           <div className='flex flex-col items-center'>
-                              <img src={WhatsappIcon} />
-                              <p className='mt-1 font-medium.4 opacity-60 text-xs'>
+                           <div className='flex items-center gap-[11px]'>
+                              <img src={WhatsappIcon} className='w-[19px]' />
+                              <p className='mt-1 font-medium.4 opacity-60 text-[14px]'>
                                  {user.phone !== null ? user.phone : '-'}
                               </p>
                            </div>
@@ -278,8 +278,9 @@ export default function ParentProfile({ isOwn }) {
                                  onClick={() => setToEdit({ ...toEdit, birthYear: { ...toEdit.birthYear, active: true } })}
                                  text='Birth year'
                                  className='text-21 justify-start'
+                                 imgClass="w-[16px]"
                               />
-                              <p className='mt-1 font-medium text-sm lg:mt-6 lg:opacity-60'>
+                              <p className='mt-1 text-[16px] font-semibold lg:mt-6 lg:opacity-60'>
                                  {userDetail?.birthyear ? userDetail?.birthyear : '-'}
                               </p>
                            </div>
@@ -288,8 +289,9 @@ export default function ParentProfile({ isOwn }) {
                                  onClick={() => setToEdit({ ...toEdit, industry: { ...toEdit.industry, active: true } })}
                                  text='Industry'
                                  className='text-21 justify-start'
+                                 imgClass="w-[16px]"
                               />
-                              <p className='mt-1 font-medium text-sm lg:mt-6 lg:opacity-60'>
+                              <p className='mt-1 font-semibold text-[16px] lg:mt-6 lg:opacity-60'>
                                  {userDetail?.industry ? userDetail?.industry : '-'}
                               </p>
                            </div>
@@ -307,7 +309,7 @@ export default function ParentProfile({ isOwn }) {
                      }
                      body={
                         <div className='overflow-x-auto scrollbar-content pb-7'>
-                           <p className='mt-2 lg:mt-6 font-medium text-sm whitespace-nowrap	'>
+                           <p className='mt-2 lg:mt-6 font-medium text-[18px] whitespace-nowrap	'>
                               {userDetail?.residentialAddress ? userDetail?.residentialAddress : '-'}
                            </p>
                         </div>
@@ -323,7 +325,7 @@ export default function ParentProfile({ isOwn }) {
                                  onClick={() => setToEdit({ ...toEdit, timeZone: { ...toEdit.timeZone, active: true } })}
                                  text='Time Zone'
                                  className='lg:text-21 whitespace-nowrap' />
-                              <p className='font-medium text-sm mt-2 lg:mt-6 lg:opacity-60'>
+                              <p className='font-semibold text-[16px] mt-2 lg:mt-6 lg:opacity-60'>
                                  {userDetail?.timeZone ? userDetail?.timeZone : '-'}
                               </p>
                            </div>
@@ -334,7 +336,7 @@ export default function ParentProfile({ isOwn }) {
                                  className='text-21 justify-between'
                               />
                               {/* <p className='text-primary font-bold lg:text-21'>Subscription</p> */}
-                              <p className='text-sm font-medium mt-2 lg:mt-6 lg:opacity-60'>
+                              <p className='text-[16px] font-semibold mt-2 lg:mt-6 lg:opacity-60'>
                                  {userDetail?.subscribeType ? userDetail?.subscribeType : '-'}
                               </p>
                            </div>
@@ -370,10 +372,10 @@ export default function ParentProfile({ isOwn }) {
                                        <div className='mt-6 opacity-60 font-inter text-center '
                                        // onClick={() => navigate('/profile/student/12')}
                                        >
-                                          <p className='font-bold text-lg whitespace-nowrap'>
+                                          <p className='font-bold text-[18px] whitespace-nowrap'>
                                              {student.name}
                                           </p>
-                                          <span className='underline cursor-pointer underline-offset-4 text-sm'> View Profile </span>
+                                          <span className='cursor-pointer text-[12px] font-semibold flex items-center gap-[8px] justify-center'> View Profile <img src={RightIcon} width="8px" alt="rightIcon" /> </span>
                                        </div>
                                     </div>
                                  )
