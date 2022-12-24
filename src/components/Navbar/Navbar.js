@@ -20,6 +20,7 @@ import Profile from "../../assets/Navbar/profile";
 import StudentTest from "../../assets/Navbar/studentTest";
 import Percentage from "../../assets/Navbar/percentage";
 import AssignedStudents from "../../assets/Navbar/assignedStudents";
+import Back from "../../assets/Navbar/Back";
 
 const tempnavdata = [
    {
@@ -72,7 +73,7 @@ const parentNav = [
       path: "/all-tests",
    },
    {
-      icon: Exit,
+      icon: Back,
       path: "/exit",
       parentClassName: "mt-auto",
    },
@@ -152,7 +153,7 @@ export default function Navbar() {
    return (
       <div
          className={`
-         fixed bottom-0 lg:w-auto lg:top-0 lg:left-0 lg:h-screen z-50 w-full overflow-y-hidden lg:overflow-y-auto lg:p-4 
+         fixed bottom-0 lg:w-auto lg:top-0 lg:left-0 lg:h-screen z-50 w-full overflow-y-hidden lg:overflow-y-auto lg:p-4
           flex overflow-auto
       ${location.pathname === "/login" ||
                location.pathname === "/signup" ||

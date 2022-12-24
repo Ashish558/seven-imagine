@@ -214,16 +214,16 @@ export default function ParentProfile({ isOwn }) {
       fetchDetails()
    }, [params.id])
 
-   if (Object.keys(user).length < 1) return
-   if (Object.keys(userDetail).length < 1) return
+   // if (Object.keys(user).length < 1) return
+   // if (Object.keys(userDetail).length < 1) return
    // if (userDetail === undefined) return
 
    return (
       <>
          <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pb-[100px]'>
-            <div className='lg:px-5 lg:pt-10'>
-
-               <div className={styles.profileCard}  >
+            <div className='lg:px-[56px] lg:pt-10'>
+               <div className={styles.profileCard}>
+                  <button className='absolute bg-[#D9BBFF] px-[14px] py-[12px] rounded-[8px] text-[#636363] text-[18px] font-medium top-[16px] left-[22px] flex gap-[12px]'><img src={LeftIcon} alt="icon" /> Back</button>
                   <div className='rounded-t-40 bg-lightWhite lg:bg-transparent flex flex-col items-center relative'>
                      <div className={styles.imgContainer}>
                         <img src={ProfileImg} />
@@ -232,7 +232,7 @@ export default function ParentProfile({ isOwn }) {
                         <EditableText text={`${user.firstName} ${user.lastName}`}
                            editable={editable}
                            onClick={() => setToEdit({ ...toEdit, fullName: { ...toEdit.fullName, active: true } })}
-                           className='text-21 justify-center text-primary text-center font-bold text-21 lg:text-40 lg:text-white'
+                           className='text-21 justify-center text-primary text-center font-bold text-21 lg:text-40 lg:text-[#F3F5F7]'
                            textClassName='flex-1'
                            imgClass='ml-auto' />
                      </div>
@@ -280,7 +280,7 @@ export default function ParentProfile({ isOwn }) {
                                  className='text-21 justify-start'
                               />
                               <p className='mt-1 font-medium text-sm lg:mt-6 lg:opacity-60'>
-                                 {userDetail.birthyear ? userDetail.birthyear : '-'}
+                                 {userDetail?.birthyear ? userDetail?.birthyear : '-'}
                               </p>
                            </div>
                            <div className='flex flex-1 flex-col'>
@@ -290,7 +290,7 @@ export default function ParentProfile({ isOwn }) {
                                  className='text-21 justify-start'
                               />
                               <p className='mt-1 font-medium text-sm lg:mt-6 lg:opacity-60'>
-                                 {userDetail.industry ? userDetail.industry : '-'}
+                                 {userDetail?.industry ? userDetail?.industry : '-'}
                               </p>
                            </div>
                         </div>
@@ -308,7 +308,7 @@ export default function ParentProfile({ isOwn }) {
                      body={
                         <div className='overflow-x-auto scrollbar-content pb-7'>
                            <p className='mt-2 lg:mt-6 font-medium text-sm whitespace-nowrap	'>
-                              {userDetail.residentialAddress ? userDetail.residentialAddress : '-'}
+                              {userDetail?.residentialAddress ? userDetail?.residentialAddress : '-'}
                            </p>
                         </div>
                      }
@@ -324,7 +324,7 @@ export default function ParentProfile({ isOwn }) {
                                  text='Time Zone'
                                  className='lg:text-21 whitespace-nowrap' />
                               <p className='font-medium text-sm mt-2 lg:mt-6 lg:opacity-60'>
-                                 {userDetail.timeZone ? userDetail.timeZone : '-'}
+                                 {userDetail?.timeZone ? userDetail?.timeZone : '-'}
                               </p>
                            </div>
                            <div className='flex-1'>
@@ -335,7 +335,7 @@ export default function ParentProfile({ isOwn }) {
                               />
                               {/* <p className='text-primary font-bold lg:text-21'>Subscription</p> */}
                               <p className='text-sm font-medium mt-2 lg:mt-6 lg:opacity-60'>
-                                 {userDetail.subscribeType ? userDetail.subscribeType : '-'}
+                                 {userDetail?.subscribeType ? userDetail?.subscribeType : '-'}
                               </p>
                            </div>
                         </div>
@@ -395,10 +395,10 @@ export default function ParentProfile({ isOwn }) {
                                        text='Service'
                                        className='lg:text-21 whitespace-nowrap' />
                                     <div className='font-medium text-sm mt-2 lg:mt-6 flex flex-wrap lg:opacity-60'>
-                                       {/* {userDetail.subscribeType ? userDetail.subscribeType : '-'} */}
-                                       {userDetail.service ? userDetail.service.map((service, idx) => {
+                                       {/* {userDetail?.subscribeType ? userDetail?.subscribeType : '-'} */}
+                                       {userDetail?.service ? userDetail?.service.map((service, idx) => {
                                           return <p className='opacity-80 mb-1 mr-1'>
-                                             {service}{idx < userDetail.service.length - 1 ? ',' : ''}
+                                             {service}{idx < userDetail?.service.length - 1 ? ',' : ''}
                                           </p>
                                        }) : '-'}
                                     </div>
@@ -416,7 +416,7 @@ export default function ParentProfile({ isOwn }) {
                                        text='Notes'
                                        className='lg:text-21 whitespace-nowrap' />
                                     <p className='font-medium text-sm mt-2 lg:mt-6 lg:opacity-60'>
-                                       {userDetail.notes ? userDetail.notes : '-'}
+                                       {userDetail?.notes ? userDetail?.notes : '-'}
 
                                     </p>
                                  </div>
@@ -433,7 +433,7 @@ export default function ParentProfile({ isOwn }) {
                                        text='Lead Status'
                                        className='lg:text-21 whitespace-nowrap' />
                                     <p className='font-medium text-sm mt-2 lg:mt-6 lg:opacity-60'>
-                                       {userDetail.leadStatus ? userDetail.leadStatus : '-'}
+                                       {userDetail?.leadStatus ? userDetail?.leadStatus : '-'}
                                     </p>
                                  </div>
                               </div>
@@ -468,36 +468,36 @@ export default function ParentProfile({ isOwn }) {
                                        </div>
                                        <div className='mb-7 col-span-2'>
                                           <p className='font-semibold mb-2'>What service are you seeking?</p>
-                                          <div> {userDetail.serviceSeeking.map((service, idx) => {
+                                          <div> {userDetail?.serviceSeeking.map((service, idx) => {
                                              return <p className='opacity-80 inline-block mr-1'>
-                                                {service}{idx < userDetail.serviceSeeking.length - 1 ? ',' : ''} </p>
+                                                {service}{idx < userDetail?.serviceSeeking.length - 1 ? ',' : ''} </p>
                                           })}
                                           </div>
                                        </div>
 
                                        <div className='mb-7'>
                                           <p className='font-semibold mb-2'>Student First Name</p>
-                                          <p className='opacity-80'> {userDetail.FirstName} </p>
+                                          <p className='opacity-80'> {userDetail?.FirstName} </p>
                                        </div>
                                        <div className='mb-7'>
                                           <p className='font-semibold mb-2'>Student Last Name  </p>
-                                          <p className='opacity-80'> {userDetail.LastName} </p>
+                                          <p className='opacity-80'> {userDetail?.LastName} </p>
                                        </div>
                                        <div className='mb-7'>
                                           <p className='font-semibold mb-2'>Student Email</p>
-                                          <p className='opacity-80'> {userDetail.Email} </p>
+                                          <p className='opacity-80'> {userDetail?.Email} </p>
                                        </div>
                                        <div className='mb-7'>
                                           <p className='font-semibold mb-2'>Student Phone </p>
-                                          <p className='opacity-80'> {userDetail.Phone} </p>
+                                          <p className='opacity-80'> {userDetail?.Phone} </p>
                                        </div>
                                        <div className='mb-7'>
                                           <p className='font-semibold mb-2'>Student’s School Name</p>
-                                          <p className='opacity-80'> {userDetail.schoolName} </p>
+                                          <p className='opacity-80'> {userDetail?.schoolName} </p>
                                        </div>
                                        <div className='mb-7'>
                                           <p className='font-semibold mb-2'>Student Grade</p>
-                                          <p className='opacity-80'>{userDetail.grade}  </p>
+                                          <p className='opacity-80'>{userDetail?.grade}  </p>
                                        </div>
 
                                        <div className='mb-7 col-span-2'>
@@ -506,30 +506,30 @@ export default function ParentProfile({ isOwn }) {
                                        </div>
                                        <div className='mb-7 col-span-2'>
                                           <p className='font-semibold mb-2'> Is your child taking any AP courses in school? Please select all that apply.</p>
-                                          <div> {userDetail.apCourses.map((service, idx) => {
+                                          <div> {userDetail?.apCourses.map((service, idx) => {
                                              return <p className='opacity-80 inline-block mr-1'>
-                                                {service}{idx < userDetail.apCourses.length - 1 ? ',' : ''} </p>
+                                                {service}{idx < userDetail?.apCourses.length - 1 ? ',' : ''} </p>
                                           })}
                                           </div>
                                        </div>
                                        <div className='mb-7 col-span-2'>
                                           <p className='font-semibold mb-2'>Select if any of these apply to you </p>
-                                          <div> {userDetail.motive.map((service, idx) => {
+                                          <div> {userDetail?.motive.map((service, idx) => {
                                              return <p className='opacity-80 mb-1'>
-                                                {service}{idx < userDetail.motive.length - 1 ? ',' : ''}
+                                                {service}{idx < userDetail?.motive.length - 1 ? ',' : ''}
                                              </p>
                                           })}
                                           </div>
                                        </div>
                                        <div className='mb-7 col-span-2'>
                                           <p className='font-semibold mb-2'>Please enter the subscription code required to access Seven Square Learning and starting prep. </p>
-                                          <p className='opacity-80'> {userDetail.subscriptionCode} </p>
+                                          <p className='opacity-80'> {userDetail?.subscriptionCode} </p>
                                        </div>
                                        <div className='mb-7 col-span-2'>
                                           <p className='font-semibold mb-2'>How did you hear about us? </p>
-                                          <div> {userDetail.hearAboutUs.map((service, idx) => {
+                                          <div> {userDetail?.hearAboutUs.map((service, idx) => {
                                              return <p className='opacity-80 inline-block mr-1'>
-                                                {service}{idx < userDetail.hearAboutUs.length - 1 ? ',' : ''} </p>
+                                                {service}{idx < userDetail?.hearAboutUs.length - 1 ? ',' : ''} </p>
                                           })}
                                           </div>
                                        </div>
