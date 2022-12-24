@@ -120,7 +120,7 @@ const tutorNav = [
    },
    {
       icon: StudentTest,
-      path: "/all-tests",
+      path: "/assigned-tests",
    },
    {
       icon: Exit,
