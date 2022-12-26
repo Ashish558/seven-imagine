@@ -39,7 +39,7 @@ export default function InputSelect({
          </label>
 
          <div
-            className={`py-[16px] px-[21px] flex items-center rounded-10 relative cursor-pointer z-50 ${inputContainerClassName ? inputContainerClassName : ""
+            className={`py-[16px] px-[21px] flex items-center rounded-10 relative cursor-pointer text-[24px] z-50 ${inputContainerClassName ? inputContainerClassName : ""
                }`}
          >
             {Icon && <img src={Icon} className="mr-6" alt="icon" />}

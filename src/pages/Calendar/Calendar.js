@@ -199,20 +199,20 @@ export default function Calendar() {
       let text = arg.text.split(" ");
       return (
          <div
-            className={`px-3 py-1 rounded-7 ${arg.isToday ? "bg-primary border" : ""
+            className={`p-[10px] rounded-7 ${arg.isToday ? "bg-primary border" : ""
                }  `}
          >
             <p
                className={`${arg.isToday ? "text-primaryWhite-900" : ""
                   } text-sm font-semibold
-                   ${arg.isPast ? "text-primaryWhite-100" : arg.isFuture ? 'text-primary-60' : ''} `}
+                   ${arg.isPast ? "text-[#BEC2CE]" : arg.isFuture ? 'text-primary-60' : ''} `}
             >
                {days[arg.date.getDay()]}
             </p>
             <p
                className={`${arg.isToday ? "text-primaryWhite-900" : ""
                   } text-2xl font-bold font-inter
-                   ${arg.isPast ? "text-primaryWhite-100" : arg.isFuture ? 'text-primary-dark' : ''
+                   ${arg.isPast ? "text-[#BEC2CE]" : arg.isFuture ? 'text-primary-dark' : ''
                   }`}
             >
                {text[1]}
@@ -518,11 +518,12 @@ export default function Calendar() {
                         end: "",
                      }}
                      titleFormat={{
-                        month: "long",
+                        day: "numeric",
+                        month: "numeric",
                         year: "numeric",
                      }}
                      expandRows={true}
-                     contentHeight={1850}
+                     contentHeight={"100%"}
                      dayHeaderFormat={{
                         day: "2-digit",
                         month: "narrow",
