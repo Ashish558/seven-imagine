@@ -5,6 +5,7 @@ import InputField from '../../../../components/InputField/inputField'
 import InputSearch from '../../../../components/InputSearch/InputSearch'
 import InputSelect from '../../../../components/InputSelect/InputSelect'
 import Modal from '../../../../components/Modal/Modal'
+import SimpleCalendar from '../../../../components/SimpleCalendar/SimpleCalendar'
 import Slider from '../../../../components/Slider/Slider'
 import styles from './style.module.css'
 
@@ -204,6 +205,8 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
    // console.log('sett', settings)
    // console.log('students', students)
 
+   const [startDate, setStartDate] = useState(new Date());
+
    return (
       Object.keys(toEdit).map(key => {
          return toEdit[key].active === true &&
@@ -226,12 +229,12 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                      <div className={styles.titleContainer}>
                         {currentField.title}
                      </div>
-                     <form className='mt-10 mb-4' id='editable-form' onSubmit={handleSubmit} >
+                     <form className='mt-20 mb-4' id='editable-form' onSubmit={handleSubmit} >
                         {/* {currentField.fields && currentField.fields} */}
                         {currentField.name === 'fullName' &&
                            <div>
                               <div className='flex items-center mb-5'>
-                                 <p className='font-medium mr-4'> First Name </p>
+                                 <p className='font-medium mr-4 text-[20px]'> First Name </p>
                                  <InputField
                                     labelClassname='hidden'
                                     placeholder='First Name'
@@ -242,7 +245,7 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                     onChange={e => setCurrentToEdit({ ...currentToEdit, firstName: e.target.value })} />
                               </div>
                               <div className='flex items-center'>
-                                 <p className='font-medium mr-4'> Last Name </p>
+                                 <p className='font-medium mr-4 text-[20px]'> Last Name </p>
                                  <InputField
                                     labelClassname='hidden'
                                     placeholder='Last Name'
@@ -266,8 +269,8 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                     labelClassname='hidden'
                                     placeholder="Type Student Name"
                                     parentClassName="w-full  mb-10"
-                                    inputContainerClassName="bg-lightWhite border-0 pt-3.5 pb-3.5"
-                                    inputClassName="bg-transparent"
+                                    inputContainerClassName="bg-[#F3F5F7] border-0 pt-3.5 pb-3.5"
+                                    inputClassName="bg-[#F3F5F7]"
                                     type="text"
                                     optionPrefix='s'
                                     value={student}
@@ -291,23 +294,23 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                         {currentField.name === 'contact' &&
                            <div>
                               <div className='flex items-center mb-5'>
-                                 <p className='font-medium mr-4 min-w-[60px]'> Email Id </p>
+                                 <p className='font-medium mr-4 min-w-[60px] text-[20px]'> Email Id </p>
                                  <InputField
                                     labelClassname='hidden'
                                     placeholder='Email Id'
                                     inputContainerClassName='text-sm pt-3 pb-3 px-5 bg-primary-50 border-0'
-                                    inputClassName='bg-transparent'
+                                    inputClassName='bg-[#D9D9D999] py-[17px] px-[20px] rounded-[4px]'
                                     parentClassName='flex-1 ' type='text'
                                     value={currentToEdit.email}
                                     onChange={e => setCurrentToEdit({ ...currentToEdit, email: e.target.value })} />
                               </div>
                               <div className='flex items-center'>
-                                 <p className='font-medium mr-4 min-w-[60px]'> Phone </p>
+                                 <p className='font-medium mr-4 min-w-[60px] text-[20px]'> Phone </p>
                                  <InputField
                                     labelClassname='hidden'
                                     placeholder='Phone'
                                     inputContainerClassName='text-sm pt-3 pb-3 px-5 bg-primary-50 border-0'
-                                    inputClassName='bg-transparent'
+                                    inputClassName='bg-[#D9D9D999] py-[17px] px-[20px] rounded-[4px]'
                                     parentClassName='flex-1 ' type='text'
                                     value={currentToEdit.phone}
                                     onChange={e => setCurrentToEdit({ ...currentToEdit, phone: e.target.value })} />
@@ -315,17 +318,19 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                            </div>
                         }
                         {currentField.name === 'birthYear' &&
-                           <div>
-                              <div className='flex items-center mb-5 pt-6'>
+                           <div className='bg-[#F3F5F7] px-[29px]'>
+                              <div className='flex items-center mb-5 bg-white rounded-10' style={{boxShadow: "-3px -4px 24px rgba(0, 0, 0, 0.25)"}}>
                                  {/* <p className='font-medium mr-4 min-w-[60px]'>  </p> */}
-                                 <InputField
+                                 {/* <InputField
                                     labelClassname='hidden'
                                     placeholder='Enter your birth year'
                                     inputContainerClassName='text-sm pt-3 pb-3 px-5 bg-primary-50 border-0'
                                     inputClassName='bg-transparent'
                                     parentClassName='flex-1 ' type='text'
                                     value={currentToEdit.birthyear}
-                                    onChange={e => setCurrentToEdit({ ...currentToEdit, birthyear: e.target.value })} />
+                                    onChange={e => setCurrentToEdit({ ...currentToEdit, birthyear: e.target.value })} /> */}
+                                 {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+                                 <SimpleCalendar setCurrentDate={setCurrentToEdit} />
                               </div>
                            </div>
                         }
@@ -339,8 +344,8 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                     }
                                     optionData={['Medical', 'Law', 'Teaching']}
                                     radio={true}
-                                    inputContainerClassName="pt-3 pb-3 border bg-white"
-                                    placeholder="Enter your Industry"
+                                    inputContainerClassName="pt-3 pb-3 border bg-[#D9D9D999]"
+                                    placeholder="Select"
                                     parentClassName="w-full mr-4"
                                     type="select"
                                  />
@@ -372,8 +377,8 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                     }
                                     optionData={['IST', 'EST', 'PTD']}
                                     radio={true}
-                                    inputContainerClassName="pt-3 pb-3 border bg-white"
-                                    placeholder="Time Zone"
+                                    inputContainerClassName="pt-3 pb-3 border bg-[#D9D9D999]"
+                                    placeholder="Select"
                                     parentClassName="w-full mr-4"
                                     type="select"
                                  />

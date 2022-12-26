@@ -425,7 +425,7 @@ export default function Calendar() {
       <>
          <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">
             <div className="py-14 pl-5 calendar flex">
-               <div className="p-10 pl-0 pr-3 w-1/5 w-[320px]">
+               <div className="p-10 pl-0 pr-0 w-[280px] mr-[10px]">
                   <div className="w-[280px]" >
                      <SimpleCalendar currentDate={currentDate} setCurrentDate={setCurrentDate} />
                   </div>
