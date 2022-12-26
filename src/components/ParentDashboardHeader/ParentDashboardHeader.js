@@ -38,15 +38,21 @@ const ParentDashboardHeader = () => {
             // console.log('response', res.data.data);
             setUser(res.data.data.user)
             setAssociatedStudents([])
-            res.data.data.user.assiginedStudents.map(student => {
+            res.data.data.user.assiginedStudents.map((student, idx) => {
                getUserDetail({ id: student })
                   .then(res => {
                      setAssociatedStudents(prev => [...prev, {
                         _id: res.data.data.user._id,
                         name: `${res.data.data.user.firstName} ${res.data.data.user.lastName}`
                      }])
+                     idx === 0 && setSelectedStudent({
+                        _id: res.data.data.user._id,
+                        value: `${res.data.data.user.firstName} ${res.data.data.user.lastName}`
+                     })
                   })
             })
+
+
          })
    }, [])
 
@@ -67,6 +73,8 @@ const ParentDashboardHeader = () => {
       }
       fetch()
    }, [user])
+
+   console.log(selectedStudent)
 
    return (
       <div
@@ -129,26 +137,26 @@ const ParentDashboardHeader = () => {
             <div className="flex justify-between items-center px-[11px]">
                <h2 className="text-[#4715D7] font-semibold text-[21px] mt-[16px]">Your Student</h2>
                {/* <img src={rightArrow} className="h-[15px] w-[15px]" alt="" /> */}
-               {associatedStudents.length > 0 && 
-               <InputSelect optionType='object'
-                  parentClassName='mb-2'
-                  inputContainerClassName='pt-1 pb-1'
-                  optionData={associatedStudents.map(item => ({ _id: item._id, value: item.name }))}
-                  optionClassName='w-[130px] text-sm'
-                  value={selectedStudent === null ? '' : selectedStudent.value}
-                  onChange={val => setSelectedStudent(val)} />}
+               {associatedStudents.length > 0 &&
+                  <InputSelect optionType='object'
+                     parentClassName='mb-2'
+                     inputContainerClassName='pt-1 pb-1'
+                     optionData={associatedStudents.map(item => ({ _id: item._id, value: item.name }))}
+                     optionClassName='w-[130px] text-sm'
+                     value={selectedStudent === null ? '' : selectedStudent.value}
+                     onChange={val => setSelectedStudent(val)} />}
             </div>
             <div class={`item ${styles.student} w-100 px-[22px] 2xl:px-[32px] 2xl:py-[13px]`}>
                <div className="flex items-center">
                   <div className="w-1/2">
                      <h2>
                         {/* {selectedStudent !== null && 'Joseph Brown'}  */}
-                        {selectedStudent === null ? 'Dummy name' : 
-                        selectedStudent.value}
+                        {selectedStudent === null ? 'Dummy name' :
+                           selectedStudent.value}
                      </h2>
                      <h6 className="text-[10px]">SAT Tutoring <br />Subject Tutoring</h6>
                      <Link className="btn-gold"
-                     to={selectedStudent !== null && `/profile/student/${selectedStudent._id}`}>
+                        to={selectedStudent !== null && `/profile/student/${selectedStudent._id}`}>
                         View Profile
                      </Link>
                   </div>

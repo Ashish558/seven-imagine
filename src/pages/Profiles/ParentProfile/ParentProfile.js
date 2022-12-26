@@ -215,7 +215,8 @@ export default function ParentProfile({ isOwn }) {
    useEffect(() => {
       fetchDetails()
    }, [params.id])
-   // console.log(associatedStudents)
+
+   
    if (Object.keys(user).length < 1) return
    if (Object.keys(userDetail).length < 1) return
    // if (userDetail === undefined) return

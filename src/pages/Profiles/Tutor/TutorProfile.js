@@ -137,11 +137,6 @@ export default function TutorProfile({ isOwn }) {
    })
 
    const handleClose = () => {
-      let tempToEdit = {}
-      // Object.keys(toEdit).map(key => {
-      //    return tempToEdit[key] = { ...toEdit[key], active: false }
-      // })
-      // setToEdit(tempToEdit)
       setToEdit(prevToEdit => {
          let obj = {}
          Object.keys(prevToEdit).map(key => {
