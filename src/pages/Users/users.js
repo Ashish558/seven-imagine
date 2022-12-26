@@ -67,6 +67,7 @@ export default function Users() {
             let data = res.data.data.user.map(user => {
                return {
                   _id: user._id,
+                  block: user.block,
                   name: `${user.firstName} ${user.lastName}`,
                   email: user.email ? user.email : '-',
                   userType: user.role ? user.role : '-',
@@ -170,6 +171,11 @@ export default function Users() {
       }
    }
 
+   const handleTutorStatus = item => {
+      console.log(item)
+     
+   }
+console.log(filteredUsersData);
    return (
       <div className='lg:ml-pageLeft bg-lightWhite min-h-screen'>
          <div className='py-14 px-5'>
@@ -225,7 +231,7 @@ export default function Users() {
             <div className='mt-6'>
                <Table dataFor='allUsers'
                   data={filteredUsersData}
-                  onClick={{ redirect }}
+                  onClick={{ redirect, handleTutorStatus }}
                   tableHeaders={tableHeaders}
                   maxPageSize={10} />
             </div>

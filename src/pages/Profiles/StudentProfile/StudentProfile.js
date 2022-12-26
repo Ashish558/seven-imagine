@@ -121,7 +121,7 @@ export default function StudentProfile({ isOwn }) {
    const [user, setUser] = useState({})
    const [userDetail, setUserDetail] = useState({})
    const [settings, setSettings] = useState({})
-
+   const [associatedParent, setAssociatedParent] = useState({})
    const params = useParams()
    const [getUserDetail, userDetailResp] = useLazyGetUserDetailQuery()
    const [fetchSettings, settingsResp] = useLazyGetSettingsQuery()
@@ -200,10 +200,16 @@ export default function StudentProfile({ isOwn }) {
       }
       getUserDetail({ id: userId })
          .then(res => {
-            console.log('response', res.data.data);
+            // console.log('response', res.data.data);
             const { firstName, lastName, phone, email } = res.data.data.user
-            const { service, accomodations, timeZone, birthyear } = res.data.data.userdetails
-
+            const { service, accomodations, timeZone, birthyear, associatedParent } = res.data.data.userdetails
+            associatedParent && getUserDetail({ id: associatedParent })
+               .then(res => {
+                  const { firstName, lastName, _id, } = res.data.data.user
+                  setAssociatedParent({
+                     firstName, lastName, _id
+                  })
+               })
             setUser(res.data.data.user)
             setToEdit({
                ...toEdit,
@@ -255,6 +261,7 @@ export default function StudentProfile({ isOwn }) {
 
    // console.log(user)
    // console.log(userDetail)
+   // console.log(associatedParent)
 
    if (Object.keys(user).length < 1) return
    if (Object.keys(userDetail).length < 1) return
@@ -320,15 +327,23 @@ export default function StudentProfile({ isOwn }) {
                      } />
 
                   <div className='col-span-2 flex  justify-center items-center  scrollbar-content overflow-x-auto lg:py-5 bg-primary-light px-4 py-5 rounded-15'>
-                     <div className='flex flex-col items-center'>
-                        <p className='text-lg text-center text-primary font-semibold mb-5 text-[21px]'>Associated Parent</p>
+                     <div className='flex flex-col items-center mb-3'>
+                        {/* <p className='text-lg text-center text-primary font-semibold mb-5 text-[21px]'>Associated Parent</p> */}
+                        <EditableText editable={editable}
+                           onClick={() => setToEdit({ ...toEdit, associatedParent: { ...toEdit.associatedParent, active: true } })}
+                           text='Associated Parent'
+                           className='text-[21px] mb-2 flex justify-start text-center' />
+
                         <div>
                            <img src={ProfileImg} width="98px" height="98px" />
                         </div>
-                        <p className='font-bold text-[18px] opacity-[68%] mb-1'>Phil Brown</p>
+                        <p className='font-bold text-[18px] opacity-[68%] mb-1'>
+                           {Object.keys(associatedParent).length > 1 ? `${associatedParent.firstName} ${associatedParent.lastName}` : 'Phil Brown'}
+                        </p>
 
                         <div className='flex items-center'>
-                           <span className='text-xs font-semibold opacity-60 inline-block mr-1'>
+                           <span className='text-xs font-semibold opacity-60 inline-block mr-1'
+                           onClick={() => Object.keys(associatedParent).length > 1  && navigate(`/profile/parent/${associatedParent._id}`) } >
                               View Profile
                            </span>
                            <img src={RightIcon} />
@@ -450,13 +465,13 @@ export default function StudentProfile({ isOwn }) {
                               />
                            </>
                         } />
-                     <ProfileCard 
+                     <ProfileCard
                         titleClassName='text-left'
                         className='mt-8'
                         body={
                            <>
                               <SubjectSlider totalMarks={26} outOf={36}
-                              header="Official ACT Scores"
+                                 header="Official ACT Scores"
                                  subjects={subjects2} title='Cumilative Score'
                               />
                            </>

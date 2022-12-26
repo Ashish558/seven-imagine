@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useLazyGetParentsByNameQuery } from '../../../../app/services/admin'
 import { useLazyGetStudentsByNameQuery } from '../../../../app/services/session'
 import { useUpdateUserDetailsMutation, useUpdateUserFieldsMutation } from '../../../../app/services/users'
 import InputField from '../../../../components/InputField/inputField'
@@ -19,11 +20,13 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
    const [fetchStudents, studentResponse] = useLazyGetStudentsByNameQuery()
    const [students, setStudents] = useState([]);
 
+   const [parent, setParent] = useState('')
+   const [fetchParents, fetchParentsResp] = useLazyGetParentsByNameQuery()
+   const [parents, setParents] = useState([])
+
    const [updateFields, updateFieldsResp] = useUpdateUserFieldsMutation()
    const [updateDetails, updateDetailsResp] = useUpdateUserDetailsMutation()
-   const handleChange = () => {
 
-   }
 
    const data = [
       {
@@ -91,6 +94,11 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
          title: 'Accomodations',
          api: 'userDetail',
       },
+      {
+         name: 'associatedParent',
+         title: 'Associated Parent',
+         api: 'userDetail',
+      },
    ]
 
    // console.log(currentField)
@@ -138,6 +146,20 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
          });
       }
    }, [student]);
+
+   useEffect(() => {
+      if (parent.length > 2) {
+         fetchParents(parent).then((res) => {
+            let tempData = res.data.data.parents.map((tutor) => {
+               return {
+                  _id: tutor._id,
+                  value: `${tutor.firstName} ${tutor.lastName}`,
+               };
+            });
+            setParents(tempData);
+         });
+      }
+   }, [parent]);
 
    const handleStudentsChange = item => {
       let tempStudents = [...currentToEdit.assiginedStudents]
@@ -319,7 +341,7 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                         }
                         {currentField.name === 'birthYear' &&
                            <div className='bg-[#F3F5F7] px-[29px]'>
-                              <div className='flex items-center mb-5 bg-white rounded-10' style={{boxShadow: "-3px -4px 24px rgba(0, 0, 0, 0.25)"}}>
+                              <div className='flex items-center mb-5 bg-white rounded-10' style={{ boxShadow: "-3px -4px 24px rgba(0, 0, 0, 0.25)" }}>
                                  {/* <p className='font-medium mr-4 min-w-[60px]'>  </p> */}
                                  {/* <InputField
                                     labelClassname='hidden'
@@ -510,6 +532,25 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                     onChange={e => setCurrentToEdit({ ...currentToEdit, accomodations: e.target.value })} />
                               </div>
                            </div>
+                        }
+                        {
+                           currentField.name === 'associatedParent' &&
+                           <InputSearch
+                              labelClassname='hidden'
+                              placeholder="Type Parent Name"
+                              parentClassName="w-full  mb-10"
+                              inputContainerClassName="bg-[#F3F5F7] border-0 pt-3.5 pb-3.5"
+                              inputClassName="bg-[#F3F5F7]"
+                              type="text"
+                              optionPrefix='s'
+                              value={parent}
+                              onChange={(e) => setParent(e.target.value)}
+                              optionData={parents}
+                              onOptionClick={(val) => {
+                                 // setStudent(item.value);
+                                 setCurrentToEdit({ ...currentToEdit, associatedParent: val._id })
+                                 // setCurrentToEdit({ ...currentToEdit, students: [... item._id] });
+                              }} />
                         }
                         {/* <InputField label='First Name'
                            labelClassname='ml-4 mb-0.5'
