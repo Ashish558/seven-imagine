@@ -265,7 +265,7 @@ export default function StudentProfile({ isOwn }) {
             <div className='lg:px-5 lg:pt-10'>
                <div className={`${styles.profileCard} relative`}>
                   <div className='rounded-t-40 bg-lightWhite lg:bg-transparent flex flex-col items-center'>
-                     <button className='absolute bg-[#D9BBFF] px-[14px] py-[12px] rounded-[8px] text-[#636363] text-[18px] font-medium top-[16px] left-[22px] flex gap-[12px] cursor-pointer' onClick={() => window.history.back()}><img src={LeftIcon} alt="icon" /> Back</button>
+                     {/* <button className='absolute bg-[#D9BBFF] px-[14px] py-[12px] rounded-[8px] text-[#636363] text-[18px] font-medium top-[16px] left-[22px] flex gap-[12px] cursor-pointer' onClick={() => window.history.back()}><img src={LeftIcon} alt="icon" /> Back</button> */}
                      <div className={styles.imgContainer}>
                         <img src={`/images/student-1.png`} />
                      </div>

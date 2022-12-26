@@ -25,7 +25,7 @@ export default function Modal({
    return (
       <div className={styles.modalContainer}>
          <div className="w-full p-1">
-            <div className={`w-full bg-[#F3F5F7] p-3 py-5 md:py-9.5 md:px-9.5 rounded-20 relative ${classname ? classname : ""
+            <div className={`w-full bg-white p-3 py-5 md:py-9.5 md:px-9.5 rounded-20 relative ${classname ? classname : ""
                }`}
             >
                <p className={`font-semibold text-xl md:text-2xl text-center text-primary-dark
@@ -45,7 +45,7 @@ export default function Modal({
                         type="button"
                      />
                   )}
-                  {/* {primaryBtn && (
+                  {primaryBtn && (
                      <button
                         onClick={primaryBtn.onClick ? primaryBtn.onClick : null}
                         form={primaryBtn.form ? primaryBtn.form : null}
@@ -55,7 +55,7 @@ export default function Modal({
                      >
                         {primaryBtn.text}
                      </button>
-                  )} */}
+                  )} 
                </div>
                <button className={styles.cancelBtn} 
                 style={cancelBtnStyle}
