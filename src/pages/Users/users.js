@@ -164,8 +164,8 @@ export default function Users() {
    const handleClose = () => setModalActive(false)
 
    const redirect = item => {
-      console.log(item)
-      if (roles.includes(item.userType)) {
+      // console.log(item)
+      if (roles.includes(item.userType) && item.userType !== 'admin') {
          navigate(`/profile/${item.userType}/${item._id}`)
       }
    }

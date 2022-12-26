@@ -21,6 +21,7 @@ import StudentTest from "../../assets/Navbar/studentTest";
 import Percentage from "../../assets/Navbar/percentage";
 import AssignedStudents from "../../assets/Navbar/assignedStudents";
 import Back from "../../assets/Navbar/Back";
+import logo from "../../assets/Navbar/logo";
 
 const tempnavdata = [
    {
@@ -80,6 +81,10 @@ const parentNav = [
 ]
 
 const studentNav = [
+   {
+      icon: logo,
+      path: ""
+   },
    {
       icon: Dashboard,
       path: "/",

@@ -32,19 +32,22 @@ const students = [
 
 export default function ParentProfile({ isOwn }) {
 
-   const navigate = useNavigate()
    const [editable, setEditable] = useState(false)
-   const persona = sessionStorage.getItem('role')
    const [activeIndex, setActiveIndex] = useState(0)
-   const [getUserDetail, userDetailResp] = useLazyGetUserDetailQuery()
-   const params = useParams()
+   const [associatedStudents, setAssociatedStudents] = useState([])
    const [user, setUser] = useState({})
    const [userDetail, setUserDetail] = useState({})
    const [settings, setSettings] = useState({})
-   const [fetchSettings, settingsResp] = useLazyGetSettingsQuery()
-   const [associatedStudents, setAssociatedStudents] = useState([])
+
    const { id } = useSelector(state => state.user)
 
+   const [fetchSettings, settingsResp] = useLazyGetSettingsQuery()
+   const [getUserDetail, userDetailResp] = useLazyGetUserDetailQuery()
+
+   const navigate = useNavigate()
+   const params = useParams()
+
+   const persona = sessionStorage.getItem('role')
    // console.log(id)
 
    useEffect(() => {
@@ -192,10 +195,9 @@ export default function ParentProfile({ isOwn }) {
 
    useEffect(() => {
       if (user.assiginedStudents === undefined) return
-
-      const fetch = () => {
+      const fetch = async () => {
          let studentsData = []
-         const students = user.assiginedStudents.map(student => {
+         const students = await user.assiginedStudents.map(student => {
             getUserDetail({ id: student })
                .then(res => {
                   studentsData.push({
@@ -213,9 +215,9 @@ export default function ParentProfile({ isOwn }) {
    useEffect(() => {
       fetchDetails()
    }, [params.id])
-
-   // if (Object.keys(user).length < 1) return
-   // if (Object.keys(userDetail).length < 1) return
+   // console.log(associatedStudents)
+   if (Object.keys(user).length < 1) return
+   if (Object.keys(userDetail).length < 1) return
    // if (userDetail === undefined) return
 
    return (
@@ -363,9 +365,9 @@ export default function ParentProfile({ isOwn }) {
                                  onClick={() => activeIndex < associatedStudents.length - 1 &&
                                     setActiveIndex(activeIndex + 1)} />
 
-                              {associatedStudents !== undefined && associatedStudents.map((student, idx) => {
+                              {associatedStudents.map((student, idx) => {
                                  return (
-                                    <div className={`${styles.student} ${activeIndex === idx ? styles.activeStudent : idx < activeIndex ? styles.previousStudent : styles.nextStudent} flex flex-col items-center px-10 lg:mb-10`}>
+                                    <div key={idx} className={`${styles.student} ${activeIndex === idx ? styles.activeStudent : idx < activeIndex ? styles.previousStudent : styles.nextStudent} flex flex-col items-center px-10 lg:mb-10`}>
                                        <div className={styles.studentImageContainer}>
                                           <img src='/images/student-1.png' />
                                        </div>
@@ -375,7 +377,8 @@ export default function ParentProfile({ isOwn }) {
                                           <p className='font-bold text-[18px] whitespace-nowrap'>
                                              {student.name}
                                           </p>
-                                          <span className='cursor-pointer text-[12px] font-semibold flex items-center gap-[8px] justify-center'> View Profile <img src={RightIcon} width="8px" alt="rightIcon" /> </span>
+                                          {/* <span className='cursor-pointer text-[12px] font-semibold flex items-center gap-[8px] justify-center'> View Profile <img src={RightIcon} width="8px" alt="rightIcon" /> </span> */}
+                                          <span className='cursor-pointer text-[12px] font-semibold flex items-center gap-[8px] justify-center' onClick={() => navigate(`/profile/student/${student._id}`)} > View Profile </span>
                                        </div>
                                     </div>
                                  )

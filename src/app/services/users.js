@@ -33,6 +33,12 @@ export const userServicesApi = createApi({
             method: "GET",
          }),
       }),
+      getTutorDetails: builder.query({
+         query: (body) => ({
+            url: `api/user/tutordetails/${body.id}`,
+            method: "GET",
+         }),
+      }),
       updateUserFields: builder.mutation({
          query: (body) => ({
             url: `api/user/${body.id}`,
@@ -71,6 +77,7 @@ export const {
    useLazyGetAllUsersQuery,
    useAddUserMutation,
    useLazyGetUserDetailQuery,
+   useLazyGetTutorDetailsQuery,
    useUpdateUserFieldsMutation,
    useUpdateUserDetailsMutation,
    useLazyGetPersonalDetailQuery

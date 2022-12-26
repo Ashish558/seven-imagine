@@ -28,7 +28,7 @@ import SubjectSlider from '../../../components/SubjectSlider/SubjectSlider'
 import BackBtn from '../../../components/Buttons/Back'
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useLazyGetUserDetailQuery } from '../../../app/services/users'
+import { useLazyGetTutorDetailsQuery } from '../../../app/services/users'
 import { useLazyGetSettingsQuery } from '../../../app/services/session'
 import { useSelector } from 'react-redux'
 import ParentEditables from '../../Frames/Editables/ParentEditables/ParentEditables'
@@ -102,7 +102,7 @@ export default function TutorProfile({ isOwn }) {
    const [settings, setSettings] = useState({})
 
    const params = useParams()
-   const [getUserDetail, userDetailResp] = useLazyGetUserDetailQuery()
+   const [getUserDetail, userDetailResp] = useLazyGetTutorDetailsQuery()
    const [fetchSettings, settingsResp] = useLazyGetSettingsQuery()
 
    const { id } = useSelector(state => state.user)

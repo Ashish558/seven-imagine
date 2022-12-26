@@ -200,7 +200,7 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
       }
    }
 
-   console.log('toedit', currentToEdit)
+   // console.log('toedit', currentToEdit)
    // console.log('field', currentField)
    // console.log('sett', settings)
    // console.log('students', students)
