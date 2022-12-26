@@ -74,7 +74,6 @@ const ParentDashboardHeader = () => {
       fetch()
    }, [user])
 
-   console.log(selectedStudent)
 
    return (
       <div

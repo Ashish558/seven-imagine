@@ -27,6 +27,24 @@ export const userServicesApi = createApi({
             },
          }),
       }),
+      getParentTutors: builder.query({
+         query: (body) => ({
+            url: `api/user/parent/tutors/${body.id}`,
+            method: "GET",
+            headers: {
+               "Authorization": sessionStorage.getItem('token'),
+            },
+         }),
+      }),
+      getStudentTutors: builder.query({
+         query: (body) => ({
+            url: `api/user/student/tutors/${body.id}`,
+            method: "GET",
+            headers: {
+               "Authorization": sessionStorage.getItem('token'),
+            },
+         }),
+      }),
       getUserDetail: builder.query({
          query: (body) => ({
             url: `api/user/${body.id}`,
@@ -75,6 +93,8 @@ export const userServicesApi = createApi({
 
 export const {
    useLazyGetAllUsersQuery,
+   useLazyGetParentTutorsQuery,
+   useLazyGetStudentTutorsQuery,
    useAddUserMutation,
    useLazyGetUserDetailQuery,
    useLazyGetTutorDetailsQuery,
