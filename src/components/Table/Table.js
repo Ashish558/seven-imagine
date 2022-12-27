@@ -22,11 +22,12 @@ export default function Table({
       if (hidePagination === true) {
          setTableData(data)
       } else {
-         const temp = tableData.slice(0, maxPageSize);
+         const temp = data.slice(0, maxPageSize);
+         // const temp = tableData.slice(0, maxPageSize); ***  it Was the Previous one  ***
          setTableData(temp);
          setCurrentPage(1);
       }
-   }, [data]);
+   }, [data, maxPageSize, data.length]);
 
 
    //change tabledata if current page changes
