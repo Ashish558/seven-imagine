@@ -24,7 +24,7 @@ import {
    useLazyGetTutorStudentsQuery,
    useLazyGetUsersByNameQuery,
 } from "../../app/services/session";
-import { convertTime12to24, getLocalTimeZone } from "../../utils/utils";
+import { convertDateToTimezone, convertTime12to24, formatAMPM, getFormattedDate, getLocalTimeZone } from "../../utils/utils";
 import InputSelect from "../../components/InputSelect/InputSelect";
 // import styles from "./calendar.css";
 import momentTimezonePlugin from '@fullcalendar/moment-timezone';
@@ -385,42 +385,34 @@ export default function Calendar() {
          return prev.map(item => {
             // console.log('item.start :', item.start)
             const ev = eventDetails.find(ev => ev._id === item.id)
-            // // console.log('utc', new Date(ev.date).toUTCString())
-            // let startTime = item.start
-            // if (timeZone === 'IST' && ev.timeZone !== timeZone) {
-            //    startTime = moment.tz(`${item.start}`, 'Asia/Kolkata').format()
-            // } else {
-            //    startTime = moment.tz(`${item.start}`, timeZone).format()
-            // }
-            // if (ev.timeZone === timeZone) {
-            //    startTime = item.start
-            //    // console.log(ev)
-            //    // moment.tz(`${item.start}`, 'Indian').format()
-            // }
             const time = ev.time;
-            const startTime = convertTime12to24(
-               `${time.start.time} ${time.start.timeType}`
-            );
+            // const startTime = convertTime12to24(
+            //    `${time.start.time} ${time.start.timeType}`
+            // );
 
-            const startHours = parseInt(startTime.split(":")[0]);
-            const startMinutes = parseInt(startTime.split(":")[1]);
+            // const startHours = parseInt(startTime.split(":")[0]);
+            // const startMinutes = parseInt(startTime.split(":")[1]);
 
-            let startDate = new Date(ev.date);
-            startHours !== NaN && startDate.setHours(startHours);
-            startMinutes !== NaN && startDate.setMinutes(startMinutes);
+            // let startDate = new Date(ev.date);
+            // startHours !== NaN && startDate.setHours(startHours);
+            // startMinutes !== NaN && startDate.setMinutes(startMinutes);
 
-            let date = new Date(new Date(
-               startDate.toLocaleString('en-US', {
-                 timeZone,
-               }),
-             ))
+            // let date = new Date(new Date(
+            //    startDate.toLocaleString('en-US', {
+            //       timeZone,
+            //    }),
+            // ))
+            const startTimer = convertDateToTimezone(ev.time.start.time, ev.time.start.timeType, ev.date, timeZone)
+
+            const endTime = convertDateToTimezone(ev.time.end.time, ev.time.end.timeType, ev.date, timeZone)
+           
             // console.log('updated date', date);
             // console.log('item.start' ,item.start);
             // console.log(date);
             // console.log('startTime :', new Date(startTime).getHours())
             // console.log(moment.utc().format('YYYY-MM-DD hh:mm:ss A'));
             // console.log(moment.utc().format('YYYY-MM-DD hh:mm:ss A'));
-            return { ...item, start: date }
+            return { ...item, start: startTimer, description: `${formatAMPM(startTimer)} - ${formatAMPM(endTime)}` }
          })
       })
       // document.getElementById('calendarContainer').refetchEvents()

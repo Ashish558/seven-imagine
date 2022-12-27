@@ -39,7 +39,7 @@ const tempnavdata = [
    {
       icon: SettingsIcon,
       path: "/settings",
-      excludes : ['student', 'parent', 'tutor']
+      excludes: ['student', 'parent', 'tutor']
    },
    {
       icon: People,
@@ -144,13 +144,13 @@ export default function Navbar() {
    const persona = sessionStorage.getItem('role')
 
    useEffect(() => {
-      if(persona === 'student'){
+      if (persona === 'student') {
          setNavData(studentNav)
       }
-      if(persona === 'tutor'){
+      if (persona === 'tutor') {
          setNavData(tutorNav)
       }
-      if(persona === 'parent' ){
+      if (persona === 'parent') {
          setNavData(parentNav)
       }
    }, [persona])
@@ -175,9 +175,7 @@ export default function Navbar() {
                   if (width < desktop) {
                      return (
                         idx < 4 && (
-                           <>
-                              <NavLink width={width} key={idx} {...item} />
-                           </>
+                           <NavLink width={width} key={idx} {...item} />
                         )
                      );
                   } else {

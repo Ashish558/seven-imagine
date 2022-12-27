@@ -137,11 +137,6 @@ export default function TutorProfile({ isOwn }) {
    })
 
    const handleClose = () => {
-      let tempToEdit = {}
-      // Object.keys(toEdit).map(key => {
-      //    return tempToEdit[key] = { ...toEdit[key], active: false }
-      // })
-      // setToEdit(tempToEdit)
       setToEdit(prevToEdit => {
          let obj = {}
          Object.keys(prevToEdit).map(key => {
@@ -224,7 +219,7 @@ export default function TutorProfile({ isOwn }) {
          <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pb-120'>
             <div className='lg:px-5 lg:pt-0 lg:pr-0 relative'>
                <div className={styles.backBtn} >
-                  <BackBtn to='/dashboard' />
+                  <BackBtn to={-1} />
                </div>
                <div className='relative'>
                   <img src={TutorImg} style={{ transform: 'matrix(-1, 0, 0, 1, 0, 0)' }} />
