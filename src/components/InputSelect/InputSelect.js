@@ -22,7 +22,7 @@ export default function InputSelect({
    const [selected, setSelected] = useState(false);
    const selectRef = useRef();
    useOutsideAlerter(selectRef, () => setSelected(false));
-
+ 
    useEffect(() => {
      if(!checkbox) setSelected(false)
    }, [value]);
@@ -39,14 +39,14 @@ export default function InputSelect({
          </label>
 
          <div
-            className={`py-[16px] px-[21px] flex items-center rounded-10 relative cursor-pointer text-[24px] z-50 ${inputContainerClassName ? inputContainerClassName : ""
+            className={`py-[16px] px-[21px] flex items-center rounded-10 relative cursor-pointer z-50 ${inputContainerClassName ? inputContainerClassName : ""
                }`}
          >
             {Icon && <img src={Icon} className="mr-6" alt="icon" />}
             {
                <img
                   src={DownArrow}
-                  className={styles.downArrow}
+                  className={`w-[15px] ${styles.downArrow}`}
                   alt="down-arrow"
                   onClick={() => setSelected(!selected)}
                />
