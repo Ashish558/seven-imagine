@@ -55,7 +55,8 @@ export default function Users() {
 
    const [fetchUsers, fetchUsersResp] = useLazyGetAllUsersQuery()
    const [addUser, addUserResp] = useAddUserMutation()
-   const [signupUser, signupUserResp] = useSignupUserMutation()
+   const [signupUser, signupUserResp] = useSignupUserMutation();
+   const [maxPageSize, setMaxPageSize] = useState(10)
 
    const [filterData, setFilterData] = useState({
       typeName: '',
@@ -88,7 +89,7 @@ export default function Users() {
    }
    useEffect(() => {
       fetch()
-   }, [])
+   }, [maxPageSize])
 
    useEffect(() => {
       let tempdata = [...usersData]
@@ -268,7 +269,8 @@ export default function Users() {
                   data={filteredUsersData}
                   onClick={{ redirect, handleTutorStatus }}
                   tableHeaders={tableHeaders}
-                  maxPageSize={10} />
+                  maxPageSize={maxPageSize} 
+                  setMaxPageSize={setMaxPageSize} />
             </div>
          </div>
 

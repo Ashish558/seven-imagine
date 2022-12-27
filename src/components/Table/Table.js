@@ -9,10 +9,13 @@ export default function Table({
    tableHeaders,
    maxPageSize,
    onClick,
-   hidePagination
+   hidePagination,
+   setMaxPageSize
 }) {
-   const [tableData, setTableData] = useState(data);
+   const [tableData, setTableData] = useState(data.sort((a,b) => a.name.slice(0,1).toLowerCase() > b.name.slice(0,1).toLowerCase()));
    const [currentPage, setCurrentPage] = useState(1);
+
+   // console.log();
    
    useEffect(() => {
       if (hidePagination === true) {
@@ -56,11 +59,18 @@ export default function Table({
             </tbody>
          </table>
 
-         {!hidePagination && <Pagination
-            totalPages={Math.ceil(data.length / maxPageSize)}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-         />}
+         <div className="grid grid-cols-3 items-center">
+            <aside></aside>
+            {!hidePagination && <Pagination
+               totalPages={Math.ceil(data.length / maxPageSize)}
+               currentPage={currentPage}
+               setCurrentPage={setCurrentPage}
+            />}
+            <aside className="ml-auto">
+               <button className="mx-3 px-6 py-3 bg-primary text-white rounded" onClick={() => setMaxPageSize(10)}>Show 10 Entries</button>
+               <button className="mx-3 px-6 py-3 bg-primary text-white rounded" onClick={() => setMaxPageSize(30)}>Show 30 Entries</button>
+            </aside>
+         </div>
 
       </div>
    );
