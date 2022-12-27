@@ -165,7 +165,7 @@ export default function Invoice() {
                         labelClassname="ml-2 mb-1.2"
                         optionData={options}
                         placeholder="Select Test Type"
-                        inputContainerClassName="bg-white border pt-2.5 pb-2.5"
+                        inputContainerClassName="bg-white border py-2.5 px-[20px]"
                         parentClassName="w-full"
                         inputClassName='bg-transparent'
                         type="select"

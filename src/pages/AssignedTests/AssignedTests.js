@@ -162,7 +162,7 @@ export default function AssignedTests() {
                      onChange={e => setFilterData({...filterData, studentName: e.target.value})}
                      optionData={optionData}
                      placeholder="Student Name"
-                     inputContainerClassName="pt-3.5 pb-3.5 bg-white"
+                     inputContainerClassName="px-[20px] py-[16px] bg-white"
                      parentClassName="w-full mr-4 text-sm"
                      type="text"
                   />
@@ -172,7 +172,7 @@ export default function AssignedTests() {
                      onChange={e => setFilterData({...filterData, testName: e.target.value})}
                      optionData={optionData}
                      placeholder="Test Name"
-                     inputContainerClassName="pt-3.5 pb-3.5 bg-white"
+                     inputContainerClassName="px-[20px] py-[16px] bg-white"
                      parentClassName="w-full mr-4 text-sm"
                      type="text"
                   />
@@ -181,7 +181,7 @@ export default function AssignedTests() {
                      onChange={e => setFilterData({...filterData, tutor: e.target.value})}
                      IconRight={SearchIcon}
                      parentClassName="w-full mr-4 text-sm"
-                     inputContainerClassName="pt-3.5 pb-3.5 bg-white"
+                     inputContainerClassName="px-[20px] py-[16px] bg-white"
                      optionData={optionData}
                      placeholder="Tutor Name"
                      type="text"
@@ -190,7 +190,7 @@ export default function AssignedTests() {
                      value={filterData.status}
                      onChange={val => setFilterData({...filterData, status: val})}
                      optionData={optionData}
-                     inputContainerClassName="pt-3.5 pb-3.5 bg-white"
+                     inputContainerClassName="px-[20px] py-[16px] bg-white"
                      placeholder="Completion Status"
                      parentClassName="w-full mr-4 text-sm"
                      type="select"
@@ -243,7 +243,7 @@ export default function AssignedTests() {
                            optionPrefix='s'
                            parentClassName="w-full mr-4"
                            labelClassname="ml-2 mb-0.5"
-                           inputContainerClassName="px-5 pt-3.5 pb-3.5 text-sm bg-primary-50 border-0"
+                           inputContainerClassName="px-5 py-3.5 text-sm bg-primary-50 border-0"
                            inputClassName="bg-transparent"
                            placeholder="Student Name"
                            type="select"
@@ -257,7 +257,7 @@ export default function AssignedTests() {
                            optionData={timeLimits}
                            parentClassName="w-full mr-4 "
                            labelClassname="ml-2 mb-0.5"
-                           inputContainerClassName="px-5 text-sm pt-3.5 pb-3.5 bg-primary-50 border-0"
+                           inputContainerClassName="px-5 text-sm py-3.5 bg-primary-50 border-0"
                            inputClassName="bg-transparent"
                            placeholder="Select Time Limit"
                            type="select"
@@ -275,7 +275,7 @@ export default function AssignedTests() {
                            }
                            parentClassName="w-full mr-4"
                            labelClassname="ml-2 mb-0.5"
-                           inputContainerClassName="px-5 pt-3.5 pb-3.5 bg-primary-50 border-0"
+                           inputContainerClassName="px-5 py-3.5 bg-primary-50 border-0"
                            inputClassName="bg-transparent text-sm"
                            optionData={optionData}
                            placeholder="Date"
@@ -303,7 +303,7 @@ export default function AssignedTests() {
                            placeholder="Type Test Name"
                            parentClassName="w-full mr-4"
                            labelClassname="ml-2 mb-0.5"
-                           inputContainerClassName="px-5 pt-3.5 pb-3.5 text-sm bg-primary-50 border-0"
+                           inputContainerClassName="px-5 py-3.5 text-sm bg-primary-50 border-0"
                            inputClassName="bg-transparent"
                            type="select"
                         />

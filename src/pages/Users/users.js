@@ -181,41 +181,41 @@ export default function Users() {
                   <img src={AddIcon} className='ml-3' />
                </button>
             </div>
-            <div className='flex align-center mt-8'>
+            <div className='flex align-center mt-8 gap-[20px]'>
                <InputField
                   IconRight={SearchIcon}
                   placeholder='Type Name'
-                  parentClassName='w-full mr-4'
-                  inputContainerClassName='text-sm pt-[12px] text-sm pb-[12px] bg-white border w-[290px]'
+                  parentClassName='w-full'
+                  inputContainerClassName='text-sm text-sm bg-white  px-[20px] py-[16px] border'
                   type='text'
                   value={filterData.typeName}
                   onChange={e => setFilterData({ ...filterData, typeName: e.target.value })} />
                <InputSelect optionData={userTypesList}
-                  inputContainerClassName='text-sm border bg-white pt-[12px] pb-[12px]'
+                  inputContainerClassName='text-sm border bg-white px-[20px] py-[16px]'
                   placeholder='User Type'
-                  parentClassName='w-full mr-4'
+                  parentClassName='w-full'
                   type='select'
                   value={filterData.userType}
                   onChange={val => setFilterData({ ...filterData, userType: val })} />
                <InputSelect optionData={optionData}
                   placeholder='Lead Status'
-                  parentClassName='w-full mr-4'
-                  inputContainerClassName='text-sm border bg-white pt-[12px] pb-[12px]'
+                  parentClassName='w-full'
+                  inputContainerClassName='text-sm border bg-white px-[20px] py-[16px]'
                   type='select'
                   value={filterData.status}
                   onChange={val => setFilterData({ ...filterData, status: val })} />
                <InputSelect optionData={optionData}
                   placeholder='Services'
-                  parentClassName='w-full mr-4'
+                  parentClassName='w-full'
                   type='select'
-                  inputContainerClassName='text-sm border bg-white pt-[12px] pb-[12px]'
+                  inputContainerClassName='text-sm border bg-white px-[20px] py-[16px]'
                   value={filterData.services}
                   onChange={val => setFilterData({ ...filterData, services: val })} />
                <InputSelect optionData={optionData}
                   placeholder='Tutor'
-                  parentClassName='w-full mr-4'
+                  parentClassName='w-full'
                   type='select'
-                  inputContainerClassName='text-sm border bg-white pt-[12px] pb-[12px]'
+                  inputContainerClassName='text-sm border bg-white px-[20px] py-[16px]'
                   value={filterData.tutor}
                   onChange={val => setFilterData({ ...filterData, tutor: val })} />
             </div>
@@ -255,7 +255,7 @@ export default function Users() {
                               placeholder='First Name'
                               inputContainerClassName='text-sm pt-3.5 pb-3.5 px-5 bg-primary-50 border-0'
                               inputClassName='bg-transparent'
-                              parentClassName='w-full mr-4' type='text'
+                              parentClassName='w-full' type='text'
                               value={modalData.firstName}
                               isRequired={true}
                               onChange={e => setModalData({ ...modalData, firstName: e.target.value })} />
@@ -267,7 +267,7 @@ export default function Users() {
                               placeholder='Last Name'
                               inputContainerClassName='text-sm pt-3.5 pb-3.5 px-5 bg-primary-50 border-0'
                               inputClassName='bg-transparent'
-                              parentClassName='w-full mr-4' type='text'
+                              parentClassName='w-full' type='text'
                               value={modalData.lastName}
                               onChange={e => setModalData({ ...modalData, lastName: e.target.value })} />
                         </div>
@@ -278,7 +278,7 @@ export default function Users() {
                               placeholder='Email Addresss'
                               inputContainerClassName='text-sm pt-3.5 pb-3.5 px-5 bg-primary-50 border-0'
                               inputClassName='bg-transparent'
-                              parentClassName='w-full mr-4' type='text'
+                              parentClassName='w-full' type='text'
                               value={modalData.email}
                               onChange={e => setModalData({ ...modalData, email: e.target.value })} />
                         </div>
@@ -292,7 +292,7 @@ export default function Users() {
                               labelClassname='ml-4 mb-0.5'
                               optionData={userTypeOptions}
                               inputContainerClassName='text-sm pt-3.5 pb-3.5 bg-primary-50 px-5 border-0'
-                              parentClassName='w-full mr-4' />
+                              parentClassName='w-full' />
                         </div>
                      </div>
                   </form>
