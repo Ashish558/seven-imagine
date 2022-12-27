@@ -72,6 +72,7 @@ export default function AssignedTests() {
 
    const [fetchTests, fetchTestsResp] = useLazyGetTestsByNameQuery()
    const [testsData, setTestsData] = useState([]);
+   const [maxPageSize, setMaxPageSize] = useState(10)
 
    useEffect(() => {
       if (modalData.name.length > 2) {
@@ -203,7 +204,8 @@ export default function AssignedTests() {
                      dataFor='assignedTests'
                      data={tableData}
                      tableHeaders={tableHeaders}
-                     maxPageSize={10}
+                     maxPageSize={maxPageSize}
+                     setMaxPageSize={setMaxPageSize}
                   />
                </div>
             </div>
