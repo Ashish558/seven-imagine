@@ -75,12 +75,12 @@ export default function TableItem({ item, dataFor, onClick }) {
                </td>
                <td className="font-medium text-sm px-1  min-w-14 py-4">
                   <div className="my-[6px]">
-                     {item.userType === 'tutor' ?
-                        <span className="cursor-pointer inline-block px-1" onClick={()=> onClick.handleTutorStatus(item, )}>
-                           {item.block === false ? 'Block' : 'Unblock'}
-                        </span>
-                        :
-                        item.tutorStatus}
+                     {/* {item.userType === 'tutor' ? */}
+                     <span className="cursor-pointer inline-block px-1" onClick={() => onClick.handleTutorStatus(item,)}>
+                        {item.block === false ? 'Active' : 'Dormant'}
+                     </span>
+                     {/* : */}
+                     {/* item.tutorStatus} */}
                   </div>
                </td>
                <td className="font-medium text-sm px-1  min-w-14 py-4">
