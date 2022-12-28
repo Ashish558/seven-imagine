@@ -12,7 +12,7 @@ export default function Table({
    hidePagination,
    setMaxPageSize
 }) {
-   const [tableData, setTableData] = useState(data.sort((a,b) => a.name.slice(0,1).toLowerCase() > b.name.slice(0,1).toLowerCase()));
+   const [tableData, setTableData] = useState(data.sort((a,b) => a.name?.slice(0,1).toLowerCase() > b.name?.slice(0,1).toLowerCase()));
    const [currentPage, setCurrentPage] = useState(1);
    const dataLength = data.length > 30 ? 30 : data.length;
 
