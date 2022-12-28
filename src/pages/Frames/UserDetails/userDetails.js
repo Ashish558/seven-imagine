@@ -5,6 +5,7 @@ import PrimaryButton from "../../../components/Buttons/PrimaryButton";
 import SecondaryButton from "../../../components/Buttons/SecondaryButton";
 import InputField from "../../../components/InputField/inputField";
 import styles from "../../Signup/signup.module.css";
+import { validateOtherDetails } from "../../Signup/utils/util";
 
 export default function UserDetails({
    setFrames,
@@ -12,17 +13,42 @@ export default function UserDetails({
    setcurrentStep,
    otherDetails,
    setOtherDetails,
+   detailsError,
+   setDetailsError,
+   resetDetailsErrors
 }) {
+
+
    const handleClick = () => {
-      if (persona === "parent") {
-         setFrames((prev) => {
-            return { ...prev, userDetails: false, questions: true };
-         });
-      } else {
-         setFrames((prev) => {
-            return { ...prev, userDetails: false, services: true };
-         });
-      }
+      const result = validateOtherDetails(otherDetails)
+      // console.log(result);
+      const promiseState = async state => new Promise(resolve => {
+         resolve(resetDetailsErrors())
+      })
+
+      promiseState()
+         .then(() => {
+            if (result.data !== true) {
+               setDetailsError(prev => {
+                  return {
+                     ...prev,
+                     [result.data]: result.message
+                  }
+               })
+            } else {
+               // return
+               if (persona === "parent") {
+                  setFrames((prev) => {
+                     return { ...prev, userDetails: false, questions: true };
+                  });
+               } else {
+                  setFrames((prev) => {
+                     return { ...prev, userDetails: false, services: true };
+                  });
+               }
+            }
+
+         })
    };
 
    useEffect(() => {
@@ -64,6 +90,7 @@ export default function UserDetails({
                      FirstName: e.target.value,
                   })
                }
+               error={detailsError.FirstName}
             />
             <InputField
                placeholder="Last Name"
@@ -79,6 +106,7 @@ export default function UserDetails({
                      LastName: e.target.value,
                   })
                }
+               error={detailsError.LastName}
             />
          </div>
 
@@ -93,6 +121,7 @@ export default function UserDetails({
             onChange={(e) =>
                setOtherDetails({ ...otherDetails, Email: e.target.value })
             }
+            error={detailsError.Email}
          />
          <InputField
             placeholder="Phone Number"
@@ -115,6 +144,7 @@ export default function UserDetails({
             onChange={(e) =>
                setOtherDetails({ ...otherDetails, Phone: e.target.value })
             }
+            error={detailsError.Phone}
          />
 
          <div className="flex items-center mt-120">

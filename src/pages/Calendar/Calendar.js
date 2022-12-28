@@ -483,17 +483,14 @@ export default function Calendar() {
                timeZone,
                ev.timeZone)
 
-            let startarg = ev.timeZone === timeZone ? item.initialStartDate : updatedDate
-            let endarg = ev.timeZone === timeZone ? item.initialEndDate : updatedDateEnd
-            // let startarg =  updatedDate
+            //   let startarg =  updatedDate
             // let endarg =  updatedDateEnd
 
-            console.log(startarg)
 
             return {
-               ...item, start: startarg,
-               description: `${formatAMPM(startarg)}-${formatAMPM(endarg)}`
-               // description: `${formatAMPM(updatedDate)}-${formatAMPM(updatedDateEnd)}`
+               ...item, start: updatedDate,
+               // description: `${formatAMPM(startarg)}-${formatAMPM(endarg)}`
+               description: `${formatAMPM(updatedDate)}-${formatAMPM(updatedDateEnd)}`
             }
          })
       })

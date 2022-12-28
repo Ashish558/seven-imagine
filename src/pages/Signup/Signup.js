@@ -26,7 +26,7 @@ import { getCheckedString } from "../../utils/utils";
 import InputSelect from "../../components/InputSelect/InputSelect";
 import useOutsideAlerter from "../../hooks/useOutsideAlerter";
 import { useLazyGetSettingsQuery } from "../../app/services/session";
-import { validateSignup } from "./utils/util";
+import { validateOtherDetails, validateSignup } from "./utils/util";
 
 export default function Signup() {
    const [frames, setFrames] = useState({
@@ -53,7 +53,7 @@ export default function Signup() {
       fetchSettings()
    }, [])
 
-
+ 
    const [error, setError] = useState({
       firstName: "",
       lastName: "",
@@ -82,6 +82,13 @@ export default function Signup() {
       aboutScore: "",
    });
 
+   const [detailsError, setDetailsError] = useState({
+      FirstName: "",
+      LastName: "",
+      Email: "",
+      Phone: "",
+   });
+
    useEffect(() => {
       window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
    }, [frames])
@@ -108,6 +115,17 @@ export default function Signup() {
             email: "",
             phone: "",
             subscriptionCode: "",
+         }
+      })
+   }
+
+   const resetDetailsErrors = () => {
+      setDetailsError(prev => {
+         return {
+            FirstName: "",
+            LastName: "",
+            Email: "",
+            Phone: "",
          }
       })
    }
@@ -192,7 +210,7 @@ export default function Signup() {
 
    const props = { persona, setFrames, setcurrentStep };
    const valueProps = { values, setValues };
-   const otherDetailsProps = { otherDetails, setOtherDetails };
+   const otherDetailsProps = { otherDetails, setOtherDetails, detailsError, setDetailsError, resetDetailsErrors };
 
    return (
       <div className="min-h-screen" id={styles.signUp}>
