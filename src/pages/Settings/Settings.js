@@ -296,7 +296,7 @@ export default function Settings() {
                      <div className='flex items-center [&>*]:mb-[10px]'>
                         <AddTag keyName='serviceSpecialisation' onAddTag={handleAddTag} />
                         <FilterItems isString={true} onlyItems={true}
-                           items={serviceSpecialisation}
+                           items={serviceSpecialisation.map(item => item.text)}
                            keyName='serviceSpecialisation'
                            onRemoveFilter={onRemoveFilter}
                            className='pt-1 pb-1 mr-15' />
