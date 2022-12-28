@@ -146,13 +146,11 @@ export default function Calendar() {
             // let startDate = new Date(session.date).toUTCString()
             startHours !== NaN && startDate.setHours(startHours);
             startMinutes !== NaN && startDate.setMinutes(startMinutes);
-
             let updatedDate = new Date(new Date(
                startDate.toLocaleString('en-US', {
                   timeZone: session.timeZone,
                }),
             ))
-
             return {
                ...session,
                updatedDate
@@ -472,7 +470,7 @@ export default function Calendar() {
             // console.log(item.updatedDate)
             // console.log('initial date ------', ev.date);
 
-            console.log(item)
+            // console.log(item)
 
             const startTimer = convertDateToTimezone(ev.time.start.time,
                ev.time.start.timeType,
@@ -487,9 +485,10 @@ export default function Calendar() {
 
             let startarg = ev.timeZone === timeZone ? item.initialStartDate : updatedDate
             let endarg = ev.timeZone === timeZone ? item.initialEndDate : updatedDateEnd
+            // let startarg =  updatedDate
+            // let endarg =  updatedDateEnd
 
-            console.log(startarg);
-            console.log(item.start);
+            console.log(startarg)
 
             return {
                ...item, start: startarg,
@@ -503,6 +502,9 @@ export default function Calendar() {
       // calendarRef.current.gotoDate('')
       // calendarRef.current.setOption('timeZone', timeZone)
    }, [timeZone, events.length])
+
+   // console.log(events);
+   // console.log(eventDetails);
 
    return (
       <>
