@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import EyeIcon from '../../assets/form/eye-open.svg'
+import Message from "./Message/Message";
 
 export default function InputField({
    parentClassName,
@@ -19,9 +20,9 @@ export default function InputField({
    required,
    isRequired,
    style,
-   disabled
+   disabled,
+   error
 }) {
-
    const [inputType, setInputType] = useState(type)
 
    return (
@@ -55,6 +56,9 @@ export default function InputField({
             {IconRight && <img src={IconRight} className={`ml-4 cursor-pointer ${iconSize === "medium" && "w-[24px]"}`} />}
             {right && right}
          </div>
+            {error !== undefined && error !== '' &&
+               <Message error={error} type='danger' />
+            }
       </div>
    );
 }
