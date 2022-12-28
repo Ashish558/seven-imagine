@@ -200,7 +200,7 @@ export default function StudentProfile({ isOwn }) {
       }
       getUserDetail({ id: userId })
          .then(res => {
-            // console.log('response', res.data.data);
+            console.log('response', res.data.data);
             const { firstName, lastName, phone, email } = res.data.data.user
             const { service, accomodations, timeZone, birthyear, associatedParent } = res.data.data.userdetails
             associatedParent && getUserDetail({ id: associatedParent })

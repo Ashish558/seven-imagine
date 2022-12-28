@@ -68,6 +68,7 @@ export default function Users() {
    const fetch = () => {
       fetchUsers()
          .then(res => {
+            console.log(res.data.data);
             let data = res.data.data.user.map(user => {
                return {
                   _id: user._id,

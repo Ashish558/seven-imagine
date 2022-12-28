@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLazyGetParentsByNameQuery } from '../../../../app/services/admin'
 import { useLazyGetStudentsByNameQuery } from '../../../../app/services/session'
-import { useUpdateTutorDetailsMutation, useUpdateUserDetailsMutation, useUpdateUserFieldsMutation } from '../../../../app/services/users'
+import { useUpdateTutorDetailsMutation, useUpdateUserDetailsMutation, useUpdateUserFieldsMutation, usePostTutorDetailsMutation } from '../../../../app/services/users'
 import InputField from '../../../../components/InputField/inputField'
 import InputSearch from '../../../../components/InputSearch/InputSearch'
 import InputSelect from '../../../../components/InputSelect/InputSelect'
@@ -27,6 +27,7 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
    const [updateFields, updateFieldsResp] = useUpdateUserFieldsMutation()
    const [updateDetails, updateDetailsResp] = useUpdateUserDetailsMutation()
    const [updateTutorDetails, updateTutorDetailsResp] = useUpdateTutorDetailsMutation()
+   const [postTutorDetails, postTutorDetailsResp] = usePostTutorDetailsMutation()
 
 
    const data = [
@@ -269,12 +270,21 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
             .then(res => {
                console.log(res)
                if (reqBody.linkedIn) {
-                  updateTutorDetails({ id: userId, fields: {linkedIn:reqBody.linkedIn } })
-                     .then(res => {
-                        console.log(res)
-                        fetchDetails(true, true)
-                        // handleClose()
-                     })
+                  if (currentToEdit.isPresent === false) {
+                     delete reqBody['isPresent']
+                     postTutorDetails({ id: userId, fields: { linkedIn: reqBody.linkedIn } })
+                        .then(res => {
+                           fetchDetails(true, true)
+                           // handleClose()
+                        })
+                  } else {
+                     delete reqBody['isPresent']
+                     updateTutorDetails({ id: userId, fields: { linkedIn: reqBody.linkedIn } })
+                        .then(res => {
+                           fetchDetails(true, true)
+                           // handleClose()
+                        })
+                  }
                }
                fetchDetails(true, true)
                // handleClose()
@@ -287,16 +297,29 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                // handleClose()
             })
       } else if (currentField.api === 'tutorDetail') {
-         updateTutorDetails({ id: userId, fields: reqBody })
-            .then(res => {
-               console.log(res)
-               fetchDetails(true, true)
-               // handleClose()
-            })
+
+         if (currentToEdit.isPresent === false) {
+            delete reqBody['isPresent']
+            postTutorDetails({ id: userId, fields: reqBody })
+               .then(res => {
+                  console.log('posted', res)
+                  fetchDetails(true, true)
+                  // handleClose()
+               })
+         } else {
+            delete reqBody['isPresent']
+            updateTutorDetails({ id: userId, fields: reqBody })
+               .then(res => {
+                  console.log('patched', res)
+                  fetchDetails(true, true)
+                  // handleClose()
+               })
+         }
+
       }
    }
 
-   // console.log('toedit', currentToEdit)
+   console.log('toedit', currentToEdit)
    // console.log('field', currentField)
    // console.log('sett', settings)
    // console.log('students', students)
@@ -416,16 +439,16 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                         {currentField.name === 'birthYear' &&
                            <div className='bg-[#F3F5F7] '>
                               {/* <div className='flex items-center mb-5 bg-white rounded-10' style={{ boxShadow: "-3px -4px 24px rgba(0, 0, 0, 0.25)" }}> */}
-                                 <p className='font-medium mr-4 min-w-[60px]'>  </p>
-                                  <InputField
-                                    labelClassname='hidden'
-                                    placeholder='Enter your birth year'
-                                    inputContainerClassName='text-sm pt-3 pb-3 rounded-sm bg-primary-50 border-0'
-                                    inputClassName='bg-transparent'
-                                    parentClassName='flex-1 ' type='text'
-                                    value={currentToEdit.birthyear}
-                                    onChange={e => setCurrentToEdit({ ...currentToEdit, birthyear: e.target.value })} /> 
-                                  {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> 
+                              <p className='font-medium mr-4 min-w-[60px]'>  </p>
+                              <InputField
+                                 labelClassname='hidden'
+                                 placeholder='Enter your birth year'
+                                 inputContainerClassName='text-sm pt-3 pb-3 rounded-sm bg-primary-50 border-0'
+                                 inputClassName='bg-transparent'
+                                 parentClassName='flex-1 ' type='text'
+                                 value={currentToEdit.birthyear}
+                                 onChange={e => setCurrentToEdit({ ...currentToEdit, birthyear: e.target.value })} />
+                              {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> 
                                  <SimpleCalendar setCurrentDate={setCurrentToEdit} /> */}
                               {/* </div> */}
                            </div>
@@ -757,7 +780,10 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                     inputClassName='bg-transparent rounded-[4px]'
                                     parentClassName='flex-1 ' type='text'
                                     value={currentToEdit.bankName}
-                                    onChange={e => setCurrentToEdit({ ...currentToEdit, bankName: e.target.value })} />
+                                    onChange={e => setCurrentToEdit({
+                                       ...currentToEdit,
+                                       paymentInfo: { ...currentToEdit.paymentInfo, bankName: e.target.value }
+                                    })} />
                               </div>
                               <div className='flex items-center mb-4'>
                                  <p className='font-medium mr-4 min-w-[100px] '>
@@ -770,7 +796,10 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                     inputClassName='bg-transparent rounded-[4px]'
                                     parentClassName='flex-1 ' type='text'
                                     value={currentToEdit.AccNo}
-                                    onChange={e => setCurrentToEdit({ ...currentToEdit, AccNo: e.target.value })} />
+                                    onChange={e => setCurrentToEdit({
+                                       ...currentToEdit,
+                                       paymentInfo: { ...currentToEdit.paymentInfo, AccNo: e.target.value }
+                                    })} />
                               </div>
                               <div className='flex items-center'>
                                  <p className='font-medium mr-4 min-w-[100px] '>
@@ -783,7 +812,10 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                     inputClassName='bg-transparent rounded-[4px]'
                                     parentClassName='flex-1 ' type='text'
                                     value={currentToEdit.ifcsCode}
-                                    onChange={e => setCurrentToEdit({ ...currentToEdit, ifcsCode: e.target.value })} />
+                                    onChange={e => setCurrentToEdit({
+                                       ...currentToEdit,
+                                       paymentInfo: { ...currentToEdit.paymentInfo, ifcsCode: e.target.value }
+                                    })} />
                               </div>
                            </div>
                         }

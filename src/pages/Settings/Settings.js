@@ -98,6 +98,7 @@ export default function Settings() {
    const fetchSettings = () => {
       getSettings()
          .then(res => {
+            console.log(res);
             setSettingsData(res.data.data.setting)
          })
    }
@@ -173,13 +174,13 @@ export default function Settings() {
    }
 
    const onRemoveImage = (item, i) => {
-     console.log(item, i)
-     let updatedField = settingsData.offerImages.filter(text => text !== item)
-     let updatedSetting = {
-      offerImages: updatedField
-     }
-   //   console.log(updatedSetting)
-     updateAndFetchsettings(updatedSetting)
+      console.log(item, i)
+      let updatedField = settingsData.offerImages.filter(text => text !== item)
+      let updatedSetting = {
+         offerImages: updatedField
+      }
+      //   console.log(updatedSetting)
+      updateAndFetchsettings(updatedSetting)
    }
 
    useEffect(() => {
@@ -188,9 +189,9 @@ export default function Settings() {
 
 
    if (Object.keys(settingsData).length === 0) return <></>
-   const { classes, serviceSpecialisation, sessionTags, leadStatus, tutorStatus, offerImages } = settingsData
+   const { classes, serviceSpecialisation, sessionTags, leadStatus, tutorStatus, offerImages, subscriptionCode } = settingsData
 
-   // console.log(settingsData)
+   console.log(settingsData)
 
    return (
       <>
@@ -250,6 +251,18 @@ export default function Settings() {
                            isString={true}
                            items={tutorStatus}
                            keyName='tutorStatus'
+                           onRemoveFilter={onRemoveFilter}
+                           className='pt-1 pb-1 mr-15' />
+                     </div>
+                  } />
+               <SettingsCard title='Subscription Code'
+                  body={
+                     <div className='flex items-center [&>*]:mb-[10px]'>
+                        <AddTag onAddTag={handleAddTag} keyName='subscriptionCode' />
+                        <FilterItems onlyItems={true}
+                           isString={true}
+                           items={subscriptionCode}
+                           keyName='subscriptionCode'
                            onRemoveFilter={onRemoveFilter}
                            className='pt-1 pb-1 mr-15' />
                      </div>
@@ -372,6 +385,40 @@ export default function Settings() {
                               onChange={e => setModalData({ ...modalData, email: e.target.value })} />
                         </div>
 
+                     </div>
+                  </form>
+               }
+            />
+         }
+         {
+            modalActive &&
+            <Modal
+               classname={'max-w-840 mx-auto'}
+               title='Edit Details'
+               titleClassName='mb-[18px]'
+               cancelBtn={true}
+               cancelBtnClassName='w-140'
+               primaryBtn={{
+                  text: "Save",
+                  className: 'w-140',
+                  form: 'settings-form',
+                  type: 'submit',
+               }}
+               handleClose={handleClose}
+               body={
+                  <form id='settings-form' onSubmit={handleSubmit}>
+                     <div className=' mb-5'>
+                        <div>
+                           <InputField label='Admin Name'
+                              labelClassname='ml-4 mb-0.5'
+                              placeholder='Admin Name'
+                              inputContainerClassName='px-5 bg-primary-50 border-0'
+                              inputClassName='bg-transparent'
+                              parentClassName='w-full mr-4' type='text'
+                              value={modalData.name}
+                              isRequired={true}
+                              onChange={e => setModalData({ ...modalData, name: e.target.value })} />
+                        </div>
                      </div>
                   </form>
                }

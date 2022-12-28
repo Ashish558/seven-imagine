@@ -147,8 +147,8 @@ export default function EventModal({
          if (formattedDate < 10) {
             formattedDate = `0${formattedDate}`
          }
-         let defDate = `${date.getFullYear()}-${date.getMonth() + 1}-${formattedDate}`
-         
+         // let defDate = `${date.getFullYear()}-${date.getMonth() + 1}-${formattedDate}`
+         let defDate = getFormattedDate(date)
          let hours = defaultEventData.date.getHours()
          let endHours = hours + 1
          // console.log(endHours)
@@ -161,7 +161,7 @@ export default function EventModal({
 
          let formattedTime = tConvert(`${hours}:00`)
          let formattedEndTime = tConvert(`${endHours}:00`)
-         if(endHours === 24) formattedEndTime={time: "12:00", timeType: 'AM'}
+         if (endHours === 24) formattedEndTime = { time: "12:00", timeType: 'AM' }
 
          setData({
             ...data,
@@ -171,7 +171,7 @@ export default function EventModal({
                start: {
                   ...formattedTime
                },
-               end:{
+               end: {
                   ...formattedEndTime
                }
             },

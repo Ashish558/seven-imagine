@@ -25,6 +25,7 @@ import { apQuestions, hearAboutUslist, motivesList } from "./data";
 import { getCheckedString } from "../../utils/utils";
 import InputSelect from "../../components/InputSelect/InputSelect";
 import useOutsideAlerter from "../../hooks/useOutsideAlerter";
+import { useLazyGetSettingsQuery } from "../../app/services/session";
 
 export default function Signup() {
    const [frames, setFrames] = useState({
@@ -36,6 +37,22 @@ export default function Signup() {
       signupLast: false,
       signupSuccessful: false,
    });
+
+   const [settings, setSettings] = useState({})
+   const [getSettings, getSettingsResp] = useLazyGetSettingsQuery()
+
+   const fetchSettings = () => {
+      getSettings()
+         .then(res => {
+            console.log(res);
+            setSettings(res.data.data.setting)
+         })
+   }
+   useEffect(() => {
+      fetchSettings()
+   }, [])
+
+   console.log()
 
    const [values, setValues] = useState({
       firstName: "",
@@ -81,16 +98,22 @@ export default function Signup() {
          lastName: values.lastName,
          email: values.email,
       };
-      signupUser(reqBody).then((res) => {
-         console.log(res.data);
-         setRedirectLink(res.data.link);
-         setValues({ ...values, userId: res.data.userId });
-         setFrames({
-            ...frames,
-            signupActive: false,
-            selectPersona: true,
-         });
-      });
+      if (values.subscriptionCode.trim() > 0) {
+         if (!settings.subscriptionCode.includes(values.subscriptionCode)) {
+            return alert('invalid subscription code')
+         } else {
+            signupUser(reqBody).then((res) => {
+               console.log(res.data);
+               setRedirectLink(res.data.link);
+               setValues({ ...values, userId: res.data.userId });
+               setFrames({
+                  ...frames,
+                  signupActive: false,
+                  selectPersona: true,
+               });
+            })
+         }
+      }
    };
 
    const addDetails = () => {
@@ -209,7 +232,7 @@ export default function Signup() {
                                        <img
                                           src={DownArrow}
                                           className={selectStyles.downArrow}
-                                          style={{right: '16px'}}
+                                          style={{ right: '16px' }}
                                           alt="down-arrow"
                                           onClick={() => setSelected(!selected)}
                                        />
@@ -218,13 +241,13 @@ export default function Signup() {
                                        {numberPrefix}
                                     </div>
                                     {selected && (
-                                       <div className={`scrollbar-content scrollbar-vertical ${selectStyles.options}`} style={{top : '100%' }} >
+                                       <div className={`scrollbar-content scrollbar-vertical ${selectStyles.options}`} style={{ top: '100%' }} >
                                           {['+91', '+1'].map((option, idx) => {
                                              return (
                                                 <div
                                                    className="outline-0 border-0 py-2 px-4"
                                                    key={idx}
-                                                   onClick={() => setNumberPrefix(option) }
+                                                   onClick={() => setNumberPrefix(option)}
                                                 >
                                                    {" "}
                                                    {option}{" "}

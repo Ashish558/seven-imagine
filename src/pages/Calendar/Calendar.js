@@ -131,7 +131,35 @@ export default function Calendar() {
       const url = `/api/session/${role}/${id}`;
       // console.log(url)
       fetchUserSessions(url).then((res) => {
-         setEventDetails(res.data.data.session);
+         const tempEvents = res.data.data.session.map(session => {
+            const time = session.time;
+            const strtTime12HFormat = `${time.start.time} ${time.start.timeType}`;
+            const startTime = convertTime12to24(
+               `${time.start.time} ${time.start.timeType}`
+            );
+            const endTime = `${time.end.time} ${time.end.timeType}`;
+            const startHours = parseInt(startTime.split(":")[0]);
+            const startMinutes = parseInt(startTime.split(":")[1]);
+            // const endHours = parseInt(endTime.split(":")[0]);
+            // const endMinutes = parseInt(endTime.split(":")[1]);
+            let startDate = new Date(session.date);
+            // let startDate = new Date(session.date).toUTCString()
+            startHours !== NaN && startDate.setHours(startHours);
+            startMinutes !== NaN && startDate.setMinutes(startMinutes);
+
+            let updatedDate = new Date(new Date(
+               startDate.toLocaleString('en-US', {
+                  timeZone: session.timeZone,
+               }),
+            ))
+
+            return {
+               ...session,
+               updatedDate
+            }
+         })
+         // setEventDetails(res.data.data.session);
+         setEventDetails(tempEvents)
          // console.log(res.data.data.session)
          let tempSession = res.data.data.session.map((session) => {
             const time = session.time;
@@ -139,7 +167,12 @@ export default function Calendar() {
             const startTime = convertTime12to24(
                `${time.start.time} ${time.start.timeType}`
             );
-            const endTime = `${time.end.time} ${time.end.timeType}`;
+            const endTime12HFormat = `${time.end.time} ${time.end.timeType}`;
+            const endTime = convertTime12to24(
+               `${time.end.time} ${time.end.timeType}`
+            );
+
+            console.log(startTime);
 
             const startHours = parseInt(startTime.split(":")[0]);
             const startMinutes = parseInt(startTime.split(":")[1]);
@@ -152,14 +185,41 @@ export default function Calendar() {
             startHours !== NaN && startDate.setHours(startHours);
             startMinutes !== NaN && startDate.setMinutes(startMinutes);
 
+            let updatedDate = new Date(new Date(
+               startDate.toLocaleString('en-US', {
+                  timeZone: session.timeZone,
+               }),
+            ))
+            // const updatedtime = moment.duration("01:00:00");
+            // let date = moment(updatedDate);
+            // let updated = date.subtract(updatedtime)._d
+
             let endDate = new Date(session.date);
             endHours !== NaN && endDate.setHours(endHours);
             endMinutes !== NaN && endDate.setMinutes(endMinutes);
+
+            let updatedDateEnd = new Date(new Date(
+               endDate.toLocaleString('en-US', {
+                  timeZone: session.timeZone,
+               }),
+            ))
+            // const updatedtimeEnd = moment.duration("01:00:00");
+            // let dateEnd = moment(updatedDateEnd);
+            // let updatedEnd = dateEnd.subtract(updatedtimeEnd)._d
+
             let eventObj = {
                id: session._id,
-               start: startDate,
                title: session.tutorName,
-               description: `${strtTime12HFormat} - ${endTime}`,
+
+               start: startDate,
+               endDate: endDate,
+
+               initialStartDate: startDate,
+               initialEndDate: endDate,
+               // updatedDate,
+               updatedDate: updatedDate,
+               updatedDateEnd: updatedDateEnd,
+               description: `${strtTime12HFormat} - ${endTime12HFormat}`,
             };
             return eventObj;
          });
@@ -259,7 +319,7 @@ export default function Calendar() {
    };
 
    const handleDateClick = (arg) => {
-      console.log(arg)
+      // console.log(arg)
       setDefaultEventData({ date: arg.date })
       if (persona === "admin" || persona === "tutor") {
          setEventModalActive(true);
@@ -385,34 +445,57 @@ export default function Calendar() {
          return prev.map(item => {
             // console.log('item.start :', item.start)
             const ev = eventDetails.find(ev => ev._id === item.id)
-            const time = ev.time;
-            // const startTime = convertTime12to24(
-            //    `${time.start.time} ${time.start.timeType}`
-            // );
 
-            // const startHours = parseInt(startTime.split(":")[0]);
-            // const startMinutes = parseInt(startTime.split(":")[1]);
+            const startTime = convertTime12to24(
+               `${ev.time.start.time} ${ev.time.start.timeType}`
+            );
 
-            // let startDate = new Date(ev.date);
-            // startHours !== NaN && startDate.setHours(startHours);
-            // startMinutes !== NaN && startDate.setMinutes(startMinutes);
+            const startHours = parseInt(startTime.split(":")[0]);
+            const startMinutes = parseInt(startTime.split(":")[1]);
+            let startDate = new Date(ev.date);
+            startHours !== NaN && startDate.setHours(startHours);
+            startMinutes !== NaN && startDate.setMinutes(startMinutes);
 
-            // let date = new Date(new Date(
-            //    startDate.toLocaleString('en-US', {
-            //       timeZone,
-            //    }),
-            // ))
-            const startTimer = convertDateToTimezone(ev.time.start.time, ev.time.start.timeType, ev.date, timeZone)
+            let updatedDate = new Date(new Date(
+               item.updatedDate.toLocaleString('en-US', {
+                  timeZone: timeZone,
+               }),
+            ))
+            let updatedDateEnd = new Date(new Date(
+               item.updatedDateEnd.toLocaleString('en-US', {
+                  timeZone: timeZone,
+               }),
+            ))
+            // console.log(item.updatedDateEnd);
+            // console.log(formatAMPM(item.updatedDate));
+            // console.log('updated date ------', updatedDate);
+            // console.log(item.updatedDate)
+            // console.log('initial date ------', ev.date);
 
-            const endTime = convertDateToTimezone(ev.time.end.time, ev.time.end.timeType, ev.date, timeZone)
-           
-            // console.log('updated date', date);
-            // console.log('item.start' ,item.start);
-            // console.log(date);
-            // console.log('startTime :', new Date(startTime).getHours())
-            // console.log(moment.utc().format('YYYY-MM-DD hh:mm:ss A'));
-            // console.log(moment.utc().format('YYYY-MM-DD hh:mm:ss A'));
-            return { ...item, start: startTimer, description: `${formatAMPM(startTimer)} - ${formatAMPM(endTime)}` }
+            console.log(item)
+
+            const startTimer = convertDateToTimezone(ev.time.start.time,
+               ev.time.start.timeType,
+               ev.date,
+               timeZone,
+               ev.timeZone)
+            const endTime = convertDateToTimezone(ev.time.end.time,
+               ev.time.end.timeType,
+               ev.date,
+               timeZone,
+               ev.timeZone)
+
+            let startarg = ev.timeZone === timeZone ? item.initialStartDate : updatedDate
+            let endarg = ev.timeZone === timeZone ? item.initialEndDate : updatedDateEnd
+
+            console.log(startarg);
+            console.log(item.start);
+
+            return {
+               ...item, start: startarg,
+               description: `${formatAMPM(startarg)}-${formatAMPM(endarg)}`
+               // description: `${formatAMPM(updatedDate)}-${formatAMPM(updatedDateEnd)}`
+            }
          })
       })
       // document.getElementById('calendarContainer').refetchEvents()
