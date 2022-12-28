@@ -170,8 +170,6 @@ export default function Calendar() {
                `${time.end.time} ${time.end.timeType}`
             );
 
-            console.log(startTime);
-
             const startHours = parseInt(startTime.split(":")[0]);
             const startMinutes = parseInt(startTime.split(":")[1]);
 
@@ -379,20 +377,57 @@ export default function Calendar() {
                const startTime = convertTime12to24(
                   `${time.start.time} ${time.start.timeType}`
                );
-               const endTime = `${time.end.time} ${time.end.timeType}`;
+               const endTime12HFormat = `${time.end.time} ${time.end.timeType}`;
+               const endTime = convertTime12to24(
+                  `${time.end.time} ${time.end.timeType}`
+               );
 
                const startHours = parseInt(startTime.split(":")[0]);
                const startMinutes = parseInt(startTime.split(":")[1]);
 
+               const endHours = parseInt(endTime.split(":")[0]);
+               const endMinutes = parseInt(endTime.split(":")[1]);
+
                let startDate = new Date(session.date);
+               // let startDate = new Date(session.date).toUTCString()
                startHours !== NaN && startDate.setHours(startHours);
                startMinutes !== NaN && startDate.setMinutes(startMinutes);
 
+               let updatedDate = new Date(new Date(
+                  startDate.toLocaleString('en-US', {
+                     timeZone: session.timeZone,
+                  }),
+               ))
+               // const updatedtime = moment.duration("01:00:00");
+               // let date = moment(updatedDate);
+               // let updated = date.subtract(updatedtime)._d
+
+               let endDate = new Date(session.date);
+               endHours !== NaN && endDate.setHours(endHours);
+               endMinutes !== NaN && endDate.setMinutes(endMinutes);
+
+               let updatedDateEnd = new Date(new Date(
+                  endDate.toLocaleString('en-US', {
+                     timeZone: session.timeZone,
+                  }),
+               ))
+               // const updatedtimeEnd = moment.duration("01:00:00");
+               // let dateEnd = moment(updatedDateEnd);
+               // let updatedEnd = dateEnd.subtract(updatedtimeEnd)._d
+
                let eventObj = {
                   id: session._id,
+                  title: session.tutorName,
+
                   start: startDate,
-                  title: session.studentName,
-                  description: `${strtTime12HFormat} - ${endTime}`,
+                  endDate: endDate,
+
+                  initialStartDate: startDate,
+                  initialEndDate: endDate,
+                  // updatedDate,
+                  updatedDate: updatedDate,
+                  updatedDateEnd: updatedDateEnd,
+                  description: `${strtTime12HFormat} - ${endTime12HFormat}`,
                };
                return eventObj;
             });
@@ -454,6 +489,7 @@ export default function Calendar() {
             startHours !== NaN && startDate.setHours(startHours);
             startMinutes !== NaN && startDate.setMinutes(startMinutes);
 
+            console.log(item);
             let updatedDate = new Date(new Date(
                item.updatedDate.toLocaleString('en-US', {
                   timeZone: timeZone,
