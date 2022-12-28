@@ -13,6 +13,7 @@ import { BASE_URL } from "../../app/constants/constants";
 import { useAssignTestMutation, useLazyGetTestsByNameQuery } from "../../app/services/test";
 import { useLazyGetStudentsByNameQuery } from "../../app/services/session";
 import InputSearch from "../../components/InputSearch/InputSearch";
+import calendar from "./../../assets/calendar/calendar.svg"
 
 const optionData = ["1", "2", "3", "4", "5"];
 const timeLimits = [30, 40, 50]
@@ -273,6 +274,8 @@ export default function AssignedTests() {
                      <div>
                         <InputField
                            label="Due Date"
+                           iconSize="medium"
+                           IconRight={calendar}
                            value={modalData.date}
                            onChange={(val) =>
                               setModalData({
