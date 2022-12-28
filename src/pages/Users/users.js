@@ -24,7 +24,7 @@ const optionData = [
 ]
 
 const tableHeaders = [
-   'Full Name', 'User Type', "Email", 'Phone', 'Assigned Tutor', 'Lead Status', 'Tutor Status',
+   'Full Name', 'User Type', "Email", 'Phone', 'Assigned Tutor', 'Lead Status', 'User Status',
    'Services'
 ]
 
