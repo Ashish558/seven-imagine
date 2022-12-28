@@ -46,7 +46,7 @@ export default function Users() {
    const [modalData, setModalData] = useState(initialState)
    const [validData, setValidData] = useState(true);
    useEffect(() => {
-      setValidData(modalData.email.length > 0 && modalData.firstName.length > 0 && modalData.lastName.length > 0 && modalData.userType.length > 0);
+      setValidData(modalData.email && modalData.firstName && modalData.lastName && modalData.userType);
    }, [modalData, modalData.email.length, modalData.firstName.length, modalData.lastName.length, modalData.phone.length, modalData.userType.length,])
 
    const [usersData, setUsersData] = useState([])

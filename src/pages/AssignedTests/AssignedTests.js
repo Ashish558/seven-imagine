@@ -72,7 +72,11 @@ export default function AssignedTests() {
 
    const [fetchTests, fetchTestsResp] = useLazyGetTestsByNameQuery()
    const [testsData, setTestsData] = useState([]);
-   const [maxPageSize, setMaxPageSize] = useState(10)
+   const [maxPageSize, setMaxPageSize] = useState(10);
+   const [validData, setValidData] = useState(true);
+   useEffect(() => {
+      setValidData(modalData.name && modalData.limit && modalData.date && modalData.test);
+   }, [modalData.name, modalData.limit, modalData.date, modalData.test])
 
    useEffect(() => {
       if (modalData.name.length > 2) {
@@ -220,6 +224,7 @@ export default function AssignedTests() {
                   text: "Assign",
                   className: "max-w-140 pl-8 pr-8",
                   onClick: () => handleAssignTestSubmit(),
+                  disabled: !validData
                }}
                handleClose={handleClose}
                body={
