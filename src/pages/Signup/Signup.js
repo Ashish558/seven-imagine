@@ -26,6 +26,7 @@ import { getCheckedString } from "../../utils/utils";
 import InputSelect from "../../components/InputSelect/InputSelect";
 import useOutsideAlerter from "../../hooks/useOutsideAlerter";
 import { useLazyGetSettingsQuery } from "../../app/services/session";
+import { validateSignup } from "./utils/util";
 
 export default function Signup() {
    const [frames, setFrames] = useState({
@@ -44,7 +45,7 @@ export default function Signup() {
    const fetchSettings = () => {
       getSettings()
          .then(res => {
-            console.log(res);
+            // console.log(res);
             setSettings(res.data.data.setting)
          })
    }
@@ -52,7 +53,16 @@ export default function Signup() {
       fetchSettings()
    }, [])
 
-   console.log()
+
+   const [error, setError] = useState({
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      subscriptionCode: "",
+      checked: false,
+      userId: "",
+   })
 
    const [values, setValues] = useState({
       firstName: "",
@@ -97,22 +107,28 @@ export default function Signup() {
          firstName: values.firstName,
          lastName: values.lastName,
          email: values.email,
+         subscriptionCode: values.subscriptionCode,
+         phone: values.phone,
       };
       if (values.subscriptionCode.trim() > 0) {
          if (!settings.subscriptionCode.includes(values.subscriptionCode)) {
             return alert('invalid subscription code')
-         } else {
-            signupUser(reqBody).then((res) => {
-               console.log(res.data);
-               setRedirectLink(res.data.link);
-               setValues({ ...values, userId: res.data.userId });
-               setFrames({
-                  ...frames,
-                  signupActive: false,
-                  selectPersona: true,
-               });
-            })
          }
+      } else {
+         const result = validateSignup(reqBody)
+         console.log(result);
+         console.log(reqBody)
+         // return
+         signupUser(reqBody).then((res) => {
+            console.log(res.data);
+            setRedirectLink(res.data.link);
+            setValues({ ...values, userId: res.data.userId });
+            setFrames({
+               ...frames,
+               signupActive: false,
+               selectPersona: true,
+            });
+         })
       }
    };
 
