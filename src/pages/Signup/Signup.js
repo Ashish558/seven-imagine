@@ -132,36 +132,35 @@ export default function Signup() {
                if (!settings.subscriptionCode.includes(values.subscriptionCode)) {
                   return alert('invalid subscription code')
                }
-            } else {
-               const result = validateSignup(reqBody)
-               console.log(result);
-               if (result.data !== true) {
-                  setError(prev => {
-                     return {
-                        ...prev,
-                        [result.data]: result.message
-                     }
-                  })
-               } else {
-
-                  // console.log(reqBody)
-                  signupUser(reqBody).then((res) => {
-                     if (res.error) {
-                        if (res.error.data.message) {
-                           alert(res.error.data.message)
-                        }
-                     }
-                     console.log(res);
-                     setRedirectLink(res.data.link);
-                     setValues({ ...values, userId: res.data.userId });
-                     setFrames({
-                        ...frames,
-                        signupActive: false,
-                        selectPersona: true,
-                     });
-                  })
-               }
             }
+            const result = validateSignup(reqBody)
+            console.log(result);
+            if (result.data !== true) {
+               setError(prev => {
+                  return {
+                     ...prev,
+                     [result.data]: result.message
+                  }
+               })
+            } else {
+               // console.log(reqBody)
+               signupUser(reqBody).then((res) => {
+                  if (res.error) {
+                     if (res.error.data.message) {
+                        alert(res.error.data.message)
+                     }
+                  }
+                  console.log(res);
+                  setRedirectLink(res.data.link);
+                  setValues({ ...values, userId: res.data.userId });
+                  setFrames({
+                     ...frames,
+                     signupActive: false,
+                     selectPersona: true,
+                  });
+               })
+            }
+
 
          })
 
