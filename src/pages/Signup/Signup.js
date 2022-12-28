@@ -149,7 +149,7 @@ export default function Signup() {
          <div className="grid grid-cols-2 min-h-screen">
             <div className="bg-primary"></div>
             <div className="flex items-center">
-               <div className="w-full px-[120px] py-8">
+               <div className="w-full px-[80px] py-6">
                   <h1>
                      {frames.signupActive
                         ? "Sign Up"

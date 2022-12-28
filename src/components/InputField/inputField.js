@@ -38,7 +38,7 @@ export default function InputField({
             className={`py-[16px] px-[21px] flex items-center rounded-10 ${inputContainerClassName ? inputContainerClassName : ""} ${disabled === true ? 'cursor-not-allowed' : ''} `}
                
          >
-            {Icon && <img src={Icon} className={`mr-5 ${iconSize === 'medium' ? 'w-[28px]' : 'w-[28px]'}`}  />}
+            {Icon && <img src={Icon} className={`mr-5 ${iconSize === 'medium' ? 'w-[24px]' : 'w-[28px]'}`}  />}
             {inputLeftField && inputLeftField}
             <input
                className={`outline-0 w-full ${inputClassName ? inputClassName : "" } ${disabled === true ? 'cursor-not-allowed' : ''} `}
@@ -52,7 +52,7 @@ export default function InputField({
             {type === 'password' && <img src={EyeIcon} className="ml-4 w-[20px]"
                onClick={() => inputType === 'password' ? setInputType('text') : setInputType('password')}
             />}
-            {IconRight && <img src={IconRight} className="ml-4" />}
+            {IconRight && <img src={IconRight} className={`ml-4 cursor-pointer ${iconSize === "medium" && "w-[24px]"}`} />}
             {right && right}
          </div>
       </div>
