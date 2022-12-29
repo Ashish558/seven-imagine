@@ -11,7 +11,7 @@ import Slider from '../../../../components/Slider/Slider'
 import styles from './style.module.css'
 
 // 637b9df1e9beff25e9c2aa83
-export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetails, settings }) {
+export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetails, settings, persona }) {
    const [title, setTitle] = useState('')
    const [currentField, setCurrentField] = useState({})
    const [currentToEdit, setCurrentToEdit] = useState({})
@@ -95,6 +95,21 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
          name: 'accomodations',
          title: 'Accomodations',
          api: 'userDetail',
+      },
+      {
+         name: 'personality',
+         title: 'Keywords that describe you',
+         api: persona === 'tutor' ? 'tutorDetail' : 'userDetail',
+      },
+      {
+         name: 'interest',
+         title: 'Your Interests',
+         api: persona === 'tutor' ? 'tutorDetail' : 'userDetail',
+      },
+      {
+         name: 'serviceSpecializations',
+         title: 'Service Specialisation',
+         api: persona === 'tutor' ? 'tutorDetail' : 'userDetail',
       },
       {
          name: 'associatedParent',
@@ -320,6 +335,7 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
    }
 
    console.log('toedit', currentToEdit)
+   // console.log('setting', settings)
    // console.log('field', currentField)
    // console.log('sett', settings)
    // console.log('students', students)
@@ -547,7 +563,7 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                        name: 'services',
                                        match: currentToEdit.service
                                     }}
-                                    optionData={settings.serviceSpecialisation}
+                                    optionData={settings.serviceSpecialisation.map(item => item.text)}
                                     inputContainerClassName="pt-3 pb-3 border bg-white"
                                     placeholder="Service"
                                     parentClassName="w-full mr-4"
@@ -888,9 +904,89 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                               ></textarea>
                            </div>
                         }
+                        {currentField.name === 'personality' &&
+                           <div className='flex flex-wrap'>
+                              {settings.personality.map(item => {
+                                 return (
+                                    !currentToEdit.personality.includes(item._id) ?
+                                       <div className={`px-3 mr-2 rounded rounded-md py-1.5 border border-primary text-primary cursor-pointer`}
+                                          onClick={() => setCurrentToEdit({
+                                             ...currentToEdit,
+                                             personality: [...currentToEdit.personality, item._id]
+                                          })} >
+                                          <p className='font-medium'>
+                                             {item.text}
+                                          </p>
+                                       </div> :
+                                       <div className={`px-3 mr-2 rounded rounded-md text-white py-1.5 border border-primary bg-primary text-primary cursor-pointer`}
+                                          onClick={() => setCurrentToEdit({
+                                             ...currentToEdit,
+                                             personality: currentToEdit.personality.filter(id => id !== item._id)
+                                          })}>
+                                          <p className='font-medium'>
+                                             {item.text}
+                                          </p>
+                                       </div>
+                                 )
+                              })}
+                           </div>
+                        }
+                        {currentField.name === 'interest' &&
+                           <div className='flex flex-wrap'>
+                              {settings.interest.map(item => {
+                                 return (
+                                    !currentToEdit.interest.includes(item._id) ?
+                                       <div className={`px-3 mr-2 rounded rounded-md py-1.5 border border-primary text-primary cursor-pointer`}
+                                          onClick={() => setCurrentToEdit({
+                                             ...currentToEdit,
+                                             interest: [...currentToEdit.interest, item._id]
+                                          })} >
+                                          <p className='font-medium'>
+                                             {item.text}
+                                          </p>
+                                       </div> :
+                                       <div className={`px-3 mr-2 rounded rounded-md text-white py-1.5 border border-primary bg-primary text-primary cursor-pointer`}
+                                          onClick={() => setCurrentToEdit({
+                                             ...currentToEdit,
+                                             interest: currentToEdit.interest.filter(id => id !== item._id)
+                                          })}>
+                                          <p className='font-medium'>
+                                             {item.text}
+                                          </p>
+                                       </div>
+                                 )
+                              })}
+                           </div>
+                        }
+                        {currentField.name === 'serviceSpecializations' &&
+                           <div className='flex flex-wrap'>
+                              {settings.serviceSpecialisation.map(item => {
+                                 return (
+                                    !currentToEdit.serviceSpecializations.includes(item._id) ?
+                                       <div className={`px-3 mr-2 rounded rounded-md py-1.5 border border-primary text-primary cursor-pointer`}
+                                          onClick={() => setCurrentToEdit({
+                                             ...currentToEdit,
+                                             serviceSpecializations: [...currentToEdit.serviceSpecializations, item._id]
+                                          })} >
+                                          <p className='font-medium'>
+                                             {item.text}
+                                          </p>
+                                       </div> :
+                                       <div className={`px-3 mr-2 rounded rounded-md text-white py-1.5 border border-primary bg-primary text-primary cursor-pointer`}
+                                          onClick={() => setCurrentToEdit({
+                                             ...currentToEdit,
+                                             serviceSpecializations: currentToEdit.serviceSpecializations.filter(id => id !== item._id)
+                                          })}>
+                                          <p className='font-medium'>
+                                             {item.text}
+                                          </p>
+                                       </div>
+                                 )
+                              })}
+                           </div>
+                        }
                         {currentField.name === 'tutorContact' &&
                            <div>
-
                               <div className='flex items-center mb-5'>
                                  <p className='font-medium mr-4 min-w-[80px] text-[20px]'> Linked In </p>
                                  <InputField

@@ -290,7 +290,7 @@ export default function Signup() {
                            inputContainerClassName="relative border pt-3 pb-3"
                            inputClassName="ml-80"
                            inputLeftField={
-                              <div ref={selectRef}
+                              <div ref={selectRef} 
                                  className={`${selected && "relative z-5000"} ${styles.phoneNumberField} `}
                                  onClick={() => setSelected(true)}
                               >

@@ -179,16 +179,24 @@ export default function TutorProfile({ isOwn }) {
          phone: '',
          linkedIn: '',
          isPresent: false,
-      }
+      },
+      interest: {
+         active: false,
+         interest: []
+      },
+      serviceSpecializations: {
+         active: false,
+         serviceSpecializations: []
+      },
    })
 
    const handleClose = () => {
-      setToEdit(prevToEdit => {
-         let obj = {}
-         Object.keys(prevToEdit).map(key => {
-            obj[key] = { ...toEdit[key], active: false }
+      setToEdit(prev => {
+         let tempToEdit = {}
+         Object.keys(prev).map(key => {
+            tempToEdit[key] = { ...prev[key], active: false }
          })
-         return obj
+         return tempToEdit
       })
    }
 
@@ -207,14 +215,11 @@ export default function TutorProfile({ isOwn }) {
       }
       getUserDetail({ id: userId })
          .then(res => {
-            // console.log('response', res.data.data);
+            console.log('response', res.data.data);
             const { firstName, lastName, phone, email } = res.data.data.user
             setUser(res.data.data.user)
             let details = res.data.data.details
-            if (details === null) {
-               details = {}
-            }
-            // console.log('details', details)
+
             // const { } = res.data.data.user
             // const { service } = res.data.data.userdetails
             const promiseState = async state => new Promise(resolve => {
@@ -277,7 +282,16 @@ export default function TutorProfile({ isOwn }) {
                         ...prevToEdit.paymentStatus,
                         isPresent: details === null ? false : true
                      },
-
+                     interest: {
+                        ...prevToEdit.interest,
+                        interest: details !== null ? details.interest : [],
+                        isPresent: details === null ? false : true
+                     },
+                     serviceSpecializations: {
+                        ...prevToEdit.serviceSpecializations,
+                        serviceSpecializations: details !== null ? details.serviceSpecializations : [],
+                        isPresent: details === null ? false : true
+                     },
                   }
                }))
             })
@@ -308,10 +322,12 @@ export default function TutorProfile({ isOwn }) {
 
    // console.log('user', user)
    // console.log('To-edit', toEdit)
-   console.log('userdetail', userDetail)
+   // console.log('userdetail', userDetail)
+   // console.log('settings', settings.serviceSpecialisation)
    const { about, education, tagLine, tutorLevel, testPrepRate, otherRate, subjectTutoringRate, address, pincode, paymentInfo, tutorRank, income, paymentStatus, linkedIn } = userDetail
 
    if (Object.keys(user).length < 1) return
+   if (Object.keys(settings).length < 1) return
    // if (Object.keys(userDetail).length < 1) return
 
 
@@ -344,7 +360,7 @@ export default function TutorProfile({ isOwn }) {
 
                <div className='lg:grid mt-12 px-2 grid-cols-12 grid-ros-6 lg:mt-[60px] gap-5 lg:pl-3'>
 
-                  <div className='col-span-3 mt-53 lg:mt-0'>
+                  <div className='col-span-3 mt-53 lg:mt-0 flex flex-col'>
                      {
                         !isOwn &&
                         <div className={` mb-5 px-4 py-4 lg:bg-textGray-30 rounded-2xl`}
@@ -362,20 +378,26 @@ export default function TutorProfile({ isOwn }) {
                         </div>
 
                      }
-                     <ProfileCard className=''
+                     <ProfileCard className='flex-1'
                         hideShadow={true}
                         body={
                            <>
-                              <p className='text-primary font-bold lg:text-21 text-center mb-10'>
-                                 Service Specializations</p>
-                              <div className='flex flex-col row-span-2 overflow-x-auto scrollbar-content'>
-                                 {values.map(val => {
+                            <EditableText editable={editable}
+                                 onClick={() => setToEdit({ ...toEdit, serviceSpecializations: { ...toEdit.serviceSpecializations, active: true } })}
+                                 text='Service Specializations'
+                                 className='text-lg mb-2' textClassName="flex-1 text-center text-[21px]" />
+                              
+                              <div className='flex flex-col row-span-2 overflow-x-auto scrollbar-content max-h-[500px] scrollbar-vertical'>
+                                 {settings && settings.serviceSpecialisation.length > 0 && userDetail.serviceSpecializations && userDetail.serviceSpecializations.map((id, idx) => {
                                     return (
-                                       <div className='flex flex-col items-center mb-10'>
-                                          <div className='flex h-90 w-90 rounded-full  items-center justify-center mb-3' style={{ backgroundColor: val.bg }}>
-                                             <img src={val.icon} />
+                                       <div key={idx} className='flex flex-col items-center mb-10'>
+                                          <div className='flex h-90 w-90 rounded-full  items-center justify-center mb-3' >
+                                             <img className='max-w-[90px] max-h-[90px]' src={settings.serviceSpecialisation.find(item => item._id === id).image}
+                                             />
                                           </div>
-                                          <p className='opacity-70 font-semibold text-lg'> {val.text} </p>
+                                          <p className='opacity-70 font-semibold text-lg'>
+                                             {settings.serviceSpecialisation.find(item => item._id === id).text}
+                                          </p>
                                        </div>
                                     )
                                  })}
@@ -440,7 +462,7 @@ export default function TutorProfile({ isOwn }) {
                         } />
                   </div>
 
-                  <div className='mt-53 pb-0 col-span-3 lg:mt-0'>
+                  <div className='mt-53 pb-0 col-span-3 lg:mt-0 flex flex-col'>
                      {
                         !isOwn &&
                         <ProfileCard hideShadow
@@ -469,15 +491,21 @@ export default function TutorProfile({ isOwn }) {
                      <ProfileCard className='flex-1' hideShadow
                         body={
                            <>
-                              <p className='text-primary font-bold lg:text-21 text-center mb-10'>Interest</p>
-                              <div className='flex flex-col overflow-x-auto scrollbar-content'>
-                                 {interests.map(val => {
+                              <EditableText editable={editable}
+                                 onClick={() => setToEdit({ ...toEdit, interest: { ...toEdit.interest, active: true } })}
+                                 text='Interest'
+                                 className='text-lg mb-2' textClassName="flex-1 text-center text-[21px]" />
+                              <div className='flex flex-col overflow-x-auto scrollbar-content max-h-[500px] scrollbar-vertical'>
+                                 {settings && settings.interest.length > 0 && userDetail.interest && userDetail.interest.map((id, idx) => {
                                     return (
-                                       <div className='flex flex-col items-center mb-10 last:mb-9'>
-                                          <div className='flex h-90 w-90 rounded-full  items-center justify-center mb-3' style={{ backgroundColor: val.bg }}>
-                                             <img src={val.icon} />
+                                       <div key={idx} className='flex flex-col items-center mb-10'>
+                                          <div className='flex h-90 w-90 rounded-full  items-center justify-center mb-3' >
+                                             <img className='max-w-[90px] max-h-[90px]' src={settings.interest.find(item => item._id === id).image}
+                                             />
                                           </div>
-                                          <p className='opacity-70 font-semibold text-sm whitespace-nowrap'> {val.text} </p>
+                                          <p className='opacity-70 font-semibold text-lg'>
+                                             {settings.interest.find(item => item._id === id).text}
+                                          </p>
                                        </div>
                                     )
                                  })}
@@ -627,7 +655,10 @@ export default function TutorProfile({ isOwn }) {
             </div>
          </div>
          <ParentEditables settings={settings} fetchDetails={fetchDetails}
-            userId={isOwn ? id : params.id} toEdit={toEdit} setToEdit={setToEdit} />
+            userId={isOwn ? id : params.id}
+            toEdit={toEdit}
+            setToEdit={setToEdit}
+            persona={user.role} />
       </>
    )
 }

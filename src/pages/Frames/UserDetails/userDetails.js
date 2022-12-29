@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import DownArrow from "../../../assets/icons/down-chevron.svg";
 import PrimaryButton from "../../../components/Buttons/PrimaryButton";
 import SecondaryButton from "../../../components/Buttons/SecondaryButton";
 import InputField from "../../../components/InputField/inputField";
+import useOutsideAlerter from "../../../hooks/useOutsideAlerter";
 import styles from "../../Signup/signup.module.css";
 import { validateOtherDetails } from "../../Signup/utils/util";
+import selectStyles from "../../../components/InputSelect/style.module.css"
 
 export default function UserDetails({
    setFrames,
@@ -18,6 +20,11 @@ export default function UserDetails({
    resetDetailsErrors
 }) {
 
+   const [selected, setSelected] = useState(false);
+   const [numberPrefix, setNumberPrefix] = useState('+91')
+
+   const selectRef = useRef();
+   useOutsideAlerter(selectRef, () => setSelected(false));
 
    const handleClick = () => {
       const result = validateOtherDetails(otherDetails)
@@ -133,13 +140,47 @@ export default function UserDetails({
             inputClassName="ml-80"
             required={persona === "student" ? true : false}
             inputLeftField={
-               <div className={styles.phoneNumberShort}>
-                  <div className="flex-1 flex justify-center items-center font-medium">
-                     +91
-                     <img src={DownArrow} className="w-3 ml-3" />
+               <div ref={selectRef}
+                  className={`${selected && "relative z-5000"} ${styles.phoneNumberField} `}
+                  onClick={() => setSelected(!selected)}
+               >
+                  <div
+                     className={`py-[16px] w-full px-2 pl-3 flex justify-center items-center rounded-10 relative cursor-pointer z-50`}
+                  >
+                     {
+                        <img
+                           src={DownArrow}
+                           className={selectStyles.downArrow}
+                           style={{ right: '16px' }}
+                           alt="down-arrow"
+                           onClick={() => setSelected(true)}
+                        />
+                     }
+                     <div className="outline-0 relative font-medium mr-4" name={'nm'}>
+                        {numberPrefix}
+                     </div>
+                     {selected && (
+                        <div className={`scrollbar-content scrollbar-vertical ${selectStyles.options}`} style={{ top: '100%' }} >
+                           {['+91s', '+1'].map((option, idx) => {
+                              return (
+                                 <div
+                                    className="outline-0 border-0 py-2 px-4"
+                                    key={idx}
+                                    onClick={() => {
+                                       setNumberPrefix(option)
+                                    }}
+                                 >
+                                    {" "}
+                                    {option}{" "}
+                                 </div>
+                              );
+                           })}
+                        </div>
+                     )}
                   </div>
                </div>
             }
+
             value={otherDetails.Phone}
             onChange={(e) =>
                setOtherDetails({ ...otherDetails, Phone: e.target.value })
