@@ -121,7 +121,7 @@ export default function Invoice() {
          //       <p className='font-bold text-[48px] mb-[30px] text-[#25335A]'> Invoices </p>
          //       <div className='flex'>
          //          <div className='grid grid-cols-2 flex-1 gap-x-[46px] gap-y-[16px] mr-[50px]'> */}
-         <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pt-[30px] pb-[50px] pl-[20px] pr-[41px]'>
+         <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pt-[30px] pb-[50px] pl-[61px] pr-[41px]'>
             <div className=''>
                <p className='font-bold text-[48px] mb-[30px] text-[#25335A]'> Invoice </p>
                <form className='flex' onSubmit={handleSubmit} >
