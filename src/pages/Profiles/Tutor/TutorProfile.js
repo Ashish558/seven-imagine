@@ -334,7 +334,7 @@ export default function TutorProfile({ isOwn }) {
                         className='text-[#4F33BD] justify-center font-bold text-[50px] capitalize'
                         imgClass='ml-auto' />
 
-                     <EditableText text={`${'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}`}
+                     <EditableText text={`${tagLine ? tagLine : 'Your tag line'}`}
                         editable={editable}
                         onClick={() => setToEdit({ ...toEdit, tagLine: { ...toEdit.tagLine, active: true } })}
                         className='text-black justify-center font-normal'

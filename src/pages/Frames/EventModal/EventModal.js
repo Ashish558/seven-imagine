@@ -397,7 +397,7 @@ export default function EventModal({
                         onChange={(val) =>
                            setData({ ...data, service: val })
                         }
-                        optionData={services}
+                        optionData={services.map(item => item.text)}
                         inputContainerClassName={`bg-lightWhite pt-3.5 pb-3.5 border-0 font-medium pr-3
                        `}
                         inputClassName="bg-transparent appearance-none font-medium pt-4 pb-4"
