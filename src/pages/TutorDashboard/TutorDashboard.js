@@ -13,8 +13,9 @@ import HatIcon from '../../assets/images/hat.svg'
 import { useLazyGetSessionsQuery } from '../../app/services/session';
 import { useSelector } from 'react-redux';
 import Message from '../../components/Message/Message';
+import { useLazyGetUserDetailQuery } from '../../app/services/users';
 
-const students = [
+const studentsArr = [
    {
       src: StudentImg,
       name: 'Joseph'
@@ -58,16 +59,18 @@ export default function TutorDashboard() {
 
    const [fetchUserSessions, fetchUserSessionsResponse] =
       useLazyGetSessionsQuery();
+   const [getUserDetail, userDetailResp] = useLazyGetUserDetailQuery()
 
    const [sessions, setSessions] = useState([])
    const [isOpen, setIsOpen] = useState(false)
    const { id } = useSelector(state => state.user)
+   const [students, setStudents] = useState([])
 
    useEffect(() => {
       const url = `/api/session/tutor/${id}`;
       fetchUserSessions(url)
          .then(res => {
-            console.log(res.data.data.session)
+            // console.log(res.data.data.session)
             let temp = res.data.data.session.filter(session => {
                let date = new Date(session.date).getDate()
                let now = new Date().getDate()
@@ -76,6 +79,32 @@ export default function TutorDashboard() {
                // console.log('sd -- ', date);
             })
             setSessions(temp)
+         })
+   }, [])
+
+   useEffect(() => {
+      getUserDetail({ id })
+         .then(resp => {
+            // console.log(resp.data.data.user.assiginedStudents)
+
+            let studentsData = []
+            const fetch = (cb) => {
+               resp.data.data.user.assiginedStudents.map((studentId, idx) => {
+                  getUserDetail({ id: studentId })
+                     .then(res => {
+                        const { _id, firstName, lastName } = res.data.data.user
+                        studentsData.push({
+                           _id,
+                           name: `${firstName} ${lastName}`
+                        })
+                        if (idx === resp.data.data.user.assiginedStudents.length - 1) cb()
+                     })
+               })
+            }
+            fetch(() => {
+               // console.log(studentsData)
+               setStudents(studentsData)
+            })
          })
    }, [])
 
@@ -97,15 +126,17 @@ export default function TutorDashboard() {
                   <div className='px-4 mb-[50px]'>
                      <p className='text-primary-dark font-semibold text-[21px] mb-8'>Latest Students</p>
                      <div className={styles.studentImages} >
-                        <OwlCarousel items={5} autoWidth margin={20} >
-                           {students.map(student => {
-                              return <div className='flex flex-col items-center'>
-                                 <img src={student.src} className='w-[100px]' />
-                                 <p className='text-lg font-semibold mt-4'> {student.name} </p>
-                              </div>
-                           })}
-
-                        </OwlCarousel>
+                        {
+                           students.length > 0 &&
+                           <OwlCarousel items={5} autoWidth margin={20} >
+                              {students.map(student => {
+                                 return <div className='flex flex-col items-center'>
+                                    <img src={studentsArr[0].src} className='w-[100px]' />
+                                    <p className='text-lg font-semibold mt-4'> {student.name} </p>
+                                 </div>
+                              })}
+                           </OwlCarousel>
+                        }
                      </div>
                   </div>
 

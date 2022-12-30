@@ -174,9 +174,9 @@ export default function TableItem({ item, dataFor, onClick }) {
          {dataFor === "assignedStudents" && (
             <tr className="odd:bg-white text-sm shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
                {mapData(item, 'assignedStudents')}
-               <td>
+               {/* <td>
                   <img src={RemoveIcon} />
-               </td>
+               </td> */}
             </tr>
          )}
          {dataFor === "studentTestsReport" && (

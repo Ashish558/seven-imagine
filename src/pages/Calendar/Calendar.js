@@ -254,7 +254,7 @@ export default function Calendar() {
          fetchSessions(userId, role);
       }
    }, [persona]);
-
+ 
    useEffect(() => {
       if (persona == "parent") {
          getUserDetail({ id })
