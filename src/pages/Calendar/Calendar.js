@@ -29,6 +29,7 @@ import { convertDateToTimezone, convertTime12to24, formatAMPM, getFormattedDate,
 import InputSelect from "../../components/InputSelect/InputSelect";
 // import styles from "./calendar.css";
 import momentTimezonePlugin from '@fullcalendar/moment-timezone';
+import { useLazyGetUserDetailQuery } from "../../app/services/users";
 
 const days = ["S", "M", "T", "W", "T", "F", "S"];
 const students = [
@@ -86,14 +87,17 @@ export default function Calendar() {
    const calendarRef = useRef(null);
    // console.log(calendarRef.current)
    const [events, setEvents] = useState([]);
-   const [persona, setPersona] = useState("");
+   const [persona, setPersona] = useState(sessionStorage.getItem("role"));
    // const [timeZones, setTimeZones] = useState(temptimeZones)
    const { id: sessionToEdit } = useParams()
    const [isEdited, setIsEdited] = useState(false)
+   const [isEditable, setIsEditable] = useState(false)
    // console.log(sessionToEdit)
+   const [associatedStudents, setAssociatedStudents] = useState([])
+   const { id } = useSelector(state => state.user)
 
    const time = formatAMPM(new Date)
- 
+
    const exactTime = time.slice(0, time.indexOf(":")) + time.slice(time.indexOf("p"), time.length);
    const slides = document.getElementsByClassName('fc-timegrid-slot-label-cushion fc-scrollgrid-shrink-cushion')
    //  console.log(document.getElementsByClassName('fc-timegrid-slot-label-cushion fc-scrollgrid-shrink-cushion'));
@@ -105,7 +109,6 @@ export default function Calendar() {
       }
    }
 
-
    const [eventModalActive, setEventModalActive] = useState(false);
    const [updateEventModalActive, setUpdateEventModalActive] = useState(false);
    const [defaultEventData, setDefaultEventData] = useState(null)
@@ -114,6 +117,7 @@ export default function Calendar() {
    const [fetchUserSessions, fetchUserSessionsResponse] =
       useLazyGetSessionsQuery();
    const [fetchStudents, fetchStudentsResp] = useLazyGetTutorStudentsQuery();
+   const [getUserDetail, userDetailResp] = useLazyGetUserDetailQuery()
 
    const [names, setNames] = useState([]);
    const [name, setName] = useState("");
@@ -137,11 +141,6 @@ export default function Calendar() {
       fetchSessions(searchedUser.id, searchedUser.role)
    }
 
-   useEffect(() => {
-      if (sessionStorage.getItem("role")) {
-         setPersona(sessionStorage.getItem("role"));
-      }
-   }, []);
 
    const fetchSessions = (id, role) => {
       // console.log(id)
@@ -239,13 +238,150 @@ export default function Calendar() {
    };
 
    useEffect(() => {
+      if (persona == "admin" || persona === 'tutor') {
+         setIsEditable(true)
+      } else {
+         setIsEditable(false)
+      }
+   }, [])
+
+   useEffect(() => {
       if (persona == "student") {
+         console.log(persona);
          const userId = sessionStorage.getItem("userId");
          const role = sessionStorage.getItem("role");
          if (!userId) return;
          fetchSessions(userId, role);
       }
    }, [persona]);
+
+   useEffect(() => {
+      if (persona == "parent") {
+         getUserDetail({ id })
+            .then(resp => {
+               console.log('response', resp.data.data);
+               setStudents([])
+               resp.data.data.user.assiginedStudents.map((student, idx) => {
+                  getUserDetail({ id: student })
+                     .then(res => {
+                        setStudents(prev => [...prev, {
+                           _id: res.data.data.user._id,
+                           studentName: `${res.data.data.user.firstName} ${res.data.data.user.lastName}`
+                        }])
+
+                     })
+               })
+
+               let allsessions = []
+               let allevents = []
+
+               const fetch = async (cb) => {
+
+                  await resp.data.data.user.assiginedStudents.map((student, idx) => {
+                     setSearchedUser({ id, role: 'student' })
+                     const url = `/api/session/student/${student}`;
+                     fetchUserSessions(url).then((res) => {
+                        const tempEvents = res.data.data.session.map(session => {
+                           const time = session.time;
+                           const strtTime12HFormat = `${time.start.time} ${time.start.timeType}`;
+                           const startTime = convertTime12to24(
+                              `${time.start.time} ${time.start.timeType}`
+                           );
+                           const endTime = `${time.end.time} ${time.end.timeType}`;
+                           const startHours = parseInt(startTime.split(":")[0]);
+                           const startMinutes = parseInt(startTime.split(":")[1]);
+                           // const endHours = parseInt(endTime.split(":")[0]);
+                           // const endMinutes = parseInt(endTime.split(":")[1]);
+                           let startDate = new Date(session.date);
+                           // let startDate = new Date(session.date).toUTCString()
+                           startHours !== NaN && startDate.setHours(startHours);
+                           startMinutes !== NaN && startDate.setMinutes(startMinutes);
+                           let updatedDate = new Date(new Date(
+                              startDate.toLocaleString('en-US', {
+                                 timeZone: session.timeZone,
+                              }),
+                           ))
+                           return {
+                              ...session,
+                              updatedDate
+                           }
+                        })
+                        allsessions.push(...tempEvents)
+                        let tempSession = res.data.data.session.map((session) => {
+                           const time = session.time;
+                           // console.log(session);
+                           const strtTime12HFormat = `${time.start.time} ${time.start.timeType}`;
+                           const startTime = convertTime12to24(
+                              `${time.start.time} ${time.start.timeType}`
+                           );
+
+                           const startHours = parseInt(startTime.split(":")[0]);
+                           const startMinutes = parseInt(startTime.split(":")[1]);
+
+                           let startDate = new Date(session.date)
+                           // let startDate = new Date(session.date).toUTCString()
+                           startHours !== NaN && startDate.setHours(startHours);
+                           startMinutes !== NaN && startDate.setMinutes(startMinutes);
+
+                           var userTimezoneOffset = startDate.getTimezoneOffset() * 60000;
+
+                           getStartDate(startDate, userTimezoneOffset, session.timeZone)
+                           let up = getStartDate(startDate, userTimezoneOffset, session.timeZone)
+                           const startUtc = up.toUTCString()
+
+                           console.log('START DATE', startDate);
+                           console.log('START DATE UTC --', startUtc);
+
+                           const endTime12HFormat = `${time.end.time} ${time.end.timeType}`;
+                           const endTime = convertTime12to24(
+                              `${time.end.time} ${time.end.timeType}`
+                           );
+                           const endHours = parseInt(endTime.split(":")[0]);
+                           const endMinutes = parseInt(endTime.split(":")[1]);
+                           let endDate = new Date(session.date);
+                           endHours !== NaN && endDate.setHours(endHours);
+                           endMinutes !== NaN && endDate.setMinutes(endMinutes);
+
+                           const endDateUtc = getStartDate(endDate, userTimezoneOffset, session.timeZone)
+
+                           let eventObj = {
+                              id: session._id,
+                              title: session.tutorName,
+                              start: startUtc,
+                              endDate: endDateUtc,
+                              updatedDate: startUtc,
+                              updatedDateEnd: endDateUtc,
+                              description: `${strtTime12HFormat} - ${endTime12HFormat}`,
+                           };
+                           return eventObj;
+                        });
+                        allevents.push(...tempSession)
+                        console.log(idx, resp.data.data.user.assiginedStudents.length - 1);
+                        if (idx === resp.data.data.user.assiginedStudents.length - 1) cb()
+                        // parseEventDatesToTz()
+                     });
+
+                  })
+
+               }
+               fetch(() => {
+                  setEventDetails(allsessions)
+                  const promiseState = async state => new Promise(resolve => {
+                     resolve(
+                        setEvents(allevents)
+                     )
+                  })
+                  promiseState()
+                     .then(() => {
+                        parseEventDatesToTz()
+                     })
+                  setEvents(allevents)
+               })
+            })
+      }
+   }, [persona])
+
+   // console.log(students)
 
    useEffect(() => {
       if (calendarRef.current) {
@@ -459,6 +595,9 @@ export default function Calendar() {
       if (persona === "admin" || persona === "tutor") {
          setUpdateEventModalActive(true);
          setSessionToUpdate(session);
+      } else {
+         setUpdateEventModalActive(true);
+         setSessionToUpdate(session);
       }
    };
 
@@ -651,6 +790,7 @@ export default function Calendar() {
          </div>
          {eventModalActive && (
             <EventModal
+               isEditable={isEditable}
                defaultEventData={defaultEventData}
                setEventModalActive={setEventModalActive}
                persona={persona}
@@ -659,6 +799,7 @@ export default function Calendar() {
          )}
          {updateEventModalActive && (
             <EventModal
+               isEditable={isEditable}
                setEventModalActive={setUpdateEventModalActive}
                persona={persona}
                isUpdating={true}

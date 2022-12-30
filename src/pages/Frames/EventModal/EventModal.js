@@ -74,6 +74,7 @@ const status = ["Scheduled", "Completed"];
 
 export default function EventModal({
    setEventModalActive,
+   isEditable,
    persona,
    isUpdating,
    sessionToUpdate,
@@ -318,8 +319,8 @@ export default function EventModal({
 
    const updateSession = (reqBody) => {
       // console.log(sessionToUpdate)
-      console.log(reqBody);
-      updateUserSession({ id: sessionToUpdate._id, body: reqBody }).then(
+      // console.log(reqBody);
+      updateUserSession({ id: sessionToUpdate._id, body: {...reqBody, _id: sessionToUpdate._id } }).then(
          (res) => {
             console.log(res);
             refetchSessions()
@@ -365,30 +366,31 @@ export default function EventModal({
          <Modal
             classname="max-w-[750px] md:pl-6 md:pr-6 mx-auto max-h-[90vh] 2xl:max-h-[700px] overflow-y-auto scrollbar-content scrollbar-vertical"
             handleClose={() => setEventModalActive(false)}
-            title={isUpdating ? "Update Session" : "Create a New Session"}
+            title={isEditable == false ? 'Session' : isUpdating ? "Update Session" : "Create a New Session"}
             body={
                <div className="text-sm" >
                   <SearchNames setStudent={setStudent}
                      setData={setData} student={student} tutor={tutor} data={data}
-                     setTutor={setTutor} />
+                     setTutor={setTutor}
+                     isEditable={isEditable} />
 
-                  <DateAndTimeInput {...dataProps} />
+                  <DateAndTimeInput {...dataProps} isEditable={isEditable} />
 
                   <div className="flex mb-3">
                      <CCheckbox checked={data.recurring} name='recurring' onChange={() =>
                         setData({
                            ...data,
                            recurring: !data.recurring,
-                        })} />
+                        })} disabled={!isEditable} />
                      <p className="font-medium text-primary-60 text-sm">
                         Recurring
                      </p>
                   </div>
 
-                  <DaysEndDate days={days} setDays={setDays} {...dataProps} />
+                  <DaysEndDate isEditable={isEditable} days={days} setDays={setDays} {...dataProps} />
 
                   {/* SESSIONS */}
-                  <SessionInputs {...dataProps} status={status} />
+                  <SessionInputs {...dataProps} status={status} isEditable={isEditable} />
                   <div className="flex">
                      <InputSelect
                         label="Services"
@@ -406,6 +408,7 @@ export default function EventModal({
                         ${persona === "student" ? "mr-4" : ""} ${persona === "parent" ? " order-2" : ""}
                         `}
                         type="select"
+                        disabled={!isEditable}
                      />
 
                      {persona === "student" && (
