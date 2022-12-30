@@ -130,6 +130,24 @@ export function formatAMPM(date) {
    var strTime = hours + ':' + minutes + ' ' + ampm;
    return strTime;
 }
+
+export const getStartDate = (startDate, userTimezoneOffset, timeZone) => {
+   if (timeZone === 'US/Central') {
+      return new Date(startDate.getTime() - userTimezoneOffset + 6 * 3600000);
+   } else if (timeZone === 'US/Alaska') {
+      return new Date(startDate.getTime() - userTimezoneOffset + 9 * 3600000);
+   } else if (timeZone === 'US/Eastern') {
+      return new Date(startDate.getTime() - userTimezoneOffset + 5 * 3600000);
+   } else if (timeZone === 'US/Hawaii') {
+      return new Date(startDate.getTime() - userTimezoneOffset + 10 * 3600000);
+   } else if (timeZone === 'US/Mountain') {
+      return new Date(startDate.getTime() - userTimezoneOffset + 7 * 3600000);
+   } else if (timeZone === 'US/Pacific') {
+      return new Date(startDate.getTime() - userTimezoneOffset + 8 * 3600000);
+   } else {
+      return new Date(startDate.getTime() - userTimezoneOffset - 5.5 * 3600000);
+   }
+}
 // // timezones
 // function getCurrentLocalDateTime() {
 //    return moment().format();

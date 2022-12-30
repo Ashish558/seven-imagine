@@ -79,7 +79,7 @@ const initialState = {
 export default function Settings() {
 
    const [modalActive, setModalActive] = useState(false)
-   const [tagModalActive, setTagModalActive] = useState(true)
+   const [tagModalActive, setTagModalActive] = useState(false)
 
    const [settingsData, setSettingsData] = useState({})
    const inputRef = useRef()

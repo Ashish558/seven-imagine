@@ -70,7 +70,7 @@ const tempDays = [
       checked: false,
    },
 ];
-const status = ["Scheduled", "Option 2"];
+const status = ["Scheduled", "Completed"];
 
 export default function EventModal({
    setEventModalActive,
