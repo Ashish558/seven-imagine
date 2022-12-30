@@ -39,7 +39,7 @@ export default function DaysEndDate({ days, setDays, data, setData }) {
          <InputField
             label="End Date"
             labelClassname="ml-3"
-            parentClassName="w-full self-end"
+            parentClassName={`w-full self-end ${!data.recurring ? 'opacity-50 pointer-events-none' : ''}} `}
             type="date"
             inputContainerClassName="bg-lightWhite border-0 font-medium pr-3 pt-3.5 pb-3.5"
             inputClassName="bg-transparent appearance-none font-medium"
