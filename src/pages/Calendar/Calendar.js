@@ -92,6 +92,55 @@ export default function Calendar() {
    const [isEdited, setIsEdited] = useState(false)
    // console.log(sessionToEdit)
 
+   function formatAMPM(date) {
+      var hours = date.getHours();
+      var minutes = date.getMinutes();
+      var ampm = hours >= 12 ? 'pm' : 'am';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+      minutes = minutes < 10 ? '0'+minutes : minutes;
+      var strTime = hours + ':' + minutes + ' ' + ampm;
+      return strTime;
+    }
+
+    const time = formatAMPM(new Date)
+    
+    const exactTime = time.slice(0, time.indexOf(":")) + time.slice(time.indexOf("p"), time.length);
+    const slides = document.getElementsByClassName('fc-timegrid-slot-label-cushion fc-scrollgrid-shrink-cushion')
+   //  console.log(document.getElementsByClassName('fc-timegrid-slot-label-cushion fc-scrollgrid-shrink-cushion'));
+   for (var i = 0; i < slides.length; i++) {
+      const item = slides.item(i);
+      // console.log(item.innerHTML);
+      if(item.innerHTML === exactTime){
+         document.getElementById("calendarContainer").scrollTop = document.getElementById("calendarContainer").scrollHeight;
+      }
+   }
+
+   //  var word = exactTime,
+   //  queue = [document.body],
+   //       curr
+   // ;
+   //    while (curr = queue.pop()) {
+   //       if (!curr.textContent.match(word)) continue;
+   //       for (var i = 0; i < curr.childNodes.length; ++i) {
+   //          switch (curr.childNodes[i].nodeType) {
+   //                case Node.TEXT_NODE : // 3
+   //                   if (curr.childNodes[i].textContent.match(word)) {
+   //                      // console.log("Found!");
+   //                      console.log(document.getElementById("calendarContainer").scrollTo(10, 10));
+   //                      document.getElementById("calendarContainer").scrollTo(curr);
+                        
+   //                      // you might want to end your search here.
+   //                   }
+   //                   break;
+   //                case Node.ELEMENT_NODE : // 1
+   //                   queue.push(curr.childNodes[i]);
+   //                   break;
+   //          }
+   //       }
+   //    }
+
+    
    const [eventModalActive, setEventModalActive] = useState(false);
    const [updateEventModalActive, setUpdateEventModalActive] = useState(false);
    const [defaultEventData, setDefaultEventData] = useState(null)
