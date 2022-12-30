@@ -86,7 +86,6 @@ export default function TutorDashboard() {
       getUserDetail({ id })
          .then(resp => {
             // console.log(resp.data.data.user.assiginedStudents)
-
             let studentsData = []
             const fetch = (cb) => {
                resp.data.data.user.assiginedStudents.map((studentId, idx) => {

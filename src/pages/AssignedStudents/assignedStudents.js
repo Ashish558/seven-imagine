@@ -10,6 +10,8 @@ import { tempTableData } from "./tempData";
 import InputField from "../../components/InputField/inputField";
 import { BASE_URL } from "../../app/constants/constants";
 import InputSearch from "../../components/InputSearch/InputSearch";
+import { useLazyGetUserDetailQuery } from "../../app/services/users";
+import { useSelector } from "react-redux";
 
 const optionData = ["1", "2", "3", "4", "5"];
 const testData = ["SAT", "ACT"];
@@ -19,7 +21,7 @@ const tempTableHeaders = [
    "Time Zone",
    "Service(s)",
    "Parent",
-   "Start Date",
+   // "Start Date",
    "Diagnostic Score",
    "Status",
    "",
@@ -31,7 +33,10 @@ export default function AssignedStudents() {
    const [tableHeaders, setTableHeaders] = useState([])
 
    const persona = sessionStorage.getItem("role");
+   const [getUserDetail, userDetailResp] = useLazyGetUserDetailQuery()
 
+   const { id } = useSelector(state => state.user)
+   const [students, setStudents] = useState([])
 
    const [filterData, setFilterData] = useState({
       studentName: '',
@@ -44,6 +49,39 @@ export default function AssignedStudents() {
    useEffect(() => {
       setTableData(tempTableData)
       setTableHeaders(tempTableHeaders)
+   }, [])
+
+   console.log(students)
+
+   useEffect(() => {
+      getUserDetail({ id })
+         .then(resp => {
+            // console.log(resp.data.data.user.assiginedStudents)
+            let studentsData = []
+            const fetch = (cb) => {
+               resp.data.data.user.assiginedStudents.map((studentId, idx) => {
+                  getUserDetail({ id: studentId })
+                     .then(res => {
+                        const { _id, firstName, lastName } = res.data.data.user
+                        const { serviceSeeking, FirstName, LastName, timeZone } = res.data.data.userdetails
+
+                        studentsData.push({
+                           _id,
+                           name: `${firstName} ${lastName}`,
+                           timeZone: timeZone ? timeZone : '-',
+                           services: serviceSeeking ? serviceSeeking.join() : '-',
+                           parentName: `${FirstName} ${LastName}`,
+                           score: '-',
+                           status: '-'
+                        })
+                        if (idx === resp.data.data.user.assiginedStudents.length - 1) cb()
+                     })
+               })
+            }
+            fetch(() => {
+               setStudents(studentsData)
+            })
+         })
    }, [])
 
    return (
@@ -59,7 +97,7 @@ export default function AssignedStudents() {
 
                </div>
 
-               <div className="flex align-center mt-8">
+               <div className="flex align-center mt-8 max-w-[1200px]">
                   <InputField
                      value={filterData.studentName}
                      IconRight={SearchIcon}
@@ -75,7 +113,7 @@ export default function AssignedStudents() {
                      onChange={val => setFilterData({ ...filterData, timeZone: val })}
                      optionData={optionData}
                      inputContainerClassName="py-[16px] px-[20px] border bg-white"
-                     placeholder="Time ZoneSe"
+                     placeholder="Time Zones"
                      parentClassName="w-full mr-4"
                      type="select"
                   />
@@ -88,7 +126,7 @@ export default function AssignedStudents() {
                      parentClassName="w-full mr-4"
                      type="select"
                   />
-                  <InputSelect
+                  {/* <InputSelect
                      value={filterData.date}
                      onChange={val => setFilterData({ ...filterData, date: val })}
                      optionData={optionData}
@@ -96,10 +134,10 @@ export default function AssignedStudents() {
                      placeholder="Start Date"
                      parentClassName="w-full mr-4"
                      type="select"
-                  />
-                   <InputSelect
+                  /> */}
+                  <InputSelect
                      value={filterData.status}
-                     onChange={val => setFilterData({...filterData, status: val})}
+                     onChange={val => setFilterData({ ...filterData, status: val })}
                      optionData={optionData}
                      inputContainerClassName="py-[16px] px-[20px] border bg-white"
                      placeholder="Status"
@@ -112,7 +150,8 @@ export default function AssignedStudents() {
                   <Table
                      // onClick={{ handleResend }}
                      dataFor='assignedStudents'
-                     data={tableData}
+                     data={students}
+                     excludes={['_id']}
                      tableHeaders={tableHeaders}
                      maxPageSize={10}
                   />

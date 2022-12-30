@@ -10,7 +10,8 @@ export default function Table({
    maxPageSize,
    onClick,
    hidePagination,
-   setMaxPageSize
+   setMaxPageSize,
+   excludes
 }) {
    const [tableData, setTableData] = useState(data.sort((a,b) => a.name?.slice(0,1).toLowerCase() > b.name?.slice(0,1).toLowerCase()));
    const [currentPage, setCurrentPage] = useState(1);
@@ -54,6 +55,7 @@ export default function Table({
                         dataFor={dataFor}
                         item={item}
                         key={idx}
+                        excludes={excludes}
                         onClick={onClick}
                      />
                   );
