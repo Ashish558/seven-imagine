@@ -92,18 +92,18 @@ export default function Calendar() {
    const [isEdited, setIsEdited] = useState(false)
    // console.log(sessionToEdit)
 
-   // const time = formatAMPM(new Date)
-
-   // const exactTime = time.slice(0, time.indexOf(":")) + time.slice(time.indexOf("p"), time.length);
-   // const slides = document.getElementsByClassName('fc-timegrid-slot-label-cushion fc-scrollgrid-shrink-cushion')
-   // //  console.log(document.getElementsByClassName('fc-timegrid-slot-label-cushion fc-scrollgrid-shrink-cushion'));
-   // for (var i = 0; i < slides.length; i++) {
-   //    const item = slides.item(i);
-   //    // console.log(item.innerHTML);
-   //    if (item.innerHTML === exactTime) {
-   //       document.getElementById("calendarContainer").scrollTop = document.getElementById("calendarContainer").scrollHeight;
-   //    }
-   // }
+   const time = formatAMPM(new Date)
+ 
+   const exactTime = time.slice(0, time.indexOf(":")) + time.slice(time.indexOf("p"), time.length);
+   const slides = document.getElementsByClassName('fc-timegrid-slot-label-cushion fc-scrollgrid-shrink-cushion')
+   //  console.log(document.getElementsByClassName('fc-timegrid-slot-label-cushion fc-scrollgrid-shrink-cushion'));
+   for (var i = 0; i < slides.length; i++) {
+      const item = slides.item(i);
+      // console.log(item.innerHTML);
+      if (item.innerHTML === exactTime) {
+         document.getElementById("calendarContainer").scrollTop = document.getElementById("calendarContainer").scrollHeight;
+      }
+   }
 
 
    const [eventModalActive, setEventModalActive] = useState(false);
