@@ -1,20 +1,34 @@
 import React, { useEffect, useState } from 'react'
+import { useLazyGetSingleSessionQuery } from '../../../app/services/session'
 import ArrowIcon from '../../../assets/Dashboard/arrow.svg'
 import { getFormattedDate } from '../../../utils/utils'
 
-export default function SingleLedger({ _id, invoiceId, title, Date, amountPaid, balanceChange, newBalance, isOpen, toggleOpen }) {
+export default function SingleLedger({ _id, invoiceId, sessionId, title, Date, amountPaid, balanceChange, newBalance, isOpen, toggleOpen }) {
 
 
    const [tutorName, setTutorName] = useState('')
    const [studentName, setStudentName] = useState('')
+   const [sessionDetails, setSessionDetails] = useState({})
+   const [fetchSession, fetchSessionResponse] = useLazyGetSingleSessionQuery()
 
    useEffect(() => {
       let names = title.split('<>')
-      if(names.length > 1){
+      if (names.length > 1) {
          setTutorName(names[0])
          setStudentName(names[1])
       }
    }, [])
+
+   useEffect(() => {
+      if (!sessionId) return
+      fetchSession(sessionId)
+         .then(res => {
+            const { start, end } = res.data.data.session.time
+            const timeStr = `${start.time} ${start.timeType} - ${end.time} ${end.timeType} `
+            setSessionDetails({ ...res.data.data.session, timeStr });
+         })
+   }, [])
+   const { service, total_hours, timeStr, sessionNotes } = sessionDetails
 
    return (
       <>
@@ -55,21 +69,23 @@ export default function SingleLedger({ _id, invoiceId, title, Date, amountPaid, 
                      {/* </div> */}
                      {/* <div className='flex items-center'>   */}
                      <div className='font-bold mx-1 py-6'> Service </div>
-                     <div className='py-6 opacity-80'> Student </div>
+                     <div className='py-6 opacity-80'> {service ? service : '-'} </div>
                      {/* </div> */}
                      {/* <div className='py-6'> Student </div> */}
                      <div className='font-bold mx-1 py-6' > Session Duration </div>
-                     <div className='py-6 opacity-80'> 2 hours </div>
+                     <div className='py-6 opacity-80'>
+                        {total_hours ? `${total_hours} ${total_hours === 1 ? 'hour' : 'hours'}` : '-'}
+                     </div>
 
                      <div className='font-bold mx-1 py-6' > Time </div>
-                     <div className='py-6 opacity-80'> 01:25 PM -3:25 PM PDT </div>
+                     <div className='py-6 opacity-80'> {timeStr ? timeStr : '-'} </div>
 
                      <div className='font-bold mx-1 py-6' > Hourly Rate </div>
-                     <div className='py-6 opacity-80'> $ 40 </div>
+                     <div className='py-6 opacity-80'> {service ? '-' : '-'} </div>
 
                      <div className='font-bold mx-1 pt-3' > Session Notes </div>
                      <div className='col-span-5 pl-4 pt-3 opacity-80'>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum nascetur donec pharetra arcu. Tortor aenean pellentesque fusce rhoncus vitae netus nisl nulla feugiat.
+                        {sessionNotes ? sessionNotes : '-'}
                      </div>
 
                   </div>
