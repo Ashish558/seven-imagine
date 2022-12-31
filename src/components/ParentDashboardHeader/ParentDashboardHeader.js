@@ -76,12 +76,13 @@ const ParentDashboardHeader = () => {
       }
       fetch()
    }, [user])
-
+ 
    const handlePay = ()=>{
       payBalance()
       .then(res => {
          if(res.error){
             console.log(res.error)
+            if (res.error.data) alert(res.error.data.message)
             return
          }
          console.log(res.data.data)
