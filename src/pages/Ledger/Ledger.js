@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { useLazyGetParentLedgerQuery } from '../../app/services/dashboard'
+import { useLazyGetParentLedgerQuery, useLazyPayBalanceQuery } from '../../app/services/dashboard'
 import PrimaryButton from '../../components/Buttons/PrimaryButton'
 import SingleLedger from './SingleLedger/SingleLedger'
 
@@ -13,8 +14,23 @@ export default function Ledger() {
    const [ledgers, setLedgers] = useState([])
    const [searchParams, setSearchParams] = useSearchParams();
    const navigate = useNavigate()
+   const [payBalance, payBalanceResp] = useLazyPayBalanceQuery()
 
-   // console.log(searchParams.get('status'));
+   const { id, amountToPay, credits } = useSelector(state => state.user)
+   const handlePay = () => {
+      payBalance()
+         .then(res => {
+            if (res.error) {
+               console.log(res.error)
+               if (res.error.data) alert(res.error.data.message)
+               return
+            }
+            console.log(res.data.data)
+            if (res.data.data) {
+               if (res.data.data.link) window.open(res.data.data.link)
+            }
+         })
+   }
 
    useEffect(() => {
       fetchLedgers()
@@ -46,6 +62,7 @@ export default function Ledger() {
       })
       setLedgers(temp)
    }
+console.log(ledgers);
 
    return (
       <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pb-51'>
@@ -55,12 +72,12 @@ export default function Ledger() {
                <p className="font-bold text-4xl text-primary-dark">
                   Ledger
                </p>
-               <PrimaryButton children='Pay Now:  $ 2600' />
+               <PrimaryButton children={`Pay Now:  $${amountToPay}`} onClick={handlePay} />
             </div>
 
             <div className='grid grid-cols-6 mt-[43px]'>
-               {headers.map(head => {
-                  return <div className='bg-primary py-[22px] text-white text-center px-4'> <p> {head} </p> </div>
+               {headers.map((head, idx) => {
+                  return <div key={idx} className='bg-primary py-[22px] text-white text-center px-4'> <p> {head} </p> </div>
                })}
                {
                   ledgers.map(ledger => {

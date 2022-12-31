@@ -30,7 +30,7 @@ const ParentDashboardHeader = () => {
    const navigate = useNavigate()
 //  localStorage
    const { id, amountToPay, credits } = useSelector(state => state.user)
-
+ 
    useEffect(() => {
       fetchSettings()
          .then(res => {

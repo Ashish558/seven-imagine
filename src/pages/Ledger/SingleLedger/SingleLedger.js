@@ -1,19 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ArrowIcon from '../../../assets/Dashboard/arrow.svg'
+import { getFormattedDate } from '../../../utils/utils'
 
-export default function SingleLedger({ _id, title, Date, amountPaid, balanceChange, newBalance, isOpen, toggleOpen }) {
+export default function SingleLedger({ _id, invoiceId, title, Date, amountPaid, balanceChange, newBalance, isOpen, toggleOpen }) {
 
+
+   const [tutorName, setTutorName] = useState('')
+   const [studentName, setStudentName] = useState('')
+
+   useEffect(() => {
+      let names = title.split('<>')
+      if(names.length > 1){
+         setTutorName(names[0])
+         setStudentName(names[1])
+      }
+   }, [])
 
    return (
       <>
          <div className='text-center py-[16px] px-3'>
-            Id
+            {`${_id.slice(-10)}`}
          </div>
          <div className='text-center  py-[16px] px-3'>
             {title}
          </div>
          <div className='text-center  py-[16px] px-3'>
-            {Date}
+            {getFormattedDate(Date)}
          </div>
          <div className='text-center  py-[16px] px-3'>
             $ {amountPaid}
@@ -35,11 +47,11 @@ export default function SingleLedger({ _id, title, Date, amountPaid, balanceChan
                   <div className='inline-grid grid-cols-6 px-[200px] grid-flow'>
                      {/* <div className='flex items-center'> */}
                      <div className='font-bold mx-1 py-6' > Student </div>
-                     <div className='py-6 opacity-80'> Student </div>
+                     <div className='py-6 opacity-80'> {studentName !== '' ? studentName : '-'} </div>
                      {/* </div> */}
                      {/* <div className='flex items-center'> */}
                      <div className='font-bold mx-1 py-6'> Tutor </div>
-                     <div className='py-6 opacity-80'> Student </div>
+                     <div className='py-6 opacity-80'> {tutorName !== '' ? tutorName : '-'} </div>
                      {/* </div> */}
                      {/* <div className='flex items-center'>   */}
                      <div className='font-bold mx-1 py-6'> Service </div>
