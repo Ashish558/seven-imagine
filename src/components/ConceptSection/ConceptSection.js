@@ -246,7 +246,7 @@ const ConceptSection = () => {
                         {
                            tutors.map((tutor, idx) => {
                               return (
-                                 <div keu={idx} className="item flex" style={{ width: "100%" }}>
+                                 <div key={idx} className="item flex" style={{ width: "100%" }}>
                                     <div className="w-3/5">
                                        <h5 className={styles.tag}>
                                           WIZARD TUTOR | UNDERGRADUATE

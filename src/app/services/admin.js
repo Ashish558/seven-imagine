@@ -18,7 +18,7 @@ export const adminServicesApi = createApi({
             },
             method: "GET",
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          }),
       }),
@@ -27,7 +27,7 @@ export const adminServicesApi = createApi({
             url: `api/invoice`,
             method: "GET",
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          }),
       }),
@@ -38,7 +38,7 @@ export const adminServicesApi = createApi({
             method: "POST",
             body: body,
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          })
       }),
@@ -49,7 +49,7 @@ export const adminServicesApi = createApi({
             method: "PATCH",
             body: body,
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          })
       }),
@@ -60,7 +60,7 @@ export const adminServicesApi = createApi({
             method: "PATCH",
             body: body,
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          })
       }),

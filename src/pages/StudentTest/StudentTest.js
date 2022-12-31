@@ -51,7 +51,7 @@ export default function StudentTest() {
    const [assignedTestDetails, setassignedTestDetails] = useState([])
    const [testDetails, setTestDetails] = useState([])
 
-   const persona = sessionStorage.getItem("role");
+   const persona = localStorage.getItem("role");
 
    useEffect(() => {
       getTest('637663fe90241bf60305bd36')

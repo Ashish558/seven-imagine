@@ -14,6 +14,7 @@ import ImageSlideshow from "../ImageSlideshow/ImageSlideshow";
 import { useLazyGetUserDetailQuery } from "../../app/services/users";
 import { useSelector } from "react-redux";
 import InputSelect from "../InputSelect/InputSelect";
+import { useLazyPayBalanceQuery } from "../../app/services/dashboard";
 
 const ParentDashboardHeader = () => {
    const [images, setImages] = useState([])
@@ -22,11 +23,13 @@ const ParentDashboardHeader = () => {
 
    const [getUserDetail, userDetailResp] = useLazyGetUserDetailQuery()
    const [fetchSettings, fetchSettingsResp] = useLazyGetSettingsQuery()
+   const [payBalance, payBalanceResp] = useLazyPayBalanceQuery()
+
    const [selectedStudent, setSelectedStudent] = useState(null)
 
    const navigate = useNavigate()
-
-   const { id } = useSelector(state => state.user)
+//  localStorage
+   const { id, amountToPay, credits } = useSelector(state => state.user)
 
    useEffect(() => {
       fetchSettings()
@@ -74,6 +77,19 @@ const ParentDashboardHeader = () => {
       fetch()
    }, [user])
 
+   const handlePay = ()=>{
+      payBalance()
+      .then(res => {
+         if(res.error){
+            console.log(res.error)
+            return
+         }
+         console.log(res.data.data)
+         if(res.data.data){
+            if(res.data.data.link) window.open(res.data.data.link)
+         }
+      })
+   }
 
    return (
       <div
@@ -116,15 +132,15 @@ const ParentDashboardHeader = () => {
 
                   <div id={styles.creditBalance}>
                      <p className="whitespace-nowrap text-3xl leading-none mb-1" >
-                        820 USD
+                     {credits} USD
                      </p>
                      <p className="text-[13.17px] font-bold cursor-pointer"
                         onClick={() => navigate('/ledger')}>
                         View details
                      </p>
                   </div>
-                  <button className={styles.btnDark}>
-                     Pay Now: $ 2600
+                  <button className={styles.btnDark} onClick={handlePay} >
+                     Pay Now: $ {amountToPay}
                   </button>
                </div>
             </div>
@@ -145,7 +161,7 @@ const ParentDashboardHeader = () => {
                      value={selectedStudent === null ? '' : selectedStudent.value}
                      onChange={val => setSelectedStudent(val)} />}
             </div>
-            <div class={`item ${styles.student} w-100 px-[22px] 2xl:px-[32px] 2xl:py-[13px]`}>
+            <div className={`item ${styles.student} w-100 px-[22px] 2xl:px-[32px] 2xl:py-[13px]`}>
                <div className="flex items-center">
                   <div className="w-1/2">
                      <h2>

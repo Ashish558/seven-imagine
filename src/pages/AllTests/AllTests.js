@@ -45,7 +45,7 @@ export default function AllTests() {
    const handleClose = () => setModalActive(false);
    const closeRemoveModal = () => setRemoveQuestionModal(false);
 
-   const persona = sessionStorage.getItem("role");
+   const persona = localStorage.getItem("role");
 
    const openRemoveTestModal = (item) => {
       setRemoveQuestionModal(true);

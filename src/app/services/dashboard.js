@@ -14,7 +14,16 @@ export const dashboardServicesApi = createApi({
             url: `api/ledger`,
             method: "GET",
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
+            },
+         }),
+      }),
+      payBalance: builder.query({
+         query: () => ({
+            url: `api/payment/init`,
+            method: "GET",
+            headers: {
+               "Authorization": localStorage.getItem('token'),
             },
          }),
       })
@@ -44,5 +53,6 @@ export const dashboardServicesApi = createApi({
 });
 
 export const {
-   useLazyGetParentLedgerQuery
+   useLazyGetParentLedgerQuery,
+   useLazyPayBalanceQuery,
 } = dashboardServicesApi;

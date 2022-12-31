@@ -26,7 +26,7 @@ export const testServicesApi = createApi({
             body: body,
             headers: {
                "Content-type": "application/json; charset=UTF-8",
-               // "Authorization": sessionStorage.getItem('token'),
+               // "Authorization": localStorage.getItem('token'),
             },
          })
       }),
@@ -35,7 +35,7 @@ export const testServicesApi = createApi({
             url: `/api/test/${id}`,
             method: "GET",
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          })
       }),
@@ -46,7 +46,7 @@ export const testServicesApi = createApi({
             body: body,
             headers: {
                "Content-type": "application/json; charset=UTF-8",
-               // "Authorization": sessionStorage.getItem('token'),
+               // "Authorization": localStorage.getItem('token'),
             },
          })
       }),
@@ -57,7 +57,7 @@ export const testServicesApi = createApi({
             body: body.formData,
             headers: {
                "Content-type": "multipart/form-data",
-               // "Authorization": sessionStorage.getItem('token'),
+               // "Authorization": localStorage.getItem('token'),
             },
          })
       }),
@@ -67,7 +67,7 @@ export const testServicesApi = createApi({
             method: "POST",
             body: body.reqbody,
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          })
       }),
@@ -77,17 +77,17 @@ export const testServicesApi = createApi({
             method: "POST",
             body: body.reqbody,
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          })
       }),
 
       getAssignedTest: builder.query({
          query: (id) => ({
-            url: `/api/test/assigntest/${sessionStorage.getItem('userId')}`,
+            url: `/api/test/assigntest/${localStorage.getItem('userId')}`,
             method: "GET",
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          })
       }),
@@ -97,7 +97,7 @@ export const testServicesApi = createApi({
             url: `/api/test/gettime/${id}`,
             method: "GET",
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          })
       }),

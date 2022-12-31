@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import moment from "moment";
 import styles from "./style.module.css";
 import InputField from "../../../components/InputField/inputField";
 import Modal from "../../../components/Modal/Modal";
@@ -15,6 +16,7 @@ import {
 import InputSearch from "../../../components/InputSearch/InputSearch";
 import {
    useLazyGetSettingsQuery,
+   useLazyUpdateSessionStatusQuery,
    useSubmitSessionMutation,
    useUpdateSessionMutation,
 } from "../../../app/services/session";
@@ -121,6 +123,7 @@ export default function EventModal({
 
    const [submitSession, sessionResponse] = useSubmitSessionMutation();
    const [updateUserSession, updateUserSessionResp] = useUpdateSessionMutation();
+   const [updateSessionStatus, updateSessionStatusResp] = useLazyUpdateSessionStatusQuery();
 
    const [student, setStudent] = useState("");
 
@@ -319,8 +322,13 @@ export default function EventModal({
 
    const updateSession = (reqBody) => {
       // console.log(sessionToUpdate)
-      // console.log(reqBody);
-      updateUserSession({ id: sessionToUpdate._id, body: {...reqBody, _id: sessionToUpdate._id } }).then(
+      if (reqBody.sessionStatus === "Completed") {
+         updateSessionStatus(sessionToUpdate._id)
+            .then(res => {
+               console.log(res.data)
+            })
+      }
+      updateUserSession({ id: sessionToUpdate._id, body: { ...reqBody, _id: sessionToUpdate._id } }).then(
          (res) => {
             console.log(res);
             refetchSessions()
@@ -349,6 +357,15 @@ export default function EventModal({
       reqBody.studentMood = getCheckedString(studentMoods)
       reqBody.sessionProductive = getCheckedString(isProductive)[0]
 
+      const { start, end } = reqBody.time
+      let startTime = convertTime12to24(`${start.time} ${start.timeType}`)
+      let endTime = convertTime12to24(`${end.time} ${end.timeType}`)
+      let startT = moment(`2016-06-06T${startTime}:00`)
+      let endT = moment(`2016-06-06T${endTime}:00`)
+      
+      var duration = endT.diff(startT, 'hours')
+      console.log(duration);
+      reqBody.total_hours = duration
       if (isUpdating) return updateSession(reqBody);
 
       submitSession(reqBody).then((res) => {

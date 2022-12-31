@@ -117,7 +117,7 @@ export default function StudentProfile({ isOwn }) {
 
    const navigate = useNavigate()
    const [editable, setEditable] = useState(false)
-   const persona = sessionStorage.getItem('role')
+   const persona = localStorage.getItem('role')
    const [user, setUser] = useState({})
    const [userDetail, setUserDetail] = useState({})
    const [settings, setSettings] = useState({})

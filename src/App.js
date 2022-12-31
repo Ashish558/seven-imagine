@@ -13,16 +13,16 @@ function App() {
 
    useEffect(() => {
       setLoading(true);
-      // console.log(sessionStorage.getItem('token'))
-      if (sessionStorage.getItem('token')) {
+      // console.log(localStorage.getItem('token'))
+      if (localStorage.getItem('token')) {
          fetchPersonalDetails()
             .then(res => {
                console.log('personal Dedails', res.data )
-               const { firstName, lastName, _id } = res.data.data.user
+               const { firstName, lastName, _id, amountToPay, credits } = res.data.data.user
                setLoading(false);
                dispatch(updateIsLoggedIn(true));
                dispatch(updateUserDetails({
-                  firstName, lastName, id: _id
+                  firstName, lastName, id: _id, amountToPay, credits
                }))
             })
       } else {

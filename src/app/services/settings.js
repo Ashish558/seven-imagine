@@ -15,7 +15,7 @@ export const settingsServicesApi = createApi({
             method: "PATCH",
             body: body,
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          })
       }),
@@ -25,7 +25,7 @@ export const settingsServicesApi = createApi({
             method: "PATCH",
             body: body,
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          })
       }),

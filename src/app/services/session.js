@@ -35,7 +35,7 @@ export const sessionServicesApi = createApi({
                search: name
             },
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          }),
       }),
@@ -63,7 +63,7 @@ export const sessionServicesApi = createApi({
             method: "POST",
             body: body,
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          })
       }),
@@ -73,15 +73,20 @@ export const sessionServicesApi = createApi({
             method: "PATCH",
             body: payload.body,
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
+         })
+      }),
+      updateSessionStatus: builder.query({
+         query: (id) => ({
+            url: `/api/session/sessioncompleted/${id}`,
+            method: "GET",
          })
       }),
       getSessions: builder.query({
          query: (url) => ({
             url: url,
             method: "GET",
-
          })
       }),
       getTutorStudents: builder.query({
@@ -103,5 +108,6 @@ export const {
    useLazyGetUsersByNameQuery,
    useLazyGetSessionsQuery,
    useUpdateSessionMutation,
-   useLazyGetTutorStudentsQuery
+   useLazyGetTutorStudentsQuery,
+   useLazyUpdateSessionStatusQuery
 } = sessionServicesApi;

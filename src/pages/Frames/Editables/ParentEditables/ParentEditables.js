@@ -274,6 +274,13 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
       setCurrentToEdit({ ...currentToEdit, subjects: tempSubjects })
    }
 
+   // useEffect(() => {
+   //    updateFields({ id: '637b1522e00aeb4098e8952a', fields: { amountToPay: 5 } })
+   //       .then(res => {
+   //          console.log(res);
+   //       })
+   // }, [])
+
    const handleSubmit = e => {
       e.preventDefault()
       let reqBody = { ...currentToEdit }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useLazyGetParentLedgerQuery } from '../../app/services/dashboard'
 import PrimaryButton from '../../components/Buttons/PrimaryButton'
 import SingleLedger from './SingleLedger/SingleLedger'
@@ -10,6 +11,10 @@ export default function Ledger() {
 
    const [fetchLedgers, ledgerResp] = useLazyGetParentLedgerQuery()
    const [ledgers, setLedgers] = useState([])
+   const [searchParams, setSearchParams] = useSearchParams();
+   const navigate = useNavigate()
+
+   // console.log(searchParams.get('status'));
 
    useEffect(() => {
       fetchLedgers()
@@ -19,11 +24,25 @@ export default function Ledger() {
          })
    }, [])
 
-   console.log(ledgers)
+   useEffect(() => {
+      if (searchParams.get('status')) {
+         if (searchParams.get('status') === 'paid') {
+            alert('Payment Successful')
+            navigate('/ledger')
+            // searchParams.delete('status')
+            // searchParams.delete('parentId')
+         } else {
+            alert('Payment not successful')
+            navigate('/ledger')
+            // searchParams.delete('status')
+            // searchParams.delete('parentId')
+         }
+      }
+   }, [])
 
    const toggleOpen = _id => {
       let temp = ledgers.map(item => {
-        return item._id === _id ? {...item, isOpen: !item.isOpen} : {...item}
+         return item._id === _id ? { ...item, isOpen: !item.isOpen } : { ...item }
       })
       setLedgers(temp)
    }

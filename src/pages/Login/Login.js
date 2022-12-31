@@ -36,9 +36,9 @@ export default function Login({ setLoginFormActive }) {
    const handleSubmit = () => {
       loginUser({ email, password }).then((res) => {
          console.log(res);
-         sessionStorage.setItem("token", res.data.data.token);
-         sessionStorage.setItem("role", res.data.data.role);
-         sessionStorage.setItem("userId", res.data.data.userId);
+         localStorage.setItem("token", res.data.data.token);
+         localStorage.setItem("role", res.data.data.role);
+         localStorage.setItem("userId", res.data.data.userId);
          dispatch(updateIsLoggedIn(true));
       });
    };

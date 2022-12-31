@@ -48,7 +48,7 @@ export default function AssignedTests() {
    const [assignTestModalActive, setAssignTestModalActive] = useState(false);
    const [resendModalActive, setResendModalActive] = useState(false);
 
-   const persona = sessionStorage.getItem("role");
+   const persona = localStorage.getItem("role");
 
    const handleClose = () => setAssignTestModalActive(false);
    

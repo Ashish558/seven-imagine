@@ -6,7 +6,7 @@ import Users from '../Users/users'
 
 export default function Home() {
 
-   const persona = sessionStorage.getItem('role')
+   const persona = localStorage.getItem('role')
 
    return (
       persona === 'parent' ?

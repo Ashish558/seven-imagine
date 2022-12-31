@@ -11,7 +11,7 @@ export default function SearchNames({ setStudent, setData, student, tutor, data,
    const [fetchTutorStudents, tutorStudentsResp] = useLazyGetTutorStudentsByNameQuery();
    
    const [students, setStudents] = useState([]);
-   const persona = sessionStorage.getItem('role')
+   const persona = localStorage.getItem('role')
 
    useEffect(() => {
       if (tutor.length > 2) {

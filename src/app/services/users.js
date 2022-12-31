@@ -23,7 +23,7 @@ export const userServicesApi = createApi({
             url: `api/user/mydetails`,
             method: "GET",
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          }),
       }),
@@ -32,7 +32,7 @@ export const userServicesApi = createApi({
             url: `api/user/parent/tutors/${body.id}`,
             method: "GET",
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          }),
       }),
@@ -41,7 +41,7 @@ export const userServicesApi = createApi({
             url: `api/user/student/tutors/${body.id}`,
             method: "GET",
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          }),
       }),
@@ -63,7 +63,7 @@ export const userServicesApi = createApi({
             method: "PATCH",
             body: body.fields,
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          })
       }),
@@ -73,7 +73,7 @@ export const userServicesApi = createApi({
             method: "PATCH",
             body: body.fields,
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          })
       }),
@@ -83,7 +83,7 @@ export const userServicesApi = createApi({
             method: "POST",
             body: body.fields,
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          })
       }),
@@ -93,7 +93,7 @@ export const userServicesApi = createApi({
             method: "PATCH",
             body: body.fields,
             headers: {
-               "Authorization": sessionStorage.getItem('token'),
+               "Authorization": localStorage.getItem('token'),
             },
          })
       }),
