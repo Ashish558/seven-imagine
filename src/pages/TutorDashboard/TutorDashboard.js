@@ -129,9 +129,9 @@ export default function TutorDashboard() {
                            students.length > 0 &&
                            <OwlCarousel items={5} autoWidth margin={20} >
                               {students.map(student => {
-                                 return <div className='flex flex-col items-center'>
+                                 return <div className='flex flex-col items-center text-center w-[110px]'>
                                     <img src={studentsArr[0].src} className='w-[100px]' />
-                                    <p className='text-lg font-semibold mt-4'> {student.name} </p>
+                                    <p className='text-lg font-semibold mt-4'> {student.name.split(" ")[0]} <br /> {student.name.split(" ")[1]} </p>
                                  </div>
                               })}
                            </OwlCarousel>
