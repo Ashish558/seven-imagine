@@ -83,22 +83,28 @@ export default function Invoice() {
          .then(resp => {
             setAllInvoices([])
             resp.data.data.invoice.map((invoice, idx) => {
+               console.log(resp.data);
                const { _id, createdAt, isPaid, status, amountDue, balanceChange, type, parentId } = invoice
                getUserDetail({ id: parentId }).then((res) => {
-                  // console.log(res.data.data.user)
-                  const { amountToPay, firstName, lastName } = res.data.data.user
-                  setAllInvoices([...allInvoices, {
-                     _id,
-                     name: `${firstName} ${lastName}`,
-                     currentBalance: `$${amountToPay}`,
-                     invoiceId: _id.slice(-8),
-                     createDate: getFormattedDate(createdAt),
-                     status: status ? status : 'Unpaid',
-                     paidOn: '-',
-                     type: checkIfExist(type),
-                     amountDue: `$${amountDue}`,
-                     balanceCredit: `$${balanceChange}`,
-                  }])
+                  console.log(res.data.data.user)
+                  const { amountToPay, firstName, lastName,credits } = res.data.data.user
+                  setAllInvoices(prev => {
+                     return [
+                        ...prev,{
+                           _id,
+                           name: `${firstName} ${lastName}`,
+                           currentBalance: `$${credits}`,
+                           invoiceId: _id.slice(-8),
+                           createDate: getFormattedDate(createdAt),
+                           status: status ? status : 'Unpaid',
+                           paidOn: '-',
+                           type: checkIfExist(type),
+                           amountDue: `$${amountDue}`,
+                           balanceCredit: `$${balanceChange}`,
+                        }
+                     ]
+                  })
+                 
                });
             })
          })

@@ -148,6 +148,7 @@ export default function Calendar() {
       const url = `/api/session/${role}/${id}`;
       // console.log(url)
       fetchUserSessions(url).then((res) => {
+         console.log(res.data.data);
          const tempEvents = res.data.data.session.map(session => {
             const time = session.time;
             const strtTime12HFormat = `${time.start.time} ${time.start.timeType}`;

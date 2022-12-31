@@ -56,7 +56,7 @@ export default function StudentTest() {
    useEffect(() => {
       getTest('637663fe90241bf60305bd36')
          .then(res => {
-            console.log(res.data.data.test);
+            // console.log(res.data.data.test);
             res.data.data.test.map(test => {
                setassignedTestDetails([
                   ...assignedTestDetails,

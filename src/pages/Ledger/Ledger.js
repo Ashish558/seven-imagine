@@ -35,6 +35,7 @@ export default function Ledger() {
    useEffect(() => {
       fetchLedgers()
          .then(res => {
+            console.log(res.data);
             let temp = res.data.data.ledger.map(item => ({ ...item, isOpen: false }))
             setLedgers(temp)
          })
