@@ -97,10 +97,10 @@ const ParentDashboardHeader = () => {
          className="flex 2xl:gap-[78px] xl:gap-[50px] ml-[55px]"
          id={styles.parentDashboardHeader}
       >
-         <div className="w-2/3 flex">
+         <div className="w-2/3">
             <div className="flex" style={{ gap: 16 }}>
-               <div className="w- flex items-center" id={styles.explore}>
-                  <div className="flex">
+               <div className="w-2/3 flex items-center" id={styles.explore}>
+                  <div className="flex mx-auto">
                      <div className="w-1/2" id={styles.exploreLeft}>
                         <h2 className="">
                            This fall get help from our Admission
@@ -125,7 +125,7 @@ const ParentDashboardHeader = () => {
                   </div>
                </div>
 
-               <div className="w-" id={styles.availableCredit}>
+               <div className="w-1/3" id={styles.availableCredit}>
                   <div className="flex justify-between">
                      <h3 className="2xl:text-[19.6px] font-semibold">Available Credit</h3>
                      <img src={i} alt="" />
