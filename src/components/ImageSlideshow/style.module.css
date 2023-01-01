@@ -1,0 +1,31 @@
+.images {
+   position: relative;
+   overflow: hidden;
+   width: 100%;
+   height: 100%;
+}
+
+.img {
+   position: absolute;
+   /* width: 100%; */
+   height: 100%;
+   object-fit: contain;
+   transition: 0.3s;
+   top: 50%;
+   transform: translateY(-50%);
+}
+
+.prev {
+   left: -100%;
+   opacity: 0;
+}
+
+.next {
+   opacity: 0;
+   left: 100%;
+}
+
+.active {
+   left: 50%;
+   transform: translate(-50%, -50%);
+}

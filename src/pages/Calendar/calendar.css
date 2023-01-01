@@ -1,0 +1,71 @@
+.fc-theme-standard .fc-timeGridWeek-view .fc-scrollgrid {
+    border: 0;
+}
+.fc-theme-standard .fc-toolbar .fc-toolbar-chunk:nth-child(1) {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.fc-theme-standard .fc-toolbar .fc-toolbar-title {
+    color: rgba(71, 21, 215, 1) !important;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: normal;
+}
+
+.fc-theme-standard
+    .fc-toolbar
+    .fc-toolbar-chunk
+    .fc-prev-button.fc-button
+    .fc-theme-standard
+    .fc-toolbar
+    .fc-toolbar-chunk
+    .fc-next-button {
+    outline: none !important;
+    border: none !important;
+    background-color: transparent !important;
+}
+
+.calendar-prev-button {
+    border: 0 !important;
+    outline: 0 !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    padding: 2px !important;
+    padding-top: 5px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.fc-direction-ltr .fc-timegrid-col-events {
+    margin: 0 !important;
+}
+.fc-theme-standard .fc-timegrid-event {
+    background-color: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+.student-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+#calendarContainer {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.2);
+    height: 91vh;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+.fc .fc-timegrid-slot-minor{
+    border-top-style: none !important;
+}
+
+.fc-direction-ltr .fc-timegrid-slot-label-frame{
+    transform: translateY(17px) !important;
+}

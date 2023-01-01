@@ -1,0 +1,14 @@
+.titleContainer{
+   position: absolute;
+   top: 0;
+   left: 0;
+   background: #7152EB;
+   width: 100%;
+   padding: 16px 23px;
+   /* text-align: center; */
+   font-size: 28px;
+   color: white;
+   font-weight: 600;
+   border-top-left-radius: 20px;
+   border-top-right-radius: 20px;
+}

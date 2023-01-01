@@ -1,0 +1,79 @@
+.profileCard {
+   background-image: linear-gradient(94.33deg,
+         #7152eb 10.45%,
+         rgba(247, 125, 86, 0.99) 84.22%);
+   padding-top: 139px;
+   position: relative;
+}
+
+.imgContainer {
+   position: absolute;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   display: flex;
+}
+
+.studentsContainer {
+   position: relative;
+   flex: 1;
+   overflow: hidden;
+}
+
+.student{
+   position: absolute;
+   top: 0;
+   width: 100%;
+   transition: 0.2s ease-out;
+}
+
+.activeStudent{
+   opacity: 1;
+   left: 0;
+}
+.previousStudent{
+   left: -100%;
+   opacity: 0;
+}
+.nextStudent{
+   left: 100%;
+   opacity: 0;
+}
+.sliderIcon{
+   position: absolute;
+   top: 30%;
+   transform: translateY(-50%);
+   cursor: pointer;
+   z-index: 20;
+}
+.sliderLeftIcon{
+   left: 10px;
+}
+.sliderRightIcon {
+   right: 10px;
+}
+@media only screen and (min-width: 1024px) {
+   .profileCard {
+      border-radius: 20px;
+      background-image: linear-gradient(94.33deg,
+            #7152eb 10.45%,
+            rgba(247, 125, 86, 0.99) 84.22%);
+   }
+
+   .imgContainer {
+      position: static;
+      left: 50%;
+      transform: translate(0, 0);
+      display: flex;
+   }
+
+   .imgContainer img {
+      width: 195px;
+      height: 195px;
+      border-radius: 50%;
+   }
+
+   .profileCard {
+      padding-top: 44px;
+      padding-bottom: 45px;
+   }
+}
