@@ -84,11 +84,9 @@ export default function Invoice() {
          .then(resp => {
             setAllInvoices([])
             console.log('all invoices' ,resp.data.data.invoice)
-            resp.data.data.invoice.map((invoice, idx) => {
-               // console.log(resp.data.data.invoice)
+            resp.data.data.invoice.map(async (invoice, idx) => {
                const { _id, createdAt, isPaid, status, amountDue, balanceChange, type, parentId } = invoice
-               getUserDetail({ id: parentId }).then((res) => {
-                  // console.log(res.data.data.user)
+              await getUserDetail({ id: parentId }).then((res) => {
                   const { amountToPay, firstName, lastName, credits } = res.data.data.user
                   setAllInvoices(prev => {
                      return [
