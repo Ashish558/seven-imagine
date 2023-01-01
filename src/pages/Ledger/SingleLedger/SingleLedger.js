@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useLazyGetSingleSessionQuery } from '../../../app/services/session'
 import ArrowIcon from '../../../assets/Dashboard/arrow.svg'
-import { getFormattedDate } from '../../../utils/utils'
+import DownloadIcon from '../../../assets/icons/download-ledger.svg'
+import { getFormattedDate, tConvert } from '../../../utils/utils'
 
-export default function SingleLedger({ _id, invoiceId, sessionId, title, Date, amountPaid, balanceChange, newBalance, isOpen, toggleOpen }) {
+export default function SingleLedger({ _id, invoiceId, sessionId, title, Date: ledgerDate, amountPaid, balanceChange, newBalance, isOpen, toggleOpen }) {
 
 
    const [tutorName, setTutorName] = useState('')
@@ -30,6 +31,24 @@ export default function SingleLedger({ _id, invoiceId, sessionId, title, Date, a
    }, [])
    const { service, total_hours, timeStr, sessionNotes } = sessionDetails
 
+   let discountLedgerDate = new Date(ledgerDate)
+   let hours = discountLedgerDate.getHours()
+   let minutes = discountLedgerDate.getMinutes()
+   if (hours < 10) {
+      hours = `0${hours}`
+   } else {
+      hours = `${hours}`
+   }
+
+   if (minutes < 10) {
+      minutes = `0${minutes}`
+   } else {
+      minutes = `${minutes}`
+   }
+   const discountPackageTime = tConvert(`${hours}:${minutes}`)
+   // console.log(ledgerDate)
+   // console.log(discountPackageTime)
+   
    return (
       <>
          <div className='text-center py-[16px] px-3'>
@@ -39,7 +58,7 @@ export default function SingleLedger({ _id, invoiceId, sessionId, title, Date, a
             {title}
          </div>
          <div className='text-center  py-[16px] px-3'>
-            {getFormattedDate(Date)}
+            {getFormattedDate(ledgerDate)}
          </div>
          <div className='text-center  py-[16px] px-3'>
             $ {amountPaid}
@@ -58,36 +77,67 @@ export default function SingleLedger({ _id, invoiceId, sessionId, title, Date, a
             <>
                {/* <div></div> */}
                <div className={`col-span-6 bg-primaryWhite-400 py-4  ease-out duration-100 ${isOpen} `}>
-                  <div className='inline-grid grid-cols-6 px-[200px] grid-flow'>
+                  <div className='grid grid-cols-6 px-[200px] grid-flow'>
                      {/* <div className='flex items-center'> */}
-                     <div className='font-bold mx-1 py-6' > Student </div>
-                     <div className='py-6 opacity-80'> {studentName !== '' ? studentName : '-'} </div>
-                     {/* </div> */}
-                     {/* <div className='flex items-center'> */}
-                     <div className='font-bold mx-1 py-6'> Tutor </div>
-                     <div className='py-6 opacity-80'> {tutorName !== '' ? tutorName : '-'} </div>
-                     {/* </div> */}
-                     {/* <div className='flex items-center'>   */}
-                     <div className='font-bold mx-1 py-6'> Service </div>
-                     <div className='py-6 opacity-80'> {service ? service : '-'} </div>
-                     {/* </div> */}
-                     {/* <div className='py-6'> Student </div> */}
-                     <div className='font-bold mx-1 py-6' > Session Duration </div>
-                     <div className='py-6 opacity-80'>
-                        {total_hours ? `${total_hours} ${total_hours === 1 ? 'hour' : 'hours'}` : '-'}
-                     </div>
+                     {
+                        title !== "Discount Package" ?
+                           <>
+                              <div className='font-bold mx-1 py-6' > Student </div>
+                              <div className='py-6 opacity-80'> {studentName !== '' ? studentName : '-'} </div>
+                              {/* </div> */}
+                              {/* <div className='flex items-center'> */}
+                              <div className='font-bold mx-1 py-6'> Tutor </div>
+                              <div className='py-6 opacity-80'> {tutorName !== '' ? tutorName : '-'} </div>
+                              {/* </div> */}
+                              {/* <div className='flex items-center'>   */}
+                              <div className='font-bold mx-1 py-6'> Service </div>
+                              <div className='py-6 opacity-80'> {service ? service : '-'} </div>
+                              {/* </div> */}
+                              {/* <div className='py-6'> Student </div> */}
+                              <div className='font-bold mx-1 py-6' > Session Duration </div>
+                              <div className='py-6 opacity-80'>
+                                 {total_hours ? `${total_hours} ${total_hours === 1 ? 'hour' : 'hours'}` : '-'}
+                              </div>
 
-                     <div className='font-bold mx-1 py-6' > Time </div>
-                     <div className='py-6 opacity-80'> {timeStr ? timeStr : '-'} </div>
+                              <div className='font-bold mx-1 py-6' > Time </div>
+                              <div className='py-6 opacity-80'> {timeStr ? timeStr : '-'} </div>
 
-                     <div className='font-bold mx-1 py-6' > Hourly Rate </div>
-                     <div className='py-6 opacity-80'> {service ? '-' : '-'} </div>
+                              <div className='font-bold mx-1 py-6' > Hourly Rate </div>
+                              <div className='py-6 opacity-80'> {service ? '-' : '-'} </div>
 
-                     <div className='font-bold mx-1 pt-3' > Session Notes </div>
-                     <div className='col-span-5 pl-4 pt-3 opacity-80'>
-                        {sessionNotes ? sessionNotes : '-'}
-                     </div>
 
+                              <div className='font-bold mx-1 pt-3' > Session Notes </div>
+                              <div className='col-span-5 pl-4 pt-3 opacity-80'>
+                                 {sessionNotes ? sessionNotes : '-'}
+                              </div>
+                           </> :
+                           <>
+
+                              <div className='font-bold mx-1 py-6' > Time </div>
+                              <div className='py-6 opacity-80'>
+                                 {discountPackageTime ? `${discountPackageTime.time} ${discountPackageTime.timeType}` : '-'}
+                              </div>
+
+
+                              {/* <div className='flex items-center'> */}
+                              <div className='col-span-4 flex justify-end'>
+                                 <div className='font-bold mx-1 py-6 flex items-center cursor-pointer'>
+                                    <p className='text-[#0671E0] mr-1.5'>
+                                       Download invoice
+                                    </p>
+                                    <img src={DownloadIcon} />
+                                 </div>
+
+                              </div>
+
+                              <div className='font-bold mx-1 py-6'> Description </div>
+                              <div className='py-6 opacity-80 col-span-'>
+                                 {sessionNotes ? sessionNotes : '-'}
+                              </div>
+
+
+                           </>
+                     }
                   </div>
                </div>
             </>

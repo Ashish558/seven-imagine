@@ -83,14 +83,14 @@ export default function Invoice() {
          .then(resp => {
             setAllInvoices([])
             resp.data.data.invoice.map((invoice, idx) => {
-               console.log(resp.data);
+               console.log(resp.data.data.invoice)
                const { _id, createdAt, isPaid, status, amountDue, balanceChange, type, parentId } = invoice
                getUserDetail({ id: parentId }).then((res) => {
                   console.log(res.data.data.user)
-                  const { amountToPay, firstName, lastName,credits } = res.data.data.user
+                  const { amountToPay, firstName, lastName, credits } = res.data.data.user
                   setAllInvoices(prev => {
                      return [
-                        ...prev,{
+                        ...prev, {
                            _id,
                            name: `${firstName} ${lastName}`,
                            currentBalance: `$${credits}`,
@@ -104,7 +104,7 @@ export default function Invoice() {
                         }
                      ]
                   })
-                 
+
                });
             })
          })
@@ -124,6 +124,7 @@ export default function Invoice() {
       fetchInvoices()
    }, [])
 
+   // console.log(allInvoices);
 
    return (
       <>
