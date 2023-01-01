@@ -59,7 +59,7 @@ export default function Ledger() {
       })
       setLedgers(temp)
    }
-   // console.log(ledgers);
+   console.log(ledgers);
 
    return (
       <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pb-51'>

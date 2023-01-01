@@ -63,6 +63,7 @@ export default function Invoice() {
       const reqBody = {
          parentId: invoiceData.parentId,
          title: invoiceData.description,
+         description: invoiceData.description,
          Date: getCurrentDate(),
          amountDue: invoiceData.amountDue,
          type: invoiceData.invoiceType,
@@ -82,11 +83,12 @@ export default function Invoice() {
       fetchAllInvoice()
          .then(resp => {
             setAllInvoices([])
+            console.log(resp.data.data.invoice)
             resp.data.data.invoice.map((invoice, idx) => {
-               console.log(resp.data.data.invoice)
+               // console.log(resp.data.data.invoice)
                const { _id, createdAt, isPaid, status, amountDue, balanceChange, type, parentId } = invoice
                getUserDetail({ id: parentId }).then((res) => {
-                  console.log(res.data.data.user)
+                  // console.log(res.data.data.user)
                   const { amountToPay, firstName, lastName, credits } = res.data.data.user
                   setAllInvoices(prev => {
                      return [
@@ -96,7 +98,7 @@ export default function Invoice() {
                            currentBalance: `$${credits}`,
                            invoiceId: _id.slice(-8),
                            createDate: getFormattedDate(createdAt),
-                           status: status ? status : 'Unpaid',
+                           status: isPaid ? 'Paid' : 'Unpaid',
                            paidOn: '-',
                            type: checkIfExist(type),
                            amountDue: `$${amountDue}`,

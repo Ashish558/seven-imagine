@@ -18,6 +18,9 @@ import ValueTwoIcon from '../../../assets/images/val-2.svg'
 import ValueThreeIcon from '../../../assets/images/val-3.svg'
 
 import TutorLevelOne from '../../../assets/profile/tutor-level-1.svg'
+import TutorLevelTwo from '../../../assets/profile/tutor-level-2.svg'
+import TutorLevelThree from '../../../assets/profile/tutor-level-3.svg'
+import TutorLevelFour from '../../../assets/profile/tutor-level-4.svg'
 
 import EducationIcon from '../../../assets/profile/education.svg'
 
@@ -72,24 +75,24 @@ const interests = [
 const levels = {
    one: {
       bg: '#FBDB89',
-      icon: TutorLevelOne
+      icon: TutorLevelOne,
+      text: '#FF4300'
    },
    two: {
-      bg: '#FBDB89',
-      icon: TutorLevelOne
+      bg: '#7152EB',
+      icon: TutorLevelTwo,
+      text: '#472D70'
    },
    three: {
-      bg: '#FBDB89',
-      icon: TutorLevelOne
+      bg: '#DC8553',
+      icon: TutorLevelThree,
+      text: '#FFFFFF'
    },
    four: {
-      bg: '#FBDB89',
-      icon: TutorLevelOne
-   },
-   five: {
-      bg: '#FBDB89',
-      icon: TutorLevelOne
-   },
+      bg: '#2D2C2C',
+      icon: TutorLevelFour,
+      text: '#FFFFFF'
+   }
 }
 
 export default function TutorProfile({ isOwn }) {
@@ -215,7 +218,7 @@ export default function TutorProfile({ isOwn }) {
       }
       getUserDetail({ id: userId })
          .then(res => {
-            console.log('response', res.data.data);
+            // console.log('response', res.data.data);
             const { firstName, lastName, phone, email } = res.data.data.user
             setUser(res.data.data.user)
             let details = res.data.data.details
@@ -325,11 +328,51 @@ export default function TutorProfile({ isOwn }) {
    // console.log('userdetail', userDetail)
    // console.log('settings', settings.serviceSpecialisation)
    const { about, education, tagLine, tutorLevel, testPrepRate, otherRate, subjectTutoringRate, address, pincode, paymentInfo, tutorRank, income, paymentStatus, linkedIn } = userDetail
+   console.log('userdetail', tutorLevel)
 
    if (Object.keys(user).length < 1) return
    if (Object.keys(settings).length < 1) return
    // if (Object.keys(userDetail).length < 1) return
+   let tutorLevelIcon = TutorLevelOne
+   let tutorLevelTextColor = 'text-[#ff4300]'
+   let tutorLevelBg = '#FBDB89'
 
+   const levels = {
+      one: {
+         bg: '#FBDB89',
+         text: '#FF4300'
+      },
+      two: {
+         bg: '#7152EB',
+         text: '#472D70'
+      },
+      three: {
+         bg: '#DC8553',
+         text: '#FFFFFF'
+      },
+      four: {
+         bg: '#2D2C2C',
+         text: '#FFFFFF'
+      }
+   }
+   if (tutorLevel === 'ORANGE') {
+      tutorLevelIcon = TutorLevelOne
+      tutorLevelTextColor = 'text-[#ff4300]'
+      tutorLevelBg = '#fbdb89'
+   } else if (tutorLevel === 'PURPLE') {
+      tutorLevelIcon = TutorLevelTwo
+      tutorLevelTextColor = 'text-[#472d70]'
+      tutorLevelBg = '#7152eb'
+   } else if (tutorLevel === 'BROWN') {
+      tutorLevelIcon = TutorLevelThree
+      tutorLevelTextColor = 'text-[#ffffff]'
+      tutorLevelBg = '#dc8553'
+
+   } else if (tutorLevel === 'BLACK') {
+      tutorLevelIcon = TutorLevelFour
+      tutorLevelTextColor = 'text-[#ffffff]'
+      tutorLevelBg = '#2d2c2c'
+   }
 
    return (
       <>
@@ -364,16 +407,16 @@ export default function TutorProfile({ isOwn }) {
                      {
                         !isOwn &&
                         <div className={` mb-5 px-4 py-4 lg:bg-textGray-30 rounded-2xl`}
-                           style={{ backgroundColor: levels.one.bg }}
+                           style={{ backgroundColor: tutorLevelBg }}
                         >
                            <EditableText text={`${user.firstName} ${user.lastName}`}
                               editable={editable}
                               onClick={() => setToEdit({ ...toEdit, tutorLevel: { ...toEdit.tutorLevel, active: true } })}
-                              className='text-primaryOrangeDark justify-center font-bold text-lg capitalize'
-                              textClassName='flex-1'
+                              className={` justify-center font-bold text-lg capitalize `}
+                              textClassName={`flex-1 ${tutorLevelTextColor}`}
                               imgClass='ml-auto' />
                            <div className='flex mt-4 mb-6 justify-center'>
-                              <img src={levels.one.icon} />
+                              <img src={tutorLevelIcon} />
                            </div>
                         </div>
 
@@ -382,11 +425,11 @@ export default function TutorProfile({ isOwn }) {
                         hideShadow={true}
                         body={
                            <>
-                            <EditableText editable={editable}
+                              <EditableText editable={editable}
                                  onClick={() => setToEdit({ ...toEdit, serviceSpecializations: { ...toEdit.serviceSpecializations, active: true } })}
                                  text='Service Specializations'
                                  className='text-lg mb-2' textClassName="flex-1 text-center text-[21px]" />
-                              
+
                               <div className='flex flex-col row-span-2 overflow-x-auto scrollbar-content max-h-[500px] scrollbar-vertical'>
                                  {settings && settings.serviceSpecialisation.length > 0 && userDetail.serviceSpecializations && userDetail.serviceSpecializations.map((id, idx) => {
                                     return (

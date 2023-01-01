@@ -70,7 +70,7 @@ export default function Table({
                currentPage={currentPage}
                setCurrentPage={setCurrentPage}
             />}
-            <aside className="ml-auto">
+            <aside className="ml-auto flex items-center whitespace-nowrap">
                <button className="mx-3 px-6 py-3 bg-primary disabled:bg-primary-300 text-white rounded" onClick={() => setMaxPageSize(10)} disabled={maxPageSize === 10}>Show 10 Entries</button>
                <button className="mx-3 px-6 py-3 bg-primary text-white rounded disabled:bg-primary-300" onClick={() => setMaxPageSize(data.length > 30 ? 30 : data.length)} disabled={maxPageSize >= dataLength}>Show {data.length > 30 ? "30" : `all ${data.length}`} Entries</button>
             </aside>

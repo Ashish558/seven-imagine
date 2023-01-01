@@ -319,7 +319,11 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                // handleClose()
             })
       } else if (currentField.api === 'tutorDetail') {
-
+         if(reqBody.tutorLevel){
+            const level = getLevel(reqBody.tutorLevel)
+            reqBody.tutorLevel = level
+         }
+         console.log(reqBody)
          if (currentToEdit.isPresent === false) {
             delete reqBody['isPresent']
             postTutorDetails({ id: userId, fields: reqBody })
@@ -341,7 +345,24 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
       }
    }
 
-   console.log('toedit', currentToEdit)
+   const getLevel = str => {
+      const levels = ['ORANGE', 'PURPLE', 'BROWN', 'BLACK']
+      if(str === 'Level - 1'){
+         return levels[0]
+      }
+      if(str === 'Level - 2'){
+         return levels[1]
+      }
+      if(str === 'Level - 3'){
+         return levels[2]
+      }
+      if(str === 'Level - 4'){
+         return levels[3]
+      }else{
+         return ''
+      }
+   }
+   // console.log('toedit', currentToEdit)
    // console.log('setting', settings)
    // console.log('field', currentField)
    // console.log('sett', settings)
@@ -680,7 +701,7 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                     onChange={val =>
                                        setCurrentToEdit({ ...currentToEdit, tutorLevel: val })
                                     }
-                                    optionData={['Level 1 - Wizard', 'Level 2 - Sorcerer', 'Level 3 - Wizard', 'Level 4 - Sorcerer', 'Level 5 - Wizard']}
+                                    optionData={['Level - 1', 'Level - 2', 'Level - 3', 'Level - 4']}
                                     radio={true}
                                     inputContainerClassName="pt-3 pb-3 border bg-white"
                                     placeholder="Tutor Level"
