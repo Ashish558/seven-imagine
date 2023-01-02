@@ -68,7 +68,7 @@ export default function SetPassword({ signup, setLoginFormActive }) {
                         value={confirmPassword}
                         onChange={e => setConfirmPassword(e.target.value)} />
 
-                     <button disabled={false}
+                     <button disabled={(password === confirmPassword)}
                         className='w-full bg-primaryDark font-medium disabled:bg-pink pt-3 pb-3 mt-12 rounded-10 text-white text-lg'
                         onClick={handleSubmit}
                      >
