@@ -33,8 +33,6 @@ export default function TableItem({ item, dataFor, onClick, excludes }) {
    };
 
    const toExcludes = ['testId', '_id', 'isCompleted']
-   const toExcludeInvoice = ['_id']
-
 
    return (
       <>
@@ -240,7 +238,7 @@ export default function TableItem({ item, dataFor, onClick, excludes }) {
          )}
          {dataFor === "invoice" && (
             <tr className="bg-white text-sm shadow-sm shadow-slate-200 rounded-2xl leading-7 mt-[10px]">
-               {mapData(item, dataFor, toExcludeInvoice)}
+               {mapData(item, dataFor, excludes)}
             </tr>
          )}
          {dataFor === "allTests" && (

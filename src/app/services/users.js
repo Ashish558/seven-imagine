@@ -107,6 +107,18 @@ export const userServicesApi = createApi({
             },
          })
       }),
+      getInvoice: builder.query({
+         query: (body) => ({
+            url: `api/invoice/`,
+            params : {
+               _id: body.id
+            },
+            method: "GET",
+            headers: {
+               "Authorization": localStorage.getItem('token'),
+            },
+         }),
+      }),
 
    }),
 });
@@ -122,5 +134,6 @@ export const {
    useUpdateUserDetailsMutation,
    useUpdateTutorDetailsMutation,
    usePostTutorDetailsMutation,
-   useLazyGetPersonalDetailQuery
+   useLazyGetPersonalDetailQuery,
+   useLazyGetInvoiceQuery
 } = userServicesApi;

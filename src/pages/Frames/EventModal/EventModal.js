@@ -5,6 +5,7 @@ import InputField from "../../../components/InputField/inputField";
 import Modal from "../../../components/Modal/Modal";
 import CalendarIcon from "../../../assets/form/calendar.svg";
 import StarIcon from "../../../assets/form/star.svg";
+import StarActiveIcon from "../../../assets/form/starActive.svg";
 import InputSelect from "../../../components/InputSelect/InputSelect";
 import PrimaryButton from "../../../components/Buttons/PrimaryButton";
 import {
@@ -111,6 +112,7 @@ export default function EventModal({
       studentMood: "",
       homeworkAssigned: "",
       sessionNotes: "",
+      feedbackStars: 0
    });
 
    const [days, setDays] = useState(tempDays);
@@ -378,6 +380,7 @@ export default function EventModal({
 
    // console.log(convertTime12to24(`${data.time.end.time} ${data.time.end.timeType}`))
    // console.log(convertTime12to24('1:00 AM'))
+   console.log(data.feedbackStars);
    const dataProps = { data, setData }
    return (
       <>
@@ -437,8 +440,9 @@ export default function EventModal({
                            <div className="flex">
                               {[...Array(5)].map((x, i) => (
                                  <img
-                                    src={StarIcon}
-                                    className="mr-7"
+                                    src={data.feedbackStars < i ? StarIcon : StarActiveIcon}
+                                    className="mr-7 cursor-pointer"
+                                    onClick={()=>setData(prev => ({...prev, feedbackStars: 3}))}
                                  />
                               ))}
                            </div>
@@ -452,8 +456,9 @@ export default function EventModal({
                            <div className="flex py-3 px-4 bg-lightWhite rounded-10">
                               {[...Array(5)].map((x, i) => (
                                  <img
-                                    src={StarIcon}
-                                    className="mr-7"
+                                    src={data.feedbackStars - 1 < i ? StarIcon : StarActiveIcon}
+                                    className="mr-7 cursor-pointer"
+                                    onClick={()=>setData(prev => ({...prev, feedbackStars: i+1}))}
                                  />
                               ))}
                            </div>
