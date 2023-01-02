@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ResendConfirmation from "../../assets/assignedTests/resendConfirmation.svg";
 import UploadIcon from "../../assets/assignedTests/upload.svg";
@@ -9,14 +9,25 @@ import RedIcon from "../../assets/assignedTests/red.svg";
 import GreenIcon from "../../assets/assignedTests/green.svg";
 import GrayIcon from "../../assets/assignedTests/gray.svg";
 import RemoveIcon from "../../assets/icons/remove.svg"
+import InputSelect from "../InputSelect/InputSelect";
+import { useLazyGetSettingsQuery } from "../../app/services/session";
 
 //can b made dynamic
 export default function TableItem({ item, dataFor, onClick, excludes }) {
 
    // console.log(onClick)
+   const [fetchSettings, settingsResp] = useLazyGetSettingsQuery()
+   const [settings, setSettings] = useState({
+      leadStatus: []
+   })
 
+   useEffect(() => {
+      fetchSettings()
+         .then(res => {
+            setSettings(res.data.data.setting)
+         })
+   }, [])
    const navigate = useNavigate();
-   // console.log(dataFor)
 
    const returnStatus = (status) => {
       return status === 0 ? (
@@ -68,7 +79,10 @@ export default function TableItem({ item, dataFor, onClick, excludes }) {
                </td>
                <td className="font-medium text-sm px-1  min-w-14 py-4">
                   <div className="my-[6px]">
-                     {item.leadStatus}
+                     <InputSelect value='-' optionData={settings.leadStatus} inputContainerClassName='min-w-[100px] pt-0 pb-0 pr-0 pl-0 text-center'
+                        optionClassName='font-semibold opacity-60 text-sm'
+                        labelClassname='hidden'
+                        onChange={val => console.log(val)} />
                   </div>
                </td>
                <td className="font-medium text-sm px-1  min-w-14 py-4">
@@ -200,7 +214,7 @@ export default function TableItem({ item, dataFor, onClick, excludes }) {
                {Object.keys(item).map((key, i) =>
                   toExcludes.includes(key) ? <></> :
                      (
-                        <td  key={i} className="font-medium px-1  min-w-14 py-4">
+                        <td key={i} className="font-medium px-1  min-w-14 py-4">
                            {key === 'status' ?
                               <img className="first:mr-2 mx-auto inline-block" src={GreenIcon} />
                               :

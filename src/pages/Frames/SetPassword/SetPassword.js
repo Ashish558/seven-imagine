@@ -3,9 +3,10 @@ import InputField from '../../../components/InputField/inputField'
 import Passwordicon from '../../../assets/form/password.svg'
 import styles from '../../Signup/signup.module.css'
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useSetPasswordMutation } from '../../../app/services/auth';
+import { useChangePasswordMutation, useSetPasswordMutation } from '../../../app/services/auth';
+import { validatePassword } from './utils';
 
-export default function SetPassword({ signup, setLoginFormActive }) {
+export default function SetPassword({ signup, setLoginFormActive, resetPassword }) {
 
    const [searchParams, setSearchParams] = useSearchParams();
    const userId = searchParams.get("userid")
@@ -14,21 +15,68 @@ export default function SetPassword({ signup, setLoginFormActive }) {
    const [password, setPassword] = useState('')
    const [confirmPassword, setConfirmPassword] = useState('')
 
+   const [error, setError] = useState({
+      password: "",
+      confirmPassword: "",
+   })
+
    const [setUserPassword, setUserPasswordResp] = useSetPasswordMutation()
+   const [changePassword, changePasswordResp] = useChangePasswordMutation()
    const navigate = useNavigate()
 
+   const resetErrors = () => {
+      setError(prev => {
+         return {
+            firstName: "",
+            lastName: "",
+            email: "",
+            phone: "",
+            subscriptionCode: "",
+         }
+      })
+   }
+
    const handleSubmit = () => {
-      if (password.length < 8) return alert('passwords must be of 8 characters')
-      if (password !== confirmPassword) return alert('passwords dont match')
+      const promiseState = async state => new Promise(resolve => {
+         resolve(resetErrors())
+      })
 
-      const reqBody = { password, token }
+      promiseState()
+         .then(() => {
+            const reqBody = { password, token }
+            const result = validatePassword({ password, confirmPassword })
+            // console.log(result);
+            if (result.data !== true) {
+               setError(prev => {
+                  return {
+                     ...prev,
+                     [result.data]: result.message
+                  }
+               })
+            } else {
+               if (resetPassword) {
+                  changePassword({ userId, body: reqBody })
+                     .then(res => {
+                        if (res.error) {
+                           console.log(res.error)
+                           alert(res.error.data.message)
+                        }
+                        console.log(res.data);
+                        setLoginFormActive(true)
+                        navigate('/')
+                     })
+               } else {
+                  setUserPassword({ userId, body: reqBody })
+                     .then(res => {
+                        console.log(res)
+                        setLoginFormActive(true)
+                        navigate('/')
+                     })
+               }
+            }
 
-      setUserPassword({ userId, body: reqBody })
-         .then(res => {
-            console.log(res)
-            setLoginFormActive(true)
-            navigate('/')
          })
+
    }
 
    return (
@@ -56,6 +104,7 @@ export default function SetPassword({ signup, setLoginFormActive }) {
                         labelClassname='ml-2 mb-2'
                         value={password}
                         onChange={e => setPassword(e.target.value)}
+                        error={error.password}
                      />
 
                      <InputField Icon={Passwordicon}
@@ -66,7 +115,9 @@ export default function SetPassword({ signup, setLoginFormActive }) {
                         label='Confirm Password'
                         labelClassname='ml-2 mb-2'
                         value={confirmPassword}
-                        onChange={e => setConfirmPassword(e.target.value)} />
+                        onChange={e => setConfirmPassword(e.target.value)}
+                        error={error.confirmPassword}
+                     />
 
                      <button disabled={false}
                         className='w-full bg-primaryDark font-medium disabled:bg-pink pt-3 pb-3 mt-12 rounded-10 text-white text-lg'

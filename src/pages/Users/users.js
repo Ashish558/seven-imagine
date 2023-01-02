@@ -37,8 +37,8 @@ const initialState = {
    phone: '',
    userType: '',
 }
+
 export default function Users() {
-   
    // const [filterItems, setFilterItems] = useState(['Student', 'Parent', 'Active'])
    const [modalActive, setModalActive] = useState(false)
    // const [modalUserType, setModalUserType] = useState('')

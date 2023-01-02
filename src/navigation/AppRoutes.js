@@ -104,6 +104,12 @@ const AppRoutes = () => {
                }
             />
             <Route
+               path="/reset-password"
+               element={
+                  <SetPassword setLoginFormActive={setLoginFormActive} resetPassword={true} />
+               }
+            />
+            <Route
                path="/assigned-tests/:id/report"
                element={<CompletedTest />}
             />
