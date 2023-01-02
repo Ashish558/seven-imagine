@@ -22,6 +22,7 @@ import Percentage from "../../assets/Navbar/percentage";
 import AssignedStudents from "../../assets/Navbar/assignedStudents";
 import Back from "../../assets/Navbar/Back";
 import logo from "../../assets/Navbar/logo";
+import Modal from "../Modal/Modal";
 
 const tempnavdata = [
    {
@@ -136,7 +137,8 @@ const tutorNav = [
 ]
 export default function Navbar() {
    const [navData, setNavData] = useState(tempnavdata)
-   const location = useLocation()
+   const location = useLocation();
+   const [modalActive, setModalActive] = useState(false);
 
    const { width } = useWindowDimensions()
    const { isLoggedIn } = useSelector((state) => state.user)
