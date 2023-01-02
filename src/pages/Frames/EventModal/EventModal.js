@@ -362,10 +362,11 @@ export default function EventModal({
       let endTime = convertTime12to24(`${end.time} ${end.timeType}`)
       let startT = moment(`2016-06-06T${startTime}:00`)
       let endT = moment(`2016-06-06T${endTime}:00`)
-      
+
       var duration = endT.diff(startT, 'hours')
       console.log(duration);
       reqBody.total_hours = duration
+      if(reqBody.timeZone === '') reqBody.timeZone = 'Asia/Kolkata'
       if (isUpdating) return updateSession(reqBody);
 
       submitSession(reqBody).then((res) => {

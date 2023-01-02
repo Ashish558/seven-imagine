@@ -35,7 +35,7 @@ export default function Ledger() {
    useEffect(() => {
       fetchLedgers()
          .then(res => {
-            console.log(res.data);
+            // console.log(res.data);
             let temp = res.data.data.ledger.map(item => ({ ...item, isOpen: false }))
             setLedgers(temp)
          })
@@ -46,13 +46,9 @@ export default function Ledger() {
          if (searchParams.get('status') === 'paid') {
             alert('Payment Successful')
             navigate('/ledger')
-            // searchParams.delete('status')
-            // searchParams.delete('parentId')
          } else {
             alert('Payment not successful')
             navigate('/ledger')
-            // searchParams.delete('status')
-            // searchParams.delete('parentId')
          }
       }
    }, [])
@@ -63,7 +59,7 @@ export default function Ledger() {
       })
       setLedgers(temp)
    }
-console.log(ledgers);
+   console.log(ledgers);
 
    return (
       <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pb-51'>
