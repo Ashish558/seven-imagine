@@ -548,7 +548,7 @@ export default function Calendar() {
                const endDateUtc = getStartDate(endDate, userTimezoneOffset, session.timeZone)
                let eventObj = {
                   id: session._id,
-                  title: session.tutorName,
+                  title: session.studentName,
                   start: startUtc,
                   endDate: endDateUtc,
                   updatedDate: startUtc,

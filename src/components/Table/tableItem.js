@@ -11,15 +11,45 @@ import GrayIcon from "../../assets/assignedTests/gray.svg";
 import RemoveIcon from "../../assets/icons/remove.svg"
 import InputSelect from "../InputSelect/InputSelect";
 import { useLazyGetSettingsQuery } from "../../app/services/session";
+import { useLazyGetTutorDetailsQuery, useLazyGetUserDetailQuery, usePostTutorDetailsMutation, useUpdateTutorDetailsMutation, useUpdateUserDetailsMutation } from "../../app/services/users";
 
 //can b made dynamic
-export default function TableItem({ item, dataFor, onClick, excludes }) {
+export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
 
    // console.log(onClick)
    const [fetchSettings, settingsResp] = useLazyGetSettingsQuery()
+   const [getUserDetail, getUserDetailResp] = useLazyGetUserDetailQuery()
+   const [getTutorDetail, getTutorDetailResp] = useLazyGetTutorDetailsQuery()
+
+   const [updateUserDetail, updateUserDetailResp] = useUpdateUserDetailsMutation()
+   const [updateTutorDetail, updateTutorDetailResp] = useUpdateTutorDetailsMutation()
+   const [postTutorDetails, postTutorDetailsResp] = usePostTutorDetailsMutation()
+
+   const [userDetail, setUserDetail] = useState({})
    const [settings, setSettings] = useState({
       leadStatus: []
    })
+   useEffect(() => {
+      if (dataFor === 'allUsers') {
+         if (item.userType === 'tutor') {
+            getTutorDetail({ id: item._id })
+               .then(res => {
+                  if (res.data.data.details) {
+                     setUserDetail(res.data.data.details)
+                  }
+               })
+         } else {
+            getUserDetail({ id: item._id })
+               .then(res => {
+                  // console.log(res.data.data);
+                  if (res.data.data.userdetails) {
+                     setUserDetail(res.data.data.userdetails)
+                  }
+               })
+         }
+
+      }
+   }, [item])
 
    useEffect(() => {
       fetchSettings()
@@ -28,6 +58,28 @@ export default function TableItem({ item, dataFor, onClick, excludes }) {
          })
    }, [])
    const navigate = useNavigate();
+   const handleChange = (field) => {
+      // console.log(field)
+      // console.log(userDetail)
+      if (item.userType === 'parent' || item.userType === 'student') {
+         updateUserDetail({ fields: field, id: item._id })
+            .then(res => {
+               fetch && fetch()
+            })
+      } else if (item.userType === 'tutor') {
+         if (Object.keys(userDetail).length === 0) {
+            postTutorDetails({ fields: field, id: item._id })
+               .then(res => {
+                  fetch && fetch()
+               })
+         } else {
+            updateTutorDetail({ fields: field, id: item._id })
+               .then(res => {
+                  fetch && fetch()
+               })
+         }
+      }
+   }
 
    const returnStatus = (status) => {
       return status === 0 ? (
@@ -79,10 +131,12 @@ export default function TableItem({ item, dataFor, onClick, excludes }) {
                </td>
                <td className="font-medium text-sm px-1  min-w-14 py-4">
                   <div className="my-[6px]">
-                     <InputSelect value='-' optionData={settings.leadStatus} inputContainerClassName='min-w-[100px] pt-0 pb-0 pr-0 pl-0 text-center'
+                     <InputSelect value={userDetail.leadStatus ? userDetail.leadStatus : '-'}
+                        optionData={settings.leadStatus}
+                        inputContainerClassName='min-w-[100px] pt-0 pb-0 pr-2 pl-0 text-center'
                         optionClassName='font-semibold opacity-60 text-sm'
                         labelClassname='hidden'
-                        onChange={val => console.log(val)} />
+                        onChange={val => handleChange({ leadStatus: val })} />
                   </div>
                </td>
                <td className="font-medium text-sm px-1  min-w-14 py-4">

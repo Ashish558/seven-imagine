@@ -10,10 +10,11 @@ export const userServicesApi = createApi({
 
    endpoints: (builder) => ({
       getAllUsers: builder.query({
-         query: () => ({
+         query: (body) => ({
             url: `api/user`,
             params: {
-               limit: 200
+               limit: body.maxPageSize,
+               page: body.currentPage
             },
             method: "GET",
          }),

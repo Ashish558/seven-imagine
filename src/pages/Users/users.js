@@ -51,7 +51,7 @@ export default function Users() {
 
    const [usersData, setUsersData] = useState([])
    const [filteredUsersData, setFilteredUsersData] = useState([])
-   
+
    const [filterItems, setFilterItems] = useState([])
 
    const [blockUser, blockUserResp] = useBlockUserMutation()
@@ -62,6 +62,9 @@ export default function Users() {
    const [signupUser, signupUserResp] = useSignupUserMutation();
    const [maxPageSize, setMaxPageSize] = useState(10)
 
+   const [totalPages, setTotalPages] = useState(0)
+   const [currentPage, setCurrentPage] = useState(1)
+
    const [filterData, setFilterData] = useState({
       typeName: '',
       userType: '',
@@ -71,9 +74,10 @@ export default function Users() {
    })
 
    const fetch = () => {
-      fetchUsers()
+      fetchUsers({currentPage, maxPageSize})
          .then(res => {
             console.log('all-users', res.data.data);
+            setTotalPages(res.data.data.total_users)
             let data = res.data.data.user.map(user => {
                return {
                   _id: user._id,
@@ -94,7 +98,7 @@ export default function Users() {
    }
    useEffect(() => {
       fetch()
-   }, [maxPageSize])
+   }, [maxPageSize, currentPage])
 
    useEffect(() => {
       let tempdata = [...usersData]
@@ -198,7 +202,7 @@ export default function Users() {
                      }
                   })
                   setUsersData(temp)
-                  setFilterData({...filterData})
+                  setFilterData({ ...filterData })
                }
             })
       } else if (item.block === true) {
@@ -212,11 +216,10 @@ export default function Users() {
                   }
                })
                setUsersData(temp)
-               setFilterData({...filterData})
+               setFilterData({ ...filterData })
             })
       }
    }
-
    return (
       <div className='lg:ml-pageLeft bg-lightWhite min-h-screen'>
          <div className='py-14 px-5'>
@@ -274,8 +277,13 @@ export default function Users() {
                   data={filteredUsersData}
                   onClick={{ redirect, handleTutorStatus }}
                   tableHeaders={tableHeaders}
-                  maxPageSize={maxPageSize} 
-                  setMaxPageSize={setMaxPageSize} />
+                  maxPageSize={maxPageSize}
+                  isCallingApi={true}
+                  total_pages={Math.ceil(totalPages / maxPageSize)}
+                  setMaxPageSize={setMaxPageSize}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                  fetch={fetch} />
             </div>
          </div>
 
