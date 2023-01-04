@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-export default function Timer({ timer, active }) {
+export default function Timer({ timer, active, handleSubmitSection }) {
 
    var initMinutes = Math.floor(timer / 60);
    var initSec = timer - initMinutes * 60;
@@ -8,6 +8,11 @@ export default function Timer({ timer, active }) {
    const [minutes, setMinutes] = useState(initMinutes);
    const [seconds, setSeconds] = useState(initSec);
 
+   useEffect(() => {
+      if(timer < 0){
+         handleSubmitSection()
+      }
+   }, [])
    useEffect(() => { 
       let myInterval = setInterval(() => {
          if (seconds > 0) {

@@ -50,31 +50,33 @@ export default function StudentTest() {
    const [getTestDetails, getTestDetailsResp] = useLazyGetTestDetailsQuery()
 
    const [assignedTestDetails, setassignedTestDetails] = useState([])
+   const [allTests, setAllTests] = useState([])
    const [testDetails, setTestDetails] = useState([])
 
    const persona = localStorage.getItem("role");
- 
+
    useEffect(() => {
       getTest()
          .then(res => {
-            console.log('all-tests', res.data.data.test);
+            // console.log('all-tests', res.data.data.test);
             res.data.data.test.map(test => {
                setassignedTestDetails(prev => {
                   let assignedOn = new Date(test.createdAt)
-                 return [
-                     ...prev,
-                     {
-                        testName: 'test',
-                        assignedOn: getFormattedDate(assignedOn),
-                        dueDate: test.dueDate,
-                        duration: test.timeLimit,
-                        status: 0,
-                        scores: 'V720 M650 | C1370	',
-                        _id: test._id,
-                        testId: test.testId,
-                        isCompleted: test.isCompleted
-                     }
-                  ]
+                  let obj = {
+                     testName: 'test',
+                     assignedOn: getFormattedDate(assignedOn),
+                     dueDate: test.dueDate,
+                     duration: test.timeLimit,
+                     status: 0,
+                     scores: 'V720 M650 | C1370	',
+                     _id: test._id,
+                     testId: test.testId,
+                     isCompleted: test.isCompleted
+                  }
+                  let allTests = [...prev, { ...obj }]
+                  return allTests.sort(function (a, b) {
+                     return new Date(b.updatedAt) - new Date(a.updatedAt);
+                  });
                })
             })
 
@@ -91,6 +93,30 @@ export default function StudentTest() {
       //    console.log(res);
       // })
    }, [])
+
+   useEffect(() => {
+      if (assignedTestDetails.length === 0) return
+
+      assignedTestDetails.map(item => {
+         getTestDetails(item.testId)
+            .then(resp => {
+               setAllTests(prev => {
+                  let obj = {
+                     ...item,
+                     testName: resp.data.data.test.testName,
+                  }
+                  let allTests = [...prev, { ...obj }]
+                  return allTests.sort(function (a, b) {
+                     return new Date(b.updatedAt) - new Date(a.updatedAt);
+                  });
+               })
+
+            })
+      })
+
+   }, [assignedTestDetails])
+
+   console.log(allTests);
 
    return (
       <>
@@ -135,7 +161,7 @@ export default function StudentTest() {
                <div className="mt-6">
                   <Table
                      dataFor='assignedTestsStudents'
-                     data={assignedTestDetails}
+                     data={allTests}
                      tableHeaders={tableHeaders}
                      maxPageSize={10}
                      excludes={['_id']}

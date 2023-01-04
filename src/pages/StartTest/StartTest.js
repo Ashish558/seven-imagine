@@ -40,9 +40,9 @@ export default function StartTest() {
    const [updateTime, updateTimeResp] = useUpdateTimeMutation()
    const [startTest, startTestResp] = useStartTestMutation()
    const [submitSection, submitSectionResp] = useSubmitTestMutation()
-
    const [getTime, getTimeResp] = useLazyGetTimeQuery()
    const [continueTest, continueTestResp] = useLazyContinueTestQuery()
+   const [completedSectionIds, setCompletedSectionIds] = useState([])
 
    const handleStartTest = () => {
       if (!activeSection) return
@@ -73,8 +73,7 @@ export default function StartTest() {
    }
    // console.log(id)
 
-   useEffect(() => {
-      if (!id) return
+   const fetchSections = () => {
       getSections({ id: id })
          .then(res => {
             if (res.error) {
@@ -88,8 +87,18 @@ export default function StartTest() {
                   selected: false
                }
             })
-            setSubjects(tempsubs)
+            const promiseState = async state => new Promise(resolve => {
+               resolve(setSubjects(tempsubs))
+            })
+            promiseState()
+               .then(() => {
+                  fetchContinueTest()
+               })
          })
+   }
+   useEffect(() => {
+      if (!id) return
+      fetchSections()
    }, [])
 
    useEffect(() => {
@@ -102,8 +111,8 @@ export default function StartTest() {
             console.log('TEST RESPONSE', res.data.data)
          })
    }, [])
-   
-   useEffect(() => {
+
+   const fetchContinueTest = () => {
       continueTest({ id })
          .then(res => {
             if (res.error) {
@@ -111,13 +120,23 @@ export default function StartTest() {
                return
             }
             console.log('continue', res.data.data)
-            const { startTime, endTime, sectionName, answer, submitId } = res.data.data
-            let timer = (new Date(endTime) - new Date()) / 1000
-            setTimer(Math.trunc(timer))
-            // setTestStarted(true)
-            setTestStarted(false)
-            setActiveSection({ name: sectionName })
-            setSubmitId(submitId)
+
+            const { startTime, endTime, sectionName, completed, answer, submitId } = res.data.data
+            if (endTime !== null) {
+               let timer = (new Date(endTime) - new Date()) / 1000
+               setTimer(Math.trunc(timer))
+               // setTestStarted(true)
+               setTestStarted(true)
+               setActiveSection({ name: sectionName })
+               setSubmitId(submitId)
+               setAnswers(answer.map(item => ({ ...item, isMarked: false, ResponseAnswer: 'C' })))
+            } else {
+               setTestStarted(false)
+            }
+            if (completed) {
+               const compIds = completed.map(test => test._id)
+               setCompletedSectionIds(compIds)
+            }
 
             setSubjects(prev => {
                return prev.map(item => {
@@ -128,10 +147,12 @@ export default function StartTest() {
                   }
                })
             })
-            setAnswers(answer.map(item => ({ ...item, isMarked: false, ResponseAnswer: 'C' })))
 
          })
-   }, [])
+   }
+   // useEffect(() => {
+   //    fetchContinueTest()
+   // }, [])
 
    const handleSubjectChange = (item) => {
       // console.log(item);
@@ -152,6 +173,15 @@ export default function StartTest() {
          setActiveSection(active)
       }
    }, [subjects])
+
+   useEffect(() => {
+      if (completedSectionIds.length === subjects.length) {
+         if(completedSectionIds.length === 0) return
+         if(subjects.length === 0) return
+         alert('All section test completed')
+         navigate('/all-tests')
+      }
+   }, [completedSectionIds, subjects])
 
    const handleResponseChange = (id, option) => {
       setAnswers(prev => {
@@ -184,6 +214,8 @@ export default function StartTest() {
             }
             console.log(res.data)
             setTestStarted(false)
+            fetchContinueTest()
+            setActiveSection({})
          })
    }
 
@@ -198,10 +230,12 @@ export default function StartTest() {
    // const { subjects, testQnId, testType } = sectionDetails.subjects
    // console.log('sectionDetails', sectionDetails)
    // console.log('answers', answers)
+   // console.log('subjects', subjects)
    // console.log('activeSection', activeSection)
+   // console.log('completedsections', completedSectionIds);
+   // console.log('timer', timer);
 
    if (subjects.length === 0) return
-
    return (
       <div className='ml-pageLeft bg-lightWhite min-h-screen'>
          <div className='py-8 px-5'>
@@ -251,7 +285,7 @@ export default function StartTest() {
                               onClick={() => handleSubjectChange(item)}
                               className={`pt-2 pb-2 px-0 mr-0 rounded-0 font-semibold w-160
                             ${item.selected ? 'bg-primaryYellow' : ''} disabled:opacity-60`}
-                           // disabled={testStarted && item.selected === false ? true : false}
+                              disabled={testStarted && item.selected === false ? true : completedSectionIds.includes(item._id) ? true : false}
                            />
                         })}
                      </div>
@@ -298,7 +332,7 @@ export default function StartTest() {
                <div className='flex-2 ml-8 flex flex-col' >
 
                   {
-                     testStarted && <Timer timer={timer} active={testStarted ? true : false} />
+                     testStarted && <Timer handleSubmitSection={handleSubmitSection} timer={timer} active={testStarted ? true : false} />
                   }
                   {
                      testStarted && <CurrentSection answers={answers} submitSection={handleSubmitSection} />
