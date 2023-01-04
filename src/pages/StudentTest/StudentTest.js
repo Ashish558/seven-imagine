@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLazyGetAssignedTestQuery, useLazyGetTestDetailsQuery } from "../../app/services/test";
 import Modal from "../../components/Modal/Modal";
 import Table from "../../components/Table/Table";
+import { getFormattedDate } from "../../utils/utils";
 
 import { tempTableData, studentsDataTable } from "../AssignedTests/tempData";
 
@@ -52,33 +53,36 @@ export default function StudentTest() {
    const [testDetails, setTestDetails] = useState([])
 
    const persona = localStorage.getItem("role");
-
+ 
    useEffect(() => {
-      getTest('637663fe90241bf60305bd36')
+      getTest()
          .then(res => {
-            // console.log(res.data.data.test);
+            console.log('all-tests', res.data.data.test);
             res.data.data.test.map(test => {
-               setassignedTestDetails([
-                  ...assignedTestDetails,
-                  {
-                     testName: 'test',
-                     assignedOn: '01-08-2022',
-                     dueDate: test.dueDate,
-                     duration: test.timeLimit,
-                     status: 0,
-                     scores: 'V720 M650 | C1370	',
-                     _id: test._id,
-                     testId: test.testId,
-                     isCompleted: test.isCompleted
-                  }
-               ])
+               setassignedTestDetails(prev => {
+                  let assignedOn = new Date(test.createdAt)
+                 return [
+                     ...prev,
+                     {
+                        testName: 'test',
+                        assignedOn: getFormattedDate(assignedOn),
+                        dueDate: test.dueDate,
+                        duration: test.timeLimit,
+                        status: 0,
+                        scores: 'V720 M650 | C1370	',
+                        _id: test._id,
+                        testId: test.testId,
+                        isCompleted: test.isCompleted
+                     }
+                  ]
+               })
             })
 
             if (res.data.data.test.length === 0) return
             res.data.data.test.map(test => {
                getTestDetails(test.testId)
                   .then(resp => {
-                     console.log(resp.data.data)
+                     // console.log('testdata', resp.data.data)
                   })
             })
          })
@@ -87,6 +91,7 @@ export default function StudentTest() {
       //    console.log(res);
       // })
    }, [])
+
    return (
       <>
          <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">
@@ -133,6 +138,7 @@ export default function StudentTest() {
                      data={assignedTestDetails}
                      tableHeaders={tableHeaders}
                      maxPageSize={10}
+                     excludes={['_id']}
                   />
                </div>
             </div>

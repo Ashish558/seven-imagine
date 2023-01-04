@@ -1,11 +1,11 @@
 import React from 'react'
 
-export function TestDetail() {
+export function TestDetail({ name }) {
 
 
    return (
       <>
-         <p>name</p>
+         <p>{name}</p>
          <p className='pb-10'>description</p>
 
          <p>

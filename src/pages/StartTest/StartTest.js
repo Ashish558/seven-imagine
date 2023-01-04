@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import SecondaryButton from '../../components/Buttons/SecondaryButton'
 
 import BackIcon from '../../assets/assignedTests/back.svg'
@@ -7,8 +7,10 @@ import PrimaryButton from '../../components/Buttons/PrimaryButton'
 import { TestDetail } from '../../components/TestDetail/TestDetail'
 import { testData } from './tempData'
 import TestOption from '../../components/TestOption/TestOption'
-import { useAttendTestMutation, useLazyGetAssignedTestQuery, useLazyGetTimeQuery, useUpdateTimeMutation } from '../../app/services/test'
+import { useAttendTestMutation, useLazyContinueTestQuery, useLazyGetAssignedTestQuery, useLazyGetSectionsQuery, useLazyGetTestResponseQuery, useLazyGetTimeQuery, useStartTestMutation, useSubmitTestMutation, useUpdateTimeMutation } from '../../app/services/test'
 import BackBtn from '../../components/Buttons/Back'
+import Timer from '../../components/Timer/Timer'
+import CurrentSection from './CurrentSection/CurrentSection'
 const tempsubjects = [
    { text: 'Trigonometry', selected: true },
    { text: 'Mathematics', selected: false },
@@ -20,29 +22,121 @@ const tempsubjects = [
 export default function StartTest() {
 
    const navigate = useNavigate()
-   const [subjects, setSubjects] = useState(tempsubjects)
+   const [tempSubjects, setTempSubjects] = useState(tempsubjects)
    const [testStarted, setTestStarted] = useState(false)
+
+   const [sectionDetails, setSectionDetails] = useState({})
+   const [subjects, setSubjects] = useState([])
+   const [activeSection, setActiveSection] = useState({})
+   const [timer, setTimer] = useState(10)
+   const [answers, setAnswers] = useState([])
+   const [submitId, setSubmitId] = useState('')
+   const { id } = useParams()
+
+   const [getSections, getSectionsResp] = useLazyGetSectionsQuery()
+   const [getTestResponse, getTestResponseResp] = useLazyGetTestResponseQuery()
 
    const [attendTest, attendTestResp] = useAttendTestMutation()
    const [updateTime, updateTimeResp] = useUpdateTimeMutation()
+   const [startTest, startTestResp] = useStartTestMutation()
+   const [submitSection, submitSectionResp] = useSubmitTestMutation()
 
    const [getTime, getTimeResp] = useLazyGetTimeQuery()
+   const [continueTest, continueTestResp] = useLazyContinueTestQuery()
 
-   const handleStartTest = (item) => {
-      setTestStarted(true)
+   const handleStartTest = () => {
+      if (!activeSection) return
+      startTest({ id: id, reqbody: { sectionName: activeSection.name } })
+         .then(res => {
+            if (res.error) {
+               console.log(res.error)
+            }
+            console.log('start test', res.data)
+            const { startTime, endTime, sectionName, answer, submitId } = res.data.data
+            let timer = (new Date(endTime) - new Date()) / 1000
+            setTimer(Math.trunc(timer))
+            setTestStarted(true)
+            setActiveSection({ name: sectionName })
+            setSubmitId(submitId)
+
+            setSubjects(prev => {
+               return prev.map(item => {
+                  if (item.name === sectionName) {
+                     return { ...item, selected: true }
+                  } else {
+                     return { ...item, selected: false }
+                  }
+               })
+            })
+            setAnswers(answer.map(item => ({ ...item, isMarked: false, ResponseAnswer: 'C' })))
+         })
    }
+   // console.log(id)
 
    useEffect(() => {
-
-      // getTime('637663fe90241bf60305bd36')
-      // .then(res => {
-      //    console.log(res);
-      // })
+      if (!id) return
+      getSections({ id: id })
+         .then(res => {
+            if (res.error) {
+               return console.log(res.error);
+            }
+            console.log('sections response', res.data.data);
+            setSectionDetails(res.data.data)
+            let tempsubs = res.data.data.subjects.subjects.map(item => {
+               return {
+                  ...item,
+                  selected: false
+               }
+            })
+            setSubjects(tempsubs)
+         })
    }, [])
 
-   const handleChange = (item) => {
+   useEffect(() => {
+      getTestResponse({ id })
+         .then(res => {
+            if (res.error) {
+               console.log(res.error)
+               return
+            }
+            console.log('TEST RESPONSE', res.data.data)
+         })
+   }, [])
+   
+   useEffect(() => {
+      continueTest({ id })
+         .then(res => {
+            if (res.error) {
+               console.log(res.error)
+               return
+            }
+            console.log('continue', res.data.data)
+            const { startTime, endTime, sectionName, answer, submitId } = res.data.data
+            let timer = (new Date(endTime) - new Date()) / 1000
+            setTimer(Math.trunc(timer))
+            // setTestStarted(true)
+            setTestStarted(false)
+            setActiveSection({ name: sectionName })
+            setSubmitId(submitId)
+
+            setSubjects(prev => {
+               return prev.map(item => {
+                  if (item.name === sectionName) {
+                     return { ...item, selected: true }
+                  } else {
+                     return { ...item, selected: false }
+                  }
+               })
+            })
+            setAnswers(answer.map(item => ({ ...item, isMarked: false, ResponseAnswer: 'C' })))
+
+         })
+   }, [])
+
+   const handleSubjectChange = (item) => {
+      // console.log(item);
       let tempdata = subjects.map(sub => {
-         if (sub.text === item.text) {
+         if (sub._id === item._id) {
             return { ...sub, selected: true }
          } else {
             return { ...sub, selected: false }
@@ -50,8 +144,63 @@ export default function StartTest() {
       })
       setSubjects(tempdata)
    }
+   // setTestStarted(false)
+   useEffect(() => {
+      if (subjects.length === 0) return
+      const active = subjects.find(item => item.selected === true)
+      if (active) {
+         setActiveSection(active)
+      }
+   }, [subjects])
 
-   // console.log(testStarted)
+   const handleResponseChange = (id, option) => {
+      setAnswers(prev => {
+         return prev.map(item => {
+            if (item._id === id) return { ...item, ResponseAnswer: option }
+            else return { ...item }
+         })
+      })
+   }
+
+   const handleSubmitSection = () => {
+      // console.log(activeSection);
+      // console.log(answers);
+      const response = answers.map(item => {
+         const { QuestionType, QuestionNumber, ResponseAnswer } = item
+         return { QuestionType, QuestionNumber, ResponseAnswer: ResponseAnswer ? ResponseAnswer : '' }
+      })
+      let body = {
+         submitId,
+         reqbody: {
+            sectionName: activeSection.name,
+            response: response
+         }
+      }
+      console.log(body);
+      submitSection(body)
+         .then(res => {
+            if (res.error) {
+               return console.log(res.error)
+            }
+            console.log(res.data)
+            setTestStarted(false)
+         })
+   }
+
+   const handleMark = (id, bool) => {
+      setAnswers(prev => {
+         return prev.map(item => {
+            if (item._id === id) return { ...item, isMarked: bool }
+            else return { ...item }
+         })
+      })
+   }
+   // const { subjects, testQnId, testType } = sectionDetails.subjects
+   // console.log('sectionDetails', sectionDetails)
+   // console.log('answers', answers)
+   // console.log('activeSection', activeSection)
+
+   if (subjects.length === 0) return
 
    return (
       <div className='ml-pageLeft bg-lightWhite min-h-screen'>
@@ -98,15 +247,17 @@ export default function StartTest() {
                         {subjects.map((item, idx) => {
                            return <PrimaryButton
                               roundedClass='rounded-0'
-                              children={item.text}
-                              onClick={() => handleChange(item)}
+                              children={item.name}
+                              onClick={() => handleSubjectChange(item)}
                               className={`pt-2 pb-2 px-0 mr-0 rounded-0 font-semibold w-160
-                            ${item.selected ? 'bg-primaryYellow' : ''}`} />
+                            ${item.selected ? 'bg-primaryYellow' : ''} disabled:opacity-60`}
+                           // disabled={testStarted && item.selected === false ? true : false}
+                           />
                         })}
                      </div>
-                     {!testStarted &&
+                     {!testStarted && Object.keys(activeSection).length > 1 &&
                         <div className='bg-white pt-[60px] pr-8 pl-12 pb-[50px] mt-4'>
-                           <TestDetail />
+                           <TestDetail name={activeSection.name} />
 
                            <div className='flex items-center flex-col mt-12'>
                               <p className='text-[#E02B1D] bg-[#FFBE9D] py-2 px-5 rounded-20 mb-[15px]' >
@@ -118,17 +269,19 @@ export default function StartTest() {
                      }
 
                      {testStarted &&
-                        <div className='mt-[15px]'>
-                           {testData.map(item => {
+                        <div className='mt-[15px] overflow-auto' style={{ maxHeight: 'calc(100vh - 240px)' }}>
+                           {answers.map((item, idx) => {
                               return (
-                                 <div className='flex justify-between items-center py-5 px-10 bg-white rounded-xl mb-[15px]'>
-                                    <p className='font-bold text-[22px] leading-none'> {item.number} </p>
-                                    <TestOption {...item} />
+                                 <div key={idx} className='flex justify-between items-center py-5 px-10 bg-white rounded-xl mb-[15px]'>
+                                    <p className='font-bold text-[22px] leading-none'> {item.QuestionNumber} </p>
+                                    <TestOption {...item} handleResponseChange={handleResponseChange} />
                                     {item.isMarked ?
-                                       <button className='w-[180px] font-semibold py-3 rounded-lg pt-2.5 pb-2.5	 border-2 border-[#D2D2D2] text-[#D2D2D2] ml-4' >
+                                       <button className='w-[180px] font-semibold py-3 rounded-lg pt-2.5 pb-2.5	 border-2 border-[#D2D2D2] text-[#D2D2D2] ml-4'
+                                          onClick={() => handleMark(item._id, false)} >
                                           Mark for Review
                                        </button> :
-                                       <button className='w-[180px] font-semibold pt-2.5 pb-2.5 rounded-lg bg-primaryOrange text-white ml-4' >
+                                       <button className='w-[180px] font-semibold pt-2.5 pb-2.5 rounded-lg bg-primaryOrange text-white ml-4'
+                                          onClick={() => handleMark(item._id, true)} >
                                           Unmark
                                        </button>
                                     }
@@ -142,14 +295,14 @@ export default function StartTest() {
                </div>
 
                {/* RIGHT */}
+               <div className='flex-2 ml-8 flex flex-col' >
 
-               <div className='flex-2 ml-8' >
-
-                  <div className='bg-primary rounded-20 text-white flex flex-col items-center px-9 py-6 font-bold mt-[100px]'>
-                     <p className='text-[28px]'> Timer </p>
-                     <p className='text-[70px] leading-none'>45:00</p>
-                  </div>
-
+                  {
+                     testStarted && <Timer timer={timer} active={testStarted ? true : false} />
+                  }
+                  {
+                     testStarted && <CurrentSection answers={answers} submitSection={handleSubmitSection} />
+                  }
                </div>
             </div>
 
