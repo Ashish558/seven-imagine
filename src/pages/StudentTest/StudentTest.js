@@ -65,7 +65,7 @@ export default function StudentTest() {
    useEffect(() => {
       getTest()
          .then(res => {
-            // console.log('all-tests', res.data.data.test);
+            console.log('all-assigned-tests', res.data.data.test);
             res.data.data.test.map(test => {
                setassignedTestDetails(prev => {
                   let assignedOn = new Date(test.createdAt)

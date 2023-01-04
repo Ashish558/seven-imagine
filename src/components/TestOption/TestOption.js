@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import InputField from '../InputField/inputField'
 
-const options = [
-   'A', 'B', 'C', 'D'
-]
 
 export default function TestOption({_id, QuestionType, AnswerChoices, ResponseAnswer, handleResponseChange, handleTimeTaken }) {
 
