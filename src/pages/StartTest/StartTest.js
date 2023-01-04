@@ -122,7 +122,7 @@ export default function StartTest() {
             console.log('continue', res.data.data)
 
             const { startTime, endTime, sectionName, completed, answer, submitId } = res.data.data
-            if (endTime !== null) {
+            if (endTime !== null && endTime) {
                let timer = (new Date(endTime) - new Date()) / 1000
                setTimer(Math.trunc(timer))
                // setTestStarted(true)

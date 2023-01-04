@@ -96,7 +96,6 @@ export default function StudentTest() {
 
    useEffect(() => {
       if (assignedTestDetails.length === 0) return
-
       assignedTestDetails.map(item => {
          getTestDetails(item.testId)
             .then(resp => {
@@ -113,10 +112,9 @@ export default function StudentTest() {
 
             })
       })
-
    }, [assignedTestDetails])
 
-   console.log(allTests);
+   // console.log(allTests);
 
    return (
       <>
