@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLazyGetAssignedTestQuery, useLazyGetTestDetailsQuery } from "../../app/services/test";
+import { useLazyGetAssignedTestQuery, useLazyGetTestDetailsQuery, useLazyGetTestResponseQuery } from "../../app/services/test";
 import Modal from "../../components/Modal/Modal";
 import Table from "../../components/Table/Table";
 import { getFormattedDate } from "../../utils/utils";
@@ -48,6 +48,7 @@ export default function StudentTest() {
 
    const [getTest, getTestResp] = useLazyGetAssignedTestQuery()
    const [getTestDetails, getTestDetailsResp] = useLazyGetTestDetailsQuery()
+   const [getResponse, getResponseRes] = useLazyGetTestResponseQuery()
 
    const [assignedTestDetails, setassignedTestDetails] = useState([])
    const [allTests, setAllTests] = useState([])
@@ -55,6 +56,12 @@ export default function StudentTest() {
 
    const persona = localStorage.getItem("role");
 
+   useEffect(() => {
+      getResponse({id: '63b567682cbfe817fe551afb'})
+      .then(res => {
+         console.log(res.data);
+      })
+   }, [])
    useEffect(() => {
       getTest()
          .then(res => {

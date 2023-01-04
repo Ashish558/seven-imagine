@@ -25,6 +25,9 @@ export default function StartTest() {
    const [tempSubjects, setTempSubjects] = useState(tempsubjects)
    const [testStarted, setTestStarted] = useState(false)
 
+   const [initialSeconds, setInitialSeconds] = useState(0)
+   const [countDown, setCountDown] = useState(0)
+
    const [sectionDetails, setSectionDetails] = useState({})
    const [subjects, setSubjects] = useState([])
    const [activeSection, setActiveSection] = useState({})
@@ -55,6 +58,7 @@ export default function StartTest() {
             const { startTime, endTime, sectionName, answer, submitId } = res.data.data
             let timer = (new Date(endTime) - new Date()) / 1000
             setTimer(Math.trunc(timer))
+            setInitialSeconds(Math.trunc(timer))
             setTestStarted(true)
             setActiveSection({ name: sectionName })
             setSubmitId(submitId)
@@ -68,7 +72,7 @@ export default function StartTest() {
                   }
                })
             })
-            setAnswers(answer.map(item => ({ ...item, isMarked: false, ResponseAnswer: 'C' })))
+            setAnswers(answer.map(item => ({ ...item, isMarked: false, ResponseAnswer: '', responseTime: 0 })))
          })
    }
    // console.log(id)
@@ -102,14 +106,14 @@ export default function StartTest() {
    }, [])
 
    useEffect(() => {
-      getTestResponse({ id })
-         .then(res => {
-            if (res.error) {
-               console.log(res.error)
-               return
-            }
-            console.log('TEST RESPONSE', res.data.data)
-         })
+      // getTestResponse({ id })
+      //    .then(res => {
+      //       if (res.error) {
+      //          console.log(res.error)
+      //          return
+      //       }
+      //       console.log('TEST RESPONSE', res.data.data)
+      //    })
    }, [])
 
    const fetchContinueTest = () => {
@@ -125,11 +129,15 @@ export default function StartTest() {
             if (endTime !== null && endTime) {
                let timer = (new Date(endTime) - new Date()) / 1000
                setTimer(Math.trunc(timer))
+               setInitialSeconds(Math.trunc(timer))
                // setTestStarted(true)
                setTestStarted(true)
                setActiveSection({ name: sectionName })
                setSubmitId(submitId)
-               setAnswers(answer.map(item => ({ ...item, isMarked: false, ResponseAnswer: 'C' })))
+               setAnswers(answer.map(item => ({
+                  ...item, isMarked: false, ResponseAnswer: '',
+                  responseTime: 0
+               })))
             } else {
                setTestStarted(false)
             }
@@ -176,17 +184,30 @@ export default function StartTest() {
 
    useEffect(() => {
       if (completedSectionIds.length === subjects.length) {
-         if(completedSectionIds.length === 0) return
-         if(subjects.length === 0) return
+         if (completedSectionIds.length === 0) return
+         if (subjects.length === 0) return
          alert('All section test completed')
          navigate('/all-tests')
       }
    }, [completedSectionIds, subjects])
 
    const handleResponseChange = (id, option) => {
+      console.log('initialSeconds', initialSeconds);
+      console.log('countDown', countDown);
+    
+      const timeTaken = initialSeconds - countDown
+      setInitialSeconds(countDown)
       setAnswers(prev => {
          return prev.map(item => {
-            if (item._id === id) return { ...item, ResponseAnswer: option }
+            let time = 0
+            if(item._id === id){
+               if(item.responseTime){
+                  time = item.responseTime + timeTaken
+               }else{
+                  time = timeTaken
+               }
+            }
+            if (item._id === id) return { ...item, ResponseAnswer: option, responseTime: time }
             else return { ...item }
          })
       })
@@ -234,6 +255,12 @@ export default function StartTest() {
    // console.log('activeSection', activeSection)
    // console.log('completedsections', completedSectionIds);
    // console.log('timer', timer);
+   // console.log('initialSeconds', initialSeconds);
+   // console.log('countDown', countDown);
+
+   const handleTimeTaken = (id, sec) => {
+
+   }
 
    if (subjects.length === 0) return
    return (
@@ -308,9 +335,11 @@ export default function StartTest() {
                               return (
                                  <div key={idx} className='flex justify-between items-center py-5 px-10 bg-white rounded-xl mb-[15px]'>
                                     <p className='font-bold text-[22px] leading-none'> {item.QuestionNumber} </p>
-                                    <TestOption {...item} handleResponseChange={handleResponseChange} />
+                                    <TestOption {...item}
+                                       handleResponseChange={handleResponseChange}
+                                       handleTimeTaken={handleTimeTaken} />
                                     {item.isMarked ?
-                                       <button className='w-[180px] font-semibold py-3 rounded-lg pt-2.5 pb-2.5	 border-2 border-[#D2D2D2] text-[#D2D2D2] ml-4'
+                                       <button className='w-[180px] font-semibold py-3 rounded-lg pt-[8px] pb-[8px]	 border-2 border-[#D2D2D2] text-[#D2D2D2] ml-4'
                                           onClick={() => handleMark(item._id, false)} >
                                           Mark for Review
                                        </button> :
@@ -332,7 +361,9 @@ export default function StartTest() {
                <div className='flex-2 ml-8 flex flex-col' >
 
                   {
-                     testStarted && <Timer handleSubmitSection={handleSubmitSection} timer={timer} active={testStarted ? true : false} />
+                     testStarted && <Timer handleSubmitSection={handleSubmitSection} timer={timer} 
+                     active={testStarted ? true : false}
+                     setCountDown={setCountDown} />
                   }
                   {
                      testStarted && <CurrentSection answers={answers} submitSection={handleSubmitSection} />
