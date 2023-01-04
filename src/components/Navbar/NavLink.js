@@ -74,7 +74,7 @@ export default function NavLink({ width, icon: Icon, path, parentClassName }) {
                      ? styles.translateUp
                      : ""
                   }  `}
-               onClick={handleNavigate}
+               // onClick={handleNavigate}
             >
                {/* <img src={icon} className={Selected ? styles.selectedNavLink : ''} /> */}
                <Icon />
