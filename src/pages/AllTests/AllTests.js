@@ -45,7 +45,12 @@ export default function AllTests() {
 
    const [modalData, setModalData] = useState(initialState);
 
-   const handleClose = () => setModalActive(false);
+   const handleClose = () =>{ 
+      setModalActive(false)
+      setModalData(initialState);
+      setPDFFile({})
+      setCSVFile({})
+   }
    const closeRemoveModal = () => setRemoveQuestionModal(false);
 
    const persona = localStorage.getItem("role");
@@ -96,13 +101,12 @@ export default function AllTests() {
          testType: modalData.testType,
       };
       submitTest(body).then(async (res) => {
-         console.log(res);
+         // console.log(res);
          if (res.error) {
             alert(res.error.data.message);
             return;
          }
          let testId = res.data.data.test._id;
-
          const formData = new FormData();
          formData.append("pdf", pdfFile);
          pdfFile && await axios
@@ -130,6 +134,8 @@ export default function AllTests() {
                   // fetchTests()
                });
          }
+
+         console.log('submitted');
       });
    };
 
@@ -142,7 +148,8 @@ export default function AllTests() {
 
    // console.log(testName);
    // console.log(tableData);
-   console.log(filteredTests);
+   // console.log(filteredTests);
+
    const fetchTests = () => {
       axios
          .get(`${BASE_URL}api/test`)
