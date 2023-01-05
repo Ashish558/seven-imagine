@@ -133,7 +133,7 @@ const ParentDashboardHeader = () => {
                   <div className="w-1/3" id={styles.availableCredit}>
                      <div className="flex justify-between">
                         <h3 className="2xl:text-[19.6px] font-semibold">Available Credit</h3>
-                        <img src={i} alt="" />
+                        <img src={i} alt="" title="Give Value List" />
                      </div>
 
                      <div id={styles.creditBalance}>
@@ -145,8 +145,8 @@ const ParentDashboardHeader = () => {
                            View details
                         </p>
                      </div>
-                     <button className={styles.btnDark} onClick={handlePay} >
-                        Pay Now: $ {amountToPay}
+                     <button className={styles.btnDark} disabled={amountToPay === 0} onClick={handlePay} >
+                        {amountToPay !== 0 ? <>Pay Now: $ {amountToPay}</> : <>No invoice Due</>}
                      </button>
                   </div>
                </div>
