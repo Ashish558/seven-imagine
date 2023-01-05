@@ -10,10 +10,12 @@ import DashboardCard from '../../components/DashboardCard/DashboardCard';
 import { scheduleData } from './tempData';
 import TutorSchedule from '../../components/TutorSchedule/TutorSchedule';
 import HatIcon from '../../assets/images/hat.svg'
-import { useLazyGetSessionsQuery } from '../../app/services/session';
+import { useLazyGetSessionsQuery, useLazyGetSingleSessionQuery } from '../../app/services/session';
 import { useSelector } from 'react-redux';
 import Message from '../../components/Message/Message';
 import { useLazyGetUserDetailQuery } from '../../app/services/users';
+import { useLazyGetFeedbacksQuery } from '../../app/services/dashboard';
+import { useNavigate } from 'react-router-dom';
 
 const studentsArr = [
    {
@@ -60,6 +62,7 @@ export default function TutorDashboard() {
    const [fetchUserSessions, fetchUserSessionsResponse] =
       useLazyGetSessionsQuery();
    const [getUserDetail, userDetailResp] = useLazyGetUserDetailQuery()
+   const navigate = useNavigate()
 
    const [sessions, setSessions] = useState([])
    const [isOpen, setIsOpen] = useState(false)
@@ -115,6 +118,7 @@ export default function TutorDashboard() {
       }, 5000);
    }
 
+   console.log(students);
    return (
       <div className="lg:ml-pageLeft bg-lightWhite min-h-screen overflow-x-hidden">
          <div className="py-8 px-5">
@@ -131,7 +135,9 @@ export default function TutorDashboard() {
                               {students.map(student => {
                                  return <div className='flex flex-col items-center text-center w-[110px]'>
                                     <img src={studentsArr[0].src} className='w-[100px]' />
-                                    <p className='text-lg font-semibold mt-4'> {student.name.split(" ")[0]} <br /> {student.name.split(" ")[1]} </p>
+                                    <p className='text-lg font-semibold mt-4 cursor-pointer'
+                                       onClick={() => navigate(`/profile/student/${student._id}`)} >
+                                       {student.name.split(" ")[0]} <br /> {student.name.split(" ")[1]} </p>
                                  </div>
                               })}
                            </OwlCarousel>

@@ -19,6 +19,13 @@ export default function SignupLast({
       setValue(temp);
    };
 
+   const [minCheck, setMinCheck] = useState(false)
+
+   // console.log(hearAboutUs);
+   useEffect(() => {
+      setMinCheck(!hearAboutUs.find(service => service.checked));
+   }, [hearAboutUs])
+
    const handleSubmit = () => {
       setFrames((prev) => {
          return { ...prev, signupLast: false, signupSuccessful: true };
@@ -79,7 +86,8 @@ export default function SignupLast({
             />
             <PrimaryButton
                children="Next"
-               className="text-lg pt-3 pb-3 font-semibold text-white mr-6 w-140"
+               disabled={minCheck}
+               className="text-lg pt-3 pb-3 disabled:bg-pink font-semibold text-white mr-6 w-140"
                onClick={() => handleSubmit()}
             />
          </div>

@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from "react";
-import ApiTable from "./ApiTAble";
 import Pagination from "./Pagination";
 import { TableHeader } from "./TableHeader";
 import TableItem from "./tableItem";
+import ReactPaginate from 'react-paginate';
 
-export default function Table(props) {
-   const {
-      dataFor,
-      data,
-      tableHeaders,
-      maxPageSize,
-      onClick,
-      hidePagination,
-      setMaxPageSize,
-      excludes,
-      total_pages,
-      isCallingApi
-   } = props
-
-   const [tableData, setTableData] = useState(data);
-   const [currentPage, setCurrentPage] = useState(1);
+export default function ApiTable({
+   dataFor,
+   data,
+   tableHeaders,
+   maxPageSize,
+   onClick,
+   hidePagination,
+   setMaxPageSize,
+   excludes,
+   total_pages,
+   isCallingApi,
+   currentPage,
+   setCurrentPage,
+   fetch
+}) {
+   const [tableData, setTableData] = useState(data.sort((a, b) => a.name?.slice(0, 1).toLowerCase() > b.name?.slice(0, 1).toLowerCase()));
    const dataLength = data.length > 30 ? 30 : data.length;
 
    // console.log();
@@ -31,7 +31,7 @@ export default function Table(props) {
          const temp = data.slice(0, maxPageSize);
          // const temp = tableData.slice(0, maxPageSize); ***  it Was the Previous one  ***
          setTableData(temp);
-         setCurrentPage(1);
+
       }
    }, [data, maxPageSize, data.length]);
 
@@ -39,11 +39,10 @@ export default function Table(props) {
    //change tabledata if current page changes
    useEffect(() => {
       if (hidePagination === true) return
-      const temp = data.slice((currentPage - 1) * maxPageSize, (currentPage - 1) * maxPageSize + maxPageSize)
-      setTableData(temp)
+      // const temp = data.slice((currentPage - 1) * maxPageSize, (currentPage - 1) * maxPageSize + maxPageSize)
+      // setTableData(temp)
    }, [currentPage, data])
 
-   if (isCallingApi) return <ApiTable {...props} />
    return (
       <div>
          <table className="table-auto mb-3 text-center w-full">
@@ -63,23 +62,35 @@ export default function Table(props) {
                         key={idx}
                         excludes={excludes}
                         onClick={onClick}
+                        fetch={fetch}
                      />
                   );
                })}
             </tbody>
          </table>
 
-         <div className="flex grid-cols- justify-center items-center">
-            <aside></aside>
-            {!hidePagination && <Pagination
-               totalPages={isCallingApi ? total_pages : Math.ceil(data.length / maxPageSize)}
+         <div className="flex justify-center items-center">
+            {/* {!hidePagination && <Pagination
+               totalPages={total_pages}
                currentPage={currentPage}
                setCurrentPage={setCurrentPage}
-            />}
-            {/* <aside className="ml-auto flex items-center whitespace-nowrap">
-               <button className="mx-3 px-6 py-3 bg-primary disabled:bg-primary-300 text-white rounded" onClick={() => setMaxPageSize(10)} disabled={maxPageSize === 10}>Show 10 Entries</button>
-               <button className="mx-3 px-6 py-3 bg-primary text-white rounded disabled:bg-primary-300" onClick={() => setMaxPageSize(data.length > 30 ? 30 : data.length)} disabled={maxPageSize >= dataLength}>Show {data.length > 30 ? "30" : `all ${data.length}`} Entries</button>
-            </aside> */}
+            />} */}
+            <ReactPaginate
+               className='table-pagination-container flex justify-center mt-5'
+               pageClassName={`flex justify-center items-center w-[38.12px] h-[38.12px] border border-primary rounded-full mr-5 cursor-pointer
+               ${'text-primary'}`}
+               activeClassName={`bg-primary text-white`}
+               breakLabel="..."
+               // nextLabel="next >"
+               onPageChange={(val) => setCurrentPage(val.selected + 1)}
+               pageRangeDisplayed={3}
+               pageCount={total_pages}
+               // previousLabel="< previous"
+               previousClassName='hidden'
+               nextClassName='hidden'
+               renderOnZeroPageCount={null}
+            />
+
          </div>
 
       </div>

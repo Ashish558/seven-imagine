@@ -330,8 +330,8 @@ export default function Calendar() {
                            let up = getStartDate(startDate, userTimezoneOffset, session.timeZone)
                            const startUtc = up.toUTCString()
 
-                           console.log('START DATE', startDate);
-                           console.log('START DATE UTC --', startUtc);
+                           // console.log('START DATE', startDate);
+                           // console.log('START DATE UTC --', startUtc);
 
                            const endTime12HFormat = `${time.end.time} ${time.end.timeType}`;
                            const endTime = convertTime12to24(
@@ -495,7 +495,7 @@ export default function Calendar() {
    };
 
    useEffect(() => {
-      if (name.length > 2) {
+      if (name.length > 0) {
          fetchNames(name).then((res) => {
             // console.log(res.data.data.user)
             let tempData = res.data.data.user.map((user) => {
@@ -548,7 +548,7 @@ export default function Calendar() {
                const endDateUtc = getStartDate(endDate, userTimezoneOffset, session.timeZone)
                let eventObj = {
                   id: session._id,
-                  title: session.tutorName,
+                  title: session.studentName,
                   start: startUtc,
                   endDate: endDateUtc,
                   updatedDate: startUtc,
@@ -631,7 +631,7 @@ export default function Calendar() {
          return prev.map(item => {
             let updatedDate = new Date(item.updatedDate).toLocaleString('en-US', { timeZone })
             let updatedDateEnd = new Date(item.updatedDateEnd).toLocaleString('en-US', { timeZone })
-            console.log('DATE UPDATED ==', new Date(updatedDate))
+            // console.log('DATE UPDATED ==', new Date(updatedDate))
             return {
                ...item,
                start: new Date(updatedDate),

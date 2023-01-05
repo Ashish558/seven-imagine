@@ -32,9 +32,11 @@ import BackBtn from '../../../components/Buttons/Back'
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useLazyGetTutorDetailsQuery } from '../../../app/services/users'
-import { useLazyGetSettingsQuery } from '../../../app/services/session'
+import { useLazyGetSettingsQuery, useLazyGetSingleSessionQuery } from '../../../app/services/session'
 import { useSelector } from 'react-redux'
 import ParentEditables from '../../Frames/Editables/ParentEditables/ParentEditables'
+import { useLazyGetFeedbacksQuery } from '../../../app/services/dashboard'
+import FeedbackTable from './FeedbackTable/FeedbackTable'
 
 
 const values = [
@@ -107,6 +109,9 @@ export default function TutorProfile({ isOwn }) {
    const params = useParams()
    const [getUserDetail, userDetailResp] = useLazyGetTutorDetailsQuery()
    const [fetchSettings, settingsResp] = useLazyGetSettingsQuery()
+   const [getFeedbacks, getFeedbacksResp] = useLazyGetFeedbacksQuery()
+   const [getSession, getSessionResp] = useLazyGetSingleSessionQuery()
+   const [feedbacks, setFeedbacks] = useState([])
 
    const { id } = useSelector(state => state.user)
 
@@ -192,6 +197,39 @@ export default function TutorProfile({ isOwn }) {
          serviceSpecializations: []
       },
    })
+
+   useEffect(() => {
+      getFeedbacks()
+         .then(({ error, data }) => {
+            if (error) {
+               console.log(error)
+               return
+            }
+            data.data.feedback.map(feedback => {
+               getUserDetail({ id: feedback.studentId })
+                  .then(res => {
+                     const student = res.data.data.user
+                     getSession(feedback.sessionId)
+                        .then(res => {
+                           const session = res.data.data.session
+                           setFeedbacks(prev => {
+                              let obj = {
+                                 ...feedback,
+                                 studentName: `${student.firstName} ${student.lastName}`,
+                                 service: session.service
+                              }
+                              let allFeedbacks = [...prev,
+                              { ...obj }
+                              ]
+                              return allFeedbacks.sort(function (a, b) {
+                                 return new Date(b.updatedAt) - new Date(a.updatedAt);
+                              });
+                           })
+                        })
+                  })
+            })
+         })
+   }, [])
 
    const handleClose = () => {
       setToEdit(prev => {
@@ -328,7 +366,7 @@ export default function TutorProfile({ isOwn }) {
    // console.log('userdetail', userDetail)
    // console.log('settings', settings.serviceSpecialisation)
    const { about, education, tagLine, tutorLevel, testPrepRate, otherRate, subjectTutoringRate, address, pincode, paymentInfo, tutorRank, income, paymentStatus, linkedIn } = userDetail
-   console.log('userdetail', tutorLevel)
+   // console.log('userdetail', tutorLevel)
 
    if (Object.keys(user).length < 1) return
    if (Object.keys(settings).length < 1) return
@@ -557,141 +595,149 @@ export default function TutorProfile({ isOwn }) {
                         } />
                   </div>
 
-                  <ProfileCard hideShadow
-                     className='col-span-3 mt-6 lg:mt-0'
-                     body={
-                        <div className='overflow-x-auto scrollbar-content'>
-                           <div className='mb-6'>
-                              <EditableText text='Test Prep Rate'
-                                 editable={editable}
-                                 onClick={() => setToEdit({ ...toEdit, rates: { ...toEdit.rates, active: true } })}
-                                 className='text-primary justify-between text-lg capitalize'
-                                 imgClass='ml-auto' />
-                              <p className='mt-1.5  font-medium text-sm whitespace-nowrap'>
-                                 {testPrepRate ? `$${testPrepRate}` : '-'}
-                              </p>
-                           </div>
-                           <div className='mb-6'>
-                              <EditableText text='Subject Tutoring Rate'
-                                 editable={editable}
-                                 onClick={() => setToEdit({ ...toEdit, rates: { ...toEdit.rates, active: true } })}
-                                 className='text-primary justify-between text-lg capitalize'
-                                 imgClass='ml-auto' />
-                              <p className='mt-1.5 font-medium text-sm whitespace-nowrap'>
-                                 {subjectTutoringRate ? `$${subjectTutoringRate}` : '-'}
-                              </p>
-                           </div>
-                           <div>
-                              <EditableText text='Other Rate'
-                                 editable={editable}
-                                 onClick={() => setToEdit({ ...toEdit, rates: { ...toEdit.rates, active: true } })}
-                                 className='text-primary justify-between text-lg capitalize'
-                                 imgClass='ml-auto' />
-                              <p className='mt-1.5 font-medium text-sm whitespace-nowrap'>
-                                 {otherRate ? `$${otherRate}` : '-'}
-                              </p>
-                           </div>
-                        </div>
-                     }
-                  />
-                  <ProfileCard hideShadow
-                     className='col-span-3 mt-6 lg:mt-0 flex items-center'
-                     body={
-                        <div className='overflow-x-auto scrollbar-content'>
-                           <div className='mb-6'>
-                              <EditableText editable={editable}
-                                 onClick={() => setToEdit({ ...toEdit, tutorAddress: { ...toEdit.tutorAddress, active: true } })}
-                                 text='Address'
-                                 className='text-xl justify-between'
-                              />
-                              <p className='mt-5  font-medium text-sm'>
-                                 {address ? address : '-'}
-                              </p>
-                           </div>
+                  {persona === 'admin' &&
 
-                        </div>
-                     }
-                  />
-                  <ProfileCard hideShadow
-                     className='col-span-3 mt-6 lg:mt-0'
-
-                     body={
-                        <div className='overflow-x-auto scrollbar-content'>
-                           <div className='mb-6'>
-                              <EditableText editable={editable}
-                                 onClick={() => setToEdit({ ...toEdit, paymentInfo: { ...toEdit.paymentInfo, active: true } })}
-                                 text='Payment Info'
-                                 className='text-xl justify-between'
-                              />
-                              <div className='mt-5  font-medium text-sm ma-w-[100px]'>
-                                 <p className='flex items-center mb-3.5'>
-                                    <span>
-                                       Bank Name
-                                    </span>
-                                    <span className='inline-block pl-2'>
-                                       {paymentInfo === undefined ? ' -' : paymentInfo.bankName ? paymentInfo.bankName : '-'}
-                                    </span>
-                                 </p>
-                                 <p className='flex items-center mb-3.5'>
-                                    <span>
-                                       Acc No.
-                                    </span>
-                                    <span className='inline-block pl-2'>
-                                       {paymentInfo === undefined ? ' -' : paymentInfo.AccNo ? paymentInfo.AccNo : '-'}
-                                    </span>
-                                 </p>
-                                 <p className='flex items-center mb-3.5'>
-                                    <span>
-                                       IFCS Code
-                                    </span>
-                                    <span className='inline-block pl-2'>
-                                       {paymentInfo === undefined ? ' -' : paymentInfo.ifcsCode ? paymentInfo.ifcsCode : '-'}
-                                    </span>
-                                 </p>
+                     <>
+                        <ProfileCard hideShadow
+                           className='col-span-3 mt-6 lg:mt-0'
+                           body={
+                              <div className='overflow-x-auto scrollbar-content'>
+                                 <div className='mb-6'>
+                                    <EditableText text='Test Prep Rate'
+                                       editable={editable}
+                                       onClick={() => setToEdit({ ...toEdit, rates: { ...toEdit.rates, active: true } })}
+                                       className='text-primary justify-between text-lg capitalize'
+                                       imgClass='ml-auto' />
+                                    <p className='mt-1.5  font-medium text-sm whitespace-nowrap'>
+                                       {testPrepRate ? `$${testPrepRate}` : '-'}
+                                    </p>
+                                 </div>
+                                 <div className='mb-6'>
+                                    <EditableText text='Subject Tutoring Rate'
+                                       editable={editable}
+                                       onClick={() => setToEdit({ ...toEdit, rates: { ...toEdit.rates, active: true } })}
+                                       className='text-primary justify-between text-lg capitalize'
+                                       imgClass='ml-auto' />
+                                    <p className='mt-1.5 font-medium text-sm whitespace-nowrap'>
+                                       {subjectTutoringRate ? `$${subjectTutoringRate}` : '-'}
+                                    </p>
+                                 </div>
+                                 <div>
+                                    <EditableText text='Other Rate'
+                                       editable={editable}
+                                       onClick={() => setToEdit({ ...toEdit, rates: { ...toEdit.rates, active: true } })}
+                                       className='text-primary justify-between text-lg capitalize'
+                                       imgClass='ml-auto' />
+                                    <p className='mt-1.5 font-medium text-sm whitespace-nowrap'>
+                                       {otherRate ? `$${otherRate}` : '-'}
+                                    </p>
+                                 </div>
                               </div>
-                           </div>
+                           }
+                        />
+                        <ProfileCard hideShadow
+                           className='col-span-3 mt-6 lg:mt-0 flex items-center'
+                           body={
+                              <div className='overflow-x-auto scrollbar-content'>
+                                 <div className='mb-6'>
+                                    <EditableText editable={editable}
+                                       onClick={() => setToEdit({ ...toEdit, tutorAddress: { ...toEdit.tutorAddress, active: true } })}
+                                       text='Address'
+                                       className='text-xl justify-between'
+                                    />
+                                    <p className='mt-5  font-medium text-sm'>
+                                       {address ? address : '-'}
+                                    </p>
+                                 </div>
 
-                        </div>
-                     }
-                  />
-                  <ProfileCard hideShadow
-                     className='col-span-3 mt-6 lg:mt-0'
+                              </div>
+                           }
+                        />
+                        <ProfileCard hideShadow
+                           className='col-span-3 mt-6 lg:mt-0'
 
-                     body={
-                        <div className='overflow-x-auto scrollbar-content'>
-                           <div className='mb-6'>
-                              <EditableText editable={editable}
-                                 onClick={() => setToEdit({ ...toEdit, tutorRank: { ...toEdit.tutorRank, active: true } })}
-                                 text='Tutor Rank'
-                                 className='text-xl justify-between'
-                              />
-                              <p className='mt-1.5  font-medium text-sm whitespace-nowrap'>
-                                 {tutorRank ? tutorRank : '-'}
-                              </p>
-                           </div>
-                           <div className='mb-6'>
-                              <EditableText editable={editable}
-                                 onClick={() => setToEdit({ ...toEdit, income: { ...toEdit.income, active: true } })}
-                                 text='Income'
-                                 className='text-xl justify-between'
-                              />
-                              <p className='mt-1.5 font-medium text-sm whitespace-nowrap'>
-                                 {income ? income : '-'}
-                              </p>
-                           </div>
-                           <div>
-                              <EditableText editable={editable}
-                                 onClick={() => setToEdit({ ...toEdit, paymentStatus: { ...toEdit.paymentStatus, active: true } })}
-                                 text='Payment Status'
-                                 className='text-xl justify-between'
-                              />
-                              <p className='mt-1.5 font-medium text-sm whitespace-nowrap'>
-                                 {paymentStatus ? paymentStatus : '-'}
-                              </p>
-                           </div>
-                        </div>
-                     }
-                  />
+                           body={
+                              <div className='overflow-x-auto scrollbar-content'>
+                                 <div className='mb-6'>
+                                    <EditableText editable={editable}
+                                       onClick={() => setToEdit({ ...toEdit, paymentInfo: { ...toEdit.paymentInfo, active: true } })}
+                                       text='Payment Info'
+                                       className='text-xl justify-between'
+                                    />
+                                    <div className='mt-5  font-medium text-sm ma-w-[100px]'>
+                                       <p className='flex items-center mb-3.5'>
+                                          <span>
+                                             Bank Name
+                                          </span>
+                                          <span className='inline-block pl-2'>
+                                             {paymentInfo === undefined ? ' -' : paymentInfo.bankName ? paymentInfo.bankName : '-'}
+                                          </span>
+                                       </p>
+                                       <p className='flex items-center mb-3.5'>
+                                          <span>
+                                             Acc No.
+                                          </span>
+                                          <span className='inline-block pl-2'>
+                                             {paymentInfo === undefined ? ' -' : paymentInfo.AccNo ? paymentInfo.AccNo : '-'}
+                                          </span>
+                                       </p>
+                                       <p className='flex items-center mb-3.5'>
+                                          <span>
+                                             IFCS Code
+                                          </span>
+                                          <span className='inline-block pl-2'>
+                                             {paymentInfo === undefined ? ' -' : paymentInfo.ifcsCode ? paymentInfo.ifcsCode : '-'}
+                                          </span>
+                                       </p>
+                                    </div>
+                                 </div>
+
+                              </div>
+                           }
+                        />
+                        <ProfileCard hideShadow
+                           className='col-span-3 mt-6 lg:mt-0'
+
+                           body={
+                              <div className='overflow-x-auto scrollbar-content'>
+                                 <div className='mb-6'>
+                                    <EditableText editable={editable}
+                                       onClick={() => setToEdit({ ...toEdit, tutorRank: { ...toEdit.tutorRank, active: true } })}
+                                       text='Tutor Rank'
+                                       className='text-xl justify-between'
+                                    />
+                                    <p className='mt-1.5  font-medium text-sm whitespace-nowrap'>
+                                       {tutorRank ? tutorRank : '-'}
+                                    </p>
+                                 </div>
+                                 <div className='mb-6'>
+                                    <EditableText editable={editable}
+                                       onClick={() => setToEdit({ ...toEdit, income: { ...toEdit.income, active: true } })}
+                                       text='Income'
+                                       className='text-xl justify-between'
+                                    />
+                                    <p className='mt-1.5 font-medium text-sm whitespace-nowrap'>
+                                       {income ? income : '-'}
+                                    </p>
+                                 </div>
+                                 <div>
+                                    <EditableText editable={editable}
+                                       onClick={() => setToEdit({ ...toEdit, paymentStatus: { ...toEdit.paymentStatus, active: true } })}
+                                       text='Payment Status'
+                                       className='text-xl justify-between'
+                                    />
+                                    <p className='mt-1.5 font-medium text-sm whitespace-nowrap'>
+                                       {paymentStatus ? paymentStatus : '-'}
+                                    </p>
+                                 </div>
+                              </div>
+                           }
+                        />
+                        {
+                           // persona === admin &&
+                           <FeedbackTable feedbacks={feedbacks} />
+                        }
+                     </>}
 
                </div>
 

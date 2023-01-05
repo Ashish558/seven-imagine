@@ -5,6 +5,7 @@ import InputField from "../../../components/InputField/inputField";
 import Modal from "../../../components/Modal/Modal";
 import CalendarIcon from "../../../assets/form/calendar.svg";
 import StarIcon from "../../../assets/form/star.svg";
+import StarActiveIcon from "../../../assets/form/starActive.svg";
 import InputSelect from "../../../components/InputSelect/InputSelect";
 import PrimaryButton from "../../../components/Buttons/PrimaryButton";
 import {
@@ -17,6 +18,7 @@ import InputSearch from "../../../components/InputSearch/InputSearch";
 import {
    useLazyGetSettingsQuery,
    useLazyUpdateSessionStatusQuery,
+   useSubmitFeedbackMutation,
    useSubmitSessionMutation,
    useUpdateSessionMutation,
 } from "../../../app/services/session";
@@ -111,6 +113,7 @@ export default function EventModal({
       studentMood: "",
       homeworkAssigned: "",
       sessionNotes: "",
+      feedbackStars: 0
    });
 
    const [days, setDays] = useState(tempDays);
@@ -124,6 +127,7 @@ export default function EventModal({
    const [submitSession, sessionResponse] = useSubmitSessionMutation();
    const [updateUserSession, updateUserSessionResp] = useUpdateSessionMutation();
    const [updateSessionStatus, updateSessionStatusResp] = useLazyUpdateSessionStatusQuery();
+   const [submitFeedback, submitFeedbackResp] = useSubmitFeedbackMutation();
 
    const [student, setStudent] = useState("");
 
@@ -366,7 +370,7 @@ export default function EventModal({
       var duration = endT.diff(startT, 'hours')
       console.log(duration);
       reqBody.total_hours = duration
-      if(reqBody.timeZone === '') reqBody.timeZone = 'Asia/Kolkata'
+      if (reqBody.timeZone === '') reqBody.timeZone = 'Asia/Kolkata'
       if (isUpdating) return updateSession(reqBody);
 
       submitSession(reqBody).then((res) => {
@@ -376,8 +380,28 @@ export default function EventModal({
       })
    }
 
+   const handleFeedbackSubmit = (rating) => {
+      // console.log(rating)
+      // console.log(sessionToUpdate)
+      const { tutorId, studentId, _id } = sessionToUpdate
+      const body = {
+         tutorId: tutorId,
+         studentId: studentId,
+         sessionId: _id,
+         rating: rating,
+      }
+      submitFeedback(body)
+      .then(res => {
+         if(res.error){
+           return console.log(res.error);
+         }
+         console.log(res.data);
+      })
+   }
+
    // console.log(convertTime12to24(`${data.time.end.time} ${data.time.end.timeType}`))
    // console.log(convertTime12to24('1:00 AM'))
+   // console.log(data.feedbackStars);
    const dataProps = { data, setData }
    return (
       <>
@@ -437,8 +461,12 @@ export default function EventModal({
                            <div className="flex">
                               {[...Array(5)].map((x, i) => (
                                  <img
-                                    src={StarIcon}
-                                    className="mr-7"
+                                    src={data.feedbackStars < i ? StarIcon : StarActiveIcon}
+                                    className="mr-7 cursor-pointer"
+                                    onClick={() => {
+                                       setData(prev => ({ ...prev, feedbackStars: i + 1 }));
+                                       handleFeedbackSubmit(i + 1)
+                                    }}
                                  />
                               ))}
                            </div>
@@ -452,8 +480,12 @@ export default function EventModal({
                            <div className="flex py-3 px-4 bg-lightWhite rounded-10">
                               {[...Array(5)].map((x, i) => (
                                  <img
-                                    src={StarIcon}
-                                    className="mr-7"
+                                    src={data.feedbackStars - 1 < i ? StarIcon : StarActiveIcon}
+                                    className="mr-7 cursor-pointer"
+                                    onClick={() => {
+                                       setData(prev => ({ ...prev, feedbackStars: i + 1 }));
+                                       handleFeedbackSubmit(i + 1)
+                                    }}
                                  />
                               ))}
                            </div>

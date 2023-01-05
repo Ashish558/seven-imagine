@@ -14,7 +14,7 @@ export default function SearchNames({ setStudent, setData, student, tutor, data,
    const persona = localStorage.getItem('role')
 
    useEffect(() => {
-      if (tutor.length > 2) {
+      if (tutor.length > 0) {
          fetchTutors(tutor).then((res) => {
             // console.log(res.data.data.tutor)
             let tempData = res.data.data.tutor.map((tutor) => {
@@ -29,7 +29,7 @@ export default function SearchNames({ setStudent, setData, student, tutor, data,
    }, [tutor]);
 
    useEffect(() => {
-      if (student.length > 2) {
+      if (student.length > 0) {
          if (persona === 'tutor') {
             fetchTutorStudents(student).then((res) => {
                // console.log(res.data.data)

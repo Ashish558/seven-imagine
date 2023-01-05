@@ -35,7 +35,7 @@ export default function Ledger() {
    useEffect(() => {
       fetchLedgers()
          .then(res => {
-            // console.log(res.data);
+            console.log('all ledgers' ,res.data.data.ledger);
             let temp = res.data.data.ledger.map(item => ({ ...item, isOpen: false }))
             setLedgers(temp)
          })
@@ -59,7 +59,7 @@ export default function Ledger() {
       })
       setLedgers(temp)
    }
-   console.log(ledgers);
+   // console.log(ledgers);
 
    return (
       <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pb-51'>

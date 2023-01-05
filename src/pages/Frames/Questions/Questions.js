@@ -17,6 +17,8 @@ export default function Questions({
    motive,
    setMotive,
 }) {
+   const [minCheckMotive, setMinCheckMotive] = useState(false)
+   const [minCheckApCourses, setMinCheckApCourses] = useState(false)
    const handleCheckboxChange = (text, arr, setValue) => {
       const temp = arr.map((topic) => {
          return topic.text === text
@@ -25,6 +27,16 @@ export default function Questions({
       });
       setValue(temp);
    };
+   // console.log(motive);
+   useEffect(() => {
+      setMinCheckMotive(!motive.find(service => service.checked));
+   }, [motive])
+   useEffect(() => {
+      setMinCheckApCourses(!apCourses.find(service => service.checked));
+   }, [apCourses])
+   // useEffect(() => {
+   //    setMinCheck(!apCourses.find(course => course.checked));
+   // }, [apCourses])
 
    const handleSubmit = () => {
       setFrames((prev) => {
@@ -43,6 +55,10 @@ export default function Questions({
          });
       }
    };
+
+   console.log(!otherDetails.aboutScore.length);
+   console.log(minCheckApCourses);
+   console.log(minCheckMotive);
 
    useEffect(() => {
       setcurrentStep(5);
@@ -146,8 +162,9 @@ export default function Questions({
                onClick={handleBack}
             />
             <PrimaryButton
+               disabled={!otherDetails.aboutScore.length || minCheckMotive || minCheckApCourses}
                children="Next"
-               className="text-md pt-3 pb-3 font-semibold text-white mr-6 w-140"
+               className="disabled:bg-pink text-md pt-3 pb-3 font-semibold text-white mr-6 w-140"
                onClick={() => handleSubmit()}
             />
          </div>

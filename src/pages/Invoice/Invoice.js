@@ -44,7 +44,7 @@ export default function Invoice() {
    const [allInvoices, setAllInvoices] = useState([])
 
    useEffect(() => {
-      if (invoiceData.clientName.length > 2) {
+      if (invoiceData.clientName.length > 0) {
          fetchParents(invoiceData.clientName).then((res) => {
             // console.log(res.data)
             let tempData = res.data.data.parents.map((parent) => {
@@ -83,31 +83,33 @@ export default function Invoice() {
       fetchAllInvoice()
          .then(resp => {
             setAllInvoices([])
-            console.log('all invoices' ,resp.data.data.invoice)
+            console.log('all invoices', resp.data.data.invoice)
             resp.data.data.invoice.map((invoice, idx) => {
-               // console.log(resp.data.data.invoice)
-               const { _id, createdAt, isPaid, status, amountDue, balanceChange, type, parentId } = invoice
-               getUserDetail({ id: parentId }).then((res) => {
-                  // console.log(res.data.data.user)
-                  const { amountToPay, firstName, lastName, credits } = res.data.data.user
-                  setAllInvoices(prev => {
-                     return [
-                        ...prev, {
-                           _id,
-                           name: `${firstName} ${lastName}`,
-                           currentBalance: `$${credits}`,
-                           invoiceId: _id.slice(-8),
-                           createDate: getFormattedDate(createdAt),
-                           status: isPaid ? 'Paid' : 'Unpaid',
-                           paidOn: '-',
-                           type: checkIfExist(type),
-                           amountDue: `$${amountDue}`,
-                           balanceCredit: `$${balanceChange}`,
-                        }
-                     ]
-                  })
+               const { _id, createdAt, isPaid, status, amountDue, balanceChange, type, parentId, updatedAt } = invoice
 
-               });
+               getUserDetail({ id: parentId }).then((res) => {
+                  const { firstName, lastName, credits } = res.data.data.user
+                  setAllInvoices(prev => {
+                     let obj = {
+                        _id,
+                        name: `${firstName} ${lastName}`,
+                        currentBalance: `$${credits}`,
+                        invoiceId: _id.slice(-8),
+                        createDate: getFormattedDate(createdAt),
+                        status: isPaid ? 'Paid' : 'Unpaid',
+                        paidOn: '-',
+                        type: checkIfExist(type),
+                        amountDue: `$${amountDue}`,
+                        balanceCredit: `$${balanceChange}`,
+                        updatedAt
+                     }
+                     let allinvs = [...prev, { ...obj }]
+                     return allinvs.sort(function (a, b) {
+                        return new Date(b.updatedAt) - new Date(a.updatedAt);
+                     });
+
+                  })
+               })
             })
          })
    }
@@ -240,6 +242,7 @@ export default function Invoice() {
                      data={allInvoices}
                      tableHeaders={tableHeaders}
                      maxPageSize={10}
+                     excludes={['_id', 'updatedAt']}
                   />
                </div>
             </div>

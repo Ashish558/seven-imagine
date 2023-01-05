@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLazyGetSingleSessionQuery } from '../../../app/services/session'
+import { useLazyGetInvoiceQuery } from '../../../app/services/users'
 import ArrowIcon from '../../../assets/Dashboard/arrow.svg'
 import DownloadIcon from '../../../assets/icons/download-ledger.svg'
 import { getFormattedDate, tConvert } from '../../../utils/utils'
@@ -9,8 +10,12 @@ export default function SingleLedger({ _id, invoiceId, sessionId, title, Date: l
 
    const [tutorName, setTutorName] = useState('')
    const [studentName, setStudentName] = useState('')
+
    const [sessionDetails, setSessionDetails] = useState({})
+   const [invoiceDetail, setInvoiceDetail] = useState({})
+   
    const [fetchSession, fetchSessionResponse] = useLazyGetSingleSessionQuery()
+   const [fetchInvoice, fetchInvoiceResp] = useLazyGetInvoiceQuery()
 
    useEffect(() => {
       let names = title.split('<>')
@@ -29,7 +34,20 @@ export default function SingleLedger({ _id, invoiceId, sessionId, title, Date: l
             setSessionDetails({ ...res.data.data.session, timeStr });
          })
    }, [])
+
+   useEffect(() => {
+      if (!invoiceId) return
+      fetchInvoice({ id: invoiceId })
+         .then(res => {
+            const invoice = res.data.data.invoice[0]
+            invoice && setInvoiceDetail(invoice)
+            // const { start, end } = res.data.data.session.time
+
+         })
+   }, [])
+
    const { service, total_hours, timeStr, sessionNotes } = sessionDetails
+   const { description } = invoiceDetail
 
    let discountLedgerDate = new Date(ledgerDate)
    let hours = discountLedgerDate.getHours()
@@ -46,9 +64,8 @@ export default function SingleLedger({ _id, invoiceId, sessionId, title, Date: l
       minutes = `${minutes}`
    }
    const discountPackageTime = tConvert(`${hours}:${minutes}`)
-   // console.log(ledgerDate)
    // console.log(discountPackageTime)
-   
+
    return (
       <>
          <div className='text-center py-[16px] px-3'>
@@ -132,7 +149,7 @@ export default function SingleLedger({ _id, invoiceId, sessionId, title, Date: l
 
                               <div className='font-bold mx-1 py-6'> Description </div>
                               <div className='py-6 opacity-80 col-span-'>
-                                 {sessionNotes ? sessionNotes : '-'}
+                                 {description ? description : '-'}
                               </div>
 
 

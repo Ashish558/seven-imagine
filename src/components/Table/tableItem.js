@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ResendConfirmation from "../../assets/assignedTests/resendConfirmation.svg";
 import UploadIcon from "../../assets/assignedTests/upload.svg";
@@ -9,14 +9,77 @@ import RedIcon from "../../assets/assignedTests/red.svg";
 import GreenIcon from "../../assets/assignedTests/green.svg";
 import GrayIcon from "../../assets/assignedTests/gray.svg";
 import RemoveIcon from "../../assets/icons/remove.svg"
+import InputSelect from "../InputSelect/InputSelect";
+import { useLazyGetSettingsQuery } from "../../app/services/session";
+import { useLazyGetTutorDetailsQuery, useLazyGetUserDetailQuery, usePostTutorDetailsMutation, useUpdateTutorDetailsMutation, useUpdateUserDetailsMutation } from "../../app/services/users";
 
 //can b made dynamic
-export default function TableItem({ item, dataFor, onClick, excludes }) {
+export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
 
    // console.log(onClick)
+   const [fetchSettings, settingsResp] = useLazyGetSettingsQuery()
+   const [getUserDetail, getUserDetailResp] = useLazyGetUserDetailQuery()
+   const [getTutorDetail, getTutorDetailResp] = useLazyGetTutorDetailsQuery()
 
+   const [updateUserDetail, updateUserDetailResp] = useUpdateUserDetailsMutation()
+   const [updateTutorDetail, updateTutorDetailResp] = useUpdateTutorDetailsMutation()
+   const [postTutorDetails, postTutorDetailsResp] = usePostTutorDetailsMutation()
+
+   const [userDetail, setUserDetail] = useState({})
+   const [settings, setSettings] = useState({
+      leadStatus: []
+   })
+   useEffect(() => {
+      if (dataFor === 'allUsers') {
+         if (item.userType === 'tutor') {
+            getTutorDetail({ id: item._id })
+               .then(res => {
+                  if (res.data.data.details) {
+                     setUserDetail(res.data.data.details)
+                  }
+               })
+         } else {
+            getUserDetail({ id: item._id })
+               .then(res => {
+                  // console.log(res.data.data);
+                  if (res.data.data.userdetails) {
+                     setUserDetail(res.data.data.userdetails)
+                  }
+               })
+         }
+
+      }
+   }, [item])
+
+   useEffect(() => {
+      fetchSettings()
+         .then(res => {
+            setSettings(res.data.data.setting)
+         })
+   }, [])
    const navigate = useNavigate();
-   // console.log(dataFor)
+   const handleChange = (field) => {
+      // console.log(field)
+      // console.log(userDetail)
+      if (item.userType === 'parent' || item.userType === 'student') {
+         updateUserDetail({ fields: field, id: item._id })
+            .then(res => {
+               fetch && fetch()
+            })
+      } else if (item.userType === 'tutor') {
+         if (Object.keys(userDetail).length === 0) {
+            postTutorDetails({ fields: field, id: item._id })
+               .then(res => {
+                  fetch && fetch()
+               })
+         } else {
+            updateTutorDetail({ fields: field, id: item._id })
+               .then(res => {
+                  fetch && fetch()
+               })
+         }
+      }
+   }
 
    const returnStatus = (status) => {
       return status === 0 ? (
@@ -33,8 +96,6 @@ export default function TableItem({ item, dataFor, onClick, excludes }) {
    };
 
    const toExcludes = ['testId', '_id', 'isCompleted']
-   const toExcludeInvoice = ['_id']
-
 
    return (
       <>
@@ -70,7 +131,12 @@ export default function TableItem({ item, dataFor, onClick, excludes }) {
                </td>
                <td className="font-medium text-sm px-1  min-w-14 py-4">
                   <div className="my-[6px]">
-                     {item.leadStatus}
+                     <InputSelect value={userDetail.leadStatus ? userDetail.leadStatus : '-'}
+                        optionData={settings.leadStatus}
+                        inputContainerClassName='min-w-[100px] pt-0 pb-0 pr-2 pl-0 text-center'
+                        optionClassName='font-semibold opacity-60 text-sm'
+                        labelClassname='hidden'
+                        onChange={val => handleChange({ leadStatus: val })} />
                   </div>
                </td>
                <td className="font-medium text-sm px-1  min-w-14 py-4">
@@ -173,7 +239,7 @@ export default function TableItem({ item, dataFor, onClick, excludes }) {
          )}
          {dataFor === "assignedStudents" && (
             <tr className="odd:bg-white text-sm shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
-               {mapData(item, 'assignedStudents', excludes)}
+               {mapData(item, 'assignedStudents', excludes, onClick)}
                {/* <td>
                   <img src={RemoveIcon} />
                </td> */}
@@ -202,7 +268,7 @@ export default function TableItem({ item, dataFor, onClick, excludes }) {
                {Object.keys(item).map((key, i) =>
                   toExcludes.includes(key) ? <></> :
                      (
-                        <td  key={i} className="font-medium px-1  min-w-14 py-4">
+                        <td key={i} className="font-medium px-1  min-w-14 py-4">
                            {key === 'status' ?
                               <img className="first:mr-2 mx-auto inline-block" src={GreenIcon} />
                               :
@@ -240,7 +306,12 @@ export default function TableItem({ item, dataFor, onClick, excludes }) {
          )}
          {dataFor === "invoice" && (
             <tr className="bg-white text-sm shadow-sm shadow-slate-200 rounded-2xl leading-7 mt-[10px]">
-               {mapData(item, dataFor, toExcludeInvoice)}
+               {mapData(item, dataFor, excludes)}
+            </tr>
+         )}
+         {dataFor === "testsDetailQuestions" && (
+            <tr className="bg-white text-sm shadow-sm shadow-slate-200 rounded-2xl leading-7 mt-[10px]">
+               {mapData(item, dataFor, excludes)}
             </tr>
          )}
          {dataFor === "allTests" && (
@@ -276,8 +347,8 @@ export default function TableItem({ item, dataFor, onClick, excludes }) {
    );
 }
 
-const mapData = (data, dataFor, exclude = []) => {
-
+const mapData = (data, dataFor, exclude = [], onClick) => {
+// console.log(data);
    return Object.keys(data).map((key, i) =>
       exclude.includes(key) ? <></> :
          (
@@ -303,8 +374,10 @@ const mapData = (data, dataFor, exclude = []) => {
                   </td>
                ) :
                   dataFor === 'assignedStudents' && key === 'name' || key === 'parent' ? (
-                     <td key={i} className={`font-medium px-1 ${data[key] === "Unpaid" && 'text-[#E02B1D]'} ${data[key] === "Paid" && 'text-[#009262]'} ${data[key] === "Cancelled" && 'text-[#7C859C]'} min-w-14 py-4 ${key === "paidOn" && "text-[16px]"}`}>
-                        <p className={`pl-4 ${key === 'name' ? 'text-left' : ''} font-semibold`}>
+                     <td key={i} className={`font-medium px-1 `}>
+                        <p className={`pl-4 ${key === 'name' ? 'text-left' : ''} font-semibold`}
+                           onClick={() => key === 'name' && onClick.handleNavigate('student', data._id)}
+                        >
                            {data[key]}
                         </p>
                      </td>

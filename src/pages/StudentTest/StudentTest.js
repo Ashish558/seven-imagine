@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useLazyGetAssignedTestQuery, useLazyGetTestDetailsQuery } from "../../app/services/test";
+import { useLazyGetAssignedTestQuery, useLazyGetTestDetailsQuery, useLazyGetTestResponseQuery } from "../../app/services/test";
 import Modal from "../../components/Modal/Modal";
 import Table from "../../components/Table/Table";
+import { getFormattedDate } from "../../utils/utils";
 
 import { tempTableData, studentsDataTable } from "../AssignedTests/tempData";
 
@@ -47,22 +48,30 @@ export default function StudentTest() {
 
    const [getTest, getTestResp] = useLazyGetAssignedTestQuery()
    const [getTestDetails, getTestDetailsResp] = useLazyGetTestDetailsQuery()
+   const [getResponse, getResponseRes] = useLazyGetTestResponseQuery()
 
    const [assignedTestDetails, setassignedTestDetails] = useState([])
+   const [allTests, setAllTests] = useState([])
    const [testDetails, setTestDetails] = useState([])
 
    const persona = localStorage.getItem("role");
 
    useEffect(() => {
-      getTest('637663fe90241bf60305bd36')
+      getResponse({id: '63b567682cbfe817fe551afb'})
+      .then(res => {
+         console.log(res.data);
+      })
+   }, [])
+   useEffect(() => {
+      getTest()
          .then(res => {
-            // console.log(res.data.data.test);
+            console.log('all-assigned-tests', res.data.data.test);
             res.data.data.test.map(test => {
-               setassignedTestDetails([
-                  ...assignedTestDetails,
-                  {
+               setassignedTestDetails(prev => {
+                  let assignedOn = new Date(test.createdAt)
+                  let obj = {
                      testName: 'test',
-                     assignedOn: '01-08-2022',
+                     assignedOn: getFormattedDate(assignedOn),
                      dueDate: test.dueDate,
                      duration: test.timeLimit,
                      status: 0,
@@ -71,14 +80,18 @@ export default function StudentTest() {
                      testId: test.testId,
                      isCompleted: test.isCompleted
                   }
-               ])
+                  let allTests = [...prev, { ...obj }]
+                  return allTests.sort(function (a, b) {
+                     return new Date(b.updatedAt) - new Date(a.updatedAt);
+                  });
+               })
             })
 
             if (res.data.data.test.length === 0) return
             res.data.data.test.map(test => {
                getTestDetails(test.testId)
                   .then(resp => {
-                     console.log(resp.data.data)
+                     // console.log('testdata', resp.data.data)
                   })
             })
          })
@@ -87,6 +100,29 @@ export default function StudentTest() {
       //    console.log(res);
       // })
    }, [])
+
+   useEffect(() => {
+      if (assignedTestDetails.length === 0) return
+      assignedTestDetails.map(item => {
+         getTestDetails(item.testId)
+            .then(resp => {
+               setAllTests(prev => {
+                  let obj = {
+                     ...item,
+                     testName: resp.data.data.test.testName,
+                  }
+                  let allTests = [...prev, { ...obj }]
+                  return allTests.sort(function (a, b) {
+                     return new Date(b.updatedAt) - new Date(a.updatedAt);
+                  });
+               })
+
+            })
+      })
+   }, [assignedTestDetails])
+
+   // console.log(allTests);
+
    return (
       <>
          <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">
@@ -130,9 +166,10 @@ export default function StudentTest() {
                <div className="mt-6">
                   <Table
                      dataFor='assignedTestsStudents'
-                     data={assignedTestDetails}
+                     data={allTests}
                      tableHeaders={tableHeaders}
                      maxPageSize={10}
+                     excludes={['_id']}
                   />
                </div>
             </div>

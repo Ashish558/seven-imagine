@@ -18,6 +18,7 @@ export default function NavLink({ width, icon: Icon, path, parentClassName }) {
       
          setModalActive(true)
       }else{
+         if(path === '') return
          navigate(path)
       }
    }

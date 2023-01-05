@@ -211,7 +211,7 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
 
 
    useEffect(() => {
-      if (student.length > 2) {
+      if (student.length > 0) {
          fetchStudents(student).then((res) => {
             let tempData = res.data.data.students.map((tutor) => {
                return {
@@ -225,12 +225,16 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
    }, [student]);
 
    useEffect(() => {
-      if (parent.length > 2) {
+      if (parent.length > 0) {
          fetchParents(parent).then((res) => {
-            let tempData = res.data.data.parents.map((tutor) => {
+            let tempData = res.data.data.parents.map((parent) => {
+               // console.log(parent);
                return {
-                  _id: tutor._id,
-                  value: `${tutor.firstName} ${tutor.lastName}`,
+                  _id: parent._id,
+                  value: `${parent.firstName} ${parent.lastName}`,
+                  fname: parent.firstName,
+                  lname: parent.lastName,
+                  email: parent.email
                };
             });
             setParents(tempData);
@@ -362,11 +366,12 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
          return ''
       }
    }
-   // console.log('toedit', currentToEdit)
+   console.log('toedit', currentToEdit)
    // console.log('setting', settings)
    // console.log('field', currentField)
    // console.log('sett', settings)
    // console.log('students', students)
+   // console.log('parents', parents)
 
    const [startDate, setStartDate] = useState(new Date());
 
@@ -689,7 +694,14 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                               optionData={parents}
                               onOptionClick={(val) => {
                                  // setStudent(item.value);
-                                 setCurrentToEdit({ ...currentToEdit, associatedParent: val._id })
+                                 console.log(val);
+                                 setCurrentToEdit({
+                                     ...currentToEdit,
+                                      associatedParent: val._id,
+                                      FirstName: val.fname,
+                                      LastName: val.lname,
+                                      Email: val.email
+                                     })
                                  // setCurrentToEdit({ ...currentToEdit, students: [... item._id] });
                               }} />
                         }

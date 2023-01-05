@@ -10,10 +10,11 @@ export const userServicesApi = createApi({
 
    endpoints: (builder) => ({
       getAllUsers: builder.query({
-         query: () => ({
+         query: (body) => ({
             url: `api/user`,
             params: {
-               limit: 200
+               limit: body.maxPageSize,
+               page: body.currentPage
             },
             method: "GET",
          }),
@@ -107,6 +108,18 @@ export const userServicesApi = createApi({
             },
          })
       }),
+      getInvoice: builder.query({
+         query: (body) => ({
+            url: `api/invoice/`,
+            params : {
+               _id: body.id
+            },
+            method: "GET",
+            headers: {
+               "Authorization": localStorage.getItem('token'),
+            },
+         }),
+      }),
 
    }),
 });
@@ -122,5 +135,6 @@ export const {
    useUpdateUserDetailsMutation,
    useUpdateTutorDetailsMutation,
    usePostTutorDetailsMutation,
-   useLazyGetPersonalDetailQuery
+   useLazyGetPersonalDetailQuery,
+   useLazyGetInvoiceQuery
 } = userServicesApi;

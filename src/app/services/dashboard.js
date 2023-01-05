@@ -26,6 +26,15 @@ export const dashboardServicesApi = createApi({
                "Authorization": localStorage.getItem('token'),
             },
          }),
+      }),
+      getFeedbacks: builder.query({
+         query: () => ({
+            url: `/api/feedback/${localStorage.getItem('userId')}`,
+            method: "GET",
+            headers: {
+               "Authorization": localStorage.getItem('token'),
+            },
+         }),
       })
 
       // addTest: builder.mutation({
@@ -55,4 +64,5 @@ export const dashboardServicesApi = createApi({
 export const {
    useLazyGetParentLedgerQuery,
    useLazyPayBalanceQuery,
+   useLazyGetFeedbacksQuery
 } = dashboardServicesApi;
