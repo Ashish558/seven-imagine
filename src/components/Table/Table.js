@@ -18,7 +18,7 @@ export default function Table(props) {
       isCallingApi
    } = props
 
-   const [tableData, setTableData] = useState(data.sort((a, b) => a.name?.slice(0, 1).toLowerCase() > b.name?.slice(0, 1).toLowerCase()));
+   const [tableData, setTableData] = useState(data);
    const [currentPage, setCurrentPage] = useState(1);
    const dataLength = data.length > 30 ? 30 : data.length;
 
@@ -69,17 +69,17 @@ export default function Table(props) {
             </tbody>
          </table>
 
-         <div className="grid grid-cols-3 items-center">
+         <div className="flex grid-cols- justify-center items-center">
             <aside></aside>
             {!hidePagination && <Pagination
                totalPages={isCallingApi ? total_pages : Math.ceil(data.length / maxPageSize)}
                currentPage={currentPage}
                setCurrentPage={setCurrentPage}
             />}
-            <aside className="ml-auto flex items-center whitespace-nowrap">
+            {/* <aside className="ml-auto flex items-center whitespace-nowrap">
                <button className="mx-3 px-6 py-3 bg-primary disabled:bg-primary-300 text-white rounded" onClick={() => setMaxPageSize(10)} disabled={maxPageSize === 10}>Show 10 Entries</button>
                <button className="mx-3 px-6 py-3 bg-primary text-white rounded disabled:bg-primary-300" onClick={() => setMaxPageSize(data.length > 30 ? 30 : data.length)} disabled={maxPageSize >= dataLength}>Show {data.length > 30 ? "30" : `all ${data.length}`} Entries</button>
-            </aside>
+            </aside> */}
          </div>
 
       </div>

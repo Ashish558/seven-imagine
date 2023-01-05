@@ -330,8 +330,8 @@ export default function Calendar() {
                            let up = getStartDate(startDate, userTimezoneOffset, session.timeZone)
                            const startUtc = up.toUTCString()
 
-                           console.log('START DATE', startDate);
-                           console.log('START DATE UTC --', startUtc);
+                           // console.log('START DATE', startDate);
+                           // console.log('START DATE UTC --', startUtc);
 
                            const endTime12HFormat = `${time.end.time} ${time.end.timeType}`;
                            const endTime = convertTime12to24(
@@ -631,7 +631,7 @@ export default function Calendar() {
          return prev.map(item => {
             let updatedDate = new Date(item.updatedDate).toLocaleString('en-US', { timeZone })
             let updatedDateEnd = new Date(item.updatedDateEnd).toLocaleString('en-US', { timeZone })
-            console.log('DATE UPDATED ==', new Date(updatedDate))
+            // console.log('DATE UPDATED ==', new Date(updatedDate))
             return {
                ...item,
                start: new Date(updatedDate),

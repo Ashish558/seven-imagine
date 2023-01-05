@@ -21,6 +21,7 @@ export default function ForgotPassword({
             alert(res.error.data.message)
          }
          console.log(res.data);
+         window.open(res.data.link)
       })
    }
 
@@ -34,7 +35,7 @@ export default function ForgotPassword({
             className="text-normal font-bold mb-90"
             style={{ fontSize: "18px" }}
          >
-            Enter your email address linked to this account
+            Enter your email address linked to this account s
          </p>
 
          <InputField

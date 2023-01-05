@@ -239,7 +239,7 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
          )}
          {dataFor === "assignedStudents" && (
             <tr className="odd:bg-white text-sm shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
-               {mapData(item, 'assignedStudents', excludes)}
+               {mapData(item, 'assignedStudents', excludes, onClick)}
                {/* <td>
                   <img src={RemoveIcon} />
                </td> */}
@@ -309,6 +309,11 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
                {mapData(item, dataFor, excludes)}
             </tr>
          )}
+         {dataFor === "testsDetailQuestions" && (
+            <tr className="bg-white text-sm shadow-sm shadow-slate-200 rounded-2xl leading-7 mt-[10px]">
+               {mapData(item, dataFor, excludes)}
+            </tr>
+         )}
          {dataFor === "allTests" && (
             <tr className="odd:bg-white font-medium text-sm shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl lead">
                <td>{item.testName}</td>
@@ -342,8 +347,8 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
    );
 }
 
-const mapData = (data, dataFor, exclude = []) => {
-
+const mapData = (data, dataFor, exclude = [], onClick) => {
+// console.log(data);
    return Object.keys(data).map((key, i) =>
       exclude.includes(key) ? <></> :
          (
@@ -369,8 +374,10 @@ const mapData = (data, dataFor, exclude = []) => {
                   </td>
                ) :
                   dataFor === 'assignedStudents' && key === 'name' || key === 'parent' ? (
-                     <td key={i} className={`font-medium px-1 ${data[key] === "Unpaid" && 'text-[#E02B1D]'} ${data[key] === "Paid" && 'text-[#009262]'} ${data[key] === "Cancelled" && 'text-[#7C859C]'} min-w-14 py-4 ${key === "paidOn" && "text-[16px]"}`}>
-                        <p className={`pl-4 ${key === 'name' ? 'text-left' : ''} font-semibold`}>
+                     <td key={i} className={`font-medium px-1 `}>
+                        <p className={`pl-4 ${key === 'name' ? 'text-left' : ''} font-semibold`}
+                           onClick={() => key === 'name' && onClick.handleNavigate('student', data._id)}
+                        >
                            {data[key]}
                         </p>
                      </td>

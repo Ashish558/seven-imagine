@@ -470,7 +470,7 @@ export default function StudentProfile({ isOwn }) {
                               text='Personality'
                               className='text-lg mb-2' textClassName="flex-1 text-center text-[21px]" />
                            <div className='flex scrollbar-content max-h-[500px]  scrollbar-vertical flex-col row-span-2 overflow-x-auto scrollbar-content h-[450px]'>
-                              {settings && settings.personality.length > 0 && userDetail.personality.map((id, idx) => {
+                              {settings && settings.personality && settings.personality.length > 0 &&  userDetail.personality &&  userDetail.personality.map((id, idx) => {
                                  return (
                                     <div key={idx} className='flex flex-col items-center mb-10'>
                                        <div className='flex h-90 w-90 rounded-full  items-center justify-center mb-3' >

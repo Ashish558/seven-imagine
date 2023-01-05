@@ -101,6 +101,16 @@ export const sessionServicesApi = createApi({
             method: "GET",
          }),
       }),
+      submitFeedback: builder.mutation({
+         query: (body) => ({
+            url: `/api/feedback`,
+            method: "POST",
+            body: body,
+            headers: {
+               "Authorization": localStorage.getItem('token'),
+            },
+         })
+      }),
 
    }),
 });
@@ -116,5 +126,6 @@ export const {
    useLazyGetSingleSessionQuery,
    useUpdateSessionMutation,
    useLazyGetTutorStudentsQuery,
-   useLazyUpdateSessionStatusQuery
+   useLazyUpdateSessionStatusQuery,
+   useSubmitFeedbackMutation
 } = sessionServicesApi;

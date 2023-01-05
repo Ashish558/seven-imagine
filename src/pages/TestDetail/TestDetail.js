@@ -11,6 +11,8 @@ import axios from "axios";
 import { BASE_URL } from "../../app/constants/constants";
 import { useLazyGetSectionsQuery } from "../../app/services/test";
 import AllTestDetail from "../../components/AllTestDetail/AllTestDetail";
+import { useLazyGetAllSectionsQuery } from "../../app/services/admin";
+import Scoring from "./Scoring/Scoring";
 
 const subjects = [
    { text: "English", selected: true },
@@ -39,26 +41,69 @@ const tableHeaders = [
 
 export default function TestDetail() {
    const [testData, setTestData] = useState([]);
-   const [sections, setSections] = useState([])
+   const [sectionsData, setSectionsData] = useState([])
    const navigate = useNavigate();
 
    const { id } = useParams()
    // console.log(window.location.pathname.split("/")[2]);
+   const [fetchSections, fetchSectionsResp] = useLazyGetAllSectionsQuery()
    const [getSections, getSectionsResp] = useLazyGetSectionsQuery()
+
+   const [allQuestions, setAllQuestions] = useState([])
+   const [questionsTable, setQuestionsTable] = useState([])
+   const [subjects, setSubjects] = useState([])
 
    useEffect(() => {
       axios.get(`${BASE_URL}api/test/${id}`)
          .then((res) => {
-            console.log(res.data.data);
+            // console.log(res.data.data);
             setTestData(res.data.data.test);
          });
-      getSections({ id })
+      fetchSections({ id })
          .then(res => {
-            console.log(res.data);
+            if (res.error) {
+               return console.log(res.error);
+            }
+            // console.log('sections data', res.data.data);
+            setSectionsData(res.data.data)
+            let tempSubs = res.data.data.answer.subjects.map((item, idx) => ({ ...item, selected: idx === 0 ? true : false }))
+            setSubjects(tempSubs)
+            setAllQuestions(res.data.data.answer.answer)
          })
    }, [])
 
-   console.log(testData);
+   useEffect(() => {
+      // console.log(allQuestions);
+      // console.log(subjects);
+      if (subjects.length === 0) return
+      if (allQuestions.length === 0) return
+      let idx = subjects.findIndex(item => item.selected === true)
+      // console.log(idx);
+      let tempdata = allQuestions[idx].map(item => {
+         const {QuestionNumber, CorrectAnswer, Concepts, Strategies} = item
+         if(!item.Strategies){
+            return {
+               QuestionNumber, CorrectAnswer,Concepts, Strategies: '-'
+            }
+         }else{
+            return  {QuestionNumber, CorrectAnswer,Concepts, Strategies}
+         }
+      })
+      setQuestionsTable(tempdata)
+   }, [subjects])
+
+   const handleSubjectChange = (id) => {
+      let tempSubs = subjects.map(subject => {
+         if (subject._id === id) {
+            return { ...subject, selected: true }
+         } else {
+            return { ...subject, selected: false }
+         }
+      })
+      setSubjects(tempSubs)
+   }
+
+   // console.log('questionsTable', questionsTable);
 
    return (
       <div className="ml-pageLeft bg-lightWhite min-h-screen">
@@ -82,45 +127,48 @@ export default function TestDetail() {
                   <AllTestDetail testData={testData} />
 
                   <div>
-                     <p className="text-2xl text-textPrimaryDark my-7 font-bold">
+                     <p className="text-2xl text-textPrimaryDark my-7 mb-6 font-bold">
                         Sections
                      </p>
-                     <div className="grid max-0 gap-y-1 mt-2">
+
+                     <div className="grid max-0 gap-y-1 mt-2 mb-10">
                         <div className="mb-2">
-                           <p className="inline-block w-138 font-semibold opacity-60">
+                           <p className="inline-block w-[170px] font-semibold opacity-60">
                               {" "}
                               Section
                            </p>
-                           <div className="inline-block w-120 font-semibold opacity-60">
+                           <div className="inline-block w-[120px] font-semibold opacity-60">
                               Time
                            </div>
-                           <p className="inline-block w-138 font-semibold opacity-60 text-center">
+                           <p className="inline-block w-[138px] font-semibold opacity-60 text-center">
                               {" "}
                               Total Questions
                            </p>
                         </div>
-                        {testData.sections?.map((section) => (
-                           <div>
-                              <p className="inline-block w-138 font-semibold">
-                                 {" "}
-                                 {section.name}
-                              </p>
-                              <div className="inline-block w-120 font-semibold">
-                                 {section.time} mins
+                        {Object.keys(sectionsData).length > 1 &&
+                           sectionsData.answer.subjects?.map((section) => (
+                              <div className="mb-1">
+                                 <p className="inline-block w-[170px] font-medium">
+                                    {" "}
+                                    {section.name}
+                                 </p>
+                                 <div className="inline-block w-120 font-medium">
+                                    {section.timer} mins
+                                 </div>
+                                 <p className="inline-block w-138 font-medium text-center">
+                                    {" "}
+                                    {/* {section.totalQuestions} {40} */}
+                                 </p>
                               </div>
-                              <p className="inline-block w-138 font-semibold text-center">
-                                 {" "}
-                                 {section.totalQuestions}
-                              </p>
-                           </div>
-                        ))}
+                           ))
+                        }
                      </div>
+
                   </div>
                </div>
 
-
-               <div>
-
+               <div className="px-3 py-4 bg-white rounded-[30px]">
+                  {Object.keys(sectionsData).length > 1 && <Scoring sectionsData={sectionsData} />}
                </div>
 
 
@@ -133,11 +181,12 @@ export default function TestDetail() {
                      {subjects.map((item, idx) => {
                         return (
                            <PrimaryButton
-                              children={item.text}
+                              children={item.name}
                               className={`py-2.5 px-0 text-xs mr-4 font-semibold w-[120px] ${item.selected
                                  ? ""
                                  : "bg-secondaryLight text-textGray"
                                  }`}
+                              onClick={() => handleSubjectChange(item._id)}
                            />
                         );
                      })}
@@ -159,10 +208,14 @@ export default function TestDetail() {
                   />
                </div>
                <div className="mt-4">
-                  {/* <Table dataFor='tests'
-                     data={testData}
-                     tableHeaders
-                     ={tableHeaders} maxPageSize={10} /> */}
+
+                  {questionsTable.length > 0 && <Table dataFor='testsDetailQuestions'
+                     data={questionsTable}
+                     tableHeaders={tableHeaders}
+                     excludes={['_id', 'AnswerChoices', '']}
+                     // maxPageSize={10}
+                     hidePagination />}
+
                </div>
             </div>
          </div>

@@ -22,6 +22,10 @@ export default function Login({ setLoginFormActive }) {
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
 
+   const [error, setError] = useState({
+      password: '',
+      email: ''
+   })
    const dispatch = useDispatch();
 
    const [loginUser, loginUserResp] = useLoginUserMutation();
@@ -31,16 +35,49 @@ export default function Login({ setLoginFormActive }) {
       setResetPasswordActive(false);
       setLoginActive(false);
       func(true);
-   };
+   }
+
+   const resetErrors = () => {
+      setError(prev => {
+         return {
+            password: '',
+            email: "",
+         }
+      })
+   }
 
    const handleSubmit = () => {
-      loginUser({ email, password }).then((res) => {
-         console.log(res);
-         localStorage.setItem("token", res.data.data.token);
-         localStorage.setItem("role", res.data.data.role);
-         localStorage.setItem("userId", res.data.data.userId);
-         dispatch(updateIsLoggedIn(true));
-      });
+      const promiseState = async state => new Promise(resolve => {
+         resolve(resetErrors())
+      })
+      promiseState()
+         .then(() => {
+            loginUser({ email, password }).then((res) => {
+               if (res.error) {
+                  console.log(res.error)
+                  if (res.error.data.message === "email not found") {
+                     setError(prev => {
+                        return { ...prev, email: 'Email not found' }
+                     })
+                  }
+                  if (res.error.data.message === "wrong password") {
+                     setError(prev => {
+                        return { ...prev, password: 'Wrong password' }
+                     })
+                  }
+                  if (res.error.data.message === "user not verified") {
+                     // setError(prev => {
+                     //    return { ...prev, password: 'Wrong password' }
+                     // })
+                  }
+                  return
+               }
+               localStorage.setItem("token", res.data.data.token);
+               localStorage.setItem("role", res.data.data.role);
+               localStorage.setItem("userId", res.data.data.userId);
+               dispatch(updateIsLoggedIn(true));
+            });
+         })
    };
 
    const props = { setActiveFrame, setResetPasswordActive };
@@ -49,7 +86,7 @@ export default function Login({ setLoginFormActive }) {
       <div className="min-h-screen">
          <div className="grid grid-cols-2 min-h-screen">
             <div className="bg-primary">
-               <ImageSlider className={styles.loginCarousel} images={[CarouselImg, CarouselImg ]} pagination={true} />
+               <ImageSlider className={styles.loginCarousel} images={[CarouselImg, CarouselImg]} pagination={true} />
             </div>
             <div className="flex items-center">
                {loginActive ? (
@@ -73,6 +110,7 @@ export default function Login({ setLoginFormActive }) {
                         inputContainerClassName='border pt-3 pb-3'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        error={error.email}
                      />
 
                      <InputField
@@ -83,10 +121,11 @@ export default function Login({ setLoginFormActive }) {
                         label="Password"
                         type='password'
                         labelClassname="ml-2 mb-2"
-                        inputClassName="bg-transparent" 
+                        inputClassName="bg-transparent"
                         inputContainerClassName='border pt-3 pb-3'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        error={error.password}
                      />
                      <p
                         className="text-secondary text-xs inline-block cursor-pointer font-semibold ml-2"

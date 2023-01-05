@@ -64,6 +64,16 @@ export const adminServicesApi = createApi({
             },
          })
       }),
+      getAllSections: builder.query({
+         query: (body) => ({
+            url: `/api/test/getans/${body.id}`,
+            method: "GET",
+            params: {userId:localStorage.getItem('userId') },
+            headers: {
+               "Authorization": localStorage.getItem('token'),
+            },
+         })
+      }),
 
    }),
 });
@@ -73,5 +83,6 @@ export const {
    useLazyGetParentsByNameQuery,
    useLazyGetAllInvoiceQuery,
    useBlockUserMutation,
-   useUnblockUserMutation
+   useUnblockUserMutation,
+   useLazyGetAllSectionsQuery       
 } = adminServicesApi;

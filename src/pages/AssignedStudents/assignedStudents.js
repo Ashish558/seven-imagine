@@ -12,6 +12,7 @@ import { BASE_URL } from "../../app/constants/constants";
 import InputSearch from "../../components/InputSearch/InputSearch";
 import { useLazyGetUserDetailQuery } from "../../app/services/users";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const optionData = ["1", "2", "3", "4", "5"];
 const testData = ["SAT", "ACT"];
@@ -31,7 +32,7 @@ export default function AssignedStudents() {
 
    const [tableData, setTableData] = useState([])
    const [tableHeaders, setTableHeaders] = useState([])
-
+   const navigate = useNavigate()
    const persona = localStorage.getItem("role");
    const [getUserDetail, userDetailResp] = useLazyGetUserDetailQuery()
 
@@ -51,12 +52,12 @@ export default function AssignedStudents() {
       setTableHeaders(tempTableHeaders)
    }, [])
 
-   console.log(students)
+   // console.log(students)
 
    useEffect(() => {
       getUserDetail({ id })
          .then(resp => {
-            // console.log(resp.data.data.user.assiginedStudents)
+            console.log(resp.data.data.user)
             let studentsData = []
             const fetch = (cb) => {
                resp.data.data.user.assiginedStudents.map((studentId, idx) => {
@@ -64,7 +65,6 @@ export default function AssignedStudents() {
                      .then(res => {
                         const { _id, firstName, lastName } = res.data.data.user
                         const { serviceSeeking, FirstName, LastName, timeZone } = res.data.data.userdetails
-
                         studentsData.push({
                            _id,
                            name: `${firstName} ${lastName}`,
@@ -83,6 +83,10 @@ export default function AssignedStudents() {
             })
          })
    }, [])
+
+   const handleNavigate = (role, id) => {
+      navigate(`/profile/${role}/${id}`)
+   }
 
    return (
       <>
@@ -148,7 +152,7 @@ export default function AssignedStudents() {
 
                <div className="mt-6">
                   <Table
-                     // onClick={{ handleResend }}
+                     onClick={{ handleNavigate }}
                      dataFor='assignedStudents'
                      data={students}
                      excludes={['_id']}

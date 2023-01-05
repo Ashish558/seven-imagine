@@ -27,6 +27,7 @@ import InputSelect from "../../components/InputSelect/InputSelect";
 import useOutsideAlerter from "../../hooks/useOutsideAlerter";
 import { useLazyGetSettingsQuery } from "../../app/services/session";
 import { validateOtherDetails, validateSignup } from "./utils/util";
+import { useLazyGetTutorDetailsQuery } from "../../app/services/users";
 
 export default function Signup() {
    const [frames, setFrames] = useState({
@@ -94,6 +95,7 @@ export default function Signup() {
    }, [frames])
    const [signupUser, signupUserResp] = useSignupUserMutation();
    const [addUserDetails, addUserDetailsResp] = useAddUserDetailsMutation();
+   const [getUserDetail, userDetailResp] = useLazyGetTutorDetailsQuery()
 
    const [persona, setPersona] = useState("");
    const [currentStep, setcurrentStep] = useState(1);
@@ -145,7 +147,7 @@ export default function Signup() {
                subscriptionCode: values.subscriptionCode,
                phone: values.phone,
             };
-            if (values.subscriptionCode.trim().length > 0 && values.checked === false) {
+            if (values.checked === false) {
                console.log(settings.subscriptionCode.includes(values.subscriptionCode));
                if (!settings.subscriptionCode.includes(values.subscriptionCode)) {
                   return alert('invalid subscription code')
