@@ -234,7 +234,7 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                   value: `${parent.firstName} ${parent.lastName}`,
                   fname: parent.firstName,
                   lname: parent.lastName,
-                  // email: parent.email
+                  email: parent.email
                };
             });
             setParents(tempData);
@@ -371,7 +371,7 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
    // console.log('field', currentField)
    // console.log('sett', settings)
    // console.log('students', students)
-   console.log('parents', parents)
+   // console.log('parents', parents)
 
    const [startDate, setStartDate] = useState(new Date());
 
@@ -694,7 +694,14 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                               optionData={parents}
                               onOptionClick={(val) => {
                                  // setStudent(item.value);
-                                 setCurrentToEdit({ ...currentToEdit, associatedParent: val._id })
+                                 console.log(val);
+                                 setCurrentToEdit({
+                                     ...currentToEdit,
+                                      associatedParent: val._id,
+                                      FirstName: val.fname,
+                                      LastName: val.lname,
+                                      Email: val.email
+                                     })
                                  // setCurrentToEdit({ ...currentToEdit, students: [... item._id] });
                               }} />
                         }

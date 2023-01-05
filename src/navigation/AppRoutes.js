@@ -73,10 +73,23 @@ const AppRoutes = () => {
                   )
                }
             />
-          
-            <Route path="/users" element={<Users />} />
-            <Route path="/invoice" element={<Invoice />} />
-       
+            <Route
+               path="/users"
+               element={
+                  <RequireAuth isLoggedIn={isLoggedIn}>
+                     <Users />
+                  </RequireAuth>
+               }
+            />
+            <Route
+               path="/invoice"
+               element={
+                  <RequireAuth isLoggedIn={isLoggedIn}>
+                     <Invoice />
+                  </RequireAuth>
+               }
+            />
+
             <Route
                path="/calendar"
                element={
@@ -93,10 +106,23 @@ const AppRoutes = () => {
                   </RequireAuth>
                }
             />
-
-            {/* <Route path="/calendar" element={<Calendar />} /> */}
+            <Route
+               path="/calendar/:persona"
+               element={
+                  <RequireAuth isLoggedIn={isLoggedIn}>
+                     <Calendar />
+                  </RequireAuth>
+               }
+            />
             {/* <Route path="/calendar/:persona" element={<Calendar />} /> */}
-            <Route path="/assigned-tests" element={<AssignedTests />} />
+            <Route
+               path="/assigned-tests"
+               element={
+                  <RequireAuth isLoggedIn={isLoggedIn}>
+                     <AssignedTests />
+                  </RequireAuth>
+               }
+            />
             <Route
                path="/set-password"
                element={
@@ -111,34 +137,103 @@ const AppRoutes = () => {
             />
             <Route
                path="/assigned-tests/:id/report"
-               element={<CompletedTest />}
+               element={
+                  <RequireAuth isLoggedIn={isLoggedIn}>
+                     <CompletedTest />
+                  </RequireAuth>
+               }
             />
-            <Route path="/all-tests" element={<AllTests />} />
-            <Route path="/all-tests/:id" element={<TestDetail />} />
-            <Route path="/profile" element={
-               persona ==='parent' ? <ParentProfile isOwn={true} /> : persona ==='student' ? <StudentProfile isOwn={true} /> : persona === 'tutor' ? <TutorProfile isOwn={true} /> : <></>
-               } />
+            <Route
+               path="/all-tests"
+               element={
+                  <RequireAuth isLoggedIn={isLoggedIn}>
+                     <AllTests />
+                  </RequireAuth>
+               }
+            />
+            <Route
+               path="/all-tests/:id"
+               element={
+                  <RequireAuth isLoggedIn={isLoggedIn}>
+                     <TestDetail />
+                  </RequireAuth>
+               }
+            />
+            <Route
+               path="/profile"
+               element={
+                  <RequireAuth isLoggedIn={isLoggedIn}>
+                     {persona === 'parent' ?
+                        <ParentProfile isOwn={true} /> :
+                        persona === 'student' ?
+                           <StudentProfile isOwn={true} /> :
+                           persona === 'tutor' ? <TutorProfile isOwn={true} /> : <></>}
+                  </RequireAuth>
+               }
+            />
+            {/* <Route path="/profile" element={
+               persona === 'parent' ? <ParentProfile isOwn={true} /> : persona === 'student' ? <StudentProfile isOwn={true} /> : persona === 'tutor' ? <TutorProfile isOwn={true} /> : <></>
+            } /> */}
+
             <Route
                path="/profile/student/:id"
-               element={<StudentProfile />}
+               element={
+                  <RequireAuth isLoggedIn={isLoggedIn}>
+                     <StudentProfile />
+                  </RequireAuth>
+               }
             />
             <Route
                path="/profile/parent/:id"
-               element={<ParentProfile />}
+               element={
+                  <RequireAuth isLoggedIn={isLoggedIn}>
+                     <ParentProfile />
+                  </RequireAuth>
+               }
             />
             <Route
                path="/profile/tutor/:id"
-               element={<TutorProfile />}
+               element={
+                  <RequireAuth isLoggedIn={isLoggedIn}>
+                     <TutorProfile />
+                  </RequireAuth>
+               }
             />
-            <Route path="/parent-dashboard" element={<ParentDashboard />} />
-            <Route path="/ledger" element={<Ledger />} />
+
+           
             <Route
-               path="/student-dashboard"
-               element={<StudentDashboard />}
+               path="/ledger"
+               element={
+                  <RequireAuth isLoggedIn={isLoggedIn}>
+                     <Ledger />
+                  </RequireAuth>
+               }
             />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/assigned-students" element={<AssignedStudents />} />
-            <Route path="/all-tests/start-section/:id" element={<StartTest />} />
+           
+            <Route
+               path="/settings"
+               element={
+                  <RequireAuth isLoggedIn={isLoggedIn}>
+                     <Settings />
+                  </RequireAuth>
+               }
+            />
+            <Route
+               path="/assigned-students"
+               element={
+                  <RequireAuth isLoggedIn={isLoggedIn}>
+                     <AssignedStudents />
+                  </RequireAuth>
+               }
+            />
+            <Route
+               path="/all-tests/start-section/:id"
+               element={
+                  <RequireAuth isLoggedIn={isLoggedIn}>
+                     <StartTest />
+                  </RequireAuth>
+               }
+            />
 
             {/* <Route
                   path="/profile"
