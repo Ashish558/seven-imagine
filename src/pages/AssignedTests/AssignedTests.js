@@ -14,6 +14,7 @@ import { useAssignTestMutation, useLazyGetTestsByNameQuery } from "../../app/ser
 import { useLazyGetStudentsByNameQuery } from "../../app/services/session";
 import InputSearch from "../../components/InputSearch/InputSearch";
 import calendar from "./../../assets/calendar/calendar.svg"
+import AssignedTestIndicator from "../../components/AssignedTestIndicator/AssignedTestIndicator";
 
 const optionData = ["1", "2", "3", "4", "5"];
 const timeLimits = [30, 40, 50]
@@ -137,7 +138,22 @@ export default function AssignedTests() {
    useEffect(() => {
       setTableData(tempTableData)
       setTableHeaders(tempTableHeaders)
-   }, [])
+   }, []);
+
+   const status = [
+      {
+         text: "Not Started",
+         color: "#CBC0F5"
+      },
+      {
+         text: "Started",
+         color: "#F6A429"
+      },
+      {
+         text: "Completed",
+         color: "#32D583"
+      },
+   ]
 
    return (
       <>
@@ -201,6 +217,14 @@ export default function AssignedTests() {
                      parentClassName="w-full mr-4 text-sm"
                      type="select"
                   />
+               </div>
+
+               <div className="flex items-center justify-end gap-[20px] mt-[10px]">
+                  {/* <AssignedTestIndicator /> */}
+                  {status.map(({text, color}) => <AssignedTestIndicator
+                     text={text}
+                     color={color}
+                  />)}
                </div>
 
                <div className="mt-6">
