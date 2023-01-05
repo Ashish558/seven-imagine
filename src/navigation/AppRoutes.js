@@ -24,6 +24,7 @@ import AssignedStudents from "../pages/AssignedStudents/assignedStudents";
 import ParentProfile from "../pages/Profiles/ParentProfile/ParentProfile";
 import TutorProfile from "../pages/Profiles/Tutor/TutorProfile";
 import Invoice from "../pages/Invoice/Invoice";
+import { useEffect } from "react";
 
 const PrivateRoutes = [
    {
@@ -57,6 +58,11 @@ const AppRoutes = () => {
    const [loginFormActive, setLoginFormActive] = useState(true);
    const persona = localStorage.getItem('role')
 
+   useEffect(() => {
+      if (sessionStorage.getItem('frames')) {
+         setLoginFormActive(false)
+      }
+   }, [])
    return (
       <BrowserRouter>
          <Navbar />
@@ -200,7 +206,7 @@ const AppRoutes = () => {
                }
             />
 
-           
+
             <Route
                path="/ledger"
                element={
@@ -209,7 +215,7 @@ const AppRoutes = () => {
                   </RequireAuth>
                }
             />
-           
+
             <Route
                path="/settings"
                element={

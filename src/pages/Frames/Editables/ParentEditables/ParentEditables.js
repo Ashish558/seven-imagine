@@ -211,7 +211,7 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
 
 
    useEffect(() => {
-      if (student.length > 2) {
+      if (student.length > 0) {
          fetchStudents(student).then((res) => {
             let tempData = res.data.data.students.map((tutor) => {
                return {
@@ -225,7 +225,7 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
    }, [student]);
 
    useEffect(() => {
-      if (parent.length > 2) {
+      if (parent.length > 0) {
          fetchParents(parent).then((res) => {
             let tempData = res.data.data.parents.map((parent) => {
                // console.log(parent);

@@ -44,7 +44,7 @@ export default function Invoice() {
    const [allInvoices, setAllInvoices] = useState([])
 
    useEffect(() => {
-      if (invoiceData.clientName.length > 2) {
+      if (invoiceData.clientName.length > 0) {
          fetchParents(invoiceData.clientName).then((res) => {
             // console.log(res.data)
             let tempData = res.data.data.parents.map((parent) => {

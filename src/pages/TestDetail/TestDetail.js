@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SecondaryButton from "../../components/Buttons/SecondaryButton";
 import BackIcon from "../../assets/assignedTests/back.svg";
 import AddIcon from "../../assets/icons/add.svg";
@@ -42,6 +42,9 @@ const tableHeaders = [
 export default function TestDetail() {
    const [testData, setTestData] = useState([]);
    const [sectionsData, setSectionsData] = useState([])
+   const [pdfFile, setPDFFile] = useState({});
+   const PdfRef = useRef()
+
    const navigate = useNavigate();
 
    const { id } = useParams()
@@ -52,6 +55,20 @@ export default function TestDetail() {
    const [allQuestions, setAllQuestions] = useState([])
    const [questionsTable, setQuestionsTable] = useState([])
    const [subjects, setSubjects] = useState([])
+
+   const handlePDFFile = (file) => {
+      const formData = new FormData();
+      formData.append("pdf", file);
+      setPDFFile(file);
+      axios.post(
+         `${BASE_URL}api/test/addpdf/${id}`,
+         formData
+      )
+         .then((res) => {
+            console.log('pdf post resp', res); 
+         });
+   };
+
 
    useEffect(() => {
       axios.get(`${BASE_URL}api/test/${id}`)
@@ -80,13 +97,13 @@ export default function TestDetail() {
       let idx = subjects.findIndex(item => item.selected === true)
       // console.log(idx);
       let tempdata = allQuestions[idx].map(item => {
-         const {QuestionNumber, CorrectAnswer, Concepts, Strategies} = item
-         if(!item.Strategies){
+         const { QuestionNumber, CorrectAnswer, Concepts, Strategies } = item
+         if (!item.Strategies) {
             return {
-               QuestionNumber, CorrectAnswer,Concepts, Strategies: '-'
+               QuestionNumber, CorrectAnswer, Concepts, Strategies: '-'
             }
-         }else{
-            return  {QuestionNumber, CorrectAnswer,Concepts, Strategies}
+         } else {
+            return { QuestionNumber, CorrectAnswer, Concepts, Strategies }
          }
       })
       setQuestionsTable(tempdata)
@@ -199,6 +216,14 @@ export default function TestDetail() {
                         Add Pdf
                         <img src={AddIcon} className='w-6 ml-2' /> </div>}
                      className={`py-3.5 pl-6 pr-6 mr-4 font-medium text-textGray" }`}
+                     onClick={() => PdfRef.current.click()}
+                  />
+                  <input ref={PdfRef}
+                     id="pdf"
+                     type="file"
+                     className="hidden"
+                     accept="application/pdf"
+                     onChange={e => handlePDFFile(e.target.files[0])}
                   />
                   <PrimaryButton
                      children={<div className="flex items-center justify-center">

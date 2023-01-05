@@ -495,7 +495,7 @@ export default function Calendar() {
    };
 
    useEffect(() => {
-      if (name.length > 2) {
+      if (name.length > 0) {
          fetchNames(name).then((res) => {
             // console.log(res.data.data.user)
             let tempData = res.data.data.user.map((user) => {

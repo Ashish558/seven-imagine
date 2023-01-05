@@ -15,6 +15,7 @@ import axios from "axios";
 import { useAddPdfMutation, useAddTestMutation } from "../../app/services/test";
 import { BASE_URL } from "../../app/constants/constants";
 import StudentTest from "../StudentTest/StudentTest";
+import FilterItems from "../../components/FilterItems/filterItems";
 
 const optionData = ["option 1", "option 2", "option 3", "option 4", "option 5"];
 const testTypeOptions = ["SAT", "ACT"];
@@ -35,6 +36,8 @@ export default function AllTests() {
    const [csvError, setCSVError] = useState("");
    const [PDFError, setPDFError] = useState("");
    const [testForDelete, setTestForDelete] = useState("");
+   const [filteredTests, setFilteredTests] = useState([])
+   const [filterItems, setFilterItems] = useState([])
 
    const [removeQuestionModal, setRemoveQuestionModal] = useState(false);
    const [submitTest, submitTestResp] = useAddTestMutation();
@@ -65,11 +68,14 @@ export default function AllTests() {
          });
    };
 
+   useEffect(() => {
+      setFilteredTests(tableData)
+   }, [tableData])
+
    const handlePDFFile = (file) => {
       // if (file.type.includes("pdf")) {
       setPDFError("");
       setPDFFile(file);
-
    };
 
    const handleCSVFile = (file) => {
@@ -112,10 +118,10 @@ export default function AllTests() {
                // fetchTests()
             });
 
-            if (csvFile) {
+         if (csvFile) {
             const formData = new FormData();
             formData.append("file", csvFile);
-              await axios.post(`${BASE_URL}api/test/addans/${testId}`, formData)
+            await axios.post(`${BASE_URL}api/test/addans/${testId}`, formData)
                .then((res) => {
                   console.log('csv post resp', res);
                   setModalData(initialState);
@@ -124,15 +130,19 @@ export default function AllTests() {
                   // fetchTests()
                });
          }
-         // submitPdf({ id: testId, formData })
-         //    .then(res => {
-         //       console.log(res)
-         //       if (res.error) {
-         //          alert(res.error.data.message)
-         //       }
-         //    })
       });
    };
+
+   useEffect(() => {
+      if (tableData.length === 0) return
+      const regex2 = new RegExp(`${testName.toLowerCase()}`, 'i')
+      let tempdata = tableData.filter(test => test.testName.match(regex2))
+      setFilteredTests(tempdata)
+   }, [testName])
+
+   // console.log(testName);
+   // console.log(tableData);
+   console.log(filteredTests);
    const fetchTests = () => {
       axios
          .get(`${BASE_URL}api/test`)
@@ -179,7 +189,7 @@ export default function AllTests() {
             <div className="mt-6">
                <Table
                   dataFor="allTests"
-                  data={tableData}
+                  data={filteredTests}
                   tableHeaders={tableHeaders}
                   maxPageSize={10}
                   onClick={{ openRemoveTestModal }}
@@ -287,17 +297,7 @@ export default function AllTests() {
                                  <input id="csv"
                                     type="file"
                                     accept=".xls,.xlsx"
-                                    // onChange={e => {
-                                    //    // handleCSVFile(e.target.files[0]);
-                                    //    Papa.parse(e.target.files[0], {
-                                    //       complete: function (
-                                    //          results
-                                    //       ) {
-                                    //          setCSVFile(results)
-                                    //          console.log(results.data);
-                                    //       },
-                                    //    });
-                                    // }}
+                                    // onChange={e => {    
                                     onChange={e => setCSVFile(e.target.files[0])}
                                  />
                                  <div id={styles.filename}>

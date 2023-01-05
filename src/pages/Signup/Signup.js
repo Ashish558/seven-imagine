@@ -29,7 +29,7 @@ import { useLazyGetSettingsQuery } from "../../app/services/session";
 import { validateOtherDetails, validateSignup } from "./utils/util";
 import { useLazyGetTutorDetailsQuery } from "../../app/services/users";
 
-export default function Signup() {
+export default function Signup({setLoginFormActive}) {
    const [frames, setFrames] = useState({
       signupActive: true,
       selectPersona: false,
@@ -54,7 +54,7 @@ export default function Signup() {
       fetchSettings()
    }, [])
 
- 
+
    const [error, setError] = useState({
       firstName: "",
       lastName: "",
@@ -96,6 +96,7 @@ export default function Signup() {
    const [signupUser, signupUserResp] = useSignupUserMutation();
    const [addUserDetails, addUserDetailsResp] = useAddUserDetailsMutation();
    const [getUserDetail, userDetailResp] = useLazyGetTutorDetailsQuery()
+   const [count, setCount] = useState(0);
 
    const [persona, setPersona] = useState("");
    const [currentStep, setcurrentStep] = useState(1);
@@ -108,6 +109,46 @@ export default function Signup() {
    //temparory
    const [redirectLink, setRedirectLink] = useState("");
    const [numberPrefix, setNumberPrefix] = useState('+91')
+
+   useEffect(() => {
+      if (count === 0) return
+      sessionStorage.setItem('frames', JSON.stringify(frames))
+      sessionStorage.setItem('values', JSON.stringify(values))
+      sessionStorage.setItem('otherDetails', JSON.stringify(otherDetails))
+      sessionStorage.setItem('persona', persona)
+      sessionStorage.setItem('redirectLink', redirectLink)
+      sessionStorage.setItem('numberPrefix', numberPrefix)
+      sessionStorage.setItem('currentStep', currentStep)
+   }, [frames, values, otherDetails, persona, redirectLink, numberPrefix, currentStep])
+
+   useEffect(() => {
+      setCount(1)
+   }, [])
+
+   useEffect(() => {
+      if (sessionStorage.getItem('frames')) {
+         // console.log(sessionStorage.getItem('frames'));
+         setFrames(JSON.parse(sessionStorage.getItem('frames')))
+      }
+      if (sessionStorage.getItem('values')) {
+         setValues(JSON.parse(sessionStorage.getItem('values')))
+      }
+      if (sessionStorage.getItem('otherDetails')) {
+         setOtherDetails(JSON.parse(sessionStorage.getItem('otherDetails')))
+      }
+      if (sessionStorage.getItem('persona')) {
+         setPersona(sessionStorage.getItem('persona'))
+      }
+      if (sessionStorage.getItem('redirectLink')) {
+         setRedirectLink(sessionStorage.getItem('redirectLink'))
+      }
+      if (sessionStorage.getItem('numberPrefix')) {
+         setNumberPrefix(sessionStorage.getItem('numberPrefix'))
+      }
+      if (sessionStorage.getItem('currentStep')) {
+         setcurrentStep(sessionStorage.getItem('currentStep'))
+      }
+   }, [])
 
    const resetErrors = () => {
       setError(prev => {
@@ -154,7 +195,6 @@ export default function Signup() {
                }
             }
             const result = validateSignup(reqBody)
-            console.log(result);
             if (result.data !== true) {
                setError(prev => {
                   return {
@@ -163,7 +203,6 @@ export default function Signup() {
                   }
                })
             } else {
-               // console.log(reqBody)
                signupUser(reqBody).then((res) => {
                   if (res.error) {
                      if (res.error.data.message) {
@@ -199,6 +238,7 @@ export default function Signup() {
       addUserDetails({ userId: values.userId, body: reqBody }).then((res) => {
          // console.log(res);
          window.open(redirectLink);
+         sessionStorage.clear()
       });
    };
    // console.log(error)
@@ -292,7 +332,7 @@ export default function Signup() {
                            inputContainerClassName="relative border pt-3 pb-3"
                            inputClassName="ml-80"
                            inputLeftField={
-                              <div ref={selectRef} 
+                              <div ref={selectRef}
                                  className={`${selected && "relative z-5000"} ${styles.phoneNumberField} `}
                                  onClick={() => setSelected(true)}
                               >
@@ -366,6 +406,12 @@ export default function Signup() {
                         >
                            Submit
                         </button>
+                        <p
+                           className="text-secondary text-xs font-semibold ml-2 mt-2 cursor-pointer inline-block"
+                           onClick={() => setLoginFormActive(true)}
+                        >
+                           Login Instead?
+                        </p>
                      </>
                   ) : frames.selectPersona ? (
                      <SelectPersona {...props} setPersona={setPersona} />
