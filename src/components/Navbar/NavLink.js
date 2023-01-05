@@ -17,6 +17,7 @@ export default function NavLink({ width, icon: Icon, path, parentClassName }) {
          navigate('/')
          dispatch(updateIsLoggedIn(false))
       }else{
+         if(path === '') return
          navigate(path)
       }
    }

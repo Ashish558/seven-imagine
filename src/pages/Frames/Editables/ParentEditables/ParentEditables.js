@@ -227,10 +227,14 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
    useEffect(() => {
       if (parent.length > 2) {
          fetchParents(parent).then((res) => {
-            let tempData = res.data.data.parents.map((tutor) => {
+            let tempData = res.data.data.parents.map((parent) => {
+               // console.log(parent);
                return {
-                  _id: tutor._id,
-                  value: `${tutor.firstName} ${tutor.lastName}`,
+                  _id: parent._id,
+                  value: `${parent.firstName} ${parent.lastName}`,
+                  fname: parent.firstName,
+                  lname: parent.lastName,
+                  // email: parent.email
                };
             });
             setParents(tempData);
@@ -362,11 +366,12 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
          return ''
       }
    }
-   // console.log('toedit', currentToEdit)
+   console.log('toedit', currentToEdit)
    // console.log('setting', settings)
    // console.log('field', currentField)
    // console.log('sett', settings)
    // console.log('students', students)
+   console.log('parents', parents)
 
    const [startDate, setStartDate] = useState(new Date());
 
