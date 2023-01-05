@@ -13,6 +13,7 @@ import Passwordicon from "../../assets/form/password.svg";
 import EmailIcon from "../../assets/form/email.svg";
 import CarouselImg from "../../assets/form/image-1.png";
 import styles from './Login.module.css'
+import { useNavigate } from "react-router-dom";
 
 export default function Login({ setLoginFormActive }) {
 
@@ -27,6 +28,7 @@ export default function Login({ setLoginFormActive }) {
       email: ''
    })
    const dispatch = useDispatch();
+   const navigate = useNavigate();
 
    const [loginUser, loginUserResp] = useLoginUserMutation();
 
@@ -145,7 +147,7 @@ export default function Login({ setLoginFormActive }) {
                      </button>
                      <p
                         className="text-secondary text-xs font-semibold ml-2 mt-2 cursor-pointer inline-block"
-                        onClick={() => setLoginFormActive(false)}
+                        onClick={() => navigate('/signup')}
                      >
                         Sign-up Instead?
                      </p>
