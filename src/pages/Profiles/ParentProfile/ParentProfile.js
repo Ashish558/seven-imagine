@@ -223,9 +223,11 @@ export default function ParentProfile({ isOwn }) {
          const students = await user.assiginedStudents.map(student => {
             getUserDetail({ id: student })
                .then(res => {
+                  console.log(res.data.data.user);
                   studentsData.push({
                      _id: res.data.data.user._id,
-                     name: `${res.data.data.user.firstName} ${res.data.data.user.lastName}`
+                     name: `${res.data.data.user.firstName} ${res.data.data.user.lastName}`,
+                     photo: res.data.data.user.photo ? res.data.data.user.photo : '/images/default.jpeg'
                   })
                })
          })
@@ -238,7 +240,7 @@ export default function ParentProfile({ isOwn }) {
    useEffect(() => {
       fetchDetails()
    }, [params.id])
-
+// console.log(associatedStudents);
    const handleProfilePhotoChange = (file) => {
       console.log(file)
       let url = ''
@@ -407,7 +409,7 @@ export default function ParentProfile({ isOwn }) {
                                  return (
                                     <div key={idx} className={`${styles.student} ${activeIndex === idx ? styles.activeStudent : idx < activeIndex ? styles.previousStudent : styles.nextStudent} flex flex-col items-center px-10 lg:mb-10`}>
                                        <div className={styles.studentImageContainer}>
-                                          <img src='/images/student-1.png' />
+                                          <img className='w-[110px] h-[110px] rounded-full' src={student.photo} />
                                        </div>
                                        <div className='mt-6 opacity-60 font-inter text-center '
                                        // onClick={() => navigate('/profile/student/12')}
