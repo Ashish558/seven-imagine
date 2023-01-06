@@ -253,8 +253,8 @@ const ConceptSection = () => {
                                        </h5>
                                        <h3> {`${tutor.firstName} ${tutor.lastName}`} </h3>
                                        <p>
-                                          Lorem ipsum dolor sit amet, consectetur
-                                          adipiscing elit.
+                                          {/* Lorem ipsum dolor sit amet, consectetur
+                                          adipiscing elit. */}
                                        </p>
                                        <button className="btn-gold" style={{ padding: '7px 9px' }}
                                           onClick={() => tutor._id && navigate(`/profile/tutor/${tutor._id}`)} >
