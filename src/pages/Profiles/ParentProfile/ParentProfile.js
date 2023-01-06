@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import styles from '../style.module.css'
+import axios from 'axios'
 
 import ProfileCard from '../../../components/ProfileCard/ProfileCard'
 import ProfileImg from '../../../assets/images/profile.png'
@@ -17,6 +18,7 @@ import { useLazyGetUserDetailQuery, useUpdateProfileImageMutation } from '../../
 import { useLazyGetSettingsQuery } from '../../../app/services/session'
 import { useSelector } from 'react-redux'
 import ProfilePhoto from '../../../components/ProfilePhoto/ProfilePhoto'
+import { BASE_URL, getAuthHeader } from '../../../app/constants/constants'
 
 const students = [
    {
@@ -239,7 +241,20 @@ export default function ParentProfile({ isOwn }) {
 
    const handleProfilePhotoChange = (file) => {
       console.log(file)
+      let url = ''
+      const formData = new FormData
+      formData.append('photo', file)
+      if (persona === 'admin') {
+         url = `${BASE_URL}api/user/admin/addphoto/${id} `
+      } else {
+         url = `${BASE_URL}api/user/addphoto`
+      }
+      axios.patch(url, formData, { headers: getAuthHeader() })
+         .then((res) => {
+            console.log(res)
+         })
    }
+
    if (Object.keys(user).length < 1) return
    if (Object.keys(userDetail).length < 1) return
    // if (userDetail === undefined) return

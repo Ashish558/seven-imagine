@@ -11,9 +11,9 @@ export default function ProfilePhoto({ src, handleChange }) {
    return (
       <div className={styles.imgContainer}>
          <img src={src} />
-         <input ref={inputref} type="file" name="myImage" className='hidden' accept="image/*" />
-         <div className={styles.cameraIcon} onClick={() => inputref.current.click()}
-            onChange={e => handleChange(e.target.files[0]) } >
+         <input ref={inputref} type="file" name="myImage" className='hidden' accept="image/*"
+          onChange={e => handleChange(e.target.files[0]) }  />
+         <div className={styles.cameraIcon} onClick={() => inputref.current.click()}>
             <img src={CameraIcon} />
          </div>
       </div>
