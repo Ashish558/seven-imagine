@@ -378,13 +378,13 @@ export default function StudentProfile({ isOwn }) {
                   <div className='col-span-2 flex  justify-center items-center  scrollbar-content overflow-x-auto lg:py-5 bg-primary-light px-4 py-5 rounded-15'>
                      <div className='flex flex-col items-center mb-3'>
                         {/* <p className='text-lg text-center text-primary font-semibold mb-5 text-[21px]'>Associated Parent</p> */}
-                        <EditableText editable={editable}
+                        <EditableText editable={persona === 'admin' ? true : false}
                            onClick={() => setToEdit({ ...toEdit, associatedParent: { ...toEdit.associatedParent, active: true } })}
                            text='Associated Parent'
                            className='text-[21px] mb-2 flex justify-start text-center' />
 
                         <div>
-                           <img src={ProfileImg} width="98px" height="98px" />
+                           <img src='/images/default.jpeg' className='rounded-full' width="98px" height="98px" />
                         </div>
                         <p className='font-bold text-[18px] opacity-[68%] mb-1'>
                            {Object.keys(associatedParent).length > 1 ? `${associatedParent.firstName} ${associatedParent.lastName}` : `${userDetail.FirstName} ${userDetail.LastName}`}
@@ -434,7 +434,7 @@ export default function StudentProfile({ isOwn }) {
                         body={
                            <div className='flex mt-5 lg:mt-5'>
                               <p className=' font-semibold text-[18px]'>
-                                 '-'
+                                 -
                               </p>
                            </div>
                         } />
