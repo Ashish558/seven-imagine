@@ -223,7 +223,6 @@ export default function ParentProfile({ isOwn }) {
          const students = await user.assiginedStudents.map(student => {
             getUserDetail({ id: student })
                .then(res => {
-                  console.log(res.data.data.user);
                   studentsData.push({
                      _id: res.data.data.user._id,
                      name: `${res.data.data.user.firstName} ${res.data.data.user.lastName}`,

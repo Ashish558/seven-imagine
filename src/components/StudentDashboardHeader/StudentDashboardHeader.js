@@ -76,7 +76,6 @@ const StudentDashboardHeader = () => {
       setAllFeedbacks(tempdata)
    }, [feedbacks])
 
-   console.log(images);
    const tutors = [
       { name: "Shivam Shrivasaba", designation: "Subject Tutoring at 17:00 on Nov 21" },
       { name: "Rohit Ransore", designation: "{{Service}} on MM/DD/YY HH:MM" },

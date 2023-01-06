@@ -101,8 +101,7 @@ export default function Calendar() {
    const [isEditable, setIsEditable] = useState(false)
    // console.log(sessionToEdit)
    const [associatedStudents, setAssociatedStudents] = useState([])
-   const { id } = useSelector(state => state.user)
-
+   const { id, timeZone: currentUserTImeZone } = useSelector(state => state.user)
    const time = formatAMPM(new Date)
 
    const exactTime = time.slice(0, time.indexOf(":")) + time.slice(time.indexOf("p"), time.length);
@@ -245,6 +244,13 @@ export default function Calendar() {
       });
    };
 
+   useEffect(() => {
+      // console.log(currentUserTImeZone);
+      if(timeZones.includes(currentUserTImeZone)){
+         setTimeZone(currentUserTImeZone)
+      }
+   }, [currentUserTImeZone])
+   
    useEffect(() => {
       if (persona == "admin" || persona === 'tutor') {
          setIsEditable(true)
@@ -443,7 +449,7 @@ export default function Calendar() {
       calendarAPI?.next();
    };
    const eventContent = (arg) => {
-      console.log(arg.event)
+      // console.log(arg.event)
       // console.log(new Date(arg.event._instance.range.start).getHours())
       let m = moment.tz(`${arg.event.start}`, "America/Los_Angeles").format();
       // console.log(new Date(m).getHours())
