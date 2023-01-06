@@ -60,8 +60,6 @@ const ParentDashboardHeader = () => {
 
          })
    }, [])
-
-   console.log(images)
     
    useEffect(() => {
       if (user.assiginedStudents === undefined) return

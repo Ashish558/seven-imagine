@@ -116,9 +116,15 @@ export default function Settings() {
    }
 
    const onRemoveTextImageTag = (item, key, idx) => {
-      console.log(item)
-      console.log(key)
-      console.log(idx)
+      // console.log(item)
+      // console.log(key)
+      // console.log(idx)
+      let updatedField = settingsData[key].filter((item, i) => i !== idx)
+      let updatedSetting = {
+         [key]: updatedField
+      }
+      // console.log(updatedSetting)
+      updateAndFetchsettings(updatedSetting)
    }
 
    const onRemoveFilter = (item, key, idx) => {
@@ -128,8 +134,6 @@ export default function Settings() {
       let updatedSetting = {
          [key]: updatedField
       }
-      console.log(updatedSetting)
-    
       updateAndFetchsettings(updatedSetting)
    }
 
@@ -151,14 +155,6 @@ export default function Settings() {
       }
       updateAndFetchsettings(updatedSetting)
    }
-
-   // const handleAddImage = (text, key) => {
-   //    let tempSettings = { ...settingsData }
-   //    let updatedSetting = {
-   //       [key]: [...tempSettings[key], text]
-   //    }
-   //    updateAndFetchsettings(updatedSetting)
-   // }
 
 
    const handleSessionAddTag = (text, key) => {
@@ -240,13 +236,12 @@ export default function Settings() {
          })
    }
 
-   const onRemoveImage = (item, i) => {
-      // console.log(item, i)
-      let updatedField = settingsData.offerImages.filter(text => text !== item)
+
+   const onRemoveImage = (link) => {
+      let updatedField = settingsData.offerImages.filter(item => item.image !== link)
       let updatedSetting = {
          offerImages: updatedField
       }
-      //   console.log(updatedSetting)
       updateAndFetchsettings(updatedSetting)
    }
 
@@ -258,7 +253,7 @@ export default function Settings() {
    if (Object.keys(settingsData).length === 0) return <></>
    const { classes, serviceSpecialisation, sessionTags, leadStatus, tutorStatus, offerImages, subscriptionCode, personality, interest } = settingsData
 
-   console.log(settingsData)
+   // console.log(settingsData)
 
    return (
       <>
