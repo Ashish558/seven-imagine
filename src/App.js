@@ -13,7 +13,7 @@ function App() {
 
    useEffect(() => {
       setLoading(true);
-      // console.log(localStorage.getItem('token'))
+     
       if (localStorage.getItem('token')) {
          fetchPersonalDetails()
             .then(res => {

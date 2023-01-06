@@ -304,6 +304,7 @@ export default function Signup() {
                                     firstName: e.target.value,
                                  })
                               }
+                              error={error.firstName}
                            />
                            <InputField
                               placeholder="Last Name "
@@ -318,6 +319,7 @@ export default function Signup() {
                                     lastName: e.target.value,
                                  })
                               }
+                              error={error.lastName}
                            />
                         </div>
 
