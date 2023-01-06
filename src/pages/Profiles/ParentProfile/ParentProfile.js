@@ -245,7 +245,7 @@ export default function ParentProfile({ isOwn }) {
       const formData = new FormData
       formData.append('photo', file)
       if (persona === 'admin') {
-         url = `${BASE_URL}api/user/admin/addphoto/${id} `
+         url = `${BASE_URL}api/user/admin/addphoto/${params.id} `
       } else {
          url = `${BASE_URL}api/user/addphoto`
       }
@@ -266,7 +266,8 @@ export default function ParentProfile({ isOwn }) {
                <div className={styles.profileCard}>
                   {/* <button className='absolute bg-[#D9BBFF] px-[14px] py-[12px] rounded-[8px] text-[#636363] text-[18px] font-medium top-[16px] left-[22px] flex gap-[12px] cursor-pointer'><img src={LeftIcon} alt="icon" /> Back</button> */}
                   <div className='rounded-t-40 bg-lightWhite lg:bg-transparent flex flex-col items-center relative'>
-                     <ProfilePhoto src={ProfileImg} handleChange={handleProfilePhotoChange} />
+                     <ProfilePhoto src={user.photo ? user.photo : '/images/default.jpeg'}
+                      handleChange={handleProfilePhotoChange} editable={editable} />
                      <div className='flex items-center mt-67 lg:mt-4'>
                         <EditableText text={`${user.firstName} ${user.lastName}`}
                            editable={editable}

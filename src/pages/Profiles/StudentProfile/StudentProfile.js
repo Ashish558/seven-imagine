@@ -22,6 +22,9 @@ import { useLazyGetUserDetailQuery } from '../../../app/services/users'
 import { useSelector } from 'react-redux'
 import ParentEditables from '../../Frames/Editables/ParentEditables/ParentEditables'
 import { useLazyGetSettingsQuery } from '../../../app/services/session'
+import ProfilePhoto from '../../../components/ProfilePhoto/ProfilePhoto'
+import axios from 'axios'
+import { BASE_URL, getAuthHeader } from '../../../app/constants/constants'
 const students = [
    {
       id: 1,
@@ -286,6 +289,22 @@ export default function StudentProfile({ isOwn }) {
          })
    }, [])
 
+   const handleProfilePhotoChange = (file) => {
+      // console.log(file)
+      let url = ''
+      const formData = new FormData
+      formData.append('photo', file)
+      if (persona === 'admin') {
+         url = `${BASE_URL}api/user/admin/addphoto/${params.id} `
+      } else {
+         url = `${BASE_URL}api/user/addphoto`
+      }
+      axios.patch(url, formData, { headers: getAuthHeader() })
+         .then((res) => {
+            console.log(res)
+            fetchDetails()
+         })
+   }
    // console.log(user)
    // console.log(userDetail.FirstName)
    console.log(associatedParent)
@@ -301,9 +320,8 @@ export default function StudentProfile({ isOwn }) {
                <div className={`${styles.profileCard} relative`}>
                   <div className='rounded-t-40 bg-lightWhite lg:bg-transparent flex flex-col items-center'>
                      {/* <button className='absolute bg-[#D9BBFF] px-[14px] py-[12px] rounded-[8px] text-[#636363] text-[18px] font-medium top-[16px] left-[22px] flex gap-[12px] cursor-pointer' onClick={() => window.history.back()}><img src={LeftIcon} alt="icon" /> Back</button> */}
-                     <div className={styles.imgContainer}>
-                        <img src={`/images/student-1.png`} />
-                     </div>
+                     <ProfilePhoto src={user.photo ? user.photo : '/images/default.jpeg'}
+                      handleChange={handleProfilePhotoChange} editable={editable} />
                      <div className='flex items-center mt-67 lg:mt-4 text-[#F3F5F7]'>
                         <EditableText text={`${user.firstName} ${user.lastName}`}
                            editable={editable}
