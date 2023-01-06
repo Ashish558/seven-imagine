@@ -16,17 +16,18 @@ import styles from './Login.module.css'
 import { useNavigate } from "react-router-dom";
 
 export default function Login({ setLoginFormActive }) {
-
+   const emailValidation = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
    const [isPasswordForgot, setIsPasswordForgot] = useState(false);
    const [resetPasswordActive, setResetPasswordActive] = useState(false);
    const [loginActive, setLoginActive] = useState(true);
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
+   const [error, setError] = useState({})
 
-   const [error, setError] = useState({
-      password: '',
-      email: ''
-   })
+   // const [error, setError] = useState({
+   //    password: '',
+   //    email: ''
+   // })
    const dispatch = useDispatch();
    const navigate = useNavigate();
 
@@ -105,7 +106,7 @@ export default function Login({ setLoginFormActive }) {
                         Icon={EmailIcon}
                         iconSize='medium'
                         placeholder="Email address"
-                        parentClassName="mb-6"
+                        parentClassName="mb-6 relative"
                         label="Email Address"
                         labelClassname="ml-2 mb-2"
                         inputClassName="bg-transparent"
@@ -139,7 +140,7 @@ export default function Login({ setLoginFormActive }) {
                      </p>
 
                      <button
-                        disabled={false}
+                        disabled={!(emailValidation.test(email) && password.length > 0)}
                         className="w-full bg-primaryDark disabled:bg-pink pt-3.5 pb-3.5 mt-12 rounded-10 text-white text-lg"
                         onClick={handleSubmit}
                      >

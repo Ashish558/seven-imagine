@@ -13,9 +13,10 @@ import RightIcon from '../../../assets/profile/right.svg'
 import EditableText from '../../../components/EditableText/EditableText'
 import { act } from 'react-dom/test-utils'
 import ParentEditables from '../../Frames/Editables/ParentEditables/ParentEditables'
-import { useLazyGetUserDetailQuery } from '../../../app/services/users'
+import { useLazyGetUserDetailQuery, useUpdateProfileImageMutation } from '../../../app/services/users'
 import { useLazyGetSettingsQuery } from '../../../app/services/session'
 import { useSelector } from 'react-redux'
+import ProfilePhoto from '../../../components/ProfilePhoto/ProfilePhoto'
 
 const students = [
    {
@@ -43,6 +44,7 @@ export default function ParentProfile({ isOwn }) {
 
    const [fetchSettings, settingsResp] = useLazyGetSettingsQuery()
    const [getUserDetail, userDetailResp] = useLazyGetUserDetailQuery()
+   const [updatePhoto, updatePhotoResp] = useUpdateProfileImageMutation()
 
    const navigate = useNavigate()
    const params = useParams()
@@ -235,7 +237,9 @@ export default function ParentProfile({ isOwn }) {
       fetchDetails()
    }, [params.id])
 
-   
+   const handleProfilePhotoChange = (file) => {
+      console.log(file)
+   }
    if (Object.keys(user).length < 1) return
    if (Object.keys(userDetail).length < 1) return
    // if (userDetail === undefined) return
@@ -247,9 +251,7 @@ export default function ParentProfile({ isOwn }) {
                <div className={styles.profileCard}>
                   {/* <button className='absolute bg-[#D9BBFF] px-[14px] py-[12px] rounded-[8px] text-[#636363] text-[18px] font-medium top-[16px] left-[22px] flex gap-[12px] cursor-pointer'><img src={LeftIcon} alt="icon" /> Back</button> */}
                   <div className='rounded-t-40 bg-lightWhite lg:bg-transparent flex flex-col items-center relative'>
-                     <div className={styles.imgContainer}>
-                        <img src={ProfileImg} />
-                     </div>
+                     <ProfilePhoto src={ProfileImg} handleChange={handleProfilePhotoChange} />
                      <div className='flex items-center mt-67 lg:mt-4'>
                         <EditableText text={`${user.firstName} ${user.lastName}`}
                            editable={editable}

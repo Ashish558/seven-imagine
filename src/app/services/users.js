@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_URL } from "../constants/constants";
+import { BASE_URL, getAuthHeader } from "../constants/constants";
 
 // 
 export const userServicesApi = createApi({
@@ -98,6 +98,14 @@ export const userServicesApi = createApi({
             },
          })
       }),
+      updateProfileImage: builder.mutation({
+         query: (body) => ({
+            url: `/api/user/addphoto`,
+            method: "PATCH",
+            body: body,
+            headers: getAuthHeader()
+         })
+      }),
       addUser: builder.mutation({
          query: (body) => ({
             url: `/api/user/addtutor`,
@@ -136,5 +144,6 @@ export const {
    useUpdateTutorDetailsMutation,
    usePostTutorDetailsMutation,
    useLazyGetPersonalDetailQuery,
-   useLazyGetInvoiceQuery
+   useLazyGetInvoiceQuery,
+   useUpdateProfileImageMutation
 } = userServicesApi;

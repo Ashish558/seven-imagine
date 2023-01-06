@@ -8,7 +8,7 @@ import SingleLedger from './SingleLedger/SingleLedger'
 const headers = [
    'ID', 'Title', 'Date', 'Amount Paid', 'Balance Change', 'Available Credit'
 ]
-export default function Ledger() {
+export default function Ledger({setLedgerVisible}) {
 
    const [fetchLedgers, ledgerResp] = useLazyGetParentLedgerQuery()
    const [ledgers, setLedgers] = useState([])
@@ -62,27 +62,32 @@ export default function Ledger() {
    // console.log(ledgers);
 
    return (
-      <div className='lg:ml-pageLeft bg-lightWhite min-h-screen pb-51'>
-         <div className='lg:px-5 lg:pt-10'>
+      <div className='bg-[#ffffffaf] w-screen h-full z-5000 absolute left-0 p-10'>
+         <div className='bg-lightWhite h-[90vh] overflow-y-auto rounded-7 z-5000'>
+            <div className='lg:px-5 lg:pt-10'>
+               <div className="text-right mb-10">
+                  <button onClick={() => setLedgerVisible(false)}>&times;</button>
+               </div>
 
-            <div className="flex justify-between items-center">
-               <p className="font-bold text-4xl text-primary-dark">
-                  Ledger
-               </p>
-               <PrimaryButton children={`Pay Now:  $${amountToPay}`} onClick={handlePay} />
+               <div className="flex justify-between items-center">
+                  <p className="font-bold text-4xl text-primary-dark">
+                     Ledger
+                  </p>
+                  <PrimaryButton children={`Pay Now:  $${amountToPay}`} onClick={handlePay} />
+               </div>
+
+               <div className='grid grid-cols-6 mt-[43px]'>
+                  {headers.map((head, idx) => {
+                     return <div key={idx} className='bg-primary py-[22px] text-white text-center px-4'> <p> {head} </p> </div>
+                  })}
+                  {
+                     ledgers.map(ledger => {
+                        return <SingleLedger key={ledger._id} {...ledger} toggleOpen={toggleOpen} />
+                     })
+                  }
+               </div>
+
             </div>
-
-            <div className='grid grid-cols-6 mt-[43px]'>
-               {headers.map((head, idx) => {
-                  return <div key={idx} className='bg-primary py-[22px] text-white text-center px-4'> <p> {head} </p> </div>
-               })}
-               {
-                  ledgers.map(ledger => {
-                     return <SingleLedger key={ledger._id} {...ledger} toggleOpen={toggleOpen} />
-                  })
-               }
-            </div>
-
          </div>
       </div>
    )
