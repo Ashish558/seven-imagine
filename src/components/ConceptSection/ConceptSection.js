@@ -277,7 +277,7 @@ const ConceptSection = () => {
             <div id={styles.practiceTestContainer}>
                <h2 className="mb-[6px]" id={styles.practiceTestHeader}>Practice Test</h2>
                <div id={styles.listedData}>
-                  <div
+                  {/* <div
                      className="flex items-center justify-between"
                      style={{ padding: "10px 0" }}
                   >
@@ -445,7 +445,7 @@ const ConceptSection = () => {
                            </div>
                         </div>
                      </div>
-                  </div>
+                  </div> */}
 
                </div>
             </div>

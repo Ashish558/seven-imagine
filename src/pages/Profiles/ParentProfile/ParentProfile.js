@@ -370,7 +370,7 @@ export default function ParentProfile({ isOwn }) {
                               </p>
                            </div>
                            <div className='flex-1'>
-                              <EditableText editable={editable}
+                              <EditableText editable={persona === 'admin' ? true : false}
                                  onClick={() => setToEdit({ ...toEdit, subscribeType: { ...toEdit.subscribeType, active: true } })}
                                  text='Subscription'
                                  className='text-21 justify-between'
@@ -389,7 +389,7 @@ export default function ParentProfile({ isOwn }) {
                      body={
                         <div className='flex py-49 h-full lg:flex-col scrollbar-content overflow-x-hidden lg:py-0'>
                            <p className='hidden lg:block text-21 text-primaryDark font-bold text-center mb-10'>
-                              <EditableText editable={true}
+                              <EditableText editable={persona === 'admin' ? true : false}
                                  onClick={() => setToEdit({ ...toEdit, associatedStudents: { ...toEdit.associatedStudents, active: true } })}
                                  text='Associated Students'
                                  className='lg:text-21 text-center' />
