@@ -186,6 +186,15 @@ export default function StudentProfile({ isOwn }) {
          active: false,
          interest: []
       },
+      schoolName: {
+         active: false,
+         schoolName: []
+      },
+      grade: {
+         active: false,
+         grade: []
+      },
+
    })
 
    const handleClose = () => {
@@ -215,7 +224,7 @@ export default function StudentProfile({ isOwn }) {
          .then(res => {
             console.log('response', res.data.data);
             const { firstName, lastName, phone, email } = res.data.data.user
-            const { service, accomodations, timeZone, birthyear, associatedParent, personality, interest } = res.data.data.userdetails
+            const { service, accomodations, timeZone, birthyear, associatedParent, personality, interest, schoolName, grade } = res.data.data.userdetails
             associatedParent && getUserDetail({ id: associatedParent })
                .then(res => {
                   const { firstName, lastName, _id, } = res.data.data.user
@@ -265,6 +274,14 @@ export default function StudentProfile({ isOwn }) {
                         interest: {
                            ...prev.interest,
                            interest,
+                        },
+                        schoolName: {
+                           ...prev.schoolName,
+                           schoolName
+                        },
+                        grade: {
+                           ...prev.grade,
+                           grade
                         },
                      }
                   })
@@ -332,13 +349,28 @@ export default function StudentProfile({ isOwn }) {
                            imgClass='ml-auto' />
                      </div>
                      <div className='flex items-center text-[#F3F5F7]'>
-                        <p className='font-semibold text-[22px] mr-4'>
-                           {/* 11th Grade */}
-                        </p>
-                        <p className='font-semibold text-[22px]'>
-                           {/* Cambridge High School */}
-                        </p>
+
+                        <EditableText text={`${userDetail.grade}`}
+                           editable={editable}
+                           onClick={() => setToEdit({ ...toEdit, grade: { ...toEdit.grade, active: true } })}
+                           className='text-21 capitalize justify-center text-[#F3F5F7] text-center font-bold text-21 mr-6'
+                           textClassName='flex-1'
+                           imgClass='ml-auto' />
+                        {/* <p className='font-semibold text-[22px] mr-4'>
+                           {userDetail.grade}
+                        </p> */}
+                        <EditableText text={`${userDetail.schoolName}`}
+                           editable={editable}
+                           onClick={() => setToEdit({ ...toEdit, schoolName: { ...toEdit.schoolName, active: true } })}
+                           className='text-21 capitalize justify-center text-[#F3F5F7] text-center font-bold text-21 mr-6'
+                           textClassName='flex-1'
+                           imgClass='ml-auto' />
+                        {/* <p className='font-semibold text-[22px]'>
+                           {userDetail.schoolName}
+                        </p> */}
+
                      </div>
+
                   </div>
                </div>
 
@@ -457,7 +489,7 @@ export default function StudentProfile({ isOwn }) {
                               </p>
                            </div>
                            <div className='mb-6'>
-                              <EditableText editable={editable}
+                              <EditableText editable={persona === 'admin' ? true : false}
                                  onClick={() => setToEdit({ ...toEdit, subscribeType: { ...toEdit.subscribeType, active: true } })}
                                  text='Subscription'
                                  textClassName="text-[21px]"
@@ -537,7 +569,7 @@ export default function StudentProfile({ isOwn }) {
                         <>
                            <EditableText editable={editable}
                               onClick={() => setToEdit({ ...toEdit, interest: { ...toEdit.interest, active: true } })}
-                              text='Interest'
+                              text='Interests'
                               className='text-lg mb-2' textClassName="flex-1 text-center text-[21px]" />
                            <div className='flex scrollbar-content max-h-[500px]  scrollbar-vertical flex-col overflow-x-auto'>
                               {settings && settings.interest.length > 0 && userDetail.interest.map((id, idx) => {

@@ -20,7 +20,7 @@ export default function ImageSlideshow({ images }) {
       <div className={styles.images}>
          {images.map((image, i) => {
             return (
-               <div className={`overflow-hidden ${styles.img} 
+               <div className={`overflow-hidden rounded-[20px] ${styles.img} 
                ${current === i ? styles.active : i < current ? styles.prev : styles.next}`}
                style={{backgroundImage : `url(${image.image})`, backgroundPosition: 'center'  }} >
 

@@ -39,15 +39,15 @@ const TutorCarousel = () => {
                         <div ley={idx} className="item pl-5">
                            <div className="flex items-center justify-center">
                               <div className="w-2/3">
-                                 <h5 className={styles.tag}>
+                                 {/* <h5 className={`opacity-0 ${styles.tag}`}>
                                     WIZARD TUTOR <br /> UNDERGRADUATE
-                                 </h5>
-                                 <h3 className="mt-2"> {`${tutor.firstName} ${tutor.lastName}`} </h3>
-                                 <p>
+                                 </h5> */}
+                                 <h3 className="mt-5 mb-5"> {`${tutor.firstName} ${tutor.lastName}`} </h3>
+                                 {/* <p className="opacity">
                                     Lorem ipsum dolor sit amet, consectetur
                                     adipiscing elit.
-                                 </p>
-                                 <button className="btn-gold"
+                                 </p> */}
+                                 <button className="btn-gold" style={{marginTop: '20px'}}
                                     onClick={() => tutor._id && navigate(`/profile/tutor/${tutor._id}`)} >View Profile</button>
                               </div>
                               <div className="w-1/3">

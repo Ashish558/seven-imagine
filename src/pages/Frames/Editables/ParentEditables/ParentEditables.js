@@ -8,7 +8,7 @@ import InputSelect from '../../../../components/InputSelect/InputSelect'
 import Modal from '../../../../components/Modal/Modal'
 import SimpleCalendar from '../../../../components/SimpleCalendar/SimpleCalendar'
 import Slider from '../../../../components/Slider/Slider'
-import { subjects, timeZones } from '../../../../constants/constants'
+import { grades, subjects, timeZones } from '../../../../constants/constants'
 import styles from './style.module.css'
 
 // 637b9df1e9beff25e9c2aa83
@@ -40,6 +40,16 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
       {
          name: 'timeZone',
          title: 'Time Zone',
+         api: 'userDetail',
+      },
+      {
+         name: 'schoolName',
+         title: 'School Name',
+         api: 'userDetail',
+      },
+      {
+         name: 'grade',
+         title: 'Grade',
          api: 'userDetail',
       },
       {
@@ -325,7 +335,7 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                // handleClose()
             })
       } else if (currentField.api === 'tutorDetail') {
-         if(reqBody.tutorLevel){
+         if (reqBody.tutorLevel) {
             const level = getLevel(reqBody.tutorLevel)
             reqBody.tutorLevel = level
          }
@@ -353,22 +363,22 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
 
    const getLevel = str => {
       const levels = ['ORANGE', 'PURPLE', 'BROWN', 'BLACK']
-      if(str === 'Level - 1'){
+      if (str === 'Level - 1') {
          return levels[0]
       }
-      if(str === 'Level - 2'){
+      if (str === 'Level - 2') {
          return levels[1]
       }
-      if(str === 'Level - 3'){
+      if (str === 'Level - 3') {
          return levels[2]
       }
-      if(str === 'Level - 4'){
+      if (str === 'Level - 4') {
          return levels[3]
-      }else{
+      } else {
          return ''
       }
    }
-   // console.log('toedit', currentToEdit)
+   console.log('toedit', currentToEdit)
    // console.log('setting', settings)
    // console.log('field', currentField)
    // console.log('sett', settings)
@@ -537,6 +547,37 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                               </div>
                            </div>
                         }
+                        {currentField.name === 'grade' &&
+                           <div>
+                              <div className='flex items-center mb-5 pt-6'>
+                                 {/* <p className='font-medium mr-4 min-w-[60px]'>  </p> */}
+                                 <InputSelect
+                                    optionData={grades}
+                                    labelClassname='hidden'
+                                    placeholder='Enter your Grade'
+                                    inputContainerClassName='text-sm pt-3 pb-3 px-5 bg-primary-50 border-0'
+                                    inputClassName='bg-transparent'
+                                    parentClassName='flex-1 ' type='text'
+                                    value={currentToEdit.grade}
+                                    onChange={val => setCurrentToEdit({ ...currentToEdit, grade: val })} />
+                              </div>
+                           </div>
+                        }
+                        {currentField.name === 'schoolName' &&
+                           <div>
+                              <div className='flex items-center mb-5 pt-6'>
+                                 {/* <p className='font-medium mr-4 min-w-[60px]'>  </p> */}
+                                 <InputField
+                                    labelClassname='hidden'
+                                    placeholder='Enter your Schol Name'
+                                    inputContainerClassName='text-sm pt-3 pb-3 px-5 bg-primary-50 border-0'
+                                    inputClassName='bg-transparent'
+                                    parentClassName='flex-1 ' type='text'
+                                    value={currentToEdit.schoolName}
+                                    onChange={e => setCurrentToEdit({ ...currentToEdit, schoolName: e.target.value })} />
+                              </div>
+                           </div>
+                        }
                         {currentField.name === 'timeZone' &&
                            <div>
                               <div className='flex items-center mb-5 pt-3 pb-5'>
@@ -698,12 +739,12 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                  // setStudent(item.value);
                                  console.log(val);
                                  setCurrentToEdit({
-                                     ...currentToEdit,
-                                      associatedParent: val._id,
-                                      FirstName: val.fname,
-                                      LastName: val.lname,
-                                      Email: val.email
-                                     })
+                                    ...currentToEdit,
+                                    associatedParent: val._id,
+                                    FirstName: val.fname,
+                                    LastName: val.lname,
+                                    Email: val.email
+                                 })
                                  // setCurrentToEdit({ ...currentToEdit, students: [... item._id] });
                               }} />
                         }

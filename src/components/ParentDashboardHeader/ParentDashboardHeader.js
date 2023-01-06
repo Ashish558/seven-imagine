@@ -58,7 +58,6 @@ const ParentDashboardHeader = () => {
                   })
             })
 
-
          })
    }, [])
 
@@ -117,7 +116,7 @@ const ParentDashboardHeader = () => {
                               Know More {">"}
                            </button>
                         </div>  */}
-                        <div className="w-full flex-1 h-full flex items-center px-2 pr-4" 
+                        <div className="w-full flex-1 h-full flex items-center" 
                         id={styles.exploreBgDisable}
                         style={{position: 'absolute', top: '0', left: '0'}} >
                            {/* <div className="relative w-full h-fll">
