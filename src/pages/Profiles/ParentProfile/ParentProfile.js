@@ -240,6 +240,7 @@ export default function ParentProfile({ isOwn }) {
       fetchDetails()
    }, [params.id])
 // console.log(associatedStudents);
+
    const handleProfilePhotoChange = (file) => {
       console.log(file)
       let url = ''
@@ -253,6 +254,7 @@ export default function ParentProfile({ isOwn }) {
       axios.patch(url, formData, { headers: getAuthHeader() })
          .then((res) => {
             console.log(res)
+            fetchDetails()
          })
    }
 

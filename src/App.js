@@ -19,11 +19,15 @@ function App() {
             .then(res => {
                console.log('personal Dedails', res.data)
                const { firstName, lastName, _id, amountToPay, credits } = res.data.data.user
-               const { timeZone } = res.data.data.userdetails
+               let timeZone = ''
+               if(res.data.data.userdetails){
+                  const  timeZone  = res.data.data.userdetails.timeZone
+               }
                setLoading(false);
                dispatch(updateIsLoggedIn(true));
                dispatch(updateUserDetails({
-                  firstName, lastName, id: _id, amountToPay, credits, timeZone
+                  firstName, lastName, id: _id, amountToPay, credits, 
+                  timeZone: timeZone ? timeZone : ''
                }))
             })
       } else {
