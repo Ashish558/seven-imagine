@@ -333,10 +333,10 @@ export default function StudentProfile({ isOwn }) {
                      </div>
                      <div className='flex items-center text-[#F3F5F7]'>
                         <p className='font-semibold text-[22px] mr-4'>
-                           11th Grade
+                           {/* 11th Grade */}
                         </p>
                         <p className='font-semibold text-[22px]'>
-                           Cambridge High School
+                           {/* Cambridge High School */}
                         </p>
                      </div>
                   </div>
