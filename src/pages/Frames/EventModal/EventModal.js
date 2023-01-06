@@ -493,7 +493,7 @@ export default function EventModal({
                            </div>
                         </div>
                      )}
-                     {persona === "parent" && (
+                     {/* {persona === "parent" && (
                         <div className="mr-4 mt-5 order-1 flex-1">
                            <p className="font-medium mb-1">
                               Session Feedback
@@ -511,7 +511,7 @@ export default function EventModal({
                               ))}
                            </div>
                         </div>
-                     )}
+                     )} */}
                   </div>
                   {persona !== "student" && persona !== "parent" && (
                      <>

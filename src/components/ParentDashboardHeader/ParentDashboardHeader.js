@@ -63,7 +63,7 @@ const ParentDashboardHeader = () => {
    }, [])
 
    console.log(images)
-   
+    
    useEffect(() => {
       if (user.assiginedStudents === undefined) return
       const fetch = async () => {
@@ -108,7 +108,7 @@ const ParentDashboardHeader = () => {
                <div className="flex" style={{ gap: 16 }}>
                   <div className="w-2/3 flex items-center" id={styles.explore}>
                      <div className="flex mx-auto">
-                        <div className="w-1/2" id={styles.exploreLeft}>
+                       {/* <div className="w-1/2" id={styles.exploreLeft}>
                            <h2 className="">
                               This fall get help from our Admission
                               Experts.
@@ -116,8 +116,10 @@ const ParentDashboardHeader = () => {
                            <button className="ml-[32px] text-sm 2xl:ml-[46px] bg-[#f3f5f7] rounded-[5px] py-[8px] px-[15px]">
                               Know More {">"}
                            </button>
-                        </div>
-                        <div className="w-1/2 flex items-center px-2 pr-4" id={styles.exploreBgDisable}>
+                        </div>  */}
+                        <div className="w-full flex-1 h-full flex items-center px-2 pr-4" 
+                        id={styles.exploreBgDisable}
+                        style={{position: 'absolute', top: '0', left: '0'}} >
                            {/* <div className="relative w-full h-fll">
                               {
                                  images.length > 0 ? <img src={images[0]} alt="" />
@@ -126,7 +128,7 @@ const ParentDashboardHeader = () => {
                               }
                            </div> */}{
                               images.length >= 1 &&
-                              <ImageSlideshow images={images} />
+                              <ImageSlideshow images={images} text='text' />
                            }
                         </div>
                      </div>

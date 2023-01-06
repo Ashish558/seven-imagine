@@ -35,7 +35,7 @@ const ConceptSection = () => {
    useEffect(() => {
       fetchTutors({ id })
          .then(res => {
-            res.data.tutors.length > 0 && setTutors(res.data.tutors)
+            // res.data.tutors.length > 0 && setTutors(res.data.tutors)
          })
    }, [])
 
@@ -241,16 +241,16 @@ const ConceptSection = () => {
 
                <div id={styles.tutor}>
                   <h2>Your Tutor</h2>
-                  { tutors.length >= 1 &&
+                  {tutors.length >= 1 ?
                      <OwlCarousel ref={tutorCarouselRef} className="owl-theme" loop margin={8} items={1}>
                         {
                            tutors.map((tutor, idx) => {
                               return (
                                  <div key={idx} className="item flex" style={{ width: "100%" }}>
                                     <div className="w-3/5">
-                                       <h5 className={styles.tag}>
+                                       {/* <h5 className={styles.tag}>
                                           WIZARD TUTOR | UNDERGRADUATE
-                                       </h5>
+                                       </h5> */}
                                        <h3> {`${tutor.firstName} ${tutor.lastName}`} </h3>
                                        <p>
                                           {/* Lorem ipsum dolor sit amet, consectetur
@@ -270,6 +270,10 @@ const ConceptSection = () => {
                         }
 
                      </OwlCarousel>
+                     :
+                     <p className="text-white font-semibold pt-8 not-italic pb-8 text-lg" style={{ fontSize: '18px', fontStyle: 'normal', fontWeight: '500' }} >
+                        No tutors to display
+                     </p>
                   }
                </div>
 

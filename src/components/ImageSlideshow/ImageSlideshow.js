@@ -8,19 +8,27 @@ export default function ImageSlideshow({ images }) {
    useEffect(() => {
       const intervalId = setInterval(() => {
          setCurrent(idx => {
-           return idx < images.length - 1 ? idx + 1 : 0
+            return idx < images.length - 1 ? idx + 1 : 0
          })
       }, 4000);
 
       return () => clearInterval(intervalId)
    }, [])
 
-
+// console.log(images);
    return (
       <div className={styles.images}>
          {images.map((image, i) => {
-            return <img key={i} src={image.image} className={`${styles.img} 
-            ${current === i ? styles.active : i < current ? styles.prev : styles.next}`} />
+            return (
+               <div className={`overflow-hidden ${styles.img} 
+               ${current === i ? styles.active : i < current ? styles.prev : styles.next}`}
+               style={{backgroundImage : `url(${image.image})`, backgroundPosition: 'center'  }} >
+
+                  {/* <img key={i} src={image.image}
+                   /> */}
+
+               </div>
+            )
          })}
       </div>
    )

@@ -62,11 +62,11 @@ export default function Ledger({setLedgerVisible}) {
    // console.log(ledgers);
 
    return (
-      <div className='bg-[#ffffffaf] w-screen h-full z-5000 absolute left-0 p-10'>
-         <div className='bg-lightWhite h-[90vh] overflow-y-auto rounded-7 z-5000'>
+      <div className='bg-[#ffffffaf] w-[90%] rounded-lg ml-auto mr-auto h-full z-5000 absolute left-0 p-10' style={{position: 'absolute', left: '50%', transform: 'translateX(calc(-50% + 30px))'}} >
+         <div className='bg-lightWhite h-[90vh] scrollbar-content scrollbar-vertical overflow-y-auto rounded-lg z-5000'>
             <div className='lg:px-5 lg:pt-10'>
                <div className="text-right mb-10">
-                  <button onClick={() => setLedgerVisible(false)}>&times;</button>
+                  <button className='scale-150	' onClick={() => setLedgerVisible(false)}>&times;</button>
                </div>
 
                <div className="flex justify-between items-center">
