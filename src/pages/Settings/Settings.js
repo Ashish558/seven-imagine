@@ -128,6 +128,8 @@ export default function Settings() {
       let updatedSetting = {
          [key]: updatedField
       }
+      console.log(updatedSetting)
+    
       updateAndFetchsettings(updatedSetting)
    }
 
@@ -420,6 +422,7 @@ export default function Settings() {
                            sliceText={true}
                            items={offerImages.map(item => item.image)}
                            onRemoveFilter={onRemoveImage}
+                           // onRemoveFilter={onRemoveFilter}
                            className='pt-1 pb-1 mr-15' />
                      </div>
                   } />  

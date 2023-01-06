@@ -10,17 +10,9 @@ export default function SearchNames({ setStudent, setData, student, tutor, data,
 
    const [fetchStudents, studentResponse] = useLazyGetStudentsByNameQuery();
    const [fetchTutorStudents, tutorStudentsResp] = useLazyGetTutorStudentsByNameQuery();
-   const { firstName, lastName, id } = useSelector(state => state.user)
    const [students, setStudents] = useState([]);
    const persona = sessionStorage.getItem('role')
    // console.log(user);
-
-   useEffect(() => {
-      if (persona === 'tutor') {
-         setTutor(`${firstName} ${lastName}`);
-         setData({ ...data, tutorId: id });
-      }
-   }, [persona])
 
    useEffect(() => {
       if (tutor.length > 0) {

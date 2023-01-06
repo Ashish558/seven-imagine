@@ -124,6 +124,7 @@ export default function Calendar() {
       useLazyGetSessionsQuery();
    const [fetchStudents, fetchStudentsResp] = useLazyGetTutorStudentsQuery();
    const [getUserDetail, userDetailResp] = useLazyGetUserDetailQuery()
+   const { firstName, lastName, id: currentUserId } = useSelector(state => state.user)
 
    const [names, setNames] = useState([]);
    const [name, setName] = useState("");
@@ -246,11 +247,11 @@ export default function Calendar() {
 
    useEffect(() => {
       // console.log(currentUserTImeZone);
-      if(timeZones.includes(currentUserTImeZone)){
+      if (timeZones.includes(currentUserTImeZone)) {
          setTimeZone(currentUserTImeZone)
       }
    }, [currentUserTImeZone])
-   
+
    useEffect(() => {
       if (persona == "admin" || persona === 'tutor') {
          setIsEditable(true)
@@ -482,7 +483,15 @@ export default function Calendar() {
 
    const handleDateClick = (arg) => {
       // console.log(arg)
-      setDefaultEventData({ date: arg.date })
+      if (persona === 'tutor') {
+         setDefaultEventData({
+            date: arg.date,
+            tutorId: currentUserId,
+            tutorName: `${firstName} ${lastName}`
+         })
+      } else {
+         setDefaultEventData({ date: arg.date })
+      }
       if (persona === "admin" || persona === "tutor") {
          setEventModalActive(true);
       }
@@ -673,6 +682,13 @@ export default function Calendar() {
       // calendarRef.current.setOption('timeZone', timeZone)
    }, [timeZone, events.length])
 
+   useEffect(() => {
+      if (persona === 'tutor') {
+         // setTutor(`${firstName} ${lastName}`);
+         // setData({ ...data, tutorId: currentUserId });
+      }
+   }, [persona, id])
+
    // console.log(events);
    // console.log(eventDetails);
 
@@ -705,7 +721,7 @@ export default function Calendar() {
                                        style={{
                                           backgroundColor: '#ebe7ff'
                                           //  getBackground(students.length, idx),
-                                          
+
                                        }}
                                     ></div>
                                  </div>

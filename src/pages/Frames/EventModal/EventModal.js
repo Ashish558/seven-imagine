@@ -16,8 +16,10 @@ import {
 } from "../../../utils/utils";
 import InputSearch from "../../../components/InputSearch/InputSearch";
 import {
+   useLazyCancelSessionQuery,
    useLazyGetSessionFeedbackQuery,
    useLazyGetSettingsQuery,
+   useLazySessionMissedQuery,
    useLazyUpdateSessionStatusQuery,
    useSubmitFeedbackMutation,
    useSubmitSessionMutation,
@@ -130,6 +132,9 @@ export default function EventModal({
    const [updateSessionStatus, updateSessionStatusResp] = useLazyUpdateSessionStatusQuery();
    const [submitFeedback, submitFeedbackResp] = useSubmitFeedbackMutation();
    const [getSessionFeedback, getSessionFeedbackResp] = useLazyGetSessionFeedbackQuery();
+   const [cancelSession, cancelSessionResp] = useLazyCancelSessionQuery()
+   const [missSession, missSessionResp] = useLazySessionMissedQuery()
+
    const [inputFeedback, setInputFeedback] = useState(0)
 
    const [student, setStudent] = useState("");
@@ -152,8 +157,8 @@ export default function EventModal({
 
    useEffect(() => {
       if (defaultEventData !== null && !isUpdating) {
-         console.log(defaultEventData)
-         const { date } = defaultEventData
+         // console.log(defaultEventData)
+         const { date, tutorId, tutorName } = defaultEventData
          let formattedDate = date.getDate()
          if (formattedDate < 10) {
             formattedDate = `0${formattedDate}`
@@ -177,6 +182,8 @@ export default function EventModal({
          setData({
             ...data,
             date: defDate,
+            tutorId: tutorId ? tutorId : '',
+            tutorName: tutorName ? tutorName : '',
             time: {
                ...data.time,
                start: {
@@ -187,6 +194,7 @@ export default function EventModal({
                }
             },
          })
+         setTutor(tutorName ? tutorName : '')
 
       }
    }, [defaultEventData])
@@ -329,15 +337,57 @@ export default function EventModal({
 
    const updateSession = (reqBody) => {
       // console.log(sessionToUpdate)
-      if (reqBody.sessionStatus === "Completed") {
+      // console.log(reqBody)
+      let body = { ...reqBody }
+      if (body.sessionStatus === "Completed") {
          updateSessionStatus(sessionToUpdate._id)
             .then(res => {
+               if (res.error) return
+               updateUserSession({ id: sessionToUpdate._id, body: { sessionStatus: 'Completed', _id: sessionToUpdate._id } }).then(
+                  (res) => {
+                     console.log(res);
+                     refetchSessions()
+                     setEventModalActive(false);
+                  }
+               );
+            })
+      }
+      if (body.sessionStatus === "Missed") {
+         missSession(sessionToUpdate._id)
+            .then(res => {
+               if (res.error) return
+               updateUserSession({ id: sessionToUpdate._id, body: { sessionStatus: 'Missed', _id: sessionToUpdate._id } }).then(
+                  (res) => {
+                     console.log(res);
+                     refetchSessions()
+                     setEventModalActive(false);
+                  }
+               );
                console.log(res.data)
             })
       }
-      updateUserSession({ id: sessionToUpdate._id, body: { ...reqBody, _id: sessionToUpdate._id } }).then(
+      if (body.sessionStatus === "Cancelled") {
+         cancelSession(sessionToUpdate._id)
+            .then(res => {
+               if (res.error) {
+                  if (res.error.data && res.error.data.message) {
+                     console.log(res.error.data.message);
+                     alert(res.error.data.message)
+                  }
+               }
+               updateUserSession({ id: sessionToUpdate._id, body: { sessionStatus: 'Cancelled', _id: sessionToUpdate._id } }).then(
+                  (res) => {
+                     console.log(res);
+                     refetchSessions()
+                     setEventModalActive(false);
+                  }
+               );
+            })
+      }
+      delete body['sessionStatus']
+      updateUserSession({ id: sessionToUpdate._id, body: { ...body, _id: sessionToUpdate._id } }).then(
          (res) => {
-            console.log(res);
+            // console.log(res);
             refetchSessions()
             setEventModalActive(false);
          }
@@ -382,7 +432,7 @@ export default function EventModal({
          refetchSessions()
       })
    }
-
+// console.log(data);
    const handleFeedbackSubmit = (rating) => {
       // console.log(rating)
       // console.log(sessionToUpdate)
@@ -415,10 +465,10 @@ export default function EventModal({
          })
    }
    useEffect(() => {
-      if(!sessionToUpdate) return
+      if (!sessionToUpdate) return
       fetchFeedback()
    }, [sessionToUpdate])
-   
+
    // console.log(convertTime12to24(`${data.time.end.time} ${data.time.end.timeType}`))
    // console.log(convertTime12to24('1:00 AM'))
    // console.log(data.feedbackStars);
