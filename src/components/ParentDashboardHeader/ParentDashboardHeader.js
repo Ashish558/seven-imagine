@@ -31,7 +31,7 @@ const ParentDashboardHeader = () => {
    const [selectedStudent, setSelectedStudent] = useState(null)
 
    const navigate = useNavigate()
-//  localStorage
+//  sessionStorage
    const { id, amountToPay, credits } = useSelector(state => state.user)
  
    useEffect(() => {

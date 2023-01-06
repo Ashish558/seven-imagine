@@ -25,7 +25,7 @@ export const dashboardServicesApi = createApi({
       }),
       getFeedbacks: builder.query({
          query: () => ({
-            url: `/api/feedback/${localStorage.getItem('userId')}`,
+            url: `/api/feedback/${sessionStorage.getItem('userId')}`,
             method: "GET",
             headers: getAuthHeader()
          }),

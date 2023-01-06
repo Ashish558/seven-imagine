@@ -54,7 +54,7 @@ export default function StudentTest() {
    const [allTests, setAllTests] = useState([])
    const [testDetails, setTestDetails] = useState([])
 
-   const persona = localStorage.getItem("role");
+   const persona = sessionStorage.getItem("role");
 
    useEffect(() => {
       getResponse({id: '63b567682cbfe817fe551afb'})

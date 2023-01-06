@@ -51,7 +51,7 @@ export default function ParentProfile({ isOwn }) {
    const navigate = useNavigate()
    const params = useParams()
 
-   const persona = localStorage.getItem('role')
+   const persona = sessionStorage.getItem('role')
    // console.log(id)
 
    useEffect(() => {

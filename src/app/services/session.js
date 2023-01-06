@@ -111,6 +111,21 @@ export const sessionServicesApi = createApi({
             headers: getAuthHeader()
          })
       }),
+      getSessionFeedback: builder.query({
+         query: (id) => ({
+            url: `/api/feedback/session/${id}`,
+            method: "GET",
+            headers: getAuthHeader()
+         })
+      }),
+      
+      getStudentFeedback: builder.query({
+         query: (body) => ({
+            url: `/api/feedback/student/${body.id}`,
+            method: "GET",
+            headers: getAuthHeader()
+         })
+      }),
 
    }),
 });
@@ -127,5 +142,7 @@ export const {
    useUpdateSessionMutation,
    useLazyGetTutorStudentsQuery,
    useLazyUpdateSessionStatusQuery,
-   useSubmitFeedbackMutation
+   useSubmitFeedbackMutation,
+   useLazyGetSessionFeedbackQuery,
+   useLazyGetStudentFeedbackQuery
 } = sessionServicesApi;

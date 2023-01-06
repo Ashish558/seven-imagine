@@ -58,7 +58,7 @@ export const adminServicesApi = createApi({
          query: (body) => ({
             url: `/api/test/getans/${body.id}`,
             method: "GET",
-            params: {userId:localStorage.getItem('userId') },
+            params: {userId:sessionStorage.getItem('userId') },
             headers: getAuthHeader()
          })
       }),

@@ -13,7 +13,7 @@ export default function NavLink({ width, icon: Icon, path, parentClassName }) {
 
    const handleNavigate = () => {
       if(path === '/exit') {
-         localStorage.clear()
+         sessionStorage.clear()
          navigate('/')
          dispatch(updateIsLoggedIn(false))
       }else{
