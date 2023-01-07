@@ -16,9 +16,10 @@ import { act } from 'react-dom/test-utils'
 import ParentEditables from '../../Frames/Editables/ParentEditables/ParentEditables'
 import { useLazyGetUserDetailQuery, useUpdateProfileImageMutation } from '../../../app/services/users'
 import { useLazyGetSettingsQuery } from '../../../app/services/session'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import ProfilePhoto from '../../../components/ProfilePhoto/ProfilePhoto'
 import { BASE_URL, getAuthHeader } from '../../../app/constants/constants'
+import { updateTimeZone } from '../../../app/slices/user'
 
 const students = [
    {
@@ -48,6 +49,7 @@ export default function ParentProfile({ isOwn }) {
    const [getUserDetail, userDetailResp] = useLazyGetUserDetailQuery()
    const [updatePhoto, updatePhotoResp] = useUpdateProfileImageMutation()
 
+   const dispatch = useDispatch()
    const navigate = useNavigate()
    const params = useParams()
 
@@ -210,6 +212,11 @@ export default function ParentProfile({ isOwn }) {
             closeModal && handleClose()
          })
    }
+
+   useEffect(() => {
+      if (userDetail.timeZone === undefined) return
+      dispatch(updateTimeZone({ timeZone: userDetail.timeZone }))
+   }, [userDetail.timeZone])
 
    // console.log('userdetail', userDetail)
    // console.log('user', user) 

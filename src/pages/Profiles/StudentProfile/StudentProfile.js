@@ -19,12 +19,13 @@ import InterestThreeIcon from '../../../assets/images/int-3.svg'
 import SubjectSlider from '../../../components/SubjectSlider/SubjectSlider'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useLazyGetUserDetailQuery } from '../../../app/services/users'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import ParentEditables from '../../Frames/Editables/ParentEditables/ParentEditables'
 import { useLazyGetSettingsQuery } from '../../../app/services/session'
 import ProfilePhoto from '../../../components/ProfilePhoto/ProfilePhoto'
 import axios from 'axios'
 import { BASE_URL, getAuthHeader } from '../../../app/constants/constants'
+import { updateTimeZone } from '../../../app/slices/user'
 const students = [
    {
       id: 1,
@@ -120,7 +121,7 @@ export default function StudentProfile({ isOwn }) {
 
    const navigate = useNavigate()
    const [editable, setEditable] = useState(false)
-
+   const dispatch = useDispatch()
    const { role: persona } = useSelector(state => state.user)
 
    const [user, setUser] = useState({})
@@ -394,6 +395,12 @@ export default function StudentProfile({ isOwn }) {
          return (userDetail.actScores.english + userDetail.actScores.maths + userDetail.actScores.reading + userDetail.actScores.science) / 4
       }
    }
+
+   useEffect(() => {
+      console.log(userDetail.timeZone);
+      if (userDetail.timeZone === undefined) return
+      dispatch(updateTimeZone({ timeZone: userDetail.timeZone }))
+   }, [userDetail.timeZone])
 
    // console.log(user)
    // console.log(userDetail)

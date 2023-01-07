@@ -27,8 +27,8 @@ import InputSelect from "../../components/InputSelect/InputSelect";
 import useOutsideAlerter from "../../hooks/useOutsideAlerter";
 import { useLazyGetSettingsQuery } from "../../app/services/session";
 import { validateOtherDetails, validateSignup } from "./utils/util";
-import { useLazyGetTutorDetailsQuery } from "../../app/services/users";
-import { useNavigate } from "react-router-dom";
+import { useLazyGetTutorDetailsQuery, useLazyGetUserDetailQuery } from "../../app/services/users";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function Signup() {
    const [frames, setFrames] = useState({
@@ -96,10 +96,17 @@ export default function Signup() {
    useEffect(() => {
       window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
    }, [frames])
+
    const [signupUser, signupUserResp] = useSignupUserMutation();
    const [addUserDetails, addUserDetailsResp] = useAddUserDetailsMutation();
    const [getUserDetail, userDetailResp] = useLazyGetTutorDetailsQuery()
    const [count, setCount] = useState(0);
+
+   const [isLinkedEmail, setIsLinkedEmail] = useState(false)
+   const [linkedUserId, setLinkedUserId] = useState('')
+
+   const [linkedEmailDetails, setLinkedEmailDetails] = useState({})
+   const [searchParams, setSearchParams] = useSearchParams()
 
    const [persona, setPersona] = useState("");
    const [currentStep, setcurrentStep] = useState(1);
@@ -108,6 +115,38 @@ export default function Signup() {
    const [apCourses, setApCourses] = useState(apQuestions);
    const [motive, setMotive] = useState(motivesList);
    const [hearAboutUs, setHearAboutUs] = useState(hearAboutUslist);
+   const [getDetails, getDetailsResp] = useLazyGetUserDetailQuery()
+
+   useEffect(() => {
+      const paramsUserId = searchParams.get('userId')
+      getDetails({ id: paramsUserId })
+         .then(res => {
+            if (res.error) {
+               return console.log(res.error)
+            }
+            // setIsLinkedEmail(true)
+            const { user, userdetails } = res.data.data
+            let user_detail = { ...userdetails }
+            // let userDetails = res.data.data
+            console.log('user', user);
+            console.log('userdetails', userdetails);
+            user_detail.Email = user.email
+            user_detail.FirstName = user.firstName
+            user_detail.LastName = user.lastName
+            user_detail.userType = user.role === 'student' ? 'parent' : 'student'
+            console.log('updated', user_detail);
+
+            setValues({
+               ...values,
+               email: userdetails.Email,
+               firstName: userdetails.FirstName,
+               lastName: userdetails.LastName,
+            })
+            setLinkedEmailDetails(user_detail)
+         })
+   }, [])
+
+
 
    //temparory
    const [redirectLink, setRedirectLink] = useState("");
@@ -185,7 +224,6 @@ export default function Signup() {
       })
    }
 
-
    const handleClick = () => {
 
       const promiseState = async state => new Promise(resolve => {
@@ -223,20 +261,50 @@ export default function Signup() {
                      }
                   }
                   console.log(res);
-                  setRedirectLink(res.data.link);
-                  setValues({ ...values, userId: res.data.userId });
-                  setFrames({
-                     ...frames,
-                     signupActive: false,
-                     selectPersona: true,
-                  });
+                  // if (isLinkedEmail) {
+                  //    addLinkedEmailDetails()
+                  //    // setLinkedUserId(res.data.userId)
+                  //    addLinkedEmailDetails(res.data.userId)
+                  // } 
+                  // else {
+                     setRedirectLink(res.data.link);
+                     setValues({ ...values, userId: res.data.userId });
+                     setFrames({
+                        ...frames,
+                        signupActive: false,
+                        selectPersona: true,
+                     });
+                  // }
                })
             }
 
 
          })
-
    };
+
+   useEffect(() => {
+      // addLinkedEmailDetails()
+   }, [])
+
+   // const addLinkedEmailDetails = (user_id) => {
+   //    if (!user_id) return
+   //    console.log(user_id);
+   //    console.log(linkedEmailDetails)
+   //    let details = { ...linkedEmailDetails }
+   //    delete details['_id']
+   //    delete details['__v']
+   //    delete details['interest']
+   //    delete details['personality']
+   //    delete details['subjects']
+   //    addUserDetails({ userId: user_id, body: details }).then((res) => {
+   //       console.log(res);
+   //       if (res.error) {
+   //          alert('something went wrong')
+   //          return
+   //       }
+   //       alert('Signup successful login to continue')
+   //    });
+   // }
 
    const addDetails = () => {
       const reqBody = {
@@ -249,7 +317,7 @@ export default function Signup() {
          userType: persona,
       };
       console.log(values.userId);
- 
+
       sessionStorage.clear()
       addUserDetails({ userId: values.userId, body: reqBody }).then((res) => {
          console.log(res);
