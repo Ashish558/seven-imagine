@@ -7,7 +7,8 @@ const initialState = {
   lastName: '',
   credits: 0,
   amountToPay: 0,
-  timeZone: ''
+  timeZone: '',
+  role: '',
 };
 
 const user = createSlice({
@@ -24,6 +25,7 @@ const user = createSlice({
       state.amountToPay = payload.amountToPay;
       state.credits = payload.credits;
       state.timeZone = payload.timeZone;
+      state.role = payload.role;
     },
   },
 });

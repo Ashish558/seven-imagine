@@ -16,6 +16,7 @@ import { useAddPdfMutation, useAddTestMutation } from "../../app/services/test";
 import { BASE_URL } from "../../app/constants/constants";
 import StudentTest from "../StudentTest/StudentTest";
 import FilterItems from "../../components/FilterItems/filterItems";
+import { useSelector } from "react-redux";
 
 const optionData = ["option 1", "option 2", "option 3", "option 4", "option 5"];
 const testTypeOptions = ["SAT", "ACT"];
@@ -53,7 +54,7 @@ export default function AllTests() {
    }
    const closeRemoveModal = () => setRemoveQuestionModal(false);
 
-   const persona = sessionStorage.getItem("role");
+   const {role : persona} = useSelector(state => state.user)
 
    const openRemoveTestModal = (item) => {
       setRemoveQuestionModal(true);

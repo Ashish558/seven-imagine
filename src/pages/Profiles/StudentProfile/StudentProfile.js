@@ -120,7 +120,9 @@ export default function StudentProfile({ isOwn }) {
 
    const navigate = useNavigate()
    const [editable, setEditable] = useState(false)
-   const persona = sessionStorage.getItem('role')
+
+   const {role : persona } = useSelector(state => state.user)
+
    const [user, setUser] = useState({})
    const [userDetail, setUserDetail] = useState({})
    const [settings, setSettings] = useState({})
@@ -194,7 +196,18 @@ export default function StudentProfile({ isOwn }) {
          active: false,
          grade: []
       },
-
+      satScores: {
+         active: false,
+         verbalScore: 60,
+         MathsScore: 50
+      },
+      actScores: {
+         active: false,
+         mathScore: 60,
+         englishScore: 60,
+         readingScore: 50,
+         englishScore: 50
+      },
    })
 
    const handleClose = () => {
@@ -223,13 +236,14 @@ export default function StudentProfile({ isOwn }) {
       getUserDetail({ id: userId })
          .then(res => {
             console.log('response', res.data.data);
-            const { firstName, lastName, phone, email } = res.data.data.user
-            const { service, accomodations, timeZone, birthyear, associatedParent, personality, interest, schoolName, grade } = res.data.data.userdetails
+            const { firstName, lastName, phone, email, associatedParent } = res.data.data.user
+            const { service, accomodations, timeZone, birthyear, personality, interest, schoolName, grade } = res.data.data.userdetails
             associatedParent && getUserDetail({ id: associatedParent })
                .then(res => {
                   const { firstName, lastName, _id, } = res.data.data.user
                   setAssociatedParent({
-                     firstName, lastName, _id
+                     firstName, lastName, _id,
+                     photo: res.data.data.user.photo ? res.data.data.user.photo : '/images/default.jpeg'
                   })
                })
             setUser(res.data.data.user)
@@ -324,7 +338,7 @@ export default function StudentProfile({ isOwn }) {
    }
    // console.log(user)
    // console.log(userDetail)
-   // console.log(associatedParent)
+   // console.log('associatedParent', associatedParent)
    // console.log(settings)
 
    if (Object.keys(user).length < 1) return
@@ -410,13 +424,14 @@ export default function StudentProfile({ isOwn }) {
                   <div className='col-span-2 flex  justify-center items-center  scrollbar-content overflow-x-auto lg:py-5 bg-primary-light px-4 py-5 rounded-15'>
                      <div className='flex flex-col items-center mb-3'>
                         {/* <p className='text-lg text-center text-primary font-semibold mb-5 text-[21px]'>Associated Parent</p> */}
-                        <EditableText editable={persona === 'admin' ? true : false}
+                        <EditableText
+                           editable={persona === 'admin' ? true : false}
                            onClick={() => setToEdit({ ...toEdit, associatedParent: { ...toEdit.associatedParent, active: true } })}
                            text='Associated Parent'
                            className='text-[21px] mb-2 flex justify-start text-center' />
 
-                        <div>
-                           <img src='/images/default.jpeg' className='rounded-full' width="98px" height="98px" />
+                        <div className='w-[98px] h-[98px]'>
+                           <img src={associatedParent.photo ? associatedParent.photo : ''} className='rounded-full w-full h-full' width="98px" height="98px" />
                         </div>
                         <p className='font-bold text-[18px] opacity-[68%] mb-1'>
                            {Object.keys(associatedParent).length > 1 ? `${associatedParent.firstName} ${associatedParent.lastName}` : `${userDetail.FirstName} ${userDetail.LastName}`}
@@ -525,15 +540,19 @@ export default function StudentProfile({ isOwn }) {
                            <div className='flex scrollbar-content max-h-[500px]  scrollbar-vertical flex-col row-span-2 overflow-x-auto scrollbar-content h-[450px]'>
                               {settings && settings.personality && settings.personality.length > 0 && userDetail.personality && userDetail.personality.map((id, idx) => {
                                  return (
-                                    <div key={idx} className='flex flex-col items-center mb-10'>
-                                       <div className='flex h-90 w-90 rounded-full  items-center justify-center mb-3' >
-                                          <img className='max-w-[90px] max-h-[90px]' src={settings.personality.find(item => item._id === id).image}
-                                          />
+                                    settings.personality.find(item => item._id === id) ?
+                                       <div key={idx} className='flex flex-col items-center mb-10'>
+                                          <div className='flex h-90 w-90 rounded-full  items-center justify-center mb-3' >
+                                             <img className='max-w-[90px] max-h-[90px]'
+                                                src={settings.personality.find(item => item._id === id) ? settings.personality.find(item => item._id === id).image :
+                                                   ''}
+                                             />
+                                          </div>
+                                          <p className='opacity-70 font-semibold text-lg'>
+                                             {settings.personality.find(item => item._id === id) ? settings.personality.find(item => item._id === id).text : <></>}
+                                          </p>
                                        </div>
-                                       <p className='opacity-70 font-semibold text-lg'>
-                                          {settings.personality.find(item => item._id === id).text}
-                                       </p>
-                                    </div>
+                                       : <></>
                                  )
                               })}
                            </div>
@@ -547,7 +566,12 @@ export default function StudentProfile({ isOwn }) {
                         body={
                            <>
                               <SubjectSlider totalMarks={'-'} outOf={'-'}
-                                 header="Official SAT Scores"
+                                 header={
+                                    <EditableText editable={editable}
+                                       onClick={() => setToEdit({ ...toEdit, satScores: { ...toEdit.satScores, active: true } })}
+                                       text='Official SAT Scores'
+                                       className='text-lg mb-2' textClassName="flex-1 text-center text-[21px]" />
+                                 }
                                  subjects={subjects1} title='Cumilative Score'
                               />
                            </>
@@ -558,7 +582,12 @@ export default function StudentProfile({ isOwn }) {
                         body={
                            <>
                               <SubjectSlider totalMarks={'-'} outOf={'-'}
-                                 header="Official ACT Scores"
+                                 header={
+                                    <EditableText editable={editable}
+                                       onClick={() => setToEdit({ ...toEdit, actScores: { ...toEdit.actScores, active: true } })}
+                                       text='Official ACT Scores'
+                                       className='text-lg mb-2' textClassName="flex-1 text-center text-[21px]" />
+                                 }
                                  subjects={subjects2} title='Cumilative Score'
                               />
                            </>
@@ -574,15 +603,17 @@ export default function StudentProfile({ isOwn }) {
                            <div className='flex scrollbar-content max-h-[500px]  scrollbar-vertical flex-col overflow-x-auto'>
                               {settings && settings.interest.length > 0 && userDetail.interest.map((id, idx) => {
                                  return (
-                                    <div key={idx} className='flex flex-col items-center mb-10'>
-                                       <div className='flex h-90 w-90 rounded-full  items-center justify-center mb-3' >
-                                          <img className='max-w-[90px] max-h-[90px]' src={settings.interest.find(item => item._id === id).image}
-                                          />
+                                    settings.interest.find(item => item._id === id) ?
+                                       <div key={idx} className='flex flex-col items-center mb-10'>
+                                          <div className='flex h-90 w-90 rounded-full  items-center justify-center mb-3' >
+                                             <img className='max-w-[90px] max-h-[90px]' src={settings.interest.find(item => item._id === id) ? settings.interest.find(item => item._id === id).image : ''}
+                                             />
+                                          </div>
+                                          <p className='opacity-70 font-semibold text-lg'>
+                                             {settings.interest.find(item => item._id === id) ? settings.interest.find(item => item._id === id).text : <></>}
+                                          </p>
                                        </div>
-                                       <p className='opacity-70 font-semibold text-lg'>
-                                          {settings.interest.find(item => item._id === id).text}
-                                       </p>
-                                    </div>
+                                       : <></>
                                  )
                               })}
                            </div>

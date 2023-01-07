@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useLazyGetAssignedTestQuery, useLazyGetTestDetailsQuery, useLazyGetTestResponseQuery } from "../../app/services/test";
 import Modal from "../../components/Modal/Modal";
 import Table from "../../components/Table/Table";
@@ -54,7 +55,7 @@ export default function StudentTest() {
    const [allTests, setAllTests] = useState([])
    const [testDetails, setTestDetails] = useState([])
 
-   const persona = sessionStorage.getItem("role");
+   const {role : persona } = useSelector(state => state.user)
 
    useEffect(() => {
       getResponse({id: '63b567682cbfe817fe551afb'})

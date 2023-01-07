@@ -94,7 +94,9 @@ export default function Calendar() {
    const calendarRef = useRef(null);
    // console.log(calendarRef.current)
    const [events, setEvents] = useState([]);
-   const [persona, setPersona] = useState(sessionStorage.getItem("role"));
+
+   const {role : persona } = useSelector(state => state.user)
+
    // const [timeZones, setTimeZones] = useState(temptimeZones)
    const { id: sessionToEdit } = useParams()
    const [isEdited, setIsEdited] = useState(false)
@@ -263,10 +265,8 @@ export default function Calendar() {
    useEffect(() => {
       if (persona == "student") {
          // console.log(persona);
-         const userId = sessionStorage.getItem("userId");
-         const role = sessionStorage.getItem("role");
-         if (!userId) return;
-         fetchSessions(userId, role);
+         if (!currentUserId) return;
+         fetchSessions(currentUserId, persona);
       }
    }, [persona]);
 
@@ -541,7 +541,7 @@ export default function Calendar() {
    }, [name]);
 
    useEffect(() => {
-      const userId = sessionStorage.getItem("userId");
+      const userId = currentUserId
       if (persona === "tutor") {
          fetchStudents(userId).then((res) => {
             setEventDetails(res.data.data.session);

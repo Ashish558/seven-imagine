@@ -10,6 +10,7 @@ import shivam from '../../assets/images/tutors/shivam-shrivastab.png'
 import { useLazyGetParentTutorsQuery } from "../../app/services/users";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import InputSelect from "../InputSelect/InputSelect";
 
 
 const initData = [
@@ -28,6 +29,7 @@ const ConceptSection = () => {
    const [tutors, setTutors] = useState([])
    const tutorCarouselRef = useRef()
    const { id } = useSelector(state => state.user)
+   const [sub, setSub] = useState('Math')
 
    const [fetchTutors, fetchTutorsResp] = useLazyGetParentTutorsQuery()
    const navigate = useNavigate()
@@ -65,85 +67,13 @@ const ConceptSection = () => {
             <div className="flex items-center" >
                <h1>Concept Chart</h1>
 
-               <div className="dropdown ml-auto" id={styles.subject}>
-                  <label
-                     className="flex items-center text-sm"
-                     id={styles.dropdownHeading}
-                     tabIndex={0}
-                     htmlFor="subVisisbility"
-                  >
-                     {subject}
-                     <img className="mr-2" id={styles.arrowDown}
-                        src={arrowDown}
-                        style={subVisisbility === "visible"
-                           ? { transform: "rotate(180deg)" }
-                           : { transform: "rotate(0)" }
-                        }
-                        alt=""
-                     />
-                  </label>
-                  <input
-                     type="checkbox"
-                     className="hidden"
-                     id="subVisisbility"
-                     onChange={(e) => setSubVisisbility(e.target.checked === true ? "visible" : "hidden")}
-                  />
-                  <ul
-                     tabIndex={0}
-                     className={`dropdown-content menu p-2 shadow bg-base-100 rounded-box absolute bg-white z-10 text-sm w-52 ${subVisisbility}`}
-                  >
-                     <li
-                        onClick={(e) => {
-                           setSubject(e.target.innerText);
-                           setSubVisisbility("hidden");
-                           document
-                              .getElementById("subVisisbility")
-                              .click();
-                        }}
-                        className="py-2 cursor-pointer"
-                     >
-                        Math
-                     </li>
-                     <li
-                        onClick={(e) => {
-                           setSubject(e.target.innerText);
-                           setSubVisisbility("hidden");
-                           document
-                              .getElementById("subVisisbility")
-                              .click();
-                        }}
-                        className="py-2 cursor-pointer"
-                     >
-                        Physic
-                     </li>
-                     <li
-                        onClick={(e) => {
-                           setSubject(e.target.innerText);
-                           setSubVisisbility("hidden");
-                           document
-                              .getElementById("subVisisbility")
-                              .click();
-                        }}
-                        className="py-2 cursor-pointer"
-                     >
-                        Biology
-                     </li>
-                     <li
-                        onClick={(e) => {
-                           setSubject(e.target.innerText);
-                           setSubVisisbility("hidden");
-                           document
-                              .getElementById("subVisisbility")
-                              .click();
-                        }}
-                        className="py-2 cursor-pointer"
-                     >
-                        Chemistry
-                     </li>
-                  </ul>
-               </div>
+               <InputSelect value={sub} labelClassname='hidden'
+                  parentClassName='w-[200px] mr-5 ml-auto'
+                  inputContainerClassName='bg-[#d9d9d980] pt-2 pb-2'
+                  optionData={['Math', 'Grammar', 'Reading', 'Science']}
+                  onChange={val => setSub(val)} />
 
-               <div className="dropdown" id={styles.data}>
+               {/* <div className="dropdown" id={styles.data}>
                   <label
                      className="flex items-center text-sm"
                      id={styles.dropdownHeading}
@@ -223,7 +153,7 @@ const ConceptSection = () => {
                         Apr 20, 2022 - May 30, 2022
                      </li>
                   </ul>
-               </div>
+               </div> */}
 
             </div>
 

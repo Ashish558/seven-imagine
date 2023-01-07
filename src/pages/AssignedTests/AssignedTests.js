@@ -15,6 +15,7 @@ import { useLazyGetStudentsByNameQuery } from "../../app/services/session";
 import InputSearch from "../../components/InputSearch/InputSearch";
 import calendar from "./../../assets/calendar/calendar.svg"
 import AssignedTestIndicator from "../../components/AssignedTestIndicator/AssignedTestIndicator";
+import { useSelector } from "react-redux";
 
 const optionData = ["1", "2", "3", "4", "5"];
 const timeLimits = [30, 40, 50]
@@ -49,8 +50,7 @@ export default function AssignedTests() {
    const [assignTestModalActive, setAssignTestModalActive] = useState(false);
    const [resendModalActive, setResendModalActive] = useState(false);
 
-   const persona = sessionStorage.getItem("role");
-
+   const {role : persona} = useSelector(state => state.user)
    const handleClose = () => setAssignTestModalActive(false);
    
    const [filterData, setFilterData] = useState({

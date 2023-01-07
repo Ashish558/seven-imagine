@@ -185,6 +185,7 @@ export default function Signup() {
       })
    }
 
+
    const handleClick = () => {
 
       const promiseState = async state => new Promise(resolve => {
@@ -247,10 +248,16 @@ export default function Signup() {
          subscriptionCode: values.subscriptionCode,
          userType: persona,
       };
+      console.log(values.userId);
+ 
+      sessionStorage.clear()
       addUserDetails({ userId: values.userId, body: reqBody }).then((res) => {
          // console.log(res);
+         if (res.error) {
+            alert('something went wrong')
+            return
+         }
          window.open(redirectLink);
-         sessionStorage.clear()
       });
    };
    // console.log(error)

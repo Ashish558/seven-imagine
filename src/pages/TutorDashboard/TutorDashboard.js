@@ -40,23 +40,23 @@ const studentsArr = [
    },
 ]
 
-const studentsData = [
-   {
-      name: 'Joseph Brown',
-      img: StudentImg,
-      dueDate: 'June 20, 2022'
-   },
-   {
-      name: 'Joseph Brown',
-      img: StudentImg,
-      dueDate: 'June 20, 2022'
-   },
-   {
-      name: 'Joseph Brown',
-      img: StudentImg,
-      dueDate: 'June 20, 2022'
-   },
-]
+// const studentsData = [
+//    {
+//       name: 'Joseph Brown',
+//       img: StudentImg,
+//       dueDate: 'June 20, 2022'
+//    },
+//    {
+//       name: 'Joseph Brown',
+//       img: StudentImg,
+//       dueDate: 'June 20, 2022'
+//    },
+//    {
+//       name: 'Joseph Brown',
+//       img: StudentImg,
+//       dueDate: 'June 20, 2022'
+//    },
+// ]
 export default function TutorDashboard() {
 
    const [fetchUserSessions, fetchUserSessionsResponse] =
@@ -97,7 +97,8 @@ export default function TutorDashboard() {
                         const { _id, firstName, lastName } = res.data.data.user
                         studentsData.push({
                            _id,
-                           name: `${firstName} ${lastName}`
+                           name: `${firstName} ${lastName}`,
+                        photo: res.data.data.user.photo ? res.data.data.user.photo : '/images/default.jpeg'
                         })
                         if (idx === resp.data.data.user.assiginedStudents.length - 1) cb()
                      })
@@ -118,7 +119,7 @@ export default function TutorDashboard() {
       }, 5000);
    }
 
-   console.log(students);
+   // console.log(students);
    return (
       <div className="lg:ml-pageLeft bg-lightWhite min-h-screen overflow-x-hidden">
          <div className="py-8 px-5">
@@ -134,7 +135,7 @@ export default function TutorDashboard() {
                            <OwlCarousel items={5} autoWidth margin={20} >
                               {students.map(student => {
                                  return <div className='flex flex-col items-center text-center w-[110px]'>
-                                    <img src={studentsArr[0].src} className='w-[100px]' />
+                                    <img src={student.photo} className='w-[100px]' />
                                     <p className='text-lg font-semibold mt-4 cursor-pointer'
                                        onClick={() => navigate(`/profile/student/${student._id}`)} >
                                        {student.name.split(" ")[0]} <br /> {student.name.split(" ")[1]} </p>
@@ -146,11 +147,11 @@ export default function TutorDashboard() {
                   </div>
 
                   <div className='flex w-full pl-6'>
-                     <DashboardCard data={{ title: '14', subtitle: 'Hours', }}
+                     <DashboardCard data={{ title: '-', subtitle: 'Hours', }}
                         header='Completed'
                         subHeader='this month'
                         className='bg-[#7E82F0]' />
-                     <DashboardCard data={{ title: '2.4k', subtitle: 'INR', titleClassName: 'text-[30px]' }}
+                     <DashboardCard data={{ title: '-', subtitle: 'INR', titleClassName: 'text-[30px]' }}
                         header='Earned'
                         subHeader='this month'
                         className='bg-[#4BBD94]' />
@@ -208,8 +209,8 @@ export default function TutorDashboard() {
                      <p className='text-primary font-semibold text-[21px] mb-4'>
                         Latest Practice Test
                      </p>
-                     <div className='px-[25px] py-[25px] bg-white rounded-20'>
-                        {studentsData.map(item => {
+                     <div className='px-[25px] h-[331px] overflow-auto py-[25px] bg-white rounded-20'>
+                        {/* {studentsData.map(item => {
                            return (
                               <div className='flex items-center mb-8'>
                                  <div>
@@ -227,7 +228,7 @@ export default function TutorDashboard() {
                                  </button>
                               </div>
                            )
-                        })}
+                        })} */}
                      </div>
                   </div>
 
