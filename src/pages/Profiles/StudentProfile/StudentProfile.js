@@ -121,7 +121,7 @@ export default function StudentProfile({ isOwn }) {
    const navigate = useNavigate()
    const [editable, setEditable] = useState(false)
 
-   const {role : persona } = useSelector(state => state.user)
+   const { role: persona } = useSelector(state => state.user)
 
    const [user, setUser] = useState({})
    const [userDetail, setUserDetail] = useState({})
@@ -150,6 +150,10 @@ export default function StudentProfile({ isOwn }) {
       birthYear: {
          active: false,
          birthyear: '',
+      },
+      aboutScore: {
+         active: false,
+         aboutScore: '',
       },
       contact: {
          active: false,
@@ -476,12 +480,17 @@ export default function StudentProfile({ isOwn }) {
                         } />
 
                      <ProfileCard className='mt-5 mt-auto flex-1'
-                        title='PSAT / P-ACT Scores'
+                        title={
+                           <EditableText editable={editable}
+                              onClick={() => setToEdit({ ...toEdit, aboutScore: { ...toEdit.aboutScore, active: true } })}
+                              text='PSAT / P-ACT Scores'
+                              className='text-[21px] mb-2 flex justify-start' />
+                        }
                         titleClassName='text-left'
                         body={
                            <div className='flex mt-5 lg:mt-5'>
                               <p className=' font-semibold text-[18px]'>
-                                 -
+                                 {userDetail.aboutScore ? userDetail.aboutScore : '-'}
                               </p>
                            </div>
                         } />

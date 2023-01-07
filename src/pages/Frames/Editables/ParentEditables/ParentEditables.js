@@ -197,6 +197,11 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
          title: 'ACT Scores',
          api: 'userDetail',
       },
+      {
+         name: 'aboutScore',
+         title: 'PSAT / P-ACT Scores',
+         api: 'userDetail',
+      },
    ]
 
    // console.log(currentField)
@@ -1203,6 +1208,20 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                     onChange={e => setCurrentToEdit({ ...currentToEdit, subjectTutoringRate: e.target.value })} />
                               </div>
 
+                           </div>
+                        }
+                        {currentField.name === 'aboutScore' &&
+                           <div>
+                              <div className='flex items-center mb-5'>
+                                 <InputField
+                                    labelClassname='hidden'
+                                    placeholder='PSAT / P-ACT Scores'
+                                    inputContainerClassName='text-sm pt-3.5 pb-3 px-5 bg-primary-50 border-0'
+                                    inputClassName='bg-transparent rounded-[4px]'
+                                    parentClassName='flex-1' type='text'
+                                    value={currentToEdit.aboutScore}
+                                    onChange={e => setCurrentToEdit({ ...currentToEdit, aboutScore: e.target.value })} />
+                              </div>
                            </div>
                         }
                         {/* <InputField label='First Name'
