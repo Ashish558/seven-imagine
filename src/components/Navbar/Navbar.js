@@ -28,7 +28,7 @@ import { updateIsLoggedIn } from "../../app/slices/user";
 const tempnavdata = [
    {
       icon: logo,
-      path: ""
+      path: "/logo"
    },
    {
       icon: Calendar,
@@ -65,7 +65,7 @@ const tempnavdata = [
 const parentNav = [
    {
       icon: logo,
-      path: ""
+      path: "/logo"
    },
    {
       icon: Dashboard,
@@ -93,7 +93,7 @@ const parentNav = [
 const studentNav = [
    {
       icon: logo,
-      path: "https://sevensquarelearning.com/"
+      path: "/logo"
    },
    {
       icon: Dashboard,
@@ -120,7 +120,7 @@ const studentNav = [
 const tutorNav = [
    {
       icon: logo,
-      path: ""
+      path: "/logo"
    },
    {
       icon: Dashboard,

@@ -26,6 +26,7 @@ function App() {
                if (res.data.data.userdetails) {
                   timeZone = res.data.data.userdetails.timeZone
                }
+               // if(!role) return
                sessionStorage.setItem('role', role)
                setLoading(false);
                dispatch(updateIsLoggedIn(true));

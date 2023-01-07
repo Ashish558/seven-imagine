@@ -18,6 +18,8 @@ export default function NavLink({ width, icon: Icon, path, parentClassName, setL
          // navigate('/')
          // dispatch(updateIsLoggedIn(false))
          setLogoutModalActive(true)
+      } else if (path === '/logo') {
+         window.open('https://sevensquarelearning.com/')
       } else {
          if (path === '') return
          navigate(path)
@@ -48,7 +50,7 @@ export default function NavLink({ width, icon: Icon, path, parentClassName, setL
                />
             )}
          </button>
-        
+
       </>
    );
 }
