@@ -138,10 +138,6 @@ const tutorNav = [
       icon: Calendar,
       path: "/calendar",
    },
-   // {
-   //    icon: StudentTest,
-   //    path: "/assigned-tests",
-   // },
    {
       icon: Exit,
       path: "/exit",
@@ -171,12 +167,14 @@ export default function Navbar() {
    useEffect(() => {
       if (persona === 'student') {
          setNavData(studentNav)
-      }
-      if (persona === 'tutor') {
+      } else if (persona === 'tutor') {
          setNavData(tutorNav)
-      }
-      if (persona === 'parent') {
+      } else if (persona === 'parent') {
          setNavData(parentNav)
+      }else if(persona === 'admin'){
+         setNavData(tempnavdata)
+      }else{
+         setNavData(studentNav)
       }
    }, [persona])
 
