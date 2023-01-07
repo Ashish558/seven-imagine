@@ -95,7 +95,7 @@ export default function Calendar() {
    // console.log(calendarRef.current)
    const [events, setEvents] = useState([]);
 
-   const {role : persona } = useSelector(state => state.user)
+   const { role: persona } = useSelector(state => state.user)
 
    // const [timeZones, setTimeZones] = useState(temptimeZones)
    const { id: sessionToEdit } = useParams()
@@ -760,6 +760,9 @@ export default function Calendar() {
                      //    startTime: '06:00', // a start time (10am in this example)
                      //    endTime: '05:00', // an end time (6pm in this example)
                      //  }}
+                     // slotMinTime='06:00:00'
+                     // slotMaxTime='23:00:00'
+                     // slotDuration='24:00:00'
                      eventClick={(info) => handleEventClick(info)}
                      ref={calendarRef}
                      plugins={[

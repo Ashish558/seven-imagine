@@ -645,7 +645,7 @@ export default function StudentProfile({ isOwn }) {
                                        text='Official SAT Scores'
                                        className='text-lg mb-2' textClassName="flex-1 text-center text-[21px]" />
                                  }
-                                 subjects={subjects1} title='Cumilative Score'
+                                 subjects={subjects1} title='Composite Score'
                               />
                            </>
                         } />
@@ -674,7 +674,7 @@ export default function StudentProfile({ isOwn }) {
                                        text='Official ACT Scores'
                                        className='text-lg mb-2' textClassName="flex-1 text-center text-[21px]" />
                                  }
-                                 subjects={subjects2} title='Cumilative Score'
+                                 subjects={subjects2} title='Composite Score'
                               />
                            </>
                         } />

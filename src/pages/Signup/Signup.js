@@ -252,12 +252,12 @@ export default function Signup() {
  
       sessionStorage.clear()
       addUserDetails({ userId: values.userId, body: reqBody }).then((res) => {
-         // console.log(res);
+         console.log(res);
          if (res.error) {
             alert('something went wrong')
             return
          }
-         window.open(redirectLink);
+         // window.open(redirectLink);
       });
    };
    // console.log(error)

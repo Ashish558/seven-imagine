@@ -11,6 +11,8 @@ import { useAttendTestMutation, useLazyContinueTestQuery, useLazyGetAssignedTest
 import BackBtn from '../../components/Buttons/Back'
 import Timer from '../../components/Timer/Timer'
 import CurrentSection from './CurrentSection/CurrentSection'
+import { useSelector } from 'react-redux'
+import { getFormattedDate } from '../../utils/utils'
 const tempsubjects = [
    { text: 'Trigonometry', selected: true },
    { text: 'Mathematics', selected: false },
@@ -28,6 +30,15 @@ export default function StartTest() {
    const [initialSeconds, setInitialSeconds] = useState(0)
    const [countDown, setCountDown] = useState(0)
 
+   const { firstName, lastName } = useSelector(state => state.user)
+
+   const [testHeaderDetails, setTestHeaderDetails] = useState({
+      name: `${firstName} ${lastName}`,
+      duration: 0,
+      dateAssigned: '',
+      startedOn: '',
+      completedOn: ''
+   })
    const [sectionDetails, setSectionDetails] = useState({})
    const [subjects, setSubjects] = useState([])
    const [activeSection, setActiveSection] = useState({})
@@ -84,6 +95,17 @@ export default function StartTest() {
                return console.log(res.error);
             }
             console.log('sections response', res.data.data);
+            let duration = 0
+
+
+            res.data.data.subjects.subjects.map(item => {
+               duration += item.timer
+            })
+            console.log('date', new Date(res.data.data.subjects.createdAt));
+            setTestHeaderDetails(prev => ({
+               ...prev, duration,
+               startedOn: getFormattedDate(new Date(res.data.data.subjects.createdAt))
+            }))
             setSectionDetails(res.data.data)
             let tempsubs = res.data.data.subjects.subjects.map(item => {
                return {
@@ -192,18 +214,18 @@ export default function StartTest() {
    }, [completedSectionIds, subjects])
 
    const handleResponseChange = (id, option) => {
-      console.log('initialSeconds', initialSeconds);
-      console.log('countDown', countDown);
-    
+      // console.log('initialSeconds', initialSeconds);
+      // console.log('countDown', countDown);
+
       const timeTaken = initialSeconds - countDown
       setInitialSeconds(countDown)
       setAnswers(prev => {
          return prev.map(item => {
             let time = 0
-            if(item._id === id){
-               if(item.responseTime){
+            if (item._id === id) {
+               if (item.responseTime) {
                   time = item.responseTime + timeTaken
-               }else{
+               } else {
                   time = timeTaken
                }
             }
@@ -277,27 +299,36 @@ export default function StartTest() {
                         <div>
                            <p className='inline-block w-138 font-semibold opacity-60'> Student’s Name</p>
                            <span className='inline-block mr-4'>:</span>
-                           <p className='inline-block w-138 font-semibold'> Joseph Brown</p>
+                           <p className='inline-block w-138 font-semibold'>
+                               {testHeaderDetails.name} 
+                               </p>
                         </div>
                         <div>
                            <p className='inline-block w-138 font-semibold opacity-60'> Started on </p>
                            <span className='inline-block mr-4'>:</span>
-                           <p className='inline-block w-138 font-semibold'> Joseph Brown</p>
+                           <p className='inline-block w-138 font-semibold'>
+                              {testHeaderDetails.startedOn ? testHeaderDetails.startedOn : '-'}
+                           </p>
                         </div>
                         <div>
                            <p className='inline-block w-138 font-semibold opacity-60'>  Date Assigned </p>
                            <span className='inline-block mr-4'>:</span>
-                           <p className='inline-block w-138 font-semibold'> Joseph Brown</p>
+                           <p className='inline-block w-138 font-semibold'>
+                              {testHeaderDetails.dateAssigned}
+                           </p>
                         </div>
                         <div>
                            <p className='inline-block w-138 font-semibold opacity-60'> Completed on </p>
                            <span className='inline-block mr-4'>:</span>
-                           <p className='inline-block w-138 font-semibold'> Joseph Brown</p>
+                           <p className='inline-block w-138 font-semibold'>
+                              -
+                           </p>
                         </div>
                         <div>
                            <p className='inline-block w-138 font-semibold opacity-60'> Duration </p>
                            <span className='inline-block mr-4'>:</span>
-                           <p className='inline-block w-138 font-semibold'> Joseph Brown</p>
+                           <p className='inline-block w-138 font-semibold'>
+                              {testHeaderDetails.duration} </p>
                         </div>
                      </div>
                   }
@@ -318,7 +349,7 @@ export default function StartTest() {
                      </div>
                      {!testStarted && Object.keys(activeSection).length > 1 &&
                         <div className='bg-white pt-[60px] pr-8 pl-12 pb-[50px] mt-4'>
-                           <TestDetail name={activeSection.name} />
+                           <TestDetail name={activeSection.name} desc={activeSection.description} />
 
                            <div className='flex items-center flex-col mt-12'>
                               <p className='text-[#E02B1D] bg-[#FFBE9D] py-2 px-5 rounded-20 mb-[15px]' >
@@ -361,9 +392,9 @@ export default function StartTest() {
                <div className='flex-2 ml-8 flex flex-col' >
 
                   {
-                     testStarted && <Timer handleSubmitSection={handleSubmitSection} timer={timer} 
-                     active={testStarted ? true : false}
-                     setCountDown={setCountDown} />
+                     testStarted && <Timer handleSubmitSection={handleSubmitSection} timer={timer}
+                        active={testStarted ? true : false}
+                        setCountDown={setCountDown} />
                   }
                   {
                      testStarted && <CurrentSection answers={answers} submitSection={handleSubmitSection} />
