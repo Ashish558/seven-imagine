@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLazyGetAssignedTestQuery, useLazyGetTestDetailsQuery, useLazyGetTestResponseQuery } from "../../app/services/test";
+import { useLazyGetUserDetailQuery } from "../../app/services/users";
 import Modal from "../../components/Modal/Modal";
 import Table from "../../components/Table/Table";
 import { getFormattedDate } from "../../utils/utils";
@@ -46,23 +47,28 @@ export default function StudentTest() {
 
    const [tableData, setTableData] = useState(studentsDataTable)
    const [tableHeaders, setTableHeaders] = useState(studentTableHeaders)
+   const [user, setUser] = useState({})
+   const [associatedStudents, setAssociatedStudents] = useState([]);
+   const [selectedStudent, setSelectedStudent] = useState(null)
 
    const [getTest, getTestResp] = useLazyGetAssignedTestQuery()
    const [getTestDetails, getTestDetailsResp] = useLazyGetTestDetailsQuery()
    const [getResponse, getResponseRes] = useLazyGetTestResponseQuery()
+   const [getUserDetail, userDetailResp] = useLazyGetUserDetailQuery()
 
    const [assignedTestDetails, setassignedTestDetails] = useState([])
    const [allTests, setAllTests] = useState([])
    const [testDetails, setTestDetails] = useState([])
 
-   const {role : persona } = useSelector(state => state.user)
+   const { role: persona, id } = useSelector(state => state.user)
 
    useEffect(() => {
-      getResponse({id: '63b567682cbfe817fe551afb'})
-      .then(res => {
-         console.log(res.data);
-      })
+      getResponse({ id: '63b567682cbfe817fe551afb' })
+         .then(res => {
+            console.log(res.data);
+         })
    }, [])
+
    useEffect(() => {
       getTest()
          .then(res => {
@@ -96,10 +102,6 @@ export default function StudentTest() {
                   })
             })
          })
-      // getTime('637663fe90241bf60305bd36')
-      // .then(res => {
-      //    console.log(res);
-      // })
    }, [])
 
    useEffect(() => {
@@ -122,7 +124,40 @@ export default function StudentTest() {
       })
    }, [assignedTestDetails])
 
+   useEffect(() => {
+      getUserDetail({ id })
+         .then(res => {
+            // console.log('response', res.data.data);
+            setUser(res.data.data.user)
+            setAssociatedStudents([])
+            res.data.data.user.assiginedStudents.map((student, idx) => {
+               getUserDetail({ id: student })
+                  .then(res => {
+                     setAssociatedStudents(prev => [...prev, {
+                        _id: res.data.data.user._id,
+                        name: `${res.data.data.user.firstName} ${res.data.data.user.lastName}`,
+                        photo: res.data.data.user.photo ? res.data.data.user.photo : '/images/default.jpeg',
+                        selected: idx === 0 ? true : false
+                     }])
+                  })
+            })
+
+         })
+   }, [])
+
+   const handleStudentChange = item => {
+      console.log(item);
+      let tempdata = associatedStudents.map(student => {
+         if (student._id === item._id) {
+            return { ...student, selected: true }
+         } else {
+            return { ...student, selected : false }
+         }
+      })
+      setAssociatedStudents(tempdata)
+   }
    // console.log(allTests);
+   // console.log(associatedStudents);
 
    return (
       <>
@@ -134,7 +169,7 @@ export default function StudentTest() {
                      Tests
                   </p>
                   {persona === "student" ? (
-                     <div className="flex flex-col items-center">
+                     <div className="flex flex-col items-center justify-end">
                         {parentTestInfo.map(item => {
                            return <div className="flex items-center mb-[20px]">
                               <div className="w-[20px] h-[20px] rounded-full mr-[20px]" style={{ backgroundColor: item.bg }}></div>
@@ -143,8 +178,8 @@ export default function StudentTest() {
                         })}
                      </div>
                   ) : persona === 'parent' &&
-                  <div>
-                     <div className="flex items-center">
+                  <div className="pl-4">
+                     <div className="flex items-center justify-end">
                         {parentTestInfo.map(item => {
                            return <>
                               <div className="w-[20px] h-[20px] rounded-full mr-[20px]" style={{ backgroundColor: item.bg }}></div>
@@ -153,8 +188,8 @@ export default function StudentTest() {
                         })}
                      </div>
                      <div className="flex mt-[29px]">
-                        {parentStudents.map(student => {
-                           return <div key={student.name} className='border w-[230px] py-[7px] flex justify-center' >
+                        {associatedStudents.map((student, idx) => {
+                           return <div key={idx} className='border px-5 py-[7px] flex justify-center' onClick={() => handleStudentChange(student)} >
                               <p className={`text-lg ${student.selected ? 'font-bold underline underline-offset-3' : ''}`}> {student.name} </p>
                            </div>
                         })}

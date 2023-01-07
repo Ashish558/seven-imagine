@@ -39,9 +39,8 @@ const initialState = {
 }
 
 export default function Users() {
-   // const [filterItems, setFilterItems] = useState(['Student', 'Parent', 'Active'])
+
    const [modalActive, setModalActive] = useState(false)
-   // const [modalUserType, setModalUserType] = useState('')
    const navigate = useNavigate()
    const [modalData, setModalData] = useState(initialState)
    const [validData, setValidData] = useState(true);
@@ -120,8 +119,6 @@ export default function Users() {
    const removeFilter = key => {
       let tempFilterData = { ...filterData }
       tempFilterData[key] = ''
-      // console.log(key)
-      // console.log(tempFilterData)
       setFilterData(tempFilterData)
    }
 
@@ -135,7 +132,6 @@ export default function Users() {
             }
          }
       }).filter(item => item !== undefined)
-      // console.log(arr)
       setFilterItems(arr)
    }, [filterData])
 

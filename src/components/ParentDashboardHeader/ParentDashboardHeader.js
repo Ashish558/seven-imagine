@@ -62,7 +62,7 @@ const ParentDashboardHeader = () => {
 
          })
    }, [])
-
+ 
    useEffect(() => {
       if (user.assiginedStudents === undefined) return
       const fetch = async () => {

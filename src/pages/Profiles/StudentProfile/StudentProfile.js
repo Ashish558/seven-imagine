@@ -202,15 +202,19 @@ export default function StudentProfile({ isOwn }) {
       },
       satScores: {
          active: false,
-         verbalScore: 60,
-         MathsScore: 50
+         satScores: {
+            verbal: 0,
+            maths: 0
+         }
       },
       actScores: {
          active: false,
-         mathScore: 60,
-         englishScore: 60,
-         readingScore: 50,
-         englishScore: 50
+         actScores: {
+            english: 0,
+            maths: 0,
+            reading: 0,
+            science: 0
+         }
       },
    })
 
@@ -241,7 +245,7 @@ export default function StudentProfile({ isOwn }) {
          .then(res => {
             console.log('response', res.data.data);
             const { firstName, lastName, phone, email, associatedParent } = res.data.data.user
-            const { service, accomodations, timeZone, birthyear, personality, interest, schoolName, grade } = res.data.data.userdetails
+            let { service, accomodations, timeZone, birthyear, personality, interest, schoolName, grade, satScores, actScores } = res.data.data.userdetails
             associatedParent && getUserDetail({ id: associatedParent })
                .then(res => {
                   const { firstName, lastName, _id, } = res.data.data.user
@@ -251,6 +255,16 @@ export default function StudentProfile({ isOwn }) {
                   })
                })
             setUser(res.data.data.user)
+            if (!satScores) satScores = {
+               verbal: 0,
+               maths: 0
+            }
+            if (!actScores) actScores = {
+               english: 0,
+               maths: 0,
+               reading: 0,
+               science: 0
+            }
             const promiseState = async state => new Promise(resolve => {
                resolve(
                   setToEdit(prev => {
@@ -301,6 +315,22 @@ export default function StudentProfile({ isOwn }) {
                            ...prev.grade,
                            grade
                         },
+                        satScores: {
+                           ...prev.satScores,
+                           satScores: {
+                              verbal: satScores.verbal,
+                              maths: satScores.maths
+                           }
+                        },
+                        actScores: {
+                           ...prev.satScores,
+                           actScores: {
+                              english: actScores.english,
+                              maths: actScores.maths,
+                              reading: actScores.reading,
+                              science: actScores.science
+                           }
+                        },
                      }
                   })
                )
@@ -340,6 +370,31 @@ export default function StudentProfile({ isOwn }) {
             fetchDetails()
          })
    }
+
+   const getSatMarks = () => {
+      // let scores = [
+      //    userDetail.satScores.verbal,
+      //    userDetail.satScores.maths
+      // ]
+      // scores =  scores.filter(score => !isNaN(score))
+      // console.log(scores);
+      if (typeof userDetail.satScores.verbal === 'number' && typeof userDetail.satScores.maths) {
+         return userDetail.satScores.verbal + userDetail.satScores.maths
+      }
+   }
+
+   const getActMarks = () => {
+      // let scores = [
+      //    userDetail.satScores.verbal,
+      //    userDetail.satScores.maths
+      // ]
+      // scores =  scores.filter(score => !isNaN(score))
+      // console.log(scores);
+      if (typeof userDetail.actScores.maths && typeof userDetail.actScores.english && typeof userDetail.actScores.reading && typeof userDetail.actScores.science) {
+         return (userDetail.actScores.english + userDetail.actScores.maths + userDetail.actScores.reading + userDetail.actScores.science) / 4
+      }
+   }
+
    // console.log(user)
    // console.log(userDetail)
    // console.log('associatedParent', associatedParent)
@@ -441,7 +496,7 @@ export default function StudentProfile({ isOwn }) {
                            {Object.keys(associatedParent).length > 1 ? `${associatedParent.firstName} ${associatedParent.lastName}` : `${userDetail.FirstName} ${userDetail.LastName}`}
                         </p>
 
-                        <div className='flex items-center'>
+                        <div className='flex items-center cursor-pointer'>
                            <span className='text-xs font-semibold opacity-60 inline-block mr-1'
                               onClick={() => Object.keys(associatedParent).length > 1 && navigate(`/profile/parent/${associatedParent._id}`)} >
                               View Profile
@@ -574,7 +629,16 @@ export default function StudentProfile({ isOwn }) {
                         className='mt-53 lg:mt-0'
                         body={
                            <>
-                              <SubjectSlider totalMarks={'-'} outOf={'-'}
+                              <SubjectSlider
+                                 score={userDetail.satScores ?
+                                    { verbal: userDetail.satScores.verbal, maths: userDetail.satScores.maths } : {}
+                                 }
+                                 totalMarks={
+                                    userDetail.satScores ?
+                                       getSatMarks() : '-'
+                                 }
+                                 outOf={'1600'}
+                                 isSat={true}
                                  header={
                                     <EditableText editable={editable}
                                        onClick={() => setToEdit({ ...toEdit, satScores: { ...toEdit.satScores, active: true } })}
@@ -590,7 +654,20 @@ export default function StudentProfile({ isOwn }) {
                         className='mt-8'
                         body={
                            <>
-                              <SubjectSlider totalMarks={'-'} outOf={'-'}
+                              <SubjectSlider
+                                 totalMarks={
+                                    userDetail.actScores ?
+                                       getActMarks() : '-'
+                                 }
+                                 outOf={'36'}
+                                 isAct={true}
+                                 score={userDetail.actScores ?
+                                    {
+                                       reading: userDetail.actScores.reading,
+                                       maths: userDetail.actScores.maths,
+                                       science: userDetail.actScores.science,
+                                       english: userDetail.actScores.english,
+                                    } : {}}
                                  header={
                                     <EditableText editable={editable}
                                        onClick={() => setToEdit({ ...toEdit, actScores: { ...toEdit.actScores, active: true } })}

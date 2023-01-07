@@ -4,7 +4,7 @@ import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 
-export default function SubjectSlider({ className, title, header, totalMarks, outOf, subjects }) {
+export default function SubjectSlider({ score, className, title, header, totalMarks, outOf, subjects, isSat, isAct }) {
 
 
    return (
@@ -29,14 +29,51 @@ export default function SubjectSlider({ className, title, header, totalMarks, ou
                </div>
                <div className='flex-1 ml-10'>
                   <div className='grid grid-cols-2 gap-x-4 gap-y-4'>
-                     {subjects.map(({ marks, name, bg }, idx) => {
+
+                     {/* {subjects.map(({ marks, name, bg }, idx) => {
                         return (
                            <div key={idx} className='py-2.5 px-8 rounded-10' style={{ backgroundColor: bg }} >
                               <p className='font-bold text-[32px] text-center mb-1 '> {marks} </p>
                               <p className='text-sm font-bold text-center mb-1' > {name} </p>
                            </div>
                         )
-                     })}
+                     })} */}
+                     {
+                        isSat && <>
+                           <div className='py-2.5 px-8 rounded-10'
+                              style={{ backgroundColor: '#FEDCC3' }} >
+                              <p className='font-bold text-[32px] text-center mb-1 '> {score.verbal ? score.verbal : '-'} </p>
+                              <p className='text-sm font-bold text-center mb-1' > Verbal </p>
+                           </div>
+                           <div className='py-2.5 px-8 rounded-10' style={{ backgroundColor: '#DACDFF' }} >
+                              <p className='font-bold text-[32px] text-center mb-1 '> {score.maths ? score.maths : '-'} </p>
+                              <p className='text-sm font-bold text-center mb-1' > Maths  </p>
+                           </div>
+                        </>
+                     }
+                     {
+                        isAct && <>
+                           <div className='py-2.5 px-8 rounded-10'
+                              style={{ backgroundColor: '#FEDCC3' }} >
+                              <p className='font-bold text-[32px] text-center mb-1 '> {score.maths ? score.maths : '-'} </p>
+                              <p className='text-sm font-bold text-center mb-1' > Maths </p>
+                           </div>
+                           <div className='py-2.5 px-8 rounded-10' style={{ backgroundColor: '#DACDFF' }} >
+                              <p className='font-bold text-[32px] text-center mb-1 '> {score.english ? score.english : '-'} </p>
+                              <p className='text-sm font-bold text-center mb-1' > English  </p>
+                           </div>
+                           <div className='py-2.5 px-8 rounded-10'
+                              style={{ backgroundColor: '#DACDFF' }} >
+                              <p className='font-bold text-[32px] text-center mb-1 '> {score.reading ? score.reading : '-'} </p>
+                              <p className='text-sm font-bold text-center mb-1' > Reading  </p>
+                           </div>
+                           <div className='py-2.5 px-8 rounded-10' style={{ backgroundColor: '#DACDFF' }} >
+                              <p className='font-bold text-[32px] text-center mb-1 '> {score.science ? score.science : '-'} </p>
+                              <p className='text-sm font-bold text-center mb-1' > Science  </p>
+                           </div>
+                        </>
+                     }
+
                   </div>
                </div>
             </div>

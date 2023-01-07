@@ -344,12 +344,24 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                // handleClose()
             })
       } else if (currentField.api === 'userDetail') {
+         if(reqBody.satScores){
+            if(isNaN(reqBody.satScores.maths)) reqBody.satScores.maths = 0
+            if(isNaN(reqBody.satScores.verbal)) reqBody.satScores.verbal = 0
+         }
+         if(reqBody.actScores){
+            if(isNaN(reqBody.actScores.maths)) reqBody.actScores.maths = 0
+            if(isNaN(reqBody.actScores.english)) reqBody.actScores.english = 0
+            if(isNaN(reqBody.actScores.reading)) reqBody.actScores.reading = 0
+            if(isNaN(reqBody.actScores.science)) reqBody.actScores.science = 0
+         }
+
          updateDetails({ id: userId, fields: reqBody })
             .then(res => {
                console.log(res)
                fetchDetails(true, true)
                // handleClose()
             })
+
       } else if (currentField.api === 'tutorDetail') {
          if (reqBody.tutorLevel) {
             const level = getLevel(reqBody.tutorLevel)
@@ -400,6 +412,18 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
    // console.log('sett', settings)
    // console.log('students', students)
    // console.log('parents', parents)
+
+   const checkNumber = (prevNum, num, limit) => {
+      // console.log(num);
+      if (limit) {
+         if (num > limit + 1) {
+            return prevNum
+         } else {
+            return num
+         }
+      }
+      return num
+   }
 
    const [startDate, setStartDate] = useState(new Date());
 
@@ -801,7 +825,7 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                               <div className='flex items-center mb-5'>
                                  <InputField
                                     labelClassname='hidden'
-                                    placeholder='Education'
+                                    placeholder='Address'
                                     inputContainerClassName='text-sm pt-3.5 pb-3 px-5 bg-primary-50 border-0'
                                     inputClassName='bg-transparent rounded-[4px]'
                                     parentClassName='flex-1' type='text'
@@ -1134,8 +1158,15 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                     inputContainerClassName='text-sm pt-3 pb-3 px-5 bg-primary-50 border-0'
                                     inputClassName='bg-transparent pl-4 rounded-[4px]'
                                     parentClassName='flex-1 max-w-[140px]' type='number'
-                                    value={currentToEdit.testPrepRate}
-                                    onChange={e => setCurrentToEdit({ ...currentToEdit, testPrepRate: e.target.value })} />
+                                    value={currentToEdit.satScores.verbal}
+                                    onChange={e => setCurrentToEdit({
+                                       ...currentToEdit,
+                                       satScores: {
+                                          ...currentToEdit.satScores,
+                                          verbal: checkNumber(currentToEdit.satScores.verbal, parseInt(e.target.value), 800)
+                                       }
+                                    })}
+                                 />
                               </div>
                               <div className='flex  flex-col  items-center mb-4'>
                                  <p className='font-medium mb-2 '>
@@ -1147,8 +1178,15 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                     inputContainerClassName='text-sm pt-3 pb-3 px-5 bg-primary-50 border-0'
                                     inputClassName='bg-transparent pl-4 rounded-[4px]'
                                     parentClassName='flex-1 max-w-[140px]' type='number'
-                                    value={currentToEdit.subjectTutoringRate}
-                                    onChange={e => setCurrentToEdit({ ...currentToEdit, subjectTutoringRate: e.target.value })} />
+                                    value={currentToEdit.satScores.maths}
+                                    onChange={e => setCurrentToEdit({
+                                       ...currentToEdit,
+                                       satScores: {
+                                          ...currentToEdit.satScores,
+                                          maths: checkNumber(currentToEdit.satScores.maths, parseInt(e.target.value), 800)
+                                       }
+                                    })}
+                                 />
                               </div>
 
                            </div>
@@ -1165,8 +1203,15 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                     inputContainerClassName='text-sm pt-3.5 pb-3.5 px-5 bg-primary-50 border-0'
                                     inputClassName='bg-transparent pl-4 rounded-[4px]'
                                     parentClassName='flex-1 max-w-[140px]' type='number'
-                                    value={currentToEdit.testPrepRate}
-                                    onChange={e => setCurrentToEdit({ ...currentToEdit, testPrepRate: e.target.value })} />
+                                    value={currentToEdit.actScores.maths}
+                                    onChange={e => setCurrentToEdit({
+                                       ...currentToEdit,
+                                       actScores: {
+                                          ...currentToEdit.actScores,
+                                          maths: checkNumber(currentToEdit.actScores.maths, parseInt(e.target.value), 36)
+                                       }
+                                    })}
+                                 />
                               </div>
                               <div className='flex  flex-col  items-center mb-4'>
                                  <p className='font-medium mb-2 '>
@@ -1178,8 +1223,15 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                     inputContainerClassName='text-sm pt-3.5 pb-3.5 px-5 bg-primary-50 border-0'
                                     inputClassName='bg-transparent pl-4 rounded-[4px]'
                                     parentClassName='flex-1 max-w-[140px]' type='number'
-                                    value={currentToEdit.subjectTutoringRate}
-                                    onChange={e => setCurrentToEdit({ ...currentToEdit, subjectTutoringRate: e.target.value })} />
+                                    value={currentToEdit.actScores.english}
+                                    onChange={e => setCurrentToEdit({
+                                       ...currentToEdit,
+                                       actScores: {
+                                          ...currentToEdit.actScores,
+                                          english: checkNumber(currentToEdit.actScores.english, parseInt(e.target.value), 36)
+                                       }
+                                    })}
+                                 />
                               </div>
                               <div className='flex  flex-col  items-center mb-4'>
                                  <p className='font-medium mb-2 '>
@@ -1191,8 +1243,15 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                     inputContainerClassName='text-sm pt-3.5 pb-3.5 px-5 bg-primary-50 border-0'
                                     inputClassName='bg-transparent pl-4 rounded-[4px]'
                                     parentClassName='flex-1 max-w-[140px]' type='number'
-                                    value={currentToEdit.subjectTutoringRate}
-                                    onChange={e => setCurrentToEdit({ ...currentToEdit, subjectTutoringRate: e.target.value })} />
+                                    value={currentToEdit.actScores.reading}
+                                    onChange={e => setCurrentToEdit({
+                                       ...currentToEdit,
+                                       actScores: {
+                                          ...currentToEdit.actScores,
+                                          reading: checkNumber(currentToEdit.actScores.reading, parseInt(e.target.value), 36)
+                                       }
+                                    })}
+                                 />
                               </div>
                               <div className='flex  flex-col  items-center mb-4'>
                                  <p className='font-medium mb-2 '>
@@ -1204,8 +1263,15 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                                     inputContainerClassName='text-sm pt-3.5 pb-3.5 px-5 bg-primary-50 border-0'
                                     inputClassName='bg-transparent pl-4 rounded-[4px]'
                                     parentClassName='flex-1 max-w-[140px]' type='number'
-                                    value={currentToEdit.subjectTutoringRate}
-                                    onChange={e => setCurrentToEdit({ ...currentToEdit, subjectTutoringRate: e.target.value })} />
+                                    value={currentToEdit.actScores.science}
+                                    onChange={e => setCurrentToEdit({
+                                       ...currentToEdit,
+                                       actScores: {
+                                          ...currentToEdit.actScores,
+                                          science: checkNumber(currentToEdit.actScores.science, parseInt(e.target.value), 36)
+                                       }
+                                    })}
+                                 />
                               </div>
 
                            </div>
