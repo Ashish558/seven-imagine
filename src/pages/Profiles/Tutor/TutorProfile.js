@@ -679,7 +679,7 @@ export default function TutorProfile({ isOwn }) {
 
 
                   {
-                     persona === 'tutor' || persona === 'admin' &&
+                     isOwn || persona === 'admin' &&
                      <ProfileCard hideShadow
                         className='col-span-3 mt-6 lg:mt-0 flex items-center'
                         body={
@@ -702,7 +702,7 @@ export default function TutorProfile({ isOwn }) {
 
 
                   {
-                     persona === 'tutor' || persona === 'admin' &&
+                     isOwn || persona === 'admin' &&
                      <ProfileCard hideShadow
                         className='col-span-3 mt-6 lg:mt-0'
                         body={
