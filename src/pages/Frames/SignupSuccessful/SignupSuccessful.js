@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import SecondaryButton from '../../../components/Buttons/SecondaryButton'
 
 export default function SignupSuccessful({ setFrames, setcurrentStep, addDetails, lastLoginDisabled }) {
 
+   const navigate = useNavigate()
 
    useEffect(() => {
       addDetails()
@@ -14,6 +16,7 @@ export default function SignupSuccessful({ setFrames, setcurrentStep, addDetails
       //    return { ...prev, signupSuccessful: false, signupActive: true }
       // })
       // setcurrentStep(1)
+      navigate('/')
    }
 
    useEffect(() => {

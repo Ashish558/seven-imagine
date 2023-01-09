@@ -320,8 +320,9 @@ export default function Signup() {
       };
       console.log(values.userId);
 
-      sessionStorage.clear()
+      // console.log('session cleared');
       addUserDetails({ userId: values.userId, body: reqBody }).then((res) => {
+         sessionStorage.clear()
          setLastLoginDisabled(false)
          console.log(res);
          if (res.error) {
