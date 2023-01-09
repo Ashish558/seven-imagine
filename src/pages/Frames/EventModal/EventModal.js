@@ -16,6 +16,7 @@ import {
 } from "../../../utils/utils";
 import InputSearch from "../../../components/InputSearch/InputSearch";
 import {
+   useDeleteSessionMutation,
    useLazyCancelSessionQuery,
    useLazyGetSessionFeedbackQuery,
    useLazyGetSettingsQuery,
@@ -153,6 +154,7 @@ export default function EventModal({
    const [getSessionFeedback, getSessionFeedbackResp] = useLazyGetSessionFeedbackQuery();
    const [cancelSession, cancelSessionResp] = useLazyCancelSessionQuery()
    const [missSession, missSessionResp] = useLazySessionMissedQuery()
+   const [deleteSession, deleteSessionResp] = useDeleteSessionMutation()
 
    const [inputFeedback, setInputFeedback] = useState(0)
 
@@ -440,9 +442,26 @@ export default function EventModal({
       let endT = moment(`2016-06-06T${endTime}:00`)
 
       var duration = endT.diff(startT, 'hours')
-      console.log(duration);
       reqBody.total_hours = duration
       if (reqBody.timeZone === '') reqBody.timeZone = 'Asia/Kolkata'
+      let date = moment(new Date(reqBody.date));
+      console.log(date);
+      // let rInterval = moment((date)).recur().every(["Saturday"]).daysOfWeek().every(2).week();
+      // console.log(rInterval);
+      let sDate = reqBody.date
+      if (reqBody.recurring === false) {
+         delete reqBody['date']
+         reqBody.date = [sDate]
+      } else {
+         let sDate = new Date(reqBody.date)
+         sDate.setHours(0)
+         sDate.setMinutes(0)
+         delete reqBody['date']
+         console.log('sDate', sDate);
+         console.log('day', sDate.getDay());
+      }
+
+      // return
       if (isUpdating) return updateSession(reqBody);
 
       submitSession(reqBody).then((res) => {
@@ -488,10 +507,20 @@ export default function EventModal({
       fetchFeedback()
    }, [sessionToUpdate])
 
+   const handleDeleteSession = () => {
+      deleteSession(sessionToUpdate._id)
+         .then(res => {
+            if (res.error) return console.log(res.error);
+            console.log(res.data);
+            refetchSessions()
+            setEventModalActive(false)
+         })
+   }
    // console.log(convertTime12to24(`${data.time.end.time} ${data.time.end.timeType}`))
    // console.log(convertTime12to24('1:00 AM'))
    //console.log(data.feedbackStars);
    // console.log('sessionToUpdate', sessionToUpdate)
+   // console.log('session data', data)
 
    const dataProps = { data, setData }
    return (
@@ -718,7 +747,7 @@ export default function EventModal({
                         </div>
 
                         <div className="flex justify-center">
-                           {/* {isUpdating && sessionToUpdate.recurring === true ?
+                           {isUpdating && sessionToUpdate.recurring === true ?
                               <div className="flex flex-1 px-4 justify-between">
                                  <div>
                                     <SecondaryButton
@@ -745,35 +774,34 @@ export default function EventModal({
                                     />
                                  </div>
                               </div>
-                              :
-                              <>
-                                 <SecondaryButton
-                                    children="Delete"
-                                    className="text-lg py-3 mr-3 pl-2 pr-2 font-medium px-7 h-[50px] w-[140px] disabled:opacity-60"
-                                 />
+                              : isUpdating ?
+                                 <>
+                                    <SecondaryButton
+                                       children="Delete"
+                                       className="text-lg py-3 mr-3 pl-2 pr-2 font-medium px-7 h-[50px] w-[140px] disabled:opacity-60"
+                                       onClick={handleDeleteSession}
+                                    />
+                                    <PrimaryButton
+                                       children="Update"
+                                       className="text-lg py-3 pl-2 pr-2 font-medium px-7 h-[50px] w-[140px] disabled:opacity-60"
+                                       onClick={handleSubmit}
+                                       disabled={submitDisabled}
+                                    />
+                                 </> :
                                  <PrimaryButton
-                                    children="Update"
+                                    children="Schedule"
                                     className="text-lg py-3 pl-2 pr-2 font-medium px-7 h-[50px] w-[140px] disabled:opacity-60"
                                     onClick={handleSubmit}
                                     disabled={submitDisabled}
                                  />
-                              </>
                            }
-                           {!isUpdating &&
-                              <PrimaryButton
-                                 children="Schedule"
-                                 className="text-lg py-3 pl-2 pr-2 font-medium px-7 h-[50px] w-[140px] disabled:opacity-60"
-                                 onClick={handleSubmit}
-                                 disabled={submitDisabled}
-                              />
-                           } */}
 
-                           <PrimaryButton
+                           {/* <PrimaryButton
                               children="Schedule"
                               className="text-lg py-3 pl-2 pr-2 font-medium px-7 h-[50px] w-[140px] disabled:opacity-60"
                               onClick={handleSubmit}
                               disabled={submitDisabled}
-                           />
+                           /> */}
 
                         </div>
                      </>
