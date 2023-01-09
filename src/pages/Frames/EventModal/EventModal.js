@@ -31,6 +31,7 @@ import CCheckbox from "../../../components/CCheckbox/CCheckbox";
 import DaysEndDate from "./Sections/daysEndDate";
 import SessionInputs from "./Sections/sessionInputs";
 import { sessionSchema } from "./schema/schema";
+import SecondaryButton from "../../../components/Buttons/SecondaryButton";
 
 const timeZones = ["IST"];
 const tempDays = [
@@ -50,7 +51,7 @@ const tempDays = [
       id: 3,
       text: "W",
       full: "Wed",
-      checked: true,
+      checked: false,
    },
    {
       id: 4,
@@ -118,6 +119,23 @@ export default function EventModal({
       sessionNotes: "",
       feedbackStars: 0
    });
+   const [submitDisabled, setSubmitDisabled] = useState(false)
+
+   useEffect(() => {
+      if (
+         data.time.start.time === '' ||
+         data.time.start.timeType === '' ||
+         data.time.end.time === '' ||
+         data.time.end.timeType === '' ||
+         data.timeZone === '' ||
+         data.date === '' ||
+         data.session === ''
+      ) {
+         setSubmitDisabled(true)
+      } else {
+         setSubmitDisabled(false)
+      }
+   }, [data])
 
    const [days, setDays] = useState(tempDays);
    const [topics, setTopics] = useState([]);
@@ -432,7 +450,7 @@ export default function EventModal({
          refetchSessions()
       })
    }
-// console.log(data);
+   // console.log(data);
    const handleFeedbackSubmit = (rating) => {
       // console.log(rating)
       // console.log(sessionToUpdate)
@@ -471,7 +489,9 @@ export default function EventModal({
 
    // console.log(convertTime12to24(`${data.time.end.time} ${data.time.end.timeType}`))
    // console.log(convertTime12to24('1:00 AM'))
-   // console.log(data.feedbackStars);
+   //console.log(data.feedbackStars);
+   // console.log('sessionToUpdate', sessionToUpdate)
+
    const dataProps = { data, setData }
    return (
       <>
@@ -697,11 +717,63 @@ export default function EventModal({
                         </div>
 
                         <div className="flex justify-center">
+                           {/* {isUpdating && sessionToUpdate.recurring === true ?
+                              <div className="flex flex-1 px-4 justify-between">
+                                 <div>
+                                    <SecondaryButton
+                                       children="Delete Current"
+                                       className="text-lg py-3 mr-3 pl-1 pr-1 font-medium px-7 h-[50px] w-[140px] disabled:opacity-60"
+                                    />
+                                    <SecondaryButton
+                                       children="Delete"
+                                       className="text-lg py-3 mr-3 pl-2 pr-2 font-medium px-7 h-[50px] w-[140px] disabled:opacity-60"
+                                    />
+                                 </div>
+                                 <div>
+                                    <PrimaryButton
+                                       children="Update Current"
+                                       className="text-lg py-3 mr-3 pl-1 pr-1 whitespace-nowrap font-medium px-7 h-[50px] w-[140px] disabled:opacity-60"
+                                       onClick={handleSubmit}
+                                       disabled={submitDisabled}
+                                    />
+                                    <PrimaryButton
+                                       children="Update All"
+                                       className="text-lg py-3 pl-2 pr-2 font-medium px-7 h-[50px] w-[140px] disabled:opacity-60"
+                                       onClick={handleSubmit}
+                                       disabled={submitDisabled}
+                                    />
+                                 </div>
+                              </div>
+                              :
+                              <>
+                                 <SecondaryButton
+                                    children="Delete"
+                                    className="text-lg py-3 mr-3 pl-2 pr-2 font-medium px-7 h-[50px] w-[140px] disabled:opacity-60"
+                                 />
+                                 <PrimaryButton
+                                    children="Update"
+                                    className="text-lg py-3 pl-2 pr-2 font-medium px-7 h-[50px] w-[140px] disabled:opacity-60"
+                                    onClick={handleSubmit}
+                                    disabled={submitDisabled}
+                                 />
+                              </>
+                           }
+                           {!isUpdating &&
+                              <PrimaryButton
+                                 children="Schedule"
+                                 className="text-lg py-3 pl-2 pr-2 font-medium px-7 h-[50px] w-[140px] disabled:opacity-60"
+                                 onClick={handleSubmit}
+                                 disabled={submitDisabled}
+                              />
+                           } */}
+
                            <PrimaryButton
                               children="Schedule"
-                              className="text-lg py-3 pl-2 pr-2 font-medium px-7 h-[50px] w-[140px]"
+                              className="text-lg py-3 pl-2 pr-2 font-medium px-7 h-[50px] w-[140px] disabled:opacity-60"
                               onClick={handleSubmit}
+                              disabled={submitDisabled}
                            />
+
                         </div>
                      </>
                   )}

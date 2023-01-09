@@ -28,15 +28,17 @@ const TutorCarousel = () => {
          })
    }, [])
 
+   // console.log(tutors)
+
    return (
       <div id={styles.tutorCarousel}>
          <h2 className="pl-5 pt-4">Your Tutor</h2>
          {tutors.length >= 1 ?
-            <OwlCarousel className="owl-theme" loop margin={30} items={1}>
+            <OwlCarousel className="owl-theme pt-3"  margin={30} items={1}>
                {
                   tutors.map((tutor, idx) => {
                      return (
-                        <div ley={idx} className="item pl-5">
+                        <div ley={idx} className="item px-4">
                            <div className="flex items-center justify-center">
                               <div className="w-2/3">
                                  {/* <h5 className={`opacity-0 ${styles.tag}`}>
@@ -51,7 +53,7 @@ const TutorCarousel = () => {
                                     onClick={() => tutor._id && navigate(`/profile/tutor/${tutor._id}`)} >View Profile</button>
                               </div>
                               <div className="w-1/3">
-                                 <img src={shivam} className="mx-auto" alt="" />
+                                 <img src={tutor.photo ? tutor.photo : '/images/default.jpeg'} className="mx-auto rounded-full" alt="" />
                               </div>
                            </div>
                         </div>

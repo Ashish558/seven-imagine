@@ -7,8 +7,8 @@ import InputSelect from '../../../../components/InputSelect/InputSelect'
 
 export default function SessionInputs({ data, setData, status, isEditable }) {
 
-   const {role : persona } = useSelector(state => state.user)
-   
+   const { role: persona } = useSelector(state => state.user)
+
    return (
       <>
          <div className="flex">
@@ -86,7 +86,7 @@ export default function SessionInputs({ data, setData, status, isEditable }) {
                            rescheduling: !data.rescheduling,
                         })} disabled={!isEditable} />
                      <p className="font-medium text-primary-60 text-sm">
-                        Rescheduling
+                        Rescheduled
                      </p>
                   </div>
                </div>

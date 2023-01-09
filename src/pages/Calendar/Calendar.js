@@ -692,6 +692,9 @@ export default function Calendar() {
    // console.log(events);
    // console.log(eventDetails);
 
+// console.log('events', events);
+// console.log('eventDetails', eventDetails);
+
    return (
       <>
          <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">
