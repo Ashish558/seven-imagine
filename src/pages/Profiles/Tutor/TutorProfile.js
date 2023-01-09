@@ -678,67 +678,73 @@ export default function TutorProfile({ isOwn }) {
                   }
 
 
-                  <ProfileCard hideShadow
-                     className='col-span-3 mt-6 lg:mt-0 flex items-center'
-                     body={
-                        <div className='overflow-x-auto scrollbar-content'>
-                           <div className='mb-6'>
-                              <EditableText editable={editable}
-                                 onClick={() => setToEdit({ ...toEdit, tutorAddress: { ...toEdit.tutorAddress, active: true } })}
-                                 text='Address'
-                                 className='text-xl justify-between'
-                              />
-                              <p className='mt-5  font-medium text-sm'>
-                                 {address ? address : '-'}
-                              </p>
-                           </div>
-
-                        </div>
-                     }
-                  />
-
-                  <ProfileCard hideShadow
-                     className='col-span-3 mt-6 lg:mt-0'
-
-                     body={
-                        <div className='overflow-x-auto scrollbar-content'>
-                           <div className='mb-6'>
-                              <EditableText editable={editable}
-                                 onClick={() => setToEdit({ ...toEdit, paymentInfo: { ...toEdit.paymentInfo, active: true } })}
-                                 text='Payment Info'
-                                 className='text-xl justify-between'
-                              />
-                              <div className='mt-5  font-medium text-sm ma-w-[100px]'>
-                                 <p className='flex items-center mb-3.5'>
-                                    <span>
-                                       Bank Name
-                                    </span>
-                                    <span className='inline-block pl-2'>
-                                       {paymentInfo === undefined ? ' -' : paymentInfo.bankName ? paymentInfo.bankName : '-'}
-                                    </span>
-                                 </p>
-                                 <p className='flex items-center mb-3.5'>
-                                    <span>
-                                       Acc No.
-                                    </span>
-                                    <span className='inline-block pl-2'>
-                                       {paymentInfo === undefined ? ' -' : paymentInfo.AccNo ? paymentInfo.AccNo : '-'}
-                                    </span>
-                                 </p>
-                                 <p className='flex items-center mb-3.5'>
-                                    <span>
-                                       IFCS Code
-                                    </span>
-                                    <span className='inline-block pl-2'>
-                                       {paymentInfo === undefined ? ' -' : paymentInfo.ifcsCode ? paymentInfo.ifcsCode : '-'}
-                                    </span>
+                  {
+                     persona === 'tutor' || persona === 'admin' &&
+                     <ProfileCard hideShadow
+                        className='col-span-3 mt-6 lg:mt-0 flex items-center'
+                        body={
+                           <div className='overflow-x-auto scrollbar-content'>
+                              <div className='mb-6'>
+                                 <EditableText editable={editable}
+                                    onClick={() => setToEdit({ ...toEdit, tutorAddress: { ...toEdit.tutorAddress, active: true } })}
+                                    text='Address'
+                                    className='text-xl justify-between'
+                                 />
+                                 <p className='mt-5  font-medium text-sm'>
+                                    {address ? address : '-'}
                                  </p>
                               </div>
-                           </div>
 
-                        </div>
-                     }
-                  />
+                           </div>
+                        }
+                     />
+                  }
+
+
+                  {
+                     persona === 'tutor' || persona === 'admin' &&
+                     <ProfileCard hideShadow
+                        className='col-span-3 mt-6 lg:mt-0'
+                        body={
+                           <div className='overflow-x-auto scrollbar-content'>
+                              <div className='mb-6'>
+                                 <EditableText editable={editable}
+                                    onClick={() => setToEdit({ ...toEdit, paymentInfo: { ...toEdit.paymentInfo, active: true } })}
+                                    text='Payment Info'
+                                    className='text-xl justify-between'
+                                 />
+                                 <div className='mt-5  font-medium text-sm ma-w-[100px]'>
+                                    <p className='flex items-center mb-3.5'>
+                                       <span>
+                                          Bank Name
+                                       </span>
+                                       <span className='inline-block pl-2'>
+                                          {paymentInfo === undefined ? ' -' : paymentInfo.bankName ? paymentInfo.bankName : '-'}
+                                       </span>
+                                    </p>
+                                    <p className='flex items-center mb-3.5'>
+                                       <span>
+                                          Acc No.
+                                       </span>
+                                       <span className='inline-block pl-2'>
+                                          {paymentInfo === undefined ? ' -' : paymentInfo.AccNo ? paymentInfo.AccNo : '-'}
+                                       </span>
+                                    </p>
+                                    <p className='flex items-center mb-3.5'>
+                                       <span>
+                                          IFCS Code
+                                       </span>
+                                       <span className='inline-block pl-2'>
+                                          {paymentInfo === undefined ? ' -' : paymentInfo.ifcsCode ? paymentInfo.ifcsCode : '-'}
+                                       </span>
+                                    </p>
+                                 </div>
+                              </div>
+
+                           </div>
+                        }
+                     />
+                  }
 
                   {
                      persona === 'admin' &&
