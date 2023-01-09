@@ -146,7 +146,7 @@ export default function StudentTest() {
    }, [])
 
    const handleStudentChange = item => {
-      console.log(item);
+      // console.log(item);
       let tempdata = associatedStudents.map(student => {
          if (student._id === item._id) {
             return { ...student, selected: true }
@@ -156,6 +156,10 @@ export default function StudentTest() {
       })
       setAssociatedStudents(tempdata)
    }
+
+   useEffect(() => {
+      console.log(selectedStudent);
+   }, [selectedStudent])
    // console.log(allTests);
    // console.log(associatedStudents);
 

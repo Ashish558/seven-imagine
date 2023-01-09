@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import SecondaryButton from '../../../components/Buttons/SecondaryButton'
 
-export default function SignupSuccessful({ setFrames, setcurrentStep, addDetails }) {
-   
+export default function SignupSuccessful({ setFrames, setcurrentStep, addDetails, lastLoginDisabled }) {
+
+
+   useEffect(() => {
+      addDetails()
+   }, [])
 
    const handleClick = () => {
-      addDetails()
+      // addDetails()
       // setFrames(prev => {
       //    return { ...prev, signupSuccessful: false, signupActive: true }
       // })
@@ -28,8 +32,10 @@ export default function SignupSuccessful({ setFrames, setcurrentStep, addDetails
          </div>
 
          <div className='flex items-center mt-16'>
-            <SecondaryButton children='Login' className='text-21 py-3.2 text-white mr-6 w-140'
-               onClick={handleClick} />
+            <SecondaryButton children='Login'
+               className='text-21 py-3.2 text-white mr-6 w-140'
+               onClick={handleClick}
+               lastLoginDisabled={lastLoginDisabled} />
          </div>
 
       </div>

@@ -44,6 +44,7 @@ export default function Signup() {
    const [settings, setSettings] = useState({})
    const [getSettings, getSettingsResp] = useLazyGetSettingsQuery()
    const navigate = useNavigate();
+   const [lastLoginDisabled, setLastLoginDisabled] = useState(false)
 
    const fetchSettings = () => {
       getSettings()
@@ -267,13 +268,13 @@ export default function Signup() {
                   //    addLinkedEmailDetails(res.data.userId)
                   // } 
                   // else {
-                     setRedirectLink(res.data.link);
-                     setValues({ ...values, userId: res.data.userId });
-                     setFrames({
-                        ...frames,
-                        signupActive: false,
-                        selectPersona: true,
-                     });
+                  setRedirectLink(res.data.link);
+                  setValues({ ...values, userId: res.data.userId });
+                  setFrames({
+                     ...frames,
+                     signupActive: false,
+                     selectPersona: true,
+                  });
                   // }
                })
             }
@@ -307,6 +308,7 @@ export default function Signup() {
    // }
 
    const addDetails = () => {
+      setLastLoginDisabled(true)
       const reqBody = {
          ...otherDetails,
          serviceSeeking: getCheckedString(services),
@@ -320,6 +322,7 @@ export default function Signup() {
 
       sessionStorage.clear()
       addUserDetails({ userId: values.userId, body: reqBody }).then((res) => {
+         setLastLoginDisabled(false)
          console.log(res);
          if (res.error) {
             alert('something went wrong')
@@ -534,6 +537,7 @@ export default function Signup() {
                      <SignupSuccessful
                         {...props}
                         addDetails={addDetails}
+                        lastLoginDisabled={lastLoginDisabled}
                      />
                   ) : (
                      ""
