@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import InputSelect from "../InputSelect/InputSelect";
 import Ledger from "./../../pages/Ledger/Ledger"
 import { useLazyPayBalanceQuery } from "../../app/services/dashboard";
+import { useDisableBodyScroll } from "../../hooks/useDisableBodyScroll";
 
 const ParentDashboardHeader = () => {
    const [images, setImages] = useState([])
@@ -33,7 +34,7 @@ const ParentDashboardHeader = () => {
    const navigate = useNavigate()
    //  sessionStorage
    const { id, amountToPay, credits } = useSelector(state => state.user)
-
+   useDisableBodyScroll(ledgerVisible)
    useEffect(() => {
       fetchSettings()
          .then(res => {

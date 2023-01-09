@@ -64,7 +64,7 @@ export default function SingleLedger({ _id, invoiceId, sessionId, title, Date: l
       minutes = `${minutes}`
    }
    const discountPackageTime = tConvert(`${hours}:${minutes}`)
-   // console.log(discountPackageTime)
+   // console.log(invoiceDetail)
 
    return (
       <>
@@ -148,8 +148,8 @@ export default function SingleLedger({ _id, invoiceId, sessionId, title, Date: l
                               </div>
 
                               <div className='font-bold mx-1 py-6'> Description </div>
-                              <div className='py-6 opacity-80 col-span-'>
-                                 {description ? description : '-'}
+                              <div className='py-6 opacity-80 col-span-5'>
+                                 {invoiceId.description ? invoiceId.description : '-'}
                               </div>
 
 

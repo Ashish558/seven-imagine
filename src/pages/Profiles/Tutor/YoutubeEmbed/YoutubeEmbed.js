@@ -11,7 +11,7 @@ export default function YoutubeEmbed({ embedId }) {
          height: '600px',
          zIndex: '-1'
       }} >
-         <iframe
+         {/* <iframe
             width="100%"
             height="100%"
             src={`https://www.youtube.com/embed/${embedId}`}
@@ -19,7 +19,7 @@ export default function YoutubeEmbed({ embedId }) {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             title="Embedded youtube"
-         />
+         /> */}
       </div>
    )
 }

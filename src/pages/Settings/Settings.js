@@ -299,7 +299,7 @@ export default function Settings() {
             <div>
                <SettingsCard title='Lead Status Items'
                   body={
-                     <div className='flex items-center [&>*]:mb-[10px]'>
+                     <div className='flex items-center flex-wrap [&>*]:mb-[10px]'>
                         <AddTag onAddTag={handleAddTag} keyName='leadStatus' />
                         <FilterItems onlyItems={true}
                            isString={true}
@@ -312,7 +312,7 @@ export default function Settings() {
 
                <SettingsCard title='Tutor Status Items'
                   body={
-                     <div className='flex items-center [&>*]:mb-[10px]'>
+                     <div className='flex items-center flex-wrap [&>*]:mb-[10px]'>
                         <AddTag onAddTag={handleAddTag} keyName='tutorStatus' />
                         <FilterItems onlyItems={true}
                            isString={true}
@@ -324,7 +324,7 @@ export default function Settings() {
                   } />
                <SettingsCard title='Subscription Code'
                   body={
-                     <div className='flex items-center [&>*]:mb-[10px]'>
+                     <div className='flex items-center flex-wrap [&>*]:mb-[10px]'>
                         <AddTag onAddTag={handleAddTag} keyName='subscriptionCode' />
                         <FilterItems onlyItems={true}
                            isString={true}
@@ -360,7 +360,7 @@ export default function Settings() {
 
                <SettingsCard title='Service Specialisation'
                   body={
-                     <div className='flex items-center [&>*]:mb-[10px]'>
+                     <div className='flex items-center flex-wrap [&>*]:mb-[10px]'>
                         <AddTag keyName='serviceSpecialisation' openModal={true}
                            onAddTag={() => handleTagModal('serviceSpecialisation')} />
                         <FilterItems isString={true} onlyItems={true}
@@ -373,7 +373,7 @@ export default function Settings() {
 
                <SettingsCard title='Personality'
                   body={
-                     <div className='flex items-center [&>*]:mb-[10px]'>
+                     <div className='flex items-center flex-wrap [&>*]:mb-[10px]'>
                         <AddTag keyName='personality' openModal={true}
                            onAddTag={() => handleTagModal('personality')} />
                         <FilterItems isString={true} onlyItems={true}
@@ -386,7 +386,7 @@ export default function Settings() {
 
                <SettingsCard title='Interest'
                   body={
-                     <div className='flex items-center [&>*]:mb-[10px]'>
+                     <div className='flex items-center flex-wrap [&>*]:mb-[10px]'>
                         <AddTag keyName='interest' openModal={true}
                            onAddTag={() => handleTagModal('interest')} />
                         <FilterItems isString={true} onlyItems={true}
@@ -399,7 +399,7 @@ export default function Settings() {
 
                <SettingsCard title='Classes'
                   body={
-                     <div className='flex items-center [&>*]:mb-[10px]'>
+                     <div className='flex items-center flex-wrap [&>*]:mb-[10px]'>
                         <AddTag onAddTag={handleAddTag} keyName='classes' />
                         <FilterItems isString={true}
                            onlyItems={true}
@@ -412,7 +412,7 @@ export default function Settings() {
 
                <SettingsCard title='Images in Offer Slide'
                   body={
-                     <div className='flex items-center [&>*]:mb-[10px]'>
+                     <div className='flex items-center flex-wrap [&>*]:mb-[10px]'>
                         <AddTag openModal={true}
                            onAddTag={() => handleTagModal('offer')} />
                         {/* <input type='file' ref={inputRef} className='hidden' accept="image/*"

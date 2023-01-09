@@ -26,30 +26,31 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
    const [postTutorDetails, postTutorDetailsResp] = usePostTutorDetailsMutation()
 
    const [userDetail, setUserDetail] = useState({})
+
    const [settings, setSettings] = useState({
       leadStatus: []
    })
-   useEffect(() => {
-      if (dataFor === 'allUsers') {
-         if (item.userType === 'tutor') {
-            getTutorDetail({ id: item._id })
-               .then(res => {
-                  if (res.data.data.details) {
-                     setUserDetail(res.data.data.details)
-                  }
-               })
-         } else {
-            getUserDetail({ id: item._id })
-               .then(res => {
-                  // console.log(res.data.data);
-                  if (res.data.data.userdetails) {
-                     setUserDetail(res.data.data.userdetails)
-                  }
-               })
-         }
 
-      }
-   }, [item])
+   // useEffect(() => {
+   //    if (dataFor === 'allUsers') {
+   //       if (item.userType === 'tutor') {
+   //          getTutorDetail({ id: item._id })
+   //             .then(res => {
+   //                if (res.data.data.details) {
+   //                   setUserDetail(res.data.data.details)
+   //                }
+   //             })
+   //       } else {
+   //          getUserDetail({ id: item._id })
+   //             .then(res => {
+   //                // console.log(res.data.data);
+   //                if (res.data.data.userdetails) {
+   //                   setUserDetail(res.data.data.userdetails)
+   //                }
+   //             })
+   //       }
+   //    }
+   // }, [item])
 
    useEffect(() => {
       fetchSettings()
@@ -57,25 +58,28 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
             setSettings(res.data.data.setting)
          })
    }, [])
+
    const navigate = useNavigate();
+
    const handleChange = (field) => {
       // console.log(field)
+      // console.log(item._id)
       // console.log(userDetail)
       if (item.userType === 'parent' || item.userType === 'student') {
          updateUserDetail({ fields: field, id: item._id })
             .then(res => {
-               fetch && fetch()
+               fetch && fetch(field, item._id)
             })
       } else if (item.userType === 'tutor') {
          if (Object.keys(userDetail).length === 0) {
             postTutorDetails({ fields: field, id: item._id })
                .then(res => {
-                  fetch && fetch()
+                  fetch && fetch(field, item._id)
                })
          } else {
             updateTutorDetail({ fields: field, id: item._id })
                .then(res => {
-                  fetch && fetch()
+                  fetch && fetch(field, item._id)
                })
          }
       }
@@ -131,7 +135,7 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
                </td>
                <td className="font-medium text-sm px-1  min-w-14 py-4">
                   <div className="my-[6px]">
-                     <InputSelect value={userDetail.leadStatus ? userDetail.leadStatus : '-'}
+                     <InputSelect value={item.leadStatus ? item.leadStatus : '-'}
                         optionData={settings.leadStatus}
                         inputContainerClassName='min-w-[100px] pt-0 pb-0 pr-2 pl-0 text-center'
                         optionClassName='font-semibold opacity-60 text-sm'
