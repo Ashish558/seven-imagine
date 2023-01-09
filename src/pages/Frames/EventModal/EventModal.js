@@ -129,7 +129,8 @@ export default function EventModal({
          data.time.end.timeType === '' ||
          data.timeZone === '' ||
          data.date === '' ||
-         data.session === ''
+         data.session === '' ||
+         data.service === ''
       ) {
          setSubmitDisabled(true)
       } else {
