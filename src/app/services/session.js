@@ -147,6 +147,13 @@ export const sessionServicesApi = createApi({
             headers: getAuthHeader()
          })
       }),
+      deleteAllRecurringSession: builder.mutation({
+         query: (id) => ({
+            url: `/api/session/all/${id}`,
+            method: "DELETE",
+            headers: getAuthHeader()
+         })
+      }),
 
    }),
 });
@@ -168,5 +175,6 @@ export const {
    useLazyGetStudentFeedbackQuery,
    useLazyCancelSessionQuery,
    useLazySessionMissedQuery,
-   useDeleteSessionMutation
+   useDeleteSessionMutation,
+   useDeleteAllRecurringSessionMutation
 } = sessionServicesApi;

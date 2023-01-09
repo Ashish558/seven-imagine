@@ -16,6 +16,7 @@ import {
 } from "../../../utils/utils";
 import InputSearch from "../../../components/InputSearch/InputSearch";
 import {
+   useDeleteAllRecurringSessionMutation,
    useDeleteSessionMutation,
    useLazyCancelSessionQuery,
    useLazyGetSessionFeedbackQuery,
@@ -73,7 +74,7 @@ const tempDays = [
       checked: false,
    },
    {
-      id: 7,
+      id: 0,
       text: "S",
       full: "Sun",
       checked: false,
@@ -122,22 +123,7 @@ export default function EventModal({
    });
    const [submitDisabled, setSubmitDisabled] = useState(false)
 
-   useEffect(() => {
-      if (
-         data.time.start.time === '' ||
-         data.time.start.timeType === '' ||
-         data.time.end.time === '' ||
-         data.time.end.timeType === '' ||
-         data.timeZone === '' ||
-         data.date === '' ||
-         data.session === '' ||
-         data.service === ''
-      ) {
-         setSubmitDisabled(true)
-      } else {
-         setSubmitDisabled(false)
-      }
-   }, [data])
+
 
    const [days, setDays] = useState(tempDays);
    const [topics, setTopics] = useState([]);
@@ -155,6 +141,7 @@ export default function EventModal({
    const [cancelSession, cancelSessionResp] = useLazyCancelSessionQuery()
    const [missSession, missSessionResp] = useLazySessionMissedQuery()
    const [deleteSession, deleteSessionResp] = useDeleteSessionMutation()
+   const [deleteAllSession, deleteAllSessionResp] = useDeleteAllRecurringSessionMutation()
 
    const [inputFeedback, setInputFeedback] = useState(0)
 
@@ -175,6 +162,47 @@ export default function EventModal({
       });
       return checkedItems;
    };
+
+   useEffect(() => {
+      if (data.recurring === false) {
+         if (
+            data.time.start.time === '' ||
+            data.time.start.timeType === '' ||
+            data.time.end.time === '' ||
+            data.time.end.timeType === '' ||
+            data.timeZone === '' ||
+            data.date === '' ||
+            data.session === '' ||
+            data.service === ''
+         ) {
+            setSubmitDisabled(true)
+         } else {
+            setSubmitDisabled(false)
+         }
+      } else {
+         let day = []
+         days.map((d) => {
+            if (d.checked) day.push(d.full);
+         });
+         console.log(day);
+         if (
+            data.time.start.time === '' ||
+            data.time.start.timeType === '' ||
+            data.time.end.time === '' ||
+            data.time.end.timeType === '' ||
+            data.timeZone === '' ||
+            data.date === '' ||
+            data.session === '' ||
+            data.service === '' ||
+            data.endDate === '' ||
+            day.length === 0
+         ) {
+            setSubmitDisabled(true)
+         } else {
+            setSubmitDisabled(false)
+         }
+      }
+   }, [data, days])
 
    useEffect(() => {
       if (defaultEventData !== null && !isUpdating) {
@@ -454,13 +482,42 @@ export default function EventModal({
          reqBody.date = [sDate]
       } else {
          let sDate = new Date(reqBody.date)
-         sDate.setHours(0)
-         sDate.setMinutes(0)
+         // sDate.setHours(0)
+         // sDate.setMinutes(0)
+         const dates = []
          delete reqBody['date']
-         console.log('sDate', sDate);
-         console.log('day', sDate.getDay());
-      }
+         // console.log('sDate', sDate);
+         // console.log('day', sDate.getDay());
+         const currentDay = sDate.getDay()
+         const currentDate = sDate.getDate()
 
+         // console.log('days', tempDays);
+         const daysTORecur = tempDays.map(item => {
+            if (reqBody.day.includes(item.full)) return item.id
+         }).filter(it => it !== undefined)
+         // console.log('daysTORecur', daysTORecur);
+         // console.log('req body days', reqBody.day);
+         if (daysTORecur.length > 0) {
+            daysTORecur.map(recurDay => {
+               if (currentDay === recurDay) {
+                  dates.push(sDate)
+               } else if (recurDay > currentDay) {
+                  let d1 = sDate
+                  let up1 = new Date(d1).setDate(currentDate + recurDay - currentDay)
+                  dates.push(new Date(up1))
+               } else if (recurDay < currentDay) {
+                  let d2 = sDate
+                  let up2 = new Date(d2).setDate(currentDate + 7 + recurDay - currentDay)
+                  dates.push(new Date(up2))
+               }
+            })
+         } else {
+            dates.push(sDate)
+         }
+         reqBody.date = dates
+         console.log('dates', dates);
+      }
+// console.log('reqBody', reqBody);
       // return
       if (isUpdating) return updateSession(reqBody);
 
@@ -509,6 +566,16 @@ export default function EventModal({
 
    const handleDeleteSession = () => {
       deleteSession(sessionToUpdate._id)
+         .then(res => {
+            if (res.error) return console.log(res.error);
+            console.log(res.data);
+            refetchSessions()
+            setEventModalActive(false)
+         })
+   }
+
+   const handleDeleteAllSession = () => {
+      deleteAllSession(sessionToUpdate._id)
          .then(res => {
             if (res.error) return console.log(res.error);
             console.log(res.data);
@@ -753,10 +820,12 @@ export default function EventModal({
                                     <SecondaryButton
                                        children="Delete Current"
                                        className="text-lg py-3 mr-3 pl-1 pr-1 font-medium px-7 h-[50px] w-[140px] disabled:opacity-60"
+                                       onClick={handleDeleteSession}
                                     />
                                     <SecondaryButton
-                                       children="Delete"
+                                       children="Delete All"
                                        className="text-lg py-3 mr-3 pl-2 pr-2 font-medium px-7 h-[50px] w-[140px] disabled:opacity-60"
+                                       onClick={handleDeleteAllSession}
                                     />
                                  </div>
                                  <div>

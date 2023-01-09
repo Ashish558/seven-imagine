@@ -692,8 +692,8 @@ export default function Calendar() {
    // console.log(events);
    // console.log(eventDetails);
 
-// console.log('events', events);
-// console.log('eventDetails', eventDetails);
+console.log('events', events);
+console.log('eventDetails', eventDetails);
 
    return (
       <>
