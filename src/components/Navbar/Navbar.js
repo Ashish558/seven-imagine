@@ -107,10 +107,10 @@ const studentNav = [
       icon: Calendar,
       path: "/calendar",
    },
-   {
-      icon: StudentTest,
-      path: "/all-tests",
-   },
+   // {
+   //    icon: StudentTest,
+   //    path: "/all-tests",
+   // },
    {
       icon: Exit,
       path: "/exit",
@@ -227,7 +227,7 @@ export default function Navbar() {
             cancelBtn={true}
             cancelBtnClassName="py-4"
             primaryBtn={{
-               text: "Remove",
+               text: "Logout",
                className: "bg-danger w-[123px] pl-4 pr-4",
                onClick: logoutUser,
             }}

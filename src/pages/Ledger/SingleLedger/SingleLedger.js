@@ -138,7 +138,7 @@ export default function SingleLedger({ _id, invoiceId, sessionId, title, Date: l
 
                               {/* <div className='flex items-center'> */}
                               <div className='col-span-4 flex justify-end'>
-                                 <div className='font-bold mx-1 py-6 flex items-center cursor-pointer'>
+                                 <div className='opacity-0 pointer-events-none font-bold mx-1 py-6 flex items-center cursor-pointer'>
                                     <p className='text-[#0671E0] mr-1.5'>
                                        Download invoice
                                     </p>
