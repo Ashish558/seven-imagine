@@ -441,7 +441,7 @@ export default function TutorProfile({ isOwn }) {
 
             <div className='lg:px-5 lg:pt-0 lg:pr-0 relative'>
                <div className='pt-10 min-h-[600px] relative z-10 flex items-end'>
-                  <YoutubeEmbed embedId='mr15Xzb1Ook' />
+                  <YoutubeEmbed embedId='uWczQkOc5a8' />
                   <div className={`${styles.backBtn} mt-10`} >
                      <BackBtn to={-1} />
                   </div>
