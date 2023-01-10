@@ -125,7 +125,7 @@ export default function Signup() {
             if (res.error) {
                return console.log(res.error)
             }
-            // setIsLinkedEmail(true)
+            setIsLinkedEmail(true)
             const { user, userdetails } = res.data.data
             let user_detail = { ...userdetails }
             // let userDetails = res.data.data
@@ -262,20 +262,20 @@ export default function Signup() {
                      }
                   }
                   console.log(res);
-                  // if (isLinkedEmail) {
-                  //    addLinkedEmailDetails()
-                  //    // setLinkedUserId(res.data.userId)
-                  //    addLinkedEmailDetails(res.data.userId)
-                  // } 
-                  // else {
-                  setRedirectLink(res.data.link);
-                  setValues({ ...values, userId: res.data.userId });
-                  setFrames({
-                     ...frames,
-                     signupActive: false,
-                     selectPersona: true,
-                  });
-                  // }
+                  if (isLinkedEmail) {
+                     addLinkedEmailDetails()
+                     setLinkedUserId(res.data.userId)
+                     addLinkedEmailDetails(res.data.userId)
+                  }
+                  else {
+                     setRedirectLink(res.data.link);
+                     setValues({ ...values, userId: res.data.userId });
+                     setFrames({
+                        ...frames,
+                        signupActive: false,
+                        selectPersona: true,
+                     });
+                  }
                })
             }
 
@@ -283,29 +283,31 @@ export default function Signup() {
          })
    };
 
+   // console.log(isLinkedEmail);
    useEffect(() => {
-      // addLinkedEmailDetails()
+      addLinkedEmailDetails()
    }, [])
 
-   // const addLinkedEmailDetails = (user_id) => {
-   //    if (!user_id) return
-   //    console.log(user_id);
-   //    console.log(linkedEmailDetails)
-   //    let details = { ...linkedEmailDetails }
-   //    delete details['_id']
-   //    delete details['__v']
-   //    delete details['interest']
-   //    delete details['personality']
-   //    delete details['subjects']
-   //    addUserDetails({ userId: user_id, body: details }).then((res) => {
-   //       console.log(res);
-   //       if (res.error) {
-   //          alert('something went wrong')
-   //          return
-   //       }
-   //       alert('Signup successful login to continue')
-   //    });
-   // }
+   const addLinkedEmailDetails = (user_id) => {
+      if (!user_id) return
+      console.log(user_id);
+      console.log(linkedEmailDetails)
+      let details = { ...linkedEmailDetails }
+      delete details['_id']
+      delete details['__v']
+      delete details['interest']
+      delete details['personality']
+      delete details['subjects']
+      addUserDetails({ userId: user_id, body: details }).then((res) => {
+         console.log(res);
+         if (res.error) {
+            alert('something went wrong')
+            return
+         }
+         alert('Signup successful! Set password link has been sent to yout email')
+         navigate('/')
+      });
+   }
 
    const addDetails = () => {
       setLastLoginDisabled(true)

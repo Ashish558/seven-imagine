@@ -13,7 +13,7 @@ export default function SingleLedger({ _id, invoiceId, sessionId, title, Date: l
 
    const [sessionDetails, setSessionDetails] = useState({})
    const [invoiceDetail, setInvoiceDetail] = useState({})
-   
+
    const [fetchSession, fetchSessionResponse] = useLazyGetSingleSessionQuery()
    const [fetchInvoice, fetchInvoiceResp] = useLazyGetInvoiceQuery()
 
@@ -27,14 +27,14 @@ export default function SingleLedger({ _id, invoiceId, sessionId, title, Date: l
 
    useEffect(() => {
       if (!sessionId) return
-      fetchSession(sessionId)
-         .then(res => {
-            const { start, end } = res.data.data.session.time
-            const timeStr = `${start.time} ${start.timeType} - ${end.time} ${end.timeType} `
-            setSessionDetails({ ...res.data.data.session, timeStr });
-         })
+
+      const { start, end } = sessionId.time
+      const timeStr = `${start.time} ${start.timeType} - ${end.time} ${end.timeType} `
+      setSessionDetails({ ...sessionId, timeStr });
+
    }, [])
 
+   console.log('session', sessionDetails);
    useEffect(() => {
       if (!invoiceId) return
       fetchInvoice({ id: invoiceId })
