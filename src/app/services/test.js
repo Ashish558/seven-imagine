@@ -81,6 +81,13 @@ export const testServicesApi = createApi({
             headers: getAuthHeader()
          })
       }),
+      getAllAssignedTest: builder.query({
+         query: (id) => ({
+            url: `/api/test/all/assigntest`,
+            method: "GET",
+            headers: getAuthHeader()
+         })
+      }),
 
       getTime: builder.query({
          query: (id) => ({
@@ -137,5 +144,6 @@ export const {
    useStartTestMutation,
    useLazyContinueTestQuery,
    useSubmitTestMutation,
-   useLazyGetTestResponseQuery
+   useLazyGetTestResponseQuery,
+   useLazyGetAllAssignedTestQuery
 } = testServicesApi;

@@ -5,6 +5,7 @@ import UploadIcon from "../../assets/assignedTests/upload.svg";
 import SuccessIcon from "../../assets/assignedTests/success.svg";
 import FailIcon from "../../assets/assignedTests/fail.svg";
 import YellowIcon from "../../assets/assignedTests/yellow.svg";
+import LightBlueIcon from "../../assets/assignedTests/lightblue.svg";
 import RedIcon from "../../assets/assignedTests/red.svg";
 import GreenIcon from "../../assets/assignedTests/green.svg";
 import GrayIcon from "../../assets/assignedTests/gray.svg";
@@ -86,12 +87,12 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
    }
 
    const returnStatus = (status) => {
-      return status === 0 ? (
+      return status === 'completed' ? (
          <img className="first:mr-2" src={YellowIcon} />
-      ) : status === 1 ? (
-         <img className="first:mr-2" src={RedIcon} />
-      ) : status === 2 ? (
+      ) : status === 'started' ? (
          <img className="first:mr-2" src={GreenIcon} />
+      ) : status === "notStarted" ? (
+         <img className="first:mr-2" src={LightBlueIcon} />
       ) : status === 3 ? (
          <img className="first:mr-2" src={GrayIcon} />
       ) : (
@@ -165,11 +166,14 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
             <tr className="odd:bg-white text-sm shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-8">
                <td className="px-1 font-medium  min-w-14 py-4 text-left">
                   <span className="inline-block cursor-pointer pl-4">
-                     {item.name}
+                     {item.studentName}
                   </span>
                </td>
                <td className={`font-medium px-1 flex justify-center items-center min-w-14 py-4 relative ${item.late && 'text-[#EE3434]'}`}>
-                  {item.late && <span className="inline-block w-[20px] h-[20px] rounded-full bg-[#EE3434]"></span>} {item.assigedOn}
+                  {item.late &&
+                     <span className="inline-block w-[20px] h-[20px] rounded-full bg-[#EE3434]">
+                     </span>}
+                  {item.assignedOn}
                </td>
                <td className="font-medium px-1  min-w-14 py-4">
                   {item.testName}
@@ -179,15 +183,17 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
                </td>
                <td className="font-medium px-1  min-w-14 py-4">
                   <div className="flex items-center no-wrap justify-center">
-                     {returnStatus(item.status[0])}
-                     {returnStatus(item.status[1])}
+                     {returnStatus(item.status)}
+                     {/* {returnStatus(item.status)} */}
                   </div>
                </td>
                <td
-                  className="font-medium pl-7 text-left min-w-14 py-4"
-                  style={{ padding: 0, paddingLeft: "27px" }}
+                  className="font-medium px-1 test-center text-left min-w-14 py-4"
+               // style={{ padding: 0,}}
                >
-                  {item.score}
+                  <div className="text-center">
+                     {item.scores}
+                  </div>
                </td>
                <td className="font-medium px-1  min-w-14 py-4">
                   <button
@@ -352,7 +358,7 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
 }
 
 const mapData = (data, dataFor, exclude = [], onClick) => {
-// console.log(data);
+   // console.log(data);
    return Object.keys(data).map((key, i) =>
       exclude.includes(key) ? <></> :
          (

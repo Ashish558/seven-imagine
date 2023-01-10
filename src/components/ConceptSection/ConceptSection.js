@@ -37,7 +37,9 @@ const ConceptSection = () => {
    useEffect(() => {
       fetchTutors({ id })
          .then(res => {
-            // res.data.tutors.length > 0 && setTutors(res.data.tutors)
+            if (res.error) return console.log(res.error);
+            // console.log(res.data);
+            res.data.tutors.length > 0 && setTutors(res.data.tutors)
          })
    }, [])
 
@@ -58,6 +60,7 @@ const ConceptSection = () => {
       }
    }, [buttons, buttons.length])
 
+   // console.log(tutors);
    return (
       <div
          className="flex justify-between ml-[35px]"
@@ -177,22 +180,22 @@ const ConceptSection = () => {
                            tutors.map((tutor, idx) => {
                               return (
                                  <div key={idx} className="item flex" style={{ width: "100%" }}>
-                                    <div className="w-3/5">
+                                    <div className="w-3/5 flex justify-center flex-col">
                                        {/* <h5 className={styles.tag}>
                                           WIZARD TUTOR | UNDERGRADUATE
                                        </h5> */}
-                                       <h3> {`${tutor.firstName} ${tutor.lastName}`} </h3>
+                                       <h3 className="mt-0 mb-1"> {`${tutor.firstName} ${tutor.lastName}`} </h3>
                                        <p>
                                           {/* Lorem ipsum dolor sit amet, consectetur
                                           adipiscing elit. */}
                                        </p>
-                                       <button className="btn-gold" style={{ padding: '7px 9px' }}
+                                       <button className="btn-gold" style={{ padding: '7px 9px', maxWidth: '110px' }}
                                           onClick={() => tutor._id && navigate(`/profile/tutor/${tutor._id}`)} >
                                           View Profile
                                        </button>
                                     </div>
                                     <div className="w-2/5">
-                                       <img src={shivam} className="mx-auto w-full object-contain	" alt="" />
+                                       <img src={tutor.photo ? tutor.photo : '/images/default.jpeg'} className="mx-auto w-full object-contain w-[140px] h-[140px] rounded-full" alt="" />
                                     </div>
                                  </div>
                               )
