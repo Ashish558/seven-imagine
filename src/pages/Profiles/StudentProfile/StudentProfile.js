@@ -324,7 +324,7 @@ export default function StudentProfile({ isOwn }) {
                            }
                         },
                         actScores: {
-                           ...prev.satScores,
+                           ...prev.actScores,
                            actScores: {
                               english: actScores.english,
                               maths: actScores.maths,

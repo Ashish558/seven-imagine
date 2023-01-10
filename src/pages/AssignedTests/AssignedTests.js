@@ -10,7 +10,7 @@ import { tempTableData, studentsDataTable } from "./tempData";
 import InputField from "../../components/InputField/inputField";
 import axios from "axios";
 import { BASE_URL } from "../../app/constants/constants";
-import { useAssignTestMutation, useLazyGetAllAssignedTestQuery, useLazyGetAssignedTestQuery, useLazyGetTestsByNameQuery } from "../../app/services/test";
+import { useAssignTestMutation, useLazyGetAllAssignedTestQuery, useLazyGetAssignedTestQuery, useLazyGetTestsByNameQuery, useLazyGetTutorAssignedTestsQuery } from "../../app/services/test";
 import { useLazyGetStudentsByNameQuery } from "../../app/services/session";
 import InputSearch from "../../components/InputSearch/InputSearch";
 import calendar from "./../../assets/calendar/calendar.svg"
@@ -19,7 +19,7 @@ import { useSelector } from "react-redux";
 import { getFormattedDate } from "../../utils/utils";
 
 const optionData = ["1", "2", "3", "4", "5"];
-const timeLimits = [30, 40, 50]
+const timeLimits = ['Regular', '1.5x', 'Unlimited']
 const testData = ["SAT", "ACT"];
 
 const tempTableHeaders = [
@@ -51,7 +51,7 @@ export default function AssignedTests() {
    const [assignTestModalActive, setAssignTestModalActive] = useState(false);
    const [resendModalActive, setResendModalActive] = useState(false);
 
-   const { role: persona } = useSelector(state => state.user)
+   const { role: persona, id } = useSelector(state => state.user)
    const handleClose = () => setAssignTestModalActive(false);
 
    const [filterData, setFilterData] = useState({
@@ -72,10 +72,12 @@ export default function AssignedTests() {
 
    const [fetchStudents, studentResponse] = useLazyGetStudentsByNameQuery();
    const [fetchAssignedTests, assignedTestsResp] = useLazyGetAllAssignedTestQuery();
+   const [fetchTutorAssignedTests, fetchTutorAssignedTestsResp] = useLazyGetTutorAssignedTestsQuery();
+   const [fetchTests, fetchTestsResp] = useLazyGetTestsByNameQuery()
+
    const [students, setStudents] = useState([]);
    const [allAssignedTests, setAllAssignedTests] = useState([])
 
-   const [fetchTests, fetchTestsResp] = useLazyGetTestsByNameQuery()
    const [testsData, setTestsData] = useState([]);
    const [maxPageSize, setMaxPageSize] = useState(10);
    const [validData, setValidData] = useState(true);
@@ -137,8 +139,34 @@ export default function AssignedTests() {
          })
    }
 
+   const fetchTutorTests = () => {
+      fetchTutorAssignedTests(id)
+         .then(res => {
+            if (res.error) return console.log('tutor assignedtest', res.error)
+            console.log('tutor assignedtest', res.data)
+            let data = res.data.data.test.map(item => {
+               const { createdAt, studentId, testId, timeLimit, isCompleted, isStarted } = item
+               return {
+                  studentName: studentId ? `${studentId.firstName} ${studentId.lastName}` : '-',
+                  studentId: studentId ? studentId._id : '-',
+                  assignedOn: getFormattedDate(createdAt),
+                  testName: testId ? testId.testName : '-',
+                  testId: testId ? testId._id : null,
+                  scores: '-',
+                  duration: timeLimit,
+                  status: isCompleted === true ? 'completed' : isStarted ? 'started' : 'notStarted',
+               }
+            })
+            setAllAssignedTests(data)
+         })
+   }
+
    useEffect(() => {
-      fetchAllAssignedTests()
+      if(persona === 'admin'){
+         fetchAllAssignedTests()
+      }else if(persona === 'tutor'){
+         fetchTutorTests()
+      }
    }, [])
 
    const handleResend = (item) => {

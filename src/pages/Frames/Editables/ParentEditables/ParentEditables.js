@@ -344,17 +344,18 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
                // handleClose()
             })
       } else if (currentField.api === 'userDetail') {
-         if(reqBody.satScores){
-            if(isNaN(reqBody.satScores.maths)) reqBody.satScores.maths = 0
-            if(isNaN(reqBody.satScores.verbal)) reqBody.satScores.verbal = 0
+         if (reqBody.satScores) {
+            if (isNaN(reqBody.satScores.maths)) reqBody.satScores.maths = 0
+            if (isNaN(reqBody.satScores.verbal)) reqBody.satScores.verbal = 0
          }
-         if(reqBody.actScores){
-            if(isNaN(reqBody.actScores.maths)) reqBody.actScores.maths = 0
-            if(isNaN(reqBody.actScores.english)) reqBody.actScores.english = 0
-            if(isNaN(reqBody.actScores.reading)) reqBody.actScores.reading = 0
-            if(isNaN(reqBody.actScores.science)) reqBody.actScores.science = 0
+         if (reqBody.actScores) {
+            if (isNaN(reqBody.actScores.maths)) reqBody.actScores.maths = 0
+            if (isNaN(reqBody.actScores.english)) reqBody.actScores.english = 0
+            if (isNaN(reqBody.actScores.reading)) reqBody.actScores.reading = 0
+            if (isNaN(reqBody.actScores.science)) reqBody.actScores.science = 0
          }
-
+         // console.log(reqBody);
+         // return
          updateDetails({ id: userId, fields: reqBody })
             .then(res => {
                console.log(res)
@@ -406,7 +407,7 @@ export default function ParentEditables({ userId, setToEdit, toEdit, fetchDetail
          return ''
       }
    }
-   // console.log('toedit', currentToEdit)
+   console.log('toedit', currentToEdit)
    // console.log('setting', settings)
    // console.log('field', currentField)
    // console.log('sett', settings)

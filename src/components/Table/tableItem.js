@@ -94,13 +94,13 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
       ) : status === "notStarted" ? (
          <img className="first:mr-2" src={LightBlueIcon} />
       ) : status === 3 ? (
-         <img className="first:mr-2" src={GrayIcon} />
+         <img className="first:mr-2" src={LightBlueIcon} />
       ) : (
          <></>
       );
    };
 
-   const toExcludes = ['testId', '_id', 'isCompleted']
+   // const toExcludes = ['testId', '_id', 'isCompleted']
 
    return (
       <>
@@ -276,13 +276,14 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
          {dataFor === "assignedTestsStudents" && (
             <tr className="odd:bg-white shadow-sm text-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
                {Object.keys(item).map((key, i) =>
-                  toExcludes.includes(key) ? <></> :
+                  excludes.includes(key) ? <></> :
                      (
                         <td key={i} className="font-medium px-1  min-w-14 py-4">
                            {key === 'status' ?
-                              <img className="first:mr-2 mx-auto inline-block opacity-60" src={GrayIcon} />
+                              <div className="flex justify-center">
+                                 {returnStatus(item.status)}
+                              </div>
                               :
-
                               item[key]
                            }
                         </td>

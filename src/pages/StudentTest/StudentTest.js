@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLazyGetAssignedTestQuery, useLazyGetTestDetailsQuery, useLazyGetTestResponseQuery } from "../../app/services/test";
+import { useLazyGetAssignedTestQuery, useLazyGetParentsAssignedTestsQuery, useLazyGetTestDetailsQuery, useLazyGetTestResponseQuery } from "../../app/services/test";
 import { useLazyGetUserDetailQuery } from "../../app/services/users";
 import Modal from "../../components/Modal/Modal";
 import Table from "../../components/Table/Table";
@@ -46,110 +46,137 @@ export default function StudentTest() {
    const [getTestDetails, getTestDetailsResp] = useLazyGetTestDetailsQuery()
    const [getResponse, getResponseRes] = useLazyGetTestResponseQuery()
    const [getUserDetail, userDetailResp] = useLazyGetUserDetailQuery()
+   const [fetchAssignedTests, fetchAssignedTestsResp] = useLazyGetParentsAssignedTestsQuery()
 
    const [assignedTestDetails, setassignedTestDetails] = useState([])
+
    const [allTests, setAllTests] = useState([])
+   const [filteredTests, setfilteredTests] = useState([])
+
    const [testDetails, setTestDetails] = useState([])
 
    const { role: persona, id } = useSelector(state => state.user)
 
-   useEffect(() => {
-      getResponse({ id: '63b567682cbfe817fe551afb' })
-         .then(res => {
-            console.log(res.data);
-         })
-   }, [])
-
-   useEffect(() => {
-      getTest()
-         .then(res => {
-            console.log('all-assigned-tests', res.data.data.test);
-            let tempAllTests = res.data.data.test.map(test => {
-               const { testId, studentId, dueDate, createdAt } = test
-               return {
-                  testName: testId.testName,
-                  assignedOn: getFormattedDate(new Date(createdAt)),
-                  dueDate: getFormattedDate(new Date(test.dueDate)),
-                  duration: test.timeLimit,
-                  status: 1,
-                  scores: 'V720 M650 | C1370	',
-                  _id: test._id,
-                  testId: testId._id,
-                  isCompleted: test.isCompleted
-               }
-            })
-
-            setAllTests(tempAllTests)
-
-            // if (res.data.data.test.length === 0) return
-            // res.data.data.test.map(test => {
-            //    getTestDetails(test.testId)
-            //       .then(resp => {
-            //          // console.log('testdata', resp.data.data)
-            //       })
-            // })
-         })
-   }, [])
-
    // useEffect(() => {
-   //    if (assignedTestDetails.length === 0) return
-   //    assignedTestDetails.map(item => {
-   //       getTestDetails(item.testId)
-   //          .then(resp => {
-   //             if (resp.error) {
-   //                return console.log('test details error', resp.error);
-   //             }
-   //             setAllTests(prev => {
-   //                let obj = {
-   //                   ...item,
-   //                   testName: resp.data.data.test.testName,
-   //                }
-   //                let allTests = [...prev, { ...obj }]
-   //                return allTests.sort(function (a, b) {
-   //                   return new Date(b.updatedAt) - new Date(a.updatedAt);
-   //                });
-   //             })
-
-   //          })
-   //    })
-   // }, [assignedTestDetails])
-
-   // useEffect(() => {
-   //    getUserDetail({ id })
+   //    getResponse({ id: '63b567682cbfe817fe551afb' })
    //       .then(res => {
-   //          // console.log('response', res.data.data);
-   //          setUser(res.data.data.user)
-   //          setAssociatedStudents([])
-   //          res.data.data.user.assiginedStudents.map((student, idx) => {
-   //             getUserDetail({ id: student })
-   //                .then(res => {
-   //                   setAssociatedStudents(prev => [...prev, {
-   //                      _id: res.data.data.user._id,
-   //                      name: `${res.data.data.user.firstName} ${res.data.data.user.lastName}`,
-   //                      photo: res.data.data.user.photo ? res.data.data.user.photo : '/images/default.jpeg',
-   //                      selected: idx === 0 ? true : false
-   //                   }])
-   //                })
-   //          })
-
+   //          console.log(res.data);
    //       })
    // }, [])
 
+   useEffect(() => {
+      if (persona === 'student') {
+         getTest()
+            .then(res => {
+               console.log('all-assigned-tests', res.data.data.test);
+               let tempAllTests = res.data.data.test.map(test => {
+                  const { testId, studentId, dueDate, isCompleted, isStarted, createdAt } = test
+                  return {
+                     testName: testId ? testId.testName : '-',
+                     assignedOn: getFormattedDate(new Date(createdAt)),
+                     studentId: studentId ? studentId : '-',
+                     dueDate: getFormattedDate(new Date(test.dueDate)),
+                     duration: test.timeLimit,
+                     status: isCompleted === true ? 'completed' : isStarted ? 'started' : 'notStarted',
+                     scores: '-',
+                     _id: test._id,
+                     testId: testId ? testId._id : '-',
+                     isCompleted: test.isCompleted
+                  }
+               })
+               setAllTests(tempAllTests)
+            })
+      }
+   }, [persona])
+
+   //fetch parents students
+   useEffect(() => {
+      if (persona === 'parent') {
+         getUserDetail({ id })
+            .then(res => {
+               // console.log('response', res.data.data);
+               setUser(res.data.data.user)
+               setAssociatedStudents([])
+               res.data.data.user.assiginedStudents.map((student, idx) => {
+                  getUserDetail({ id: student })
+                     .then(res => {
+                        setAssociatedStudents(prev => [...prev, {
+                           _id: res.data.data.user._id,
+                           name: `${res.data.data.user.firstName} ${res.data.data.user.lastName}`,
+                           photo: res.data.data.user.photo ? res.data.data.user.photo : '/images/default.jpeg',
+                           selected: idx === 0 ? true : false
+                        }])
+                     })
+               })
+
+            })
+      }
+   }, [persona])
+
+   useEffect(() => {
+      if (persona === 'parent') {
+         fetchAssignedTests(id)
+            .then(res => {
+               if (res.error) return console.log('assigned test parent resp', res.error);
+               // console.log('assigned test parent resp', res.data);
+               let tempAllTests = res.data.data.test.map(test => {
+                  const { testId, studentId, isCompleted, isStarted, dueDate, createdAt } = test
+                  return {
+                     testName: testId ? testId.testName : '-',
+                     assignedOn: getFormattedDate(new Date(createdAt)),
+                     studentId: studentId ? studentId : '-',
+                     dueDate: getFormattedDate(new Date(test.dueDate)),
+                     duration: test.timeLimit,
+                     status: isCompleted === true ? 'completed' : isStarted ? 'started' : 'notStarted',
+                     scores: '-',
+                     _id: test._id,
+                     testId: testId ? testId._id : '-',
+                     isCompleted: test.isCompleted
+                  }
+               })
+
+               setAllTests(tempAllTests)
+            })
+      }
+   }, [])
+
+
+   useEffect(() => {
+      // console.log('associatedStudents', associatedStudents);
+      // console.log('allTests', allTests);
+      if (associatedStudents.length === 0) return
+      if (associatedStudents.length >= 1) {
+         setSelectedStudent(associatedStudents[0])
+      }
+   }, [associatedStudents])
+
+   useEffect(() => {
+      if (selectedStudent === null) return
+      if (Object.keys(selectedStudent).length === 0) return
+      let tempdata = allTests.filter(test => test.studentId._id === selectedStudent._id)
+      // console.log(tempdata);
+      setfilteredTests(tempdata)
+      // console.log('selectedStudent', selectedStudent);
+      // console.log('allTests', allTests);
+   }, [selectedStudent])
+
    const handleStudentChange = item => {
-      // console.log(item);
+      let obj = {}
       let tempdata = associatedStudents.map(student => {
          if (student._id === item._id) {
+            obj = { ...student, selected: true }
             return { ...student, selected: true }
          } else {
             return { ...student, selected: false }
          }
       })
+      setSelectedStudent(obj)
       setAssociatedStudents(tempdata)
    }
 
-   useEffect(() => {
-      console.log(selectedStudent);
-   }, [selectedStudent])
+   // useEffect(() => {
+   // }, [selectedStudent])
+   // console.log(selectedStudent);
    // console.log(allTests);
    // console.log(associatedStudents);
 
@@ -174,9 +201,9 @@ export default function StudentTest() {
                   ) : persona === 'parent' &&
                   <div className="pl-4">
                      <div className="flex items-center justify-end">
-                        {parentTestInfo.map(item => {
+                        {parentTestInfo.map((item, idx) => {
                            return <>
-                              <div className="w-[20px] h-[20px] rounded-full mr-[20px]" style={{ backgroundColor: item.bg }}></div>
+                              <div key={idx} className="w-[20px] h-[20px] rounded-full mr-[20px]" style={{ backgroundColor: item.bg }}></div>
                               <div className="mr-[20px] font-semibold"> {item.text} </div>
                            </>
                         })}
@@ -196,10 +223,10 @@ export default function StudentTest() {
                <div className="mt-6">
                   <Table
                      dataFor='assignedTestsStudents'
-                     data={allTests}
+                     data={persona === 'parent' ? filteredTests : allTests}
                      tableHeaders={tableHeaders}
                      maxPageSize={10}
-                     excludes={['_id']}
+                     excludes={['_id', 'studentId', 'testId', 'isCompleted']}
                   />
                </div>
             </div>

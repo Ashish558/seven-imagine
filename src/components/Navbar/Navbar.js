@@ -79,10 +79,10 @@ const parentNav = [
       icon: Calendar,
       path: "/calendar",
    },
-   // {
-   //    icon: StudentTest,
-   //    path: "/all-tests",
-   // },
+   {
+      icon: StudentTest,
+      path: "/all-tests",
+   },
    {
       icon: Back,
       path: "/exit",
@@ -137,6 +137,10 @@ const tutorNav = [
    {
       icon: Calendar,
       path: "/calendar",
+   },
+   {
+      icon: TestsIcon,
+      path: "/assigned-tests",
    },
    {
       icon: Exit,
