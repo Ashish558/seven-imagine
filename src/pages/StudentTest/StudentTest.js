@@ -32,16 +32,7 @@ const parentTestInfo = [
       text: 'Completed'
    },
 ]
-const parentStudents = [
-   {
-      name: 'Sarina Darper',
-      selected: true,
-   },
-   {
-      name: 'Joseph Brown',
-      selected: false,
-   },
-]
+
 
 export default function StudentTest() {
 
@@ -73,77 +64,76 @@ export default function StudentTest() {
       getTest()
          .then(res => {
             console.log('all-assigned-tests', res.data.data.test);
-            res.data.data.test.map(test => {
-               setassignedTestDetails(prev => {
-                  let assignedOn = new Date(test.createdAt)
-                  let obj = {
-                     testName: 'test',
-                     assignedOn: getFormattedDate(assignedOn),
-                     dueDate: test.dueDate,
-                     duration: test.timeLimit,
-                     status: 0,
-                     scores: 'V720 M650 | C1370	',
-                     _id: test._id,
-                     testId: test.testId,
-                     isCompleted: test.isCompleted
-                  }
-                  let allTests = [...prev, { ...obj }]
-                  return allTests.sort(function (a, b) {
-                     return new Date(b.updatedAt) - new Date(a.updatedAt);
-                  });
-               })
+            let tempAllTests = res.data.data.test.map(test => {
+               const { testId, studentId, dueDate, createdAt } = test
+               return {
+                  testName: testId.testName,
+                  assignedOn: getFormattedDate(new Date(createdAt)),
+                  dueDate: getFormattedDate(new Date(test.dueDate)),
+                  duration: test.timeLimit,
+                  status: 1,
+                  scores: 'V720 M650 | C1370	',
+                  _id: test._id,
+                  testId: testId._id,
+                  isCompleted: test.isCompleted
+               }
             })
 
-            if (res.data.data.test.length === 0) return
-            res.data.data.test.map(test => {
-               getTestDetails(test.testId)
-                  .then(resp => {
-                     // console.log('testdata', resp.data.data)
-                  })
-            })
+            setAllTests(tempAllTests)
+
+            // if (res.data.data.test.length === 0) return
+            // res.data.data.test.map(test => {
+            //    getTestDetails(test.testId)
+            //       .then(resp => {
+            //          // console.log('testdata', resp.data.data)
+            //       })
+            // })
          })
    }, [])
 
-   useEffect(() => {
-      if (assignedTestDetails.length === 0) return
-      assignedTestDetails.map(item => {
-         getTestDetails(item.testId)
-            .then(resp => {
-               setAllTests(prev => {
-                  let obj = {
-                     ...item,
-                     testName: resp.data.data.test.testName,
-                  }
-                  let allTests = [...prev, { ...obj }]
-                  return allTests.sort(function (a, b) {
-                     return new Date(b.updatedAt) - new Date(a.updatedAt);
-                  });
-               })
+   // useEffect(() => {
+   //    if (assignedTestDetails.length === 0) return
+   //    assignedTestDetails.map(item => {
+   //       getTestDetails(item.testId)
+   //          .then(resp => {
+   //             if (resp.error) {
+   //                return console.log('test details error', resp.error);
+   //             }
+   //             setAllTests(prev => {
+   //                let obj = {
+   //                   ...item,
+   //                   testName: resp.data.data.test.testName,
+   //                }
+   //                let allTests = [...prev, { ...obj }]
+   //                return allTests.sort(function (a, b) {
+   //                   return new Date(b.updatedAt) - new Date(a.updatedAt);
+   //                });
+   //             })
 
-            })
-      })
-   }, [assignedTestDetails])
+   //          })
+   //    })
+   // }, [assignedTestDetails])
 
-   useEffect(() => {
-      getUserDetail({ id })
-         .then(res => {
-            // console.log('response', res.data.data);
-            setUser(res.data.data.user)
-            setAssociatedStudents([])
-            res.data.data.user.assiginedStudents.map((student, idx) => {
-               getUserDetail({ id: student })
-                  .then(res => {
-                     setAssociatedStudents(prev => [...prev, {
-                        _id: res.data.data.user._id,
-                        name: `${res.data.data.user.firstName} ${res.data.data.user.lastName}`,
-                        photo: res.data.data.user.photo ? res.data.data.user.photo : '/images/default.jpeg',
-                        selected: idx === 0 ? true : false
-                     }])
-                  })
-            })
+   // useEffect(() => {
+   //    getUserDetail({ id })
+   //       .then(res => {
+   //          // console.log('response', res.data.data);
+   //          setUser(res.data.data.user)
+   //          setAssociatedStudents([])
+   //          res.data.data.user.assiginedStudents.map((student, idx) => {
+   //             getUserDetail({ id: student })
+   //                .then(res => {
+   //                   setAssociatedStudents(prev => [...prev, {
+   //                      _id: res.data.data.user._id,
+   //                      name: `${res.data.data.user.firstName} ${res.data.data.user.lastName}`,
+   //                      photo: res.data.data.user.photo ? res.data.data.user.photo : '/images/default.jpeg',
+   //                      selected: idx === 0 ? true : false
+   //                   }])
+   //                })
+   //          })
 
-         })
-   }, [])
+   //       })
+   // }, [])
 
    const handleStudentChange = item => {
       // console.log(item);
@@ -151,7 +141,7 @@ export default function StudentTest() {
          if (student._id === item._id) {
             return { ...student, selected: true }
          } else {
-            return { ...student, selected : false }
+            return { ...student, selected: false }
          }
       })
       setAssociatedStudents(tempdata)

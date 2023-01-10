@@ -274,7 +274,7 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
                      (
                         <td key={i} className="font-medium px-1  min-w-14 py-4">
                            {key === 'status' ?
-                              <img className="first:mr-2 mx-auto inline-block" src={GreenIcon} />
+                              <img className="first:mr-2 mx-auto inline-block opacity-60" src={GrayIcon} />
                               :
 
                               item[key]

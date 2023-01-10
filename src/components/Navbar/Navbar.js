@@ -34,10 +34,10 @@ const tempnavdata = [
       icon: Calendar,
       path: "/calendar",
    },
-   // {
-   //    icon: TestsIcon,
-   //    path: "/assigned-tests",
-   // },
+   {
+      icon: TestsIcon,
+      path: "/assigned-tests",
+   },
    {
       icon: Document,
       path: "/all-tests",
@@ -107,10 +107,10 @@ const studentNav = [
       icon: Calendar,
       path: "/calendar",
    },
-   // {
-   //    icon: StudentTest,
-   //    path: "/all-tests",
-   // },
+   {
+      icon: StudentTest,
+      path: "/all-tests",
+   },
    {
       icon: Exit,
       path: "/exit",

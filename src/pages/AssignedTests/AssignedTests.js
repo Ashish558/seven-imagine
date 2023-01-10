@@ -10,7 +10,7 @@ import { tempTableData, studentsDataTable } from "./tempData";
 import InputField from "../../components/InputField/inputField";
 import axios from "axios";
 import { BASE_URL } from "../../app/constants/constants";
-import { useAssignTestMutation, useLazyGetTestsByNameQuery } from "../../app/services/test";
+import { useAssignTestMutation, useLazyGetAssignedTestQuery, useLazyGetTestsByNameQuery } from "../../app/services/test";
 import { useLazyGetStudentsByNameQuery } from "../../app/services/session";
 import InputSearch from "../../components/InputSearch/InputSearch";
 import calendar from "./../../assets/calendar/calendar.svg"
@@ -70,18 +70,20 @@ export default function AssignedTests() {
    });
 
    const [fetchStudents, studentResponse] = useLazyGetStudentsByNameQuery();
+   const [fetchAssignedTests, assignedTestsResp] = useLazyGetAssignedTestQuery();
    const [students, setStudents] = useState([]);
 
    const [fetchTests, fetchTestsResp] = useLazyGetTestsByNameQuery()
    const [testsData, setTestsData] = useState([]);
    const [maxPageSize, setMaxPageSize] = useState(10);
    const [validData, setValidData] = useState(true);
+  
    useEffect(() => {
       setValidData(modalData.name && modalData.limit && modalData.date && modalData.test);
    }, [modalData.name, modalData.limit, modalData.date, modalData.test])
 
    useEffect(() => {
-      if (modalData.name.length > 2) {
+      if (modalData.name.length > 0) {
          fetchStudents(modalData.name).then((res) => {
             // console.log(res.data.data)
             let tempData = res.data.data.students.map((student) => {
@@ -96,7 +98,7 @@ export default function AssignedTests() {
    }, [modalData.name]);
 
    useEffect(() => {
-      if (modalData.test.length > 2) {
+      if (modalData.test.length > 0) {
          fetchTests(modalData.test).then((res) => {
             let tempData = res.data.data.test.map((test) => {
                return {
@@ -109,6 +111,19 @@ export default function AssignedTests() {
          });
       }
    }, [modalData.test]);
+
+
+   const fetchAllAssignedTests = ()=>{
+      fetchAssignedTests()
+      .then(res =>{
+         if(res.error) return console.log(res.error)
+         console.log(res.data);
+      })
+   }
+
+   useEffect(() => {
+      fetchAllAssignedTests()
+   }, [])
 
    const handleResend = (item) => {
       console.log(item);

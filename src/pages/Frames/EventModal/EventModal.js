@@ -184,7 +184,6 @@ export default function EventModal({
          days.map((d) => {
             if (d.checked) day.push(d.full);
          });
-         console.log(day);
          if (
             data.time.start.time === '' ||
             data.time.start.timeType === '' ||
@@ -384,10 +383,14 @@ export default function EventModal({
       return strArr;
    };
 
-   const updateSession = (reqBody) => {
+   const updateSession = (reqBody, isMultiple) => {
       // console.log(sessionToUpdate)
       // console.log(reqBody)
       let body = { ...reqBody }
+      body.date = reqBody.date[0]
+      
+      // console.log(isMultiple);
+      // return
       if (body.sessionStatus === "Completed") {
          updateSessionStatus(sessionToUpdate._id)
             .then(res => {
@@ -404,7 +407,10 @@ export default function EventModal({
       if (body.sessionStatus === "Missed") {
          missSession(sessionToUpdate._id)
             .then(res => {
-               if (res.error) return
+               if (res.error){
+                  alert(res.error.data.message)
+                  console.log('miss session err', res.error);
+               }
                updateUserSession({ id: sessionToUpdate._id, body: { sessionStatus: 'Missed', _id: sessionToUpdate._id } }).then(
                   (res) => {
                      console.log(res);
@@ -423,6 +429,7 @@ export default function EventModal({
                      console.log(res.error.data.message);
                      alert(res.error.data.message)
                   }
+                  return
                }
                updateUserSession({ id: sessionToUpdate._id, body: { sessionStatus: 'Cancelled', _id: sessionToUpdate._id } }).then(
                   (res) => {
@@ -436,14 +443,14 @@ export default function EventModal({
       delete body['sessionStatus']
       updateUserSession({ id: sessionToUpdate._id, body: { ...body, _id: sessionToUpdate._id } }).then(
          (res) => {
-            // console.log(res);
+            console.log(res);
             refetchSessions()
             setEventModalActive(false);
          }
       );
    };
 
-   const handleSubmit = () => {
+   const handleSubmit = (isUpdatingAll) => {
       //  sessionSchema.validate(data)
       // .then(valid => {
       //    console.log(valid)
@@ -517,9 +524,10 @@ export default function EventModal({
          reqBody.date = dates
          console.log('dates', dates);
       }
-// console.log('reqBody', reqBody);
+      // console.log('reqBody', reqBody);
       // return
-      if (isUpdating) return updateSession(reqBody);
+      if(isUpdating && isUpdatingAll) return  updateSession(reqBody, isUpdatingAll);
+      if (isUpdating) return updateSession(reqBody, isUpdatingAll);
 
       submitSession(reqBody).then((res) => {
          console.log(res)
@@ -832,13 +840,13 @@ export default function EventModal({
                                     <PrimaryButton
                                        children="Update Current"
                                        className="text-lg py-3 mr-3 pl-1 pr-1 whitespace-nowrap font-medium px-7 h-[50px] w-[140px] disabled:opacity-60"
-                                       onClick={handleSubmit}
+                                       onClick={() => handleSubmit()}
                                        disabled={submitDisabled}
                                     />
                                     <PrimaryButton
                                        children="Update All"
                                        className="text-lg py-3 pl-2 pr-2 font-medium px-7 h-[50px] w-[140px] disabled:opacity-60"
-                                       onClick={handleSubmit}
+                                       onClick={() => handleSubmit(true)}
                                        disabled={submitDisabled}
                                     />
                                  </div>
