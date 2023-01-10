@@ -79,10 +79,10 @@ const parentNav = [
       icon: Calendar,
       path: "/calendar",
    },
-   {
-      icon: StudentTest,
-      path: "/all-tests",
-   },
+   // {
+   //    icon: StudentTest,
+   //    path: "/all-tests",
+   // },
    {
       icon: Back,
       path: "/exit",

@@ -140,7 +140,7 @@ export default function AllTests() {
                   // fetchTests()
                });
          }
-
+         fetchTests()
          console.log('submitted');
       });
    };
