@@ -80,6 +80,7 @@ export default function StudentTest() {
                      status: isCompleted === true ? 'completed' : isStarted ? 'started' : 'notStarted',
                      scores: '-',
                      _id: test._id,
+                     pdfLink: testId.pdf ? testId.pdf : null, 
                      testId: testId ? testId._id : '-',
                      isCompleted: test.isCompleted
                   }
@@ -130,6 +131,7 @@ export default function StudentTest() {
                      status: isCompleted === true ? 'completed' : isStarted ? 'started' : 'notStarted',
                      scores: '-',
                      _id: test._id,
+                     pdfLink: testId.pdf ? testId.pdf : null,
                      testId: testId ? testId._id : '-',
                      isCompleted: test.isCompleted
                   }
@@ -179,7 +181,7 @@ export default function StudentTest() {
    // console.log(selectedStudent);
    // console.log(allTests);
    // console.log(associatedStudents);
-
+ 
    return (
       <>
          <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">
@@ -226,7 +228,7 @@ export default function StudentTest() {
                      data={persona === 'parent' ? filteredTests : allTests}
                      tableHeaders={tableHeaders}
                      maxPageSize={10}
-                     excludes={['_id', 'studentId', 'testId', 'isCompleted']}
+                     excludes={['_id', 'studentId', 'testId', 'isCompleted', 'pdfLink']}
                   />
                </div>
             </div>

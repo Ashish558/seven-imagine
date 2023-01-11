@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ResendConfirmation from "../../assets/assignedTests/resendConfirmation.svg";
 import UploadIcon from "../../assets/assignedTests/upload.svg";
+import DownloadIcon from "../../assets/icons/download.png";
 import SuccessIcon from "../../assets/assignedTests/success.svg";
 import FailIcon from "../../assets/assignedTests/fail.svg";
 import YellowIcon from "../../assets/assignedTests/yellow.svg";
@@ -28,6 +29,7 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
 
    const [userDetail, setUserDetail] = useState({})
 
+// console.log(item);
    const [settings, setSettings] = useState({
       leadStatus: []
    })
@@ -296,7 +298,7 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
                )}
                <td className="font-medium px-1  min-w-14 py-4">
                   <div className="flex items-center">
-                     <img src={UploadIcon} />
+                     <img src={DownloadIcon} className='w-[30px] cursor-pointer' onClick={()=> item.pdfLink !== null && window.open(item.pdfLink)} />
                      {
                         item.isCompleted ?
                            <button
