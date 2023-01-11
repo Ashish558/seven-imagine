@@ -138,10 +138,10 @@ const tutorNav = [
       icon: Calendar,
       path: "/calendar",
    },
-   {
-      icon: TestsIcon,
-      path: "/assigned-tests",
-   },
+   // {
+   //    icon: TestsIcon,
+   //    path: "/assigned-tests",
+   // },
    {
       icon: Exit,
       path: "/exit",

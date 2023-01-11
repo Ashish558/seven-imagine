@@ -88,9 +88,9 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
 
    const returnStatus = (status) => {
       return status === 'completed' ? (
-         <img className="first:mr-2" src={YellowIcon} />
-      ) : status === 'started' ? (
          <img className="first:mr-2" src={GreenIcon} />
+      ) : status === 'started' ? (
+         <img className="first:mr-2" src={YellowIcon} />
       ) : status === "notStarted" ? (
          <img className="first:mr-2" src={LightBlueIcon} />
       ) : status === 3 ? (
@@ -199,7 +199,7 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
                   <button
                      className="px-2.5 py-1.8 rounded-md flex items-center leading-none bg-primary text-white"
                      onClick={() =>
-                        navigate("/assigned-tests/321/report")
+                        navigate(`/assigned-tests/${item.testId}/report`)
                      }
                   >
                      Test details
@@ -260,6 +260,11 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
                {mapData(item)}
             </tr>
          )}
+         {dataFor === "studentTestsReportSmall" && (
+            <tr className="odd:bg-white text-sm shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
+               {mapData(item)}
+            </tr>
+         )}
          {dataFor === "studentTestsAnswers" && (
             <tr className="odd:bg-white text-sm shadow-sm shadow-slate-200 even:bg-primaryWhite-300 rounded-2xl leading-7">
                {mapData(item)}
@@ -297,7 +302,7 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
                            <button
                               className="px-2.5 py-1.8 rounded-md flex items-center leading-none bg-primary text-white ml-4"
                               onClick={() =>
-                                 navigate("/assigned-tests/321/report")
+                                 navigate(`/assigned-tests/${item.testId}/report`)
                               }
                            >
                               View Report
@@ -363,12 +368,12 @@ const mapData = (data, dataFor, exclude = [], onClick) => {
    return Object.keys(data).map((key, i) =>
       exclude.includes(key) ? <></> :
          (
-            key === "Accuracy" ? (
+            key === "isCorrect" ? (
                <td key={i} className="font-medium px-1  min-w-14 py-4">
                   <div className="flex items-center justify-center">
                      <img
                         src={
-                           data[key] > 80
+                           data[key] === true 
                               ? SuccessIcon
                               : FailIcon
                         }

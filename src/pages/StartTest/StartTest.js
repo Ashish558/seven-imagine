@@ -83,7 +83,7 @@ export default function StartTest() {
                   }
                })
             })
-            setAnswers(answer.map(item => ({ ...item, isMarked: false, ResponseAnswer: '', responseTime: 0 })))
+            setAnswers(answer.map(item => ({ ...item, isMarked: false, ResponseAnswer: 'C', responseTime: 0 })))
          })
    }
    // console.log(id)
@@ -157,7 +157,7 @@ export default function StartTest() {
                setActiveSection({ name: sectionName })
                setSubmitId(submitId)
                setAnswers(answer.map(item => ({
-                  ...item, isMarked: false, ResponseAnswer: '',
+                  ...item, isMarked: false, ResponseAnswer: 'C',
                   responseTime: 0
                })))
             } else {
@@ -239,8 +239,13 @@ export default function StartTest() {
       // console.log(activeSection);
       // console.log(answers);
       const response = answers.map(item => {
-         const { QuestionType, QuestionNumber, ResponseAnswer } = item
-         return { QuestionType, QuestionNumber, ResponseAnswer: ResponseAnswer ? ResponseAnswer : '' }
+         const { QuestionType, QuestionNumber, ResponseAnswer, responseTime } = item
+         return {
+            QuestionType,
+            QuestionNumber,
+            ResponseAnswer: ResponseAnswer ? ResponseAnswer : '',
+            responseTime: responseTime ? responseTime : 0,
+         }
       })
       let body = {
          submitId,
@@ -300,8 +305,8 @@ export default function StartTest() {
                            <p className='inline-block w-138 font-semibold opacity-60'> Student’s Name</p>
                            <span className='inline-block mr-4'>:</span>
                            <p className='inline-block w-138 font-semibold'>
-                               {testHeaderDetails.name} 
-                               </p>
+                              {testHeaderDetails.name}
+                           </p>
                         </div>
                         <div>
                            <p className='inline-block w-138 font-semibold opacity-60'> Started on </p>

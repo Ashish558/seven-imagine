@@ -163,6 +163,20 @@ export const getBackground = (totalLeangth, idx) => {
    ]
    return backgrounds[idx]
 }
+
+export function millisToMinutesAndSeconds(millis) {
+   var minutes = Math.floor(millis / 60000);
+   var seconds = ((millis % 60000) / 1000).toFixed(0);
+   return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+}
+
+export function getDate(arg) {
+   let date = new Date(arg)
+   const month = date.toLocaleString('default', { month: 'long' });
+
+   return `${month} ${date.getDate()}, ${date.getFullYear()}`
+}
+
 // // timezones
 // function getCurrentLocalDateTime() {
 //    return moment().format();

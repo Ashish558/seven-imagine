@@ -25,6 +25,7 @@ import ParentProfile from "../pages/Profiles/ParentProfile/ParentProfile";
 import TutorProfile from "../pages/Profiles/Tutor/TutorProfile";
 import Invoice from "../pages/Invoice/Invoice";
 import { useEffect } from "react";
+import StudentReport from "../pages/StudentReport/StudentReport";
 
 const PrivateRoutes = [
    {
@@ -144,7 +145,7 @@ const AppRoutes = () => {
                path="/assigned-tests/:id/report"
                element={
                   <RequireAuth isLoggedIn={isLoggedIn}>
-                     <CompletedTest />
+                     <StudentReport />
                   </RequireAuth>
                }
             />

@@ -140,6 +140,20 @@ export const testServicesApi = createApi({
             headers: getAuthHeader()
          })
       }),
+      getSingleAssignedTest: builder.query({
+         query: (id) => ({
+            url: `/api/test/myassigntest/${id}`,
+            method: "GET",
+            headers: getAuthHeader()
+         })
+      }),
+      getAnswers: builder.query({
+         query: (id) => ({
+            url: `/api/test/getans/${id}`,
+            method: "GET",
+            headers: getAuthHeader()
+         })
+      }),
 
    }),
 });
@@ -161,5 +175,7 @@ export const {
    useLazyGetTestResponseQuery,
    useLazyGetAllAssignedTestQuery,
    useLazyGetParentsAssignedTestsQuery,
-   useLazyGetTutorAssignedTestsQuery
+   useLazyGetTutorAssignedTestsQuery,
+   useLazyGetSingleAssignedTestQuery,
+   useLazyGetAnswersQuery
 } = testServicesApi;
