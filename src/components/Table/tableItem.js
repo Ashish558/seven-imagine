@@ -14,6 +14,9 @@ import RemoveIcon from "../../assets/icons/remove.svg"
 import InputSelect from "../InputSelect/InputSelect";
 import { useLazyGetSettingsQuery } from "../../app/services/session";
 import { useLazyGetTutorDetailsQuery, useLazyGetUserDetailQuery, usePostTutorDetailsMutation, useUpdateTutorDetailsMutation, useUpdateUserDetailsMutation } from "../../app/services/users";
+import { useSelector } from "react-redux";
+import { useLazyGetTestResponseQuery } from "../../app/services/test";
+import { getScore } from "../../utils/utils";
 
 //can b made dynamic
 export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
@@ -22,38 +25,66 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
    const [fetchSettings, settingsResp] = useLazyGetSettingsQuery()
    const [getUserDetail, getUserDetailResp] = useLazyGetUserDetailQuery()
    const [getTutorDetail, getTutorDetailResp] = useLazyGetTutorDetailsQuery()
-
+   const [score, setScore] = useState('-')
    const [updateUserDetail, updateUserDetailResp] = useUpdateUserDetailsMutation()
    const [updateTutorDetail, updateTutorDetailResp] = useUpdateTutorDetailsMutation()
    const [postTutorDetails, postTutorDetailsResp] = usePostTutorDetailsMutation()
+   const [getTestResponse, getTestResponseResp] = useLazyGetTestResponseQuery()
+
+   const { role: persona } = useSelector(state => state.user)
 
    const [userDetail, setUserDetail] = useState({})
 
-// console.log(item);
+   // console.log(item);
    const [settings, setSettings] = useState({
       leadStatus: []
    })
 
-   // useEffect(() => {
-   //    if (dataFor === 'allUsers') {
-   //       if (item.userType === 'tutor') {
-   //          getTutorDetail({ id: item._id })
-   //             .then(res => {
-   //                if (res.data.data.details) {
-   //                   setUserDetail(res.data.data.details)
-   //                }
-   //             })
-   //       } else {
-   //          getUserDetail({ id: item._id })
-   //             .then(res => {
-   //                // console.log(res.data.data);
-   //                if (res.data.data.userdetails) {
-   //                   setUserDetail(res.data.data.userdetails)
-   //                }
-   //             })
-   //       }
-   //    }
-   // }, [item])
+
+   useEffect(() => {
+      if (dataFor === 'assignedTestsStudents') {
+         let params = {}
+         let url = `/api/test/getresponse/${item.testId}`
+         if (persona !== 'student') {
+            url = `/api/test/admin/getresponse/${item.testId}`
+            params = { userId: item.studentId._id }
+         }
+         if (item.isCompleted === true) {
+            getTestResponse({ url, params: params })
+               .then(res => {
+                  if (res.error) {
+                     console.log('resp err', res.error)
+                     return
+                  }
+                  // console.log('Resp score', res.data.data.response);
+                  let scr = getScore(res.data.data.response.testType, res.data.data.response.subjects)
+                  setScore(`${scr.cumulative} ${scr.right}`)
+               })
+         }
+      }
+   }, [dataFor, item])
+
+   useEffect(() => {
+      if (dataFor === 'assignedTests') {
+
+         let url = `/api/test/admin/getresponse/${item.testId}`
+         let params = { userId: item.studentId }
+
+         if (item.status === 'completed') {
+
+            getTestResponse({ url, params: params })
+               .then(res => {
+                  if (res.error) {
+                     console.log('resp err', res.error)
+                     return
+                  }
+                  // console.log('Resp score', res.data.data.response);
+                  let scr = getScore(res.data.data.response.testType, res.data.data.response.subjects)
+                  setScore(`${scr.cumulative} ${scr.right}`)
+               })
+         }
+      }
+   }, [dataFor, item])
 
    useEffect(() => {
       fetchSettings()
@@ -101,8 +132,6 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
          <></>
       );
    };
-
-   // const toExcludes = ['testId', '_id', 'isCompleted']
 
    return (
       <>
@@ -184,7 +213,7 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
                   {item.duration}
                </td>
                <td className="font-medium px-1  min-w-14 py-4">
-                  <div className="flex items-center no-wrap justify-center">
+                  <div className={`flex items-center no-wrap justify-center`}>
                      {returnStatus(item.status)}
                      {/* {returnStatus(item.status)} */}
                   </div>
@@ -194,14 +223,14 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
                // style={{ padding: 0,}}
                >
                   <div className="text-center">
-                     {item.scores}
+                     {score}
                   </div>
                </td>
                <td className="font-medium px-1  min-w-14 py-4">
                   <button
-                     className="px-2.5 py-1.8 rounded-md flex items-center leading-none bg-primary text-white"
+                     className={`px-2.5 py-1.8 rounded-md flex items-center leading-none bg-primary text-white ${item.status !== 'completed' ? 'opacity-50 pointer-events-none' : ''}`}
                      onClick={() =>
-                        navigate(`/assigned-tests/${item.testId}/report`)
+                        navigate(`/assigned-tests/${item.testId}/report/${item.studentId}`)
                      }
                   >
                      Test details
@@ -290,34 +319,61 @@ export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
                               <div className="flex justify-center">
                                  {returnStatus(item.status)}
                               </div>
-                              :
-                              item[key]
+                              : key === 'scores' ? <div>
+                                 {score}
+                              </div> :
+                                 item[key]
                            }
                         </td>
                      )
                )}
                <td className="font-medium px-1  min-w-14 py-4">
                   <div className="flex items-center">
-                     <img src={DownloadIcon} className='w-[30px] cursor-pointer' onClick={()=> item.pdfLink !== null && window.open(item.pdfLink)} />
+                     <img src={DownloadIcon} className='w-[30px] cursor-pointer' onClick={() => item.pdfLink !== null && window.open(item.pdfLink)} />
                      {
-                        item.isCompleted ?
-                           <button
-                              className="px-2.5 py-1.8 rounded-md flex items-center leading-none bg-primary text-white ml-4"
-                              onClick={() =>
-                                 navigate(`/assigned-tests/${item.testId}/report`)
+                        persona === 'parent' ?
+                           <>
+                              <button
+                                 className={`px-2.5 py-1.8 rounded-md flex items-center leading-none bg-primary text-white ml-4 ${item.isCompleted === false ? 'opacity-50 pointer-events-none' : ''}`}
+                                 onClick={() =>
+                                    navigate(`/assigned-tests/${item.testId}/report/${item.studentId._id}`)
+                                 }
+                              >
+                                 View Report
+                              </button>
+                           </> :
+                           <>
+                              {
+                                 item.isCompleted ?
+                                    <button
+                                       className="px-2.5 py-1.8 rounded-md flex items-center leading-none bg-primary text-white ml-4"
+                                       onClick={() =>
+                                          navigate(`/assigned-tests/${item.testId}/report`)
+                                       }
+                                    >
+                                       View Report
+                                    </button> :
+                                    item.isStarted ?
+                                       <button
+                                          className="px-2.5 py-1.8 rounded-md flex items-center leading-none bg-primary text-white ml-4"
+                                          onClick={() =>
+                                             navigate(`/all-tests/start-section/${item.testId}`)
+                                          }
+                                       >
+                                          Continue
+                                       </button> :
+                                       <button
+                                          className="px-2.5 py-1.8 rounded-md flex items-center leading-none bg-primary text-white ml-4"
+                                          onClick={() =>
+                                             navigate(`/all-tests/start-section/${item.testId}`)
+                                          }
+                                       >
+                                          Start Test
+                                       </button>
                               }
-                           >
-                              View Report
-                           </button> :
-                           <button
-                              className="px-2.5 py-1.8 rounded-md flex items-center leading-none bg-primary text-white ml-4"
-                              onClick={() =>
-                                 navigate(`/all-tests/start-section/${item.testId}`)
-                              }
-                           >
-                              Start Test
-                           </button>
+                           </>
                      }
+
                   </div>
                </td>
             </tr>
@@ -375,7 +431,7 @@ const mapData = (data, dataFor, exclude = [], onClick) => {
                   <div className="flex items-center justify-center">
                      <img
                         src={
-                           data[key] === true 
+                           data[key] === true
                               ? SuccessIcon
                               : FailIcon
                         }

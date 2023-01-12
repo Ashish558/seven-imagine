@@ -121,7 +121,7 @@ export default function AssignedTests() {
       fetchAssignedTests()
          .then(res => {
             if (res.error) return console.log(res.error)
-            console.log(res.data)
+            console.log('response', res.data)
             let data = res.data.data.test.map(item => {
                const { createdAt, studentId, testId, timeLimit, isCompleted, isStarted } = item
                return {
@@ -161,12 +161,15 @@ export default function AssignedTests() {
          })
    }
 
-   useEffect(() => {
-      if(persona === 'admin'){
+   const fetch = () => {
+      if (persona === 'admin') {
          fetchAllAssignedTests()
-      }else if(persona === 'tutor'){
+      } else if (persona === 'tutor') {
          fetchTutorTests()
       }
+   }
+   useEffect(() => {
+      fetch()
    }, [])
 
    const handleResend = (item) => {
@@ -179,7 +182,7 @@ export default function AssignedTests() {
    };
 
    const handleAssignTestSubmit = () => {
-      console.log(modalData)
+      // console.log(modalData)
       const body = {
          studentId: modalData.studentId,
          testId: modalData.testId,
@@ -190,6 +193,7 @@ export default function AssignedTests() {
          .then(res => {
             console.log(res.data.data.assign)
             setAssignTestModalActive(false)
+            fetch()
          })
 
    }
@@ -214,7 +218,7 @@ export default function AssignedTests() {
       },
    ]
 
-   console.log('allAssignedTests', allAssignedTests);
+   // console.log('allAssignedTests', allAssignedTests);
    return (
       <>
          <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">

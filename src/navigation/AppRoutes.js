@@ -150,6 +150,14 @@ const AppRoutes = () => {
                }
             />
             <Route
+               path="/assigned-tests/:id/report/:studentId"
+               element={
+                  <RequireAuth isLoggedIn={isLoggedIn}>
+                     <StudentReport  />
+                  </RequireAuth>
+               }
+            />
+            <Route
                path="/all-tests"
                element={
                   <RequireAuth isLoggedIn={isLoggedIn}>

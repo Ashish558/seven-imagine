@@ -1,3 +1,4 @@
+//y
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLazyGetAssignedTestQuery, useLazyGetParentsAssignedTestsQuery, useLazyGetTestDetailsQuery, useLazyGetTestResponseQuery } from "../../app/services/test";
@@ -56,6 +57,8 @@ export default function StudentTest() {
    const [testDetails, setTestDetails] = useState([])
 
    const { role: persona, id } = useSelector(state => state.user)
+   const [getTestResponse, getTestResponseResp] = useLazyGetTestResponseQuery()
+
 
    // useEffect(() => {
    //    getResponse({ id: '63b567682cbfe817fe551afb' })
@@ -63,14 +66,16 @@ export default function StudentTest() {
    //          console.log(res.data);
    //       })
    // }, [])
-
+ 
    useEffect(() => {
       if (persona === 'student') {
          getTest()
             .then(res => {
                console.log('all-assigned-tests', res.data.data.test);
+
                let tempAllTests = res.data.data.test.map(test => {
                   const { testId, studentId, dueDate, isCompleted, isStarted, createdAt } = test
+
                   return {
                      testName: testId ? testId.testName : '-',
                      assignedOn: getFormattedDate(new Date(createdAt)),
@@ -80,9 +85,10 @@ export default function StudentTest() {
                      status: isCompleted === true ? 'completed' : isStarted ? 'started' : 'notStarted',
                      scores: '-',
                      _id: test._id,
-                     pdfLink: testId.pdf ? testId.pdf : null, 
+                     pdfLink: testId.pdf ? testId.pdf : null,
                      testId: testId ? testId._id : '-',
-                     isCompleted: test.isCompleted
+                     isCompleted: test.isCompleted,
+                     isStarted: test.isStarted,
                   }
                })
                setAllTests(tempAllTests)
@@ -119,7 +125,7 @@ export default function StudentTest() {
          fetchAssignedTests(id)
             .then(res => {
                if (res.error) return console.log('assigned test parent resp', res.error);
-               // console.log('assigned test parent resp', res.data);
+               console.log('assigned test parent resp', res.data);
                let tempAllTests = res.data.data.test.map(test => {
                   const { testId, studentId, isCompleted, isStarted, dueDate, createdAt } = test
                   return {
@@ -155,24 +161,25 @@ export default function StudentTest() {
    useEffect(() => {
       if (selectedStudent === null) return
       if (Object.keys(selectedStudent).length === 0) return
-      let tempdata = allTests.filter(test => test.studentId._id === selectedStudent._id)
-      // console.log(tempdata);
+      if (allTests.length === 0) return
+
+      const selected = associatedStudents.find(student => student.selected === true)
+      if (!selected) return
+      let tempdata = allTests.filter(test => test.studentId._id === selected._id)
+      // console.log('filtered', tempdata);
+      // console.log('selected', selected);
       setfilteredTests(tempdata)
-      // console.log('selectedStudent', selectedStudent);
-      // console.log('allTests', allTests);
-   }, [selectedStudent])
+   }, [associatedStudents, allTests])
 
    const handleStudentChange = item => {
       let obj = {}
       let tempdata = associatedStudents.map(student => {
          if (student._id === item._id) {
-            obj = { ...student, selected: true }
             return { ...student, selected: true }
          } else {
             return { ...student, selected: false }
          }
       })
-      setSelectedStudent(obj)
       setAssociatedStudents(tempdata)
    }
 
@@ -181,7 +188,7 @@ export default function StudentTest() {
    // console.log(selectedStudent);
    // console.log(allTests);
    // console.log(associatedStudents);
- 
+
    return (
       <>
          <div className="lg:ml-pageLeft bg-lightWhite min-h-screen">
@@ -212,7 +219,7 @@ export default function StudentTest() {
                      </div>
                      <div className="flex mt-[29px]">
                         {associatedStudents.map((student, idx) => {
-                           return <div key={idx} className='border px-5 py-[7px] flex justify-center' onClick={() => handleStudentChange(student)} >
+                           return <div key={idx} className='border cursor-pointer px-5 py-[7px] flex justify-center' onClick={() => handleStudentChange(student)} >
                               <p className={`text-lg ${student.selected ? 'font-bold underline underline-offset-3' : ''}`}> {student.name} </p>
                            </div>
                         })}
@@ -228,7 +235,7 @@ export default function StudentTest() {
                      data={persona === 'parent' ? filteredTests : allTests}
                      tableHeaders={tableHeaders}
                      maxPageSize={10}
-                     excludes={['_id', 'studentId', 'testId', 'isCompleted', 'pdfLink']}
+                     excludes={['_id', 'studentId', 'testId', 'isCompleted', 'pdfLink', 'isStarted']}
                   />
                </div>
             </div>

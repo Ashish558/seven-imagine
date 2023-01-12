@@ -177,6 +177,36 @@ export function getDate(arg) {
    return `${month} ${date.getDate()}, ${date.getFullYear()}`
 }
 
+export const getScore = (testType, subjects) => {
+   if (testType === 'SAT') {
+      let set1Score = 0
+      let set2Score = 0
+      subjects.map((sub, idx) => {
+         if (idx === 0 || idx === 1) {
+            set1Score += sub.no_of_correct
+         } else {
+            set2Score += sub.no_of_correct
+         }
+      })
+
+      return {
+         cumulative: `C${set1Score + set2Score}`,
+         right: `V${set1Score} M${set2Score}`,
+      }
+   } else if (testType === 'SAT') {
+      let scoreArr = []
+      let total = 0
+      subjects.map((sub, idx) => {
+         total += sub.no_of_correct
+         scoreArr.push(sub.no_of_correct)
+      })
+      return {
+         cumulative: `C${total / subjects.length}`,
+         right: `E${scoreArr[0]} M${scoreArr[1]} R${scoreArr[2]} C${scoreArr[3]}`,
+
+      }
+   }
+}
 // // timezones
 // function getCurrentLocalDateTime() {
 //    return moment().format();

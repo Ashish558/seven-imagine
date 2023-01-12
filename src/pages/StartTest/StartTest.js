@@ -7,7 +7,7 @@ import PrimaryButton from '../../components/Buttons/PrimaryButton'
 import { TestDetail } from '../../components/TestDetail/TestDetail'
 import { testData } from './tempData'
 import TestOption from '../../components/TestOption/TestOption'
-import { useAttendTestMutation, useLazyContinueTestQuery, useLazyGetAssignedTestQuery, useLazyGetSectionsQuery, useLazyGetTestResponseQuery, useLazyGetTimeQuery, useStartTestMutation, useSubmitTestMutation, useUpdateTimeMutation } from '../../app/services/test'
+import { useAttendTestMutation, useLazyContinueTestQuery, useLazyGetAssignedTestQuery, useLazyGetSectionsQuery, useLazyGetSingleAssignedTestQuery, useLazyGetTestResponseQuery, useLazyGetTimeQuery, useStartTestMutation, useSubmitTestMutation, useUpdateTimeMutation } from '../../app/services/test'
 import BackBtn from '../../components/Buttons/Back'
 import Timer from '../../components/Timer/Timer'
 import CurrentSection from './CurrentSection/CurrentSection'
@@ -37,7 +37,8 @@ export default function StartTest() {
       duration: 0,
       dateAssigned: '',
       startedOn: '',
-      completedOn: ''
+      completedOn: '',
+      testName: ''
    })
    const [sectionDetails, setSectionDetails] = useState({})
    const [subjects, setSubjects] = useState([])
@@ -49,6 +50,7 @@ export default function StartTest() {
 
    const [getSections, getSectionsResp] = useLazyGetSectionsQuery()
    const [getTestResponse, getTestResponseResp] = useLazyGetTestResponseQuery()
+   const [getAssignedTest, getAssignedTestResp] = useLazyGetSingleAssignedTestQuery()
 
    const [attendTest, attendTestResp] = useAttendTestMutation()
    const [updateTime, updateTimeResp] = useUpdateTimeMutation()
@@ -57,6 +59,24 @@ export default function StartTest() {
    const [getTime, getTimeResp] = useLazyGetTimeQuery()
    const [continueTest, continueTestResp] = useLazyContinueTestQuery()
    const [completedSectionIds, setCompletedSectionIds] = useState([])
+
+
+   useEffect(() => {
+      getAssignedTest(id)
+         .then(res => {
+            if (res.error) return console.log('testerror', res.error);
+            console.log('test', res.data.data.test);
+            const { testId, createdAt } = res.data.data.test
+            if (res.data.data.test.testId) {
+               setTestHeaderDetails(prev => ({
+                  ...prev,
+                  testName: testId.testName,
+                  dateAssigned: getFormattedDate(createdAt)
+               }))
+            }
+
+         })
+   }, [])
 
    const handleStartTest = () => {
       if (!activeSection) return
@@ -298,7 +318,9 @@ export default function StartTest() {
 
                <div className='flex-1' >
                   <BackBtn to='/all-tests' />
-                  <p className='text-primary-dark font-bold text-3xl mb-8' >Test Name</p>
+                  <p className='text-primary-dark font-bold text-3xl mb-8' >
+                     {testHeaderDetails.testName}
+                  </p>
                   {!testStarted &&
                      <div className='grid grid-cols-2 grid-rows-3 max-w-840 text-sm gap-y-4 mt-2'>
                         <div>

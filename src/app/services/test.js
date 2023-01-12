@@ -113,7 +113,8 @@ export const testServicesApi = createApi({
       }),
       getTestResponse: builder.query({
          query: (body) => ({
-            url: `/api/test/getresponse/${body.id}`,
+            url: body.url,
+            params: body.params,
             method: "GET",
             headers: getAuthHeader()
          })
@@ -141,8 +142,9 @@ export const testServicesApi = createApi({
          })
       }),
       getSingleAssignedTest: builder.query({
-         query: (id) => ({
-            url: `/api/test/myassigntest/${id}`,
+         query: (body) => ({
+            url: body.url,
+            params: body.params,
             method: "GET",
             headers: getAuthHeader()
          })

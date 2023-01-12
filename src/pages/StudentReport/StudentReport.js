@@ -38,6 +38,11 @@ export default function StudentReport() {
    const [testData, setTestData] = useState(tableData)
    const [answersData, setAnswersData] = useState(answerTableData)
    const [responseData, setResponseData] = useState({})
+   const [displayScore, setDisplayScore] = useState({
+      cumulative: '',
+      right: '',
+      isSat: false,
+   })
    const { role: persona, id: currentUserId } = useSelector(state => state.user)
    const [sectionScore, setSectionScore] = useState({
       correct: 0,
@@ -49,7 +54,7 @@ export default function StudentReport() {
    })
 
    const [accuracySeries, setAccuracySeries] = useState({
-      name: 'No. of Incorrect',
+      name: 'Incorrect Answers',
       data: []
    })
    const [accuracyGraphOptions, setAccuracyGraphOptions] = useState(accuracyOptions)
@@ -65,6 +70,8 @@ export default function StudentReport() {
       }
    }, [persona])
 
+   const { id, studentId } = useParams()
+
    const [testDetails, setTestDetails] = useState({
       testName: '-',
       assignedOn: '-',
@@ -73,6 +80,7 @@ export default function StudentReport() {
       completedOn: '-',
       duration: '-',
    })
+
    const [subjects, setSubjects] = useState([])
    const [selectedSubject, setSelectedSubject] = useState({})
    const [getTestResponse, getTestResponseResp] = useLazyGetTestResponseQuery()
@@ -81,8 +89,8 @@ export default function StudentReport() {
    const [getAssignedTest, getAssignedTestResp] = useLazyGetSingleAssignedTestQuery()
    const [getAnswers, getAnswersResp] = useLazyGetAnswersQuery()
 
-   const { id } = useParams()
 
+   // console.log('params studnt', studentId);
    //get answer key
    useEffect(() => {
       getAnswers(id)
@@ -102,10 +110,18 @@ export default function StudentReport() {
    }
 
    useEffect(() => {
-      getAssignedTest(id)
+      let params = {}
+      let url = `/api/test/myassigntest/${id}`
+      if (studentId) {
+         params = {
+            userId: studentId
+         }
+         url = `/api/test/myassigntest/${id}`
+      }
+      getAssignedTest({ url, params: params })
          .then(res => {
-            if (res.error) return console.log(res.error);
-            // console.log('test', res.data.data.test);
+            if (res.error) return console.log('testerror', res.error);
+            console.log('test', res.data.data.test);
             const { testId, createdAt, timeLimit } = res.data.data.test
             setTestDetails(prev => {
                return {
@@ -116,17 +132,56 @@ export default function StudentReport() {
                }
             })
          })
+
    }, [])
 
    useEffect(() => {
-      getTestResponse({ id })
+      let params = {}
+      let url = `/api/test/getresponse/${id}`
+      if (studentId) {
+         params = {
+            userId: studentId
+         }
+         url = `/api/test/admin/getresponse/${id}`
+      }
+
+      getTestResponse({ url, params: params })
          .then(res => {
             if (res.error) {
-               console.log(res.error)
+               console.log('test resp err', res.error)
                return
             }
             console.log('RESPONSE', res.data.data.response);
             const { subjects, studentId, response, createdAt, updatedAt } = res.data.data.response
+            if (res.data.data.response.testType === 'SAT') {
+               let set1Score = 0
+               let set2Score = 0
+               subjects.map((sub, idx) => {
+                  if (idx === 0 || idx === 1) {
+                     set1Score += sub.no_of_correct
+                  } else {
+                     set2Score += sub.no_of_correct
+                  }
+               })
+
+               setDisplayScore({
+                  cumulative: `C${set1Score + set2Score}`,
+                  right: `V${set1Score} M${set2Score}`,
+                  isSat: true
+               })
+            } else if (res.data.data.response.testType === 'SAT') {
+               let scoreArr = []
+               let total = 0
+               subjects.map((sub, idx) => {
+                  total += sub.no_of_correct
+                  scoreArr.push(sub.no_of_correct)
+               })
+               setDisplayScore({
+                  cumulative: `C${total/subjects.length}`,
+                  right: `E${scoreArr[0]} M${scoreArr[1]} R${scoreArr[2]} C${scoreArr[3]}`,
+                  isSat: false
+               })
+            }
             setTestDetails(prev => {
                return {
                   ...prev,
@@ -149,8 +204,8 @@ export default function StudentReport() {
                      }
                   })
                })
-
          })
+
    }, [])
 
    const handleChange = (item) => {
@@ -184,17 +239,35 @@ export default function StudentReport() {
       // let selectedIndex = selectedSubject.idx
       // console.log(responseData.response[selectedSubject.idx])
       // console.log(answerKey[selectedSubject.idx]);
-      let temp = responseData.response[selectedSubject.idx].map((item, index) => {
-         const { QuestionNumber, QuestionType, ResponseAnswer, isCorrect, responseTime, _id } = item
-         return {
-            QuestionNumber,
-            isCorrect,
-            Concept: answerKey[selectedSubject.idx][index].Concepts ? answerKey[selectedSubject.idx][index].Concepts : '-',
-            Strategy: answerKey[selectedSubject.idx][index].Strategy ? answerKey[selectedSubject.idx][index].Strategy : '-',
-            responseTime: responseTime >= 0 ? `${responseTime} sec` : '-'
-         }
-      })
-      setTableData(temp)
+      if (persona === 'student' || persona === 'parent') {
+         let temp = responseData.response[selectedSubject.idx].map((item, index) => {
+            const { QuestionNumber, QuestionType, ResponseAnswer, isCorrect, responseTime, _id } = item
+            return {
+               QuestionNumber,
+               isCorrect,
+               Concept: answerKey[selectedSubject.idx][index].Concepts ? answerKey[selectedSubject.idx][index].Concepts : '-',
+               Strategy: answerKey[selectedSubject.idx][index].Strategy ? answerKey[selectedSubject.idx][index].Strategy : '-',
+               responseTime: responseTime >= 0 ? `${responseTime} sec` : '-'
+            }
+         })
+         setTableData(temp)
+      } else {
+         // console.log('answerKey', answerKey[selectedSubject.idx]);
+         let temp = responseData.response[selectedSubject.idx].map((item, index) => {
+            const { QuestionNumber, QuestionType, ResponseAnswer, isCorrect, responseTime, _id } = item
+            return {
+               QuestionNumber,
+               CorrectAnswer: answerKey[selectedSubject.idx][index].CorrectAnswer,
+               ResponseAnswer,
+               isCorrect,
+               Concept: answerKey[selectedSubject.idx][index].Concepts ? answerKey[selectedSubject.idx][index].Concepts : '-',
+               Strategy: answerKey[selectedSubject.idx][index].Strategy ? answerKey[selectedSubject.idx][index].Strategy : '-',
+               responseTime: responseTime >= 0 ? `${responseTime} sec` : '-'
+            }
+         })
+         setTableData(temp)
+      }
+
 
    }, [selectedSubject, answerKey])
 
@@ -343,10 +416,14 @@ export default function StudentReport() {
                            className={`py-2 px-0 mr-7 font-semibold w-160 ${item.selected ? '' : 'bg-secondaryLight text-textGray'}`} />
                      })}
                   </div>
-                  <button className='py-4 px-4 bg-primaryOrange text-white rounded-20 flex items-center shadow-md pr-7'>
-                     <span className='inline-block font-bold text-42'>C26</span>
+                  <button className={`py-4 ${displayScore.isSat ? 'px-6' : 'px-4'}  bg-primaryOrange text-white rounded-20 flex items-center shadow-md pr-7`}>
+                     <span className='inline-block font-bold text-42'>
+                        {displayScore.cumulative}
+                     </span>
                      <div className={styles.line}></div>
-                     <span className='inline-block font-bold text-xl' >E20 M26 R22 S30</span>
+                     <span className='inline-block font-bold text-xl' >
+                        {displayScore.right}
+                     </span>
                   </button>
                </div>
 
