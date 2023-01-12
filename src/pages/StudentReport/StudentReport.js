@@ -245,11 +245,6 @@ export default function StudentReport() {
       if (Object.keys(selectedSubject).length === 0) return
       if (answerKey.length === 0) return
 
-      // let selectedIndex = selectedSubject.idx
-      // console.log('selectedSubject', selectedSubject)
-      // console.log('response', responseData)
-      // console.log('answer key', answerKey)
-      // console.log('answer  key subjects', answerKeySubjects)
       let currentAnswerKeyIndex = 0
       
       answerKeySubjects.map((subj, idx) => {
@@ -257,9 +252,7 @@ export default function StudentReport() {
             currentAnswerKeyIndex = idx
          }
       })
-      // console.log('currentAnswerKeyIndex', currentAnswerKeyIndex)
 
-      console.log(answerKey[selectedSubject.idx]);
       if (persona === 'student' || persona === 'parent') {
          let temp = responseData.response[selectedSubject.idx].map((item, index) => {
             const { QuestionNumber, QuestionType, ResponseAnswer, isCorrect, responseTime, _id } = item

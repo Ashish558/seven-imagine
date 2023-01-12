@@ -21,11 +21,11 @@ import { getScore } from "../../utils/utils";
 //can b made dynamic
 export default function TableItem({ item, dataFor, onClick, excludes, fetch }) {
 
+   const [score, setScore] = useState('-')
    // console.log(onClick)
    const [fetchSettings, settingsResp] = useLazyGetSettingsQuery()
    const [getUserDetail, getUserDetailResp] = useLazyGetUserDetailQuery()
    const [getTutorDetail, getTutorDetailResp] = useLazyGetTutorDetailsQuery()
-   const [score, setScore] = useState('-')
    const [updateUserDetail, updateUserDetailResp] = useUpdateUserDetailsMutation()
    const [updateTutorDetail, updateTutorDetailResp] = useUpdateTutorDetailsMutation()
    const [postTutorDetails, postTutorDetailsResp] = usePostTutorDetailsMutation()
