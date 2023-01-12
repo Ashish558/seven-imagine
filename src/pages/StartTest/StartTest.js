@@ -103,7 +103,7 @@ export default function StartTest() {
                   }
                })
             })
-            setAnswers(answer.map(item => ({ ...item, isMarked: false, ResponseAnswer: 'C', responseTime: 0 })))
+            setAnswers(answer.map(item => ({ ...item, isMarked: true, ResponseAnswer: '', responseTime: 0 })))
          })
    }
    // console.log(id)
@@ -177,7 +177,7 @@ export default function StartTest() {
                setActiveSection({ name: sectionName })
                setSubmitId(submitId)
                setAnswers(answer.map(item => ({
-                  ...item, isMarked: false, ResponseAnswer: 'C',
+                  ...item, isMarked: true, ResponseAnswer: '',
                   responseTime: 0
                })))
             } else {
@@ -397,7 +397,7 @@ export default function StartTest() {
                                        handleResponseChange={handleResponseChange}
                                        handleTimeTaken={handleTimeTaken} />
                                     {item.isMarked ?
-                                       <button className='w-[180px] font-semibold py-3 rounded-lg pt-[8px] pb-[8px]	 border-2 border-[#D2D2D2] text-[#D2D2D2] ml-4'
+                                       <button className='w-[180px] font-semibold py-3 rounded-lg pt-[8px] pb-[8px] border-2 border-[#D2D2D2] text-[#D2D2D2] ml-4'
                                           onClick={() => handleMark(item._id, false)} >
                                           Mark for Review
                                        </button> :

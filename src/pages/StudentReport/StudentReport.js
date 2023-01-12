@@ -87,19 +87,28 @@ export default function StudentReport() {
    const [getUserDetail, userDetailResp] = useLazyGetTutorDetailsQuery()
    const [getTestDetails, getTestDetailsResp] = useLazyGetTestDetailsQuery()
    const [getAssignedTest, getAssignedTestResp] = useLazyGetSingleAssignedTestQuery()
+
    const [getAnswers, getAnswersResp] = useLazyGetAnswersQuery()
+   const [answerKeySubjects, setAnswerKeySubjects] = useState([])
 
 
    // console.log('params studnt', studentId);
    //get answer key
    useEffect(() => {
+      if (Object.keys(responseData).length === 0) return
+      // console.log('response data', responseData);
+      // let sortedSubjects = responseData.subjects.map(sub => sub.name)
+
       getAnswers(id)
          .then(res => {
             if (res.error) return console.log(res.error);
-            // console.log('answers', res.data.data);
+            // console.log('answer key', res.data.data);
+            let answerKeyData = { ...res.data.data }
+            // let subjects = answerKeyData.answer.subjects
             setAnswerKey(res.data.data.answer.answer)
+            setAnswerKeySubjects(answerKeyData.answer.subjects)
          })
-   }, [])
+   }, [responseData])
 
    const getSelectedString = (arr) => {
       let strArr = []
@@ -121,7 +130,7 @@ export default function StudentReport() {
       getAssignedTest({ url, params: params })
          .then(res => {
             if (res.error) return console.log('testerror', res.error);
-            console.log('test', res.data.data.test);
+            // console.log('test', res.data.data.test);
             const { testId, createdAt, timeLimit } = res.data.data.test
             setTestDetails(prev => {
                return {
@@ -151,7 +160,7 @@ export default function StudentReport() {
                console.log('test resp err', res.error)
                return
             }
-            console.log('RESPONSE', res.data.data.response);
+            // console.log('RESPONSE', res.data.data.response);
             const { subjects, studentId, response, createdAt, updatedAt } = res.data.data.response
             if (res.data.data.response.testType === 'SAT') {
                let set1Score = 0
@@ -177,7 +186,7 @@ export default function StudentReport() {
                   scoreArr.push(sub.no_of_correct)
                })
                setDisplayScore({
-                  cumulative: `C${total/subjects.length}`,
+                  cumulative: `C${total / subjects.length}`,
                   right: `E${scoreArr[0]} M${scoreArr[1]} R${scoreArr[2]} C${scoreArr[3]}`,
                   isSat: false
                })
@@ -237,18 +246,39 @@ export default function StudentReport() {
       if (answerKey.length === 0) return
 
       // let selectedIndex = selectedSubject.idx
-      // console.log(responseData.response[selectedSubject.idx])
-      // console.log(answerKey[selectedSubject.idx]);
+      // console.log('selectedSubject', selectedSubject)
+      // console.log('response', responseData)
+      // console.log('answer key', answerKey)
+      // console.log('answer  key subjects', answerKeySubjects)
+      let currentAnswerKeyIndex = 0
+      
+      answerKeySubjects.map((subj, idx) => {
+         if(subj.name === selectedSubject.name){
+            currentAnswerKeyIndex = idx
+         }
+      })
+      // console.log('currentAnswerKeyIndex', currentAnswerKeyIndex)
+
+      console.log(answerKey[selectedSubject.idx]);
       if (persona === 'student' || persona === 'parent') {
          let temp = responseData.response[selectedSubject.idx].map((item, index) => {
             const { QuestionNumber, QuestionType, ResponseAnswer, isCorrect, responseTime, _id } = item
-            return {
-               QuestionNumber,
-               isCorrect,
-               Concept: answerKey[selectedSubject.idx][index].Concepts ? answerKey[selectedSubject.idx][index].Concepts : '-',
-               Strategy: answerKey[selectedSubject.idx][index].Strategy ? answerKey[selectedSubject.idx][index].Strategy : '-',
-               responseTime: responseTime >= 0 ? `${responseTime} sec` : '-'
+            let concept = '-'
+            let strategy = '-'
+            if (answerKey[currentAnswerKeyIndex][index]) {
+               concept = answerKey[currentAnswerKeyIndex][index].Concepts ? answerKey[currentAnswerKeyIndex][index].Concepts : '-'
             }
+            if (answerKey[currentAnswerKeyIndex][index]) {
+               strategy = answerKey[currentAnswerKeyIndex][index].Strategy ? answerKey[currentAnswerKeyIndex][index].Strategy : '-'
+            }
+            if (answerKey[currentAnswerKeyIndex][index])
+               return {
+                  QuestionNumber,
+                  isCorrect,
+                  Concept: concept,
+                  Strategy: strategy,
+                  responseTime: responseTime >= 0 ? `${responseTime} sec` : '-'
+               }
          })
          setTableData(temp)
       } else {
@@ -257,11 +287,11 @@ export default function StudentReport() {
             const { QuestionNumber, QuestionType, ResponseAnswer, isCorrect, responseTime, _id } = item
             return {
                QuestionNumber,
-               CorrectAnswer: answerKey[selectedSubject.idx][index].CorrectAnswer,
+               CorrectAnswer: answerKey[currentAnswerKeyIndex][index].CorrectAnswer,
                ResponseAnswer,
                isCorrect,
-               Concept: answerKey[selectedSubject.idx][index].Concepts ? answerKey[selectedSubject.idx][index].Concepts : '-',
-               Strategy: answerKey[selectedSubject.idx][index].Strategy ? answerKey[selectedSubject.idx][index].Strategy : '-',
+               Concept: answerKey[currentAnswerKeyIndex][index].Concepts ? answerKey[currentAnswerKeyIndex][index].Concepts : '-',
+               Strategy: answerKey[currentAnswerKeyIndex][index].Strategy ? answerKey[currentAnswerKeyIndex][index].Strategy : '-',
                responseTime: responseTime >= 0 ? `${responseTime} sec` : '-'
             }
          })
@@ -339,7 +369,15 @@ export default function StudentReport() {
    }, [selectedSubject])
 
    const getConceptScore = (correctTotal, key, returnIncorrectOnly) => {
-      const selected = answerKey[selectedSubject.idx]
+      let currentAnswerKeyIndex = 0
+      
+      answerKeySubjects.map((subj, idx) => {
+         if(subj.name === selectedSubject.name){
+            currentAnswerKeyIndex = idx
+         }
+      })
+
+      const selected = answerKey[currentAnswerKeyIndex]
       let total = 0
       selected.forEach(concept => {
          if (concept.Concepts === key) {
